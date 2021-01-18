@@ -1,45 +1,94 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Snapathon!
+## Shoot, Compete, Rate, Repeat!
+## Code Institute Milestone Project 3
 
-Welcome USER_NAME,
+Snapathon seeks to gamify photography. It is a photo-sharing application that enhances the user experience with competition. 
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+# UX
+## User Stories
 
-## Gitpod Reminders
+This application is targeted towards photography enthusiasts. Anyone who takes photographs for fun and loves to share them with others.
+Other photo sharing platforms have indicated a massive opportunity for an application that successfully gamifies photography and this application aims to achieve that.
+Snapathon aims to entice users to register and upload their images in weekly competitions pitting their best images against others'.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## Application Goals
 
-`python3 -m http.server`
+- Create a workable photography competition application that is fun and intutive to use. 
+- Gamify photography (both amateur & professional), and thus encourage high quality imagery as opposed to the current trend of low-quality personal images.
+- Make the content publicly accessible / viewable, so as to encourage users to register and use the application. 
+- Create a loyal community of users who regularly engage and compete against each other for points and bragging rights. 
+- Allow users to easily register and then login and out of the application and have them be able to store and retrieve their data easily.
 
-A blue button should appear to click: *Make Public*,
+## First Time User Stories
 
-Another blue button should appear to click: *Open Browser*.
+### *As a first time user / prospective user I want to be able to...*
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+- Easily understand the purpose of this web application. 
+- Quickly and easily understand how to navigate the application.
+- View the competition rules and how to enter. 
+- View an application that is visually and creatively appealing and physically easy to look at. 
+- Browse images entered by other people to get a sense of what the application does and how it runs. 
+- Filter my browsing by keyword, or by selecting only images that have won awards.
+- Display my filtered selection 
+- View the most recent winning images and see how many points they got. 
+- Register an account using my email and password. 
+- Confirm my password when registering, to ensure that I don't enter a typo.
+- Contact the application owner if I have any questions. 
 
-A blue button should appear to click: *Make Public*,
+## Returning User Stories
+### *As a returning user I want to be able to...*
 
-Another blue button should appear to click: *Open Browser*.
+- Login to the application.
+- View my profile.
+- Upload an avatar. 
+- Edit my account information - change my password, username or avatar.
+- Enter an image for competition. 
+- Edit the details of the image I entered for competition. 
+- Delete the image I entered for competition.
+- Use my vote to vote for the image I think is the best (other than my own).
+- See all the images I've entered in my profile section.
+- View my winning images separetly from the main collection. 
+- View all the images I've voted for. 
+- View other user profiles to see their images and who they've voted for.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+## Accessibility User Stories
 
-## Updates Since The Instructional Video
+- As a user who is colourblind, I want the colours and design elements used to employ sufficient contrast so that any visual cues are easily apparent.
+- As a keyboard user, I want to be able to navigate the application using the keyboard. 
+- As a user using screen reader technology, I want my screen reader to describe the page elements correctly.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+### *As the application creator I want to be able to...*
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+- Create and maintain a user-friendly platform allowing photography enthusiasts to compete with each other and to inspire each other with excellent images. 
+- Ensure that the application is as accessible as possible to include as wide a variety of users as possible.
+- Create a competition application that is re-usable for other fields, if this one proves popular. 
+- Eventually introduce a profit-earning aspect to the application, perhaps by monetizing awards for professional photographers. 
+ 
+ # Strategy
+ ## Project Goals
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+ ## Target users
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+ ## Research
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+ # Scope
+ ## Core Theme
+ ## Feature Ideas Table
+ ## List of Final Features 
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+ # Structure
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+ # Skeleton
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+ 
 
---------
 
-Happy coding!
+ # Attribution
+
+ # Deployment
+
+ # Tools and Other Resources Used 
+
+ - ## [RandomKeygen](https://randomkeygen.com/)
+
+    A random key generator to create super secure keys & passwords. 
