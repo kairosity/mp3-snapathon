@@ -1,7 +1,16 @@
 nav a:hover{
-    color:  #651fff;
+    color:  #7c4dff;
 }
 
 div.intro-buttons a{
-    width: 250px;
+    width: 70%;
+}
+h4.flashmsg {
+    line-height: 2;
+    color: #fafafa;
+    background-color: #7c4dff;
+}
+
+button.register-btn {
+    width: 100%;
 }
