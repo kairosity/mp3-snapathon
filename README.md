@@ -201,9 +201,11 @@ This is where first time users can register to become members. They fill in a us
 
 ## Information Architecture
 
-This application combines both linear and non-linear narratives. For first time users there is an obvious progression, they are encourage to register and then they can explore the various non-linear options. 
+This application combines both linear and non-linear narratives. For first time users there is an obvious progression, they are encouraged to register and then they can explore the various non-linear options. 
 They can enter and image into a competition, or they can browse other images, or they can view their own profiles or the profiles of other users. 
 There is no linearity to these options, but as the options are limited to a few main pathways, the application doesn't get overly confusing and it remains straightforward and intuitive. 
+
+When a user selects an image to view its details, a hub and spoke structure is employed insofar as a "back to all images" link is the only option afforded that user when they are inside the image view. 
 
  # Skeleton
 
@@ -229,7 +231,12 @@ There is no linearity to these options, but as the options are limited to a few 
 <p align="left">
   <img src="static/images/mongodb-connection-2.png">
 </p>
-5. Copied the connection string and pasted it in my env.py file editing it to include my dbname and my user password. 
+5. Copied the connection string and pasted it in my env.py file editing it to include my dbname and my user password.
+
+6.Created an instance of PyMongo and passed the application to that instance as below:
+
+
+        mongo = PyMongo(app)
 
 ## Heroku Deployment
 

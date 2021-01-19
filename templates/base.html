@@ -17,21 +17,21 @@
       <a href="#" class="brand-logo"><i class="fas fa-record-vinyl"></i></a>
       <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li class="grey darken-3"><a href="index.html">Home</a></li>
+        <li class="grey darken-3"><a href="{{url_for('home')}}">Home</a></li>
         <li><a href="#">Recent Winners</a></li>
         <li><a href="#">Browse</a></li>
         <li><a href="#">Login</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a href="{{url_for('register')}}">Register</a></li>
         <li><a href="#">Contact Us</a></li>
       </ul>
     </div>
   </nav>
   <ul class="sidenav grey darken-4" id="mobile-nav">
-    <li class="grey darken-3"><a href="index.html">Home</a></li>
+    <li class="grey darken-3"><a href="{{url_for('home')}}">Home</a></li>
         <li><a class="grey-text text-lighten-5" href="#">Recent Winners</a></li>
         <li><a class="grey-text text-lighten-5" href="#">Browse</a></li>
         <li><a class="grey-text text-lighten-5" href="#">Login</a></li>
-        <li><a class="grey-text text-lighten-5" href="#">Register</a></li>
+        <li><a href="{{url_for('register')}}">Register</a></li>
         <li><a class="grey-text text-lighten-5" href="#">Contact Us</a></li>
   </ul>
 {% block content %}
