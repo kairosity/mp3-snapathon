@@ -214,6 +214,63 @@ There is no linearity to these options, but as the options are limited to a few 
 
  # Deployment
 
+## Heroku Deployment
+
+Before following the steps listed below, a requirements.txt file and a Procfile were created and pushed to GitHub using the following commands: 
+
+        pip3 freeze --local > requirements.txt
+        echo web: python app.py > Procfile
+
+### The application was deployed via Heroku using this process: 
+
+ 1. Navigated to [Heroku](https://www.heroku.com/)
+ 2. Signed into my Heroku account. 
+ 3. Selected "New" on the dashboard and then "Create new application" option as below: 
+ <p align="left">
+  <img src="static/images/deployment-process-1.png">
+</p>
+
+ 4. Selected a name for my application, selected "Europe" as the region and clicked "Create app". 
+ <p align="left">
+  <img src="static/images/deployment-process-2.png">
+</p>
+ 5. With the "Deploy" tab selected, "GitHub - Connect to GitHub" was chosen as the deployment method.
+<p align="left">
+  <img src="static/images/deployment-process-3.png">
+</p>
+ 6. Making sure my GitHub profile was displayed, I clicked "connect" next to the GitHub repository for this project.
+
+<p align="left">
+    <img src="static/images/deployment-process-4.png">
+</p>
+<p align="left">
+    <img src="static/images/deployment-process-5.png">
+</p>
+<p align="left">
+    <img src="static/images/deployment-process-6.png">
+</p>
+ 7. Then I navigated to the "Settings" tab and clicked on "Reveal Convig Vars".
+ <p align="left">
+    <img src="static/images/deployment-process-7.png">
+</p>
+
+ 8. Added in my configuration variables to Heroku.
+ 9. Navigated back to the "Deploy" tab and selected "Enable Automatic Deploys" with the master branch selected from the dropdown box.
+ <p align="left">
+    <img src="static/images/deployment-process-9.png">
+</p>
+<p align="left">
+    <img src="static/images/deployment-process-10.png">
+</p>
+ 10. Then clicked on "Deploy Branch" also with master selected. 
+ <p align="left">
+    <img src="static/images/deployment-process-11.png">
+</p>
+ 11. Site is deployed and any changes are automatically deployed each time they are updated and pushed to GitHub during development.
+<p align="left">
+    <img src="static/images/deployment-process-12.png">
+</p>
+
  # Tools and Other Resources Used 
 
  - ## [RandomKeygen](https://randomkeygen.com/)
