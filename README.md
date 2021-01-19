@@ -68,8 +68,7 @@ Snapathon aims to entice users to register and upload their images in weekly com
  ## Project Goals
 As already touched upon, the aim with this project is to create a usable photography competition application that enhances the quality of photography users display on the internet. 
 As a professional photographer, I would love to use an application where the emphasis is less on sharing personal images and more on sharing images based on the quality of their photography.
-High quality cameras on phones and mobile devices have made photography hugely accessible for people in the last few years. 
-However their has been a marked drop in the quality of photography online. 
+High quality cameras on phones and mobile devices have made photography hugely accessible for everyone, however there has also been a marked drop in the quality of the photography people post online. 
 
 The main goal for this application is to create an interface and an environment that encourage great quality images. That encourages looking for good light and interesting subjects.
 
@@ -137,7 +136,74 @@ The features needed to achieve basic functionality are outlined below:
 
  ## List of Final Features 
 
+In order to create a working online competition the high-level list of feature requirements does not allow for too much compromise. There are certain features that must 
+be implemented if the application is to work at a fundamental level. Those are the features I decided to run with, the MVP features:
+
+
  # Structure
+
+The structure is somewhat non-linear as there are multiple views and the views a user can see are determined by whether or not they are registered and logged in. 
+
+Below are two user flows:
+
+## Users Not Logged In / Guest Users 
+
+### Landing Page: 
+
+1. Application landing page. - the first thing a user sees are two options: login / register. 
+2. If they choose to scroll down the page to learn more, the application purpose and rules of competition are clearly outlined. 
+3. Further scrolling on that page brings them to the contact form.
+
+The first view is designed in this manner to encourage information-seeking behaviour and provide answers within the first interaction. If the user arrives at the page and is immediately enticed to sign up, perfect, 
+otherwise they can scroll down and understand a little more about what the application does. 
+
+Ideally users will choose to register at this juncture, however should they choose to continue browsing, the navigation options at this level are as follows:
+
+### Navigation (not logged in): 
+
+1. Home - The landing page where the rules of the competition are outlined. 
+2. Recent Winners - This is where the top 3 images from the last competition are displayed.
+3. Browse - All current and past entries can be viewed and filtered using keywords or award status. 
+4. Login - Registered users can navigate here to login. 
+5. Register - Unregistered users can navigate here to register. 
+6. Contact Us - This directs the user back to the bottom of the landing page, where the contact form is located. 
+
+### Navigation (logged in):
+
+1. Home - Landing page, available if the user wants to re-read the competition rules. 
+2. My Profile - When a user logs in they are redirected to this page where all their entries, votes and winning images are viewable, as well as a link to enter a new image for competition or to vote, depending on what day of the week it is. 
+3. Compete / Vote - This link will read "Compete" between Monday & Friday at 22:00PM and "Vote" between Saturday & Sunday. The compete page will show the current week's entries as well as a button to enter an image, and another link to review the rules. 
+4. Vote - This view will display all of the current week's entries all of which have "Vote" icons. 
+5. Recent Winners - This is where the top 3 images from the last competition are displayed.
+6. Browse - All current and past entries can be viewed and filtered using keywords or award status. 
+7. Logout - Users can logout by clicking this link. 
+8. Contact Us - This directs the user back to the bottom of the landing page, where the contact form is located. 
+
+### Recent Winners 
+
+This is a simple page where the top 3 images from the last competition will be displayed. Their placement (1st, 2nd or 3rd), the user who created the image and the points the image received will all be displayed. 
+Clicking on the image will open the image view page where further details of the photograph can be viewed. 
+
+### Browse
+
+This is the full collection of images uploaded to the application. They are displayed as medium-sized thumbnails and users can click on any of them to bring them to the image view page, where further details about the photograph can be viewed. 
+Users can also choose to filter the images displayed by using a search bar, where they can search by keywords. They can also choose to view only images that have won awards. 
+
+### Login 
+
+This is where users who have registered can login to the application. They can login using their email address.
+
+### Register
+
+This is where first time users can register to become members. They fill in a username, email address and password. They are asked to type in their password twice. 
+
+## Interaction Design 
+
+## Information Architecture
+
+This application combines both linear and non-linear narratives. For first time users there is an obvious progression, they are encourage to register and then they can explore the various non-linear options. 
+They can enter and image into a competition, or they can browse other images, or they can view their own profiles or the profiles of other users. 
+There is no linearity to these options, but as the options are limited to a few main pathways, the application doesn't get overly confusing and it remains straightforward and intuitive. 
 
  # Skeleton
 
@@ -153,3 +219,7 @@ The features needed to achieve basic functionality are outlined below:
  - ## [RandomKeygen](https://randomkeygen.com/)
 
     A random key generator to create super secure keys & passwords. 
+
+- ## [Font Awesome](https://fontawesome.com/)
+
+    The icons used in this application were sourced from Font Awesome. 
