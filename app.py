@@ -26,7 +26,7 @@ def home():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        #check if email address already exists in db
+        # check if email address already exists in db
         existing_email = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
         existing_username = mongo.db.users.find_one(
@@ -40,7 +40,7 @@ def register():
             flash("Username is already in use, please choose a different one.")
             return redirect(url_for('register'))
         
-        #check if password fields match
+        # check if password fields match
         password1 = request.form.get("password")
         password2 = request.form.get("password-confirmation")
 
@@ -60,6 +60,31 @@ def register():
         flash("Registration successful!")
     return render_template("register.html")
 
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # does username exist?
+        existing_user = mongo.db.users.find_one(
+            {"email": request.form.get("email").lower()})
+
+        if existing_user:
+            # ensure that the hashed password matches this input
+            if check_password_hash(
+                    existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("email").lower()
+                flash("Welcome, {}!".format(existing_user["username"]))
+            else:
+                #invalid password hash
+                flash("Incorrect username and/or password!")
+                return redirect(url_for("login"))
+
+        else:
+            # username doesn't exist
+            flash("Incorrect username and/or password!")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
 
 
 # @app.route("/get_photos")

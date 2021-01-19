@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row">
+        
+    <div class="col s12 m4 offset-m4">
+        
+        <form class="card-panel grey darken-4" method="POST" action="{{ url_for('login') }}">
+            <h1 class="center-align grey-text text-lighten-5">LOGIN</h1>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" name="email" type="text" class="validate" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+                    <label for="email">email</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25" required>
+                    <label for="password">password</label>
+                </div>
+                <button class="register-btn btn waves-effect waves-light deep-purple accent-2 center-align" type="submit" name="action">LOGIN
+                </button>
+            </div>
+        </form>
+    </div>
+  </div>
+            
+
+{% endblock %}
