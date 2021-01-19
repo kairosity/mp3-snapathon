@@ -212,7 +212,24 @@ There is no linearity to these options, but as the options are limited to a few 
 
  # Attribution
 
- # Deployment
+# Deployment
+
+## Connecting the Application to MongoDB
+
+1. Logged into my MongoDB account. 
+2. With the "Clusters" tab selected, I clicked on "Connect" 
+<p align="left">
+  <img src="static/images/mongodb-connection-1.png">
+</p>
+3. Selected "Connect your application"
+<p align="left">
+  <img src="static/images/mongodb-connection-3.png">
+</p>
+4. Selected "Python" as the "Driver" and "Version" "3.6 or later". 
+<p align="left">
+  <img src="static/images/mongodb-connection-2.png">
+</p>
+5. Copied the connection string and pasted it in my env.py file editing it to include my dbname and my user password. 
 
 ## Heroku Deployment
 
