@@ -17,8 +17,6 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-filename_counter = 1
-
 @app.route("/")
 @app.route("/home")
 def home():
