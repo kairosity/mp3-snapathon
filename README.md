@@ -304,3 +304,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Font Awesome](https://fontawesome.com/)
 
     The icons used in this application were sourced from Font Awesome. 
+
+- ## [Regex use vs. Regex abuse](https://blog.codinghorror.com/regex-use-vs-regex-abuse/)
+
+    Super article outlining the use of regular expressions. 
+
+- ## [Form Input Validation Using Only HTML5 and Regex](https://code.tutsplus.com/tutorials/form-input-validation-using-only-html5-and-regex--cms-33095)
+
+    Useful blog post on form validation. 

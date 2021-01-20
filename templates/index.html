@@ -7,11 +7,15 @@
    <h4 class="grey-text text-lighten-5">Love photography?</h4>
     <h1 class="grey-text text-lighten-5">Welcome to Snapathon!</h1>
     <h3 class="grey-text text-lighten-5">Shoot, Compete, Rate, Repeat!</h3>
-    <div class="intro-buttons">
-        <a class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">LOGIN</a>
-        <p class="grey-text text-lighten-5">not a member yet?</p>
-        <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">REGISTER</a>
-    </div>
+    {% if not session['user']%}
+        <div class="intro-buttons">
+            <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">LOGIN</a>
+            <p class="grey-text text-lighten-5">not a member yet?</p>
+            <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">REGISTER</a>
+        </div>
+    {% else %}
+        <h2>Welcome {{ session['user'] }}</h2>
+    {% endif %}
 </div>
 </section>
 

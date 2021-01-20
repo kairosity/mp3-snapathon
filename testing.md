@@ -14,6 +14,8 @@ Various validations were employed to ensure the registration form saved the corr
 
         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
 
+    This is not a failsafe regex for email, however it will suffice for the first iteration of this application. 
+
 5. On the backend side of things, both usernames and emails are checked against existing data in the database to ensure neither have already been registered. 
 
 6. Also on the backend, the password & password confirmation fields are checked against each other, to ensure they match and to protect against typos. 

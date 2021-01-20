@@ -56,8 +56,13 @@ def register():
         mongo.db.users.insert_one(register)
 
         # puts the new user into a session
-        session["user"] = request.form.get("email").lower()
+        session["user"] = request.form.get("username").lower()
         flash("Registration successful!")
+
+        username = session["user"]
+        print(username)
+
+        return redirect(url_for("profile", username=username))
     return render_template("register.html")
 
 
@@ -71,11 +76,13 @@ def login():
         if existing_user:
             # ensure that the hashed password matches this input
             if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("email").lower()
-                flash("Welcome, {}!".format(existing_user["username"]))
+                existing_user["password"], request.form.get("password")):
+                    username = existing_user["username"]
+                    session["user"] = username
+                    flash("Welcome, {}!".format(username))
+                    return redirect(url_for("profile", username=username))
             else:
-                #invalid password hash
+                # invalid password hash
                 flash("Incorrect username and/or password!")
                 return redirect(url_for("login"))
 
@@ -87,10 +94,33 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    '''
+    The session variable stores the email address because that's
+    what the user logs in with. This uses that to return the
+    username which we will use to return the profile page.
+    '''
+
+    if session["user"]:
+        return render_template("profile.html", username=username)
+    
+    return redirect(url_for("login"))
+
 # @app.route("/get_photos")
 # def get_photos():
 #     photos = mongo.db.photos.find()
 #     return render_template("photos.html", photos=photos)
+
+
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("You've been logged out")
+    session.pop("user")
+    return redirect(url_for("login"))
+
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
