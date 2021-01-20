@@ -17,6 +17,25 @@ in order to add that specific photo's _id to the user's photos array. Hence all 
             photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
             photo_id_to_add_to_user = photo_to_add_to_user["_id"]
 
+
+### Issue 2:
+
+The method of retrieving and displaying files that gridfs uses made this functionality more complicated, as the send_file() function that it relies on, only uses the file's "filename"
+to send the file. This was frustrating because it is quite possible that there be more than one photo with the same filename. 'photo.jpg' or the like. So as I had to rely on the filenames, 
+instead of on the objectIds as I'd hoped, I needed a way to make every filename completely unique. 
+
+### Fix 2:
+
+I achieved this by creating a new filename, using the suffix (.png, .svg, .jpg) and then once the save_file() method had returned the file_id into my variable of the same name, I used a str() of 
+this to create a filename for each image that is completely unique and identical to their file_id. I then updated the file in mongo to have this new filename. 
+
+            filename_suffix = photo.filename[-4:]
+            new_filename = str(file_id) + filename_suffix
+             
+            mongo.db.fs.files.update_one({"_id": file_id},
+                                    { '$set': {"filename": new_filename}})
+
+
 # Input Validation
 
 ## Registration Form

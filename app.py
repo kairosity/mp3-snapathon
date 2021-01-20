@@ -94,6 +94,7 @@ def login():
     return render_template("login.html")
 
 
+
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     '''
@@ -103,11 +104,35 @@ def profile(username):
     '''
 
     if session["user"]:
-        return render_template("profile.html", username=username)
+
+        # grab the array of all the photo_ids this user has under their name 
+        current_user = mongo.db.users.find_one({"username": username})
+
+        user_photos = list(mongo.db.photos.find({"created_by": current_user["_id"]}))
+
+        # For each of the photo ids in user_photos I need to retrieve their file.
+
+        file_ids = []
+        for photo in user_photos:
+            file_ids.append(photo["file_id"])
+
+        # print(file_ids)
+
+        user_files = []
+        for id in file_ids:
+            # print(id)
+            user_files.append(list(mongo.db.fs.files.find({"_id": id})))
+        # print(user_files)
+
+        user_filenames = []
+
+        for file in user_files:
+            user_filenames.append(file[0]["filename"])
+
+        
+        return render_template("profile.html", username=username, user_photos=user_photos, user_filenames=user_filenames)
     
     return redirect(url_for("login"))
-
-
 
 @app.route("/compete", methods=['GET', 'POST'])
 def compete():
@@ -128,6 +153,13 @@ def compete():
 
             # Upload the photo to the gridfs mongo storage
             file_id = mongo.save_file(photo.filename, photo)
+
+            filename_suffix = photo.filename[-4:]
+            new_filename = str(file_id) + filename_suffix
+
+             # Update the gridFS "Filename" attribute to be equal to the file_id
+            mongo.db.fs.files.update_one({"_id": file_id},
+                                    { '$set': {"filename": new_filename}})
 
             current_user = mongo.db.users.find_one(
                 {"username": session["user"]})
@@ -150,16 +182,16 @@ def compete():
             photo_id_to_add_to_user = photo_to_add_to_user["_id"]
           
             # Add the photo obj id into the user's photos array
-            mongo.db.users.update({"_id": current_user["_id"]},
+            mongo.db.users.update_one({"_id": current_user["_id"]},
                                   { '$push':{"photos": photo_id_to_add_to_user}})
+   
             flash("Entry Received!")
 
     return render_template("compete.html")
 
-# @app.route("/get_photos")
-# def get_photos():
-#     photos = mongo.db.photos.find()
-#     return render_template("photos.html", photos=photos)
+@app.route("/file/<filename>")
+def file(filename):
+    return mongo.send_file(filename)
 
 
 @app.route("/logout")

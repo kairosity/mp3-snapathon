@@ -15,6 +15,15 @@
         <li class="tab col s3"><a href="#">Awards</a></li>
       </ul>
     </div>
+
+            {% for photo in user_photos %}
+                <h2>{{ photo.photo_title }}</h2>
+                <p>{{ photo.photo_story }}</p>
+            {% endfor %}
+
+            {% for file in user_filenames %}
+                <img class="profile-image" src="{{ url_for('file', filename=file) }}" alt="f">
+            {% endfor %}
     <div id="test1" class="col s12">Test 1</div>
     <div id="test2" class="col s12">Test 2</div>
     <div id="test3" class="col s12">Test 3</div>

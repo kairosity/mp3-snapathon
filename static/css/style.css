@@ -26,6 +26,11 @@ button.register-btn {
     background-color: #7c4dff;
 }
 
+img.profile-image{
+    width: 150px;
+    height: 150px;
+}
+
 /* Competition Page */
 
 input[type=text],
