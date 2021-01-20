@@ -112,13 +112,15 @@ def profile(username):
 @app.route("/compete", methods=['GET', 'POST'])
 def compete():
     '''
-    1. Get the competition page
-    2. Know which user is using it (through session)
-    3. when the form is posted:
-        3.1. save the image into gridfs
-        3.2 save all the image details into photo object
-        3.3 save the image objectid into the user object - that user in session.
-    This needs to post the image to the mongodb photos db
+    If the method is POST
+    1. Grab the file that was uploaded & store it in a var called photo.
+    2. Save that image to mongodb using gridfs at the same time store the file id
+    into a var called file_id.
+    3. Select the current user and save it into a var called current_user
+    4. Create a new_entry dict with the data from the form and current_user & the file_id
+    5. Add that dict entry into the photos collection.
+    6. Get that photo object's id using the file_id. 
+    7. Save that photo object's id into the current user object's photo's array.
     '''
     if request.method == 'POST':
         if 'photo' in request.files:
@@ -127,7 +129,7 @@ def compete():
             # Upload the photo to the gridfs mongo storage
             file_id = mongo.save_file(photo.filename, photo)
 
-            current_user_id = mongo.db.users.find_one(
+            current_user = mongo.db.users.find_one(
                 {"username": session["user"]})
 
             new_entry = {
@@ -138,8 +140,7 @@ def compete():
             "aperture": request.form.get("aperture").lower(),
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower(),
-            # This puts the whole user in the photo db as an obj - which might work? Or should I just put the user obj id? 
-            "created_by": current_user_id["_id"],
+            "created_by": current_user["_id"],
             "file_id": file_id
             }
             mongo.db.photos.insert_one(new_entry)
@@ -149,7 +150,7 @@ def compete():
             photo_id_to_add_to_user = photo_to_add_to_user["_id"]
           
             # Add the photo obj id into the user's photos array
-            mongo.db.users.update({"_id": current_user_id["_id"]},
+            mongo.db.users.update({"_id": current_user["_id"]},
                                   { '$push':{"photos": photo_id_to_add_to_user}})
             flash("Entry Received!")
 
