@@ -24,6 +24,7 @@
         <li><a href="#">Browse</a></li>
         {% if session['user'] %}
             <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
+            <li><a href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
             <li><a href="{{url_for('logout')}}">Logout</a></li>
         {% else %}
             <li><a href="{{url_for('login')}}">Login</a></li>
@@ -56,7 +57,7 @@
       {% endwith %}
   </section>
 
-     <h2 class="text-white">{{ username }}</h2>
+    
 {% block content %}
 {% endblock %}
 

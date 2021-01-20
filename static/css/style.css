@@ -14,3 +14,31 @@ h4.flashmsg {
 button.register-btn {
     width: 100%;
 }
+
+/* User profile Page */
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border: #7c4dff 2px solid;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: #7c4dff;
+}
+
+/* Competition Page */
+
+input[type=text],
+textarea {
+    color: #f5f5f5;
+}
+
+.upload-photo {
+    width: 200px;
+    height: 100px;
+    background-color: #7c4dff;
+}
+
+.collapsible-body {
+    border: none;
+}
