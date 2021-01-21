@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ photo.photo_title }}</h1>
+    <h3>by {{ user.username }}</h3>
+    <p>{{ photo.photo_story }}</p>
+    <img src="{{ url_for('file', filename=photo.filename) }}">
+    <h5>Camera: {{ photo.camera }}</h5>
+    <h5>Lens: {{ photo.lens }}</h5>
+    <h5>Aperture: {{photo.aperture }}</h5>
+    <h5>Shutter Speed: {{ photo.shutter }}</h5>
+    <h5>ISO: {{ photo.iso }}</h5>
+
+    <!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
+    {% if user.username == session_user %}
+        <!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. -->
+        <a class="waves-effect waves-light btn-large">Edit Photo Details</a>
+        <a class="waves-effect waves-light btn-large">Delete Photograph</a>
+    {% endif %}
+
+{% endblock %}

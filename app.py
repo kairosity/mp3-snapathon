@@ -93,8 +93,6 @@ def login():
 
     return render_template("login.html")
 
-
-
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     '''
@@ -107,30 +105,8 @@ def profile(username):
 
         # grab the array of all the photo_ids this user has under their name 
         current_user = mongo.db.users.find_one({"username": username})
-
         user_photos = list(mongo.db.photos.find({"created_by": current_user["_id"]}))
-
-        # For each of the photo ids in user_photos I need to retrieve their file.
-
-        file_ids = []
-        for photo in user_photos:
-            file_ids.append(photo["file_id"])
-
-        # print(file_ids)
-
-        user_files = []
-        for id in file_ids:
-            # print(id)
-            user_files.append(list(mongo.db.fs.files.find({"_id": id})))
-        # print(user_files)
-
-        user_filenames = []
-
-        for file in user_files:
-            user_filenames.append(file[0]["filename"])
-
-        
-        return render_template("profile.html", username=username, user_photos=user_photos, user_filenames=user_filenames)
+        return render_template("profile.html", username=username, user_photos=user_photos)
     
     return redirect(url_for("login"))
 
@@ -173,7 +149,8 @@ def compete():
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower(),
             "created_by": current_user["_id"],
-            "file_id": file_id
+            "file_id": file_id,
+            "filename": new_filename
             }
             mongo.db.photos.insert_one(new_entry)
 
@@ -193,6 +170,18 @@ def compete():
 def file(filename):
     return mongo.send_file(filename)
 
+@app.route("/photos/<filename>", methods=["GET", "POST"])
+def get_photo(filename):
+
+    photo = mongo.db.photos.find_one({"filename": filename})
+    user = mongo.db.users.find_one({"_id": photo["created_by"]})
+
+    if session["user"]:
+        session_user = session["user"]
+        return render_template("get_photo.html", 
+            photo=photo, user=user, session_user=session_user)
+    
+    return render_template("get_photo.html", photo=photo, user=user)
 
 @app.route("/logout")
 def logout():
