@@ -4,9 +4,9 @@
 
 <section class="row">
     <div class="col s12 m6 offset-m3 center-align">
-   <h4 class="grey-text text-lighten-5">Love photography?</h4>
-    <h1 class="grey-text text-lighten-5">Welcome to Snapathon!</h1>
-    <h3 class="grey-text text-lighten-5">Shoot, Compete, Rate, Repeat!</h3>
+   <h2 class="subheading1">Love photography?</h2>
+    <h1 class="main-page-heading">Welcome to Snapathon!</h1>
+    <h3 class="subheading2">Shoot, Compete, Rate, Repeat!</h3>
     {% if not session['user']%}
         <div class="intro-buttons">
             <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">LOGIN</a>
@@ -14,9 +14,27 @@
             <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">REGISTER</a>
         </div>
     {% else %}
-        <h2>Welcome {{ session['user'] }}</h2>
+        <h4 class="subheading3">welcome {{ session['user'] }}</h4>
     {% endif %}
 </div>
+</section>
+<section class="light-bg">
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <h2 class="center-align subheading2 dark-text">Weekly Photography Competitions</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m2 offset-m3">
+            <ol class="home-list">
+                <li>Register</li>
+                <li>Compete</li>
+                <li>Rate Others</li>
+                <li>Win Points!</li>
+            </ol>
+        </div>
+        <div class="col s12 m4 "><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
+    </div>
 </section>
 
 

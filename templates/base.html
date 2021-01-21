@@ -16,7 +16,8 @@
 <body class="grey darken-4">
     <nav class="grey darken-4">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo"><i class="fas fa-record-vinyl"></i></a>
+        
+      <a href="{{ url_for('home')}}" class="brand-logo"><img src="{{url_for('static', filename='images/in-app/logo.svg')}}" width="70px" height="auto"/></a>
       <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li class="grey darken-3"><a href="{{url_for('home')}}">Home</a></li>

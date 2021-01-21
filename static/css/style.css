@@ -1,14 +1,73 @@
-nav a:hover{
-    color:  #7c4dff;
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+/* Variables */
+
+:root {
+    --main-heading-font: "Fraunces", serif;
+    --subheading-1-font: "Open Sans", sans-serif;
+    --subheading-2-font: "Fraunces", serif;
+    --main-text-colour: #e0e0e0;
+    --accent-colour: #0091ea;
+    --dark-text-color: #212121;
 }
+/* Text Styles */
+
+.main-page-heading {
+    font-family: var(--main-heading-font);
+    color: var(--main-text-colour);
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-style: italic;
+}
+.subheading1{
+    font-family: var(--subheading-1-font);
+    font-size: 1.5em;
+    color: var(--main-text-colour);
+    letter-spacing: 3px;
+}
+.subheading2{
+    font-family: var(--subheading-2-font);
+    font-size: 2em;
+    color: var(--main-text-colour);
+}
+.subheading3{
+    font-family: var(--subheading-1-font);
+    color: var(--main-text-colour);
+    letter-spacing: 2px;
+    font-weight: 200;
+    font-size: 1.8em;
+}
+.dark-text {
+    color: var(--dark-text-color);
+}
+
+/* Background Styles */
+
+.light-bg {
+    background-color: var(--main-text-colour);
+}
+
+/* Navigation */
+
+nav a:hover{
+    color:  var(--accent-colour);
+}
+nav.brand-logo {
+    color: var(--accent-colour) !important;
+    padding: 2px;
+}
+
+/* Home Page */
 
 div.intro-buttons a{
     width: 70%;
 }
-h4.flashmsg {
-    line-height: 2;
-    color: #fafafa;
-    background-color: #7c4dff;
+
+img.home-image {
+    width: 100%;
+    height: 200px;
+}
+ol.home-list {
+    font-size: 1.6em;
 }
 
 button.register-btn {
@@ -20,15 +79,23 @@ button.register-btn {
 .avatar {
     width: 100px;
     height: 100px;
-    border: #7c4dff 2px solid;
+    border: var(--accent-colour) 2px solid;
     border-radius: 50%;
     padding: 10px;
-    background-color: #7c4dff;
+    background-color: var(--accent-colour);
 }
 
 img.profile-image{
     width: 300x;
     height: 200px;
+}
+
+/* Flash Messages */
+
+h4.flashmsg {
+    line-height: 2;
+    color: var(--main-text-colour);
+    background-color: var(--accent-colour);
 }
 
 /* Competition Page */
@@ -41,7 +108,7 @@ textarea {
 .upload-photo {
     width: 200px;
     height: 100px;
-    background-color: #7c4dff;
+    background-color: var(--accent-colour);
 }
 
 .collapsible-body {

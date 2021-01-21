@@ -228,7 +228,7 @@ def delete_photo(filename):
         return redirect(url_for('profile', username=session["user"]))
     else:
         flash("Sorry, you must be logged in to delete a photograph.")
-        return redirect(url_for('login/'))
+        return redirect(url_for('login'))
 
 @app.route("/logout")
 def logout():
