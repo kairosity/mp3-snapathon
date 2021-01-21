@@ -10,9 +10,15 @@
     --dark-text-color: #212121;
     --dark-accent-colour: #ffab00;
 }
-
 /* Universal Styles */
 
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+#content-wrap {
+  padding-bottom: 1rem;  
+}
 .light-bg {
     background-color: var(--main-text-colour);
 }
@@ -233,7 +239,12 @@ textarea {
 }
 
 /* Footer */
-footer p{
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+footer p {
     padding-top: 3em;
     color: var(--main-text-colour);
 }

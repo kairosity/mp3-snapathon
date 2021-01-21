@@ -322,3 +322,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Save and Retrieve Files In a MongoDB with Flask-Pymongo](https://www.youtube.com/watch?v=DsgAuceHha4)
 
     Wonderfully concise tutorial that perfectly demonstrates how to save & retrieve images with GridFS & Flask. 
+
+- ## [Keeping your footer at the bottom of the page](https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/)
+
+    This is always a useful article.
