@@ -3,47 +3,30 @@
 
 :root {
     --main-heading-font: "Fraunces", serif;
-    --subheading-1-font: "Open Sans", sans-serif;
-    --subheading-2-font: "Fraunces", serif;
+    --subheading-font: "Open Sans", sans-serif;
+    --subheading-serif-font: "Fraunces", serif;
     --main-text-colour: #e0e0e0;
-    --accent-colour: #0091ea;
+    --accent-colour: #ffc400;
     --dark-text-color: #212121;
+    --dark-accent-colour: #ffab00;
 }
-/* Text Styles */
 
-.main-page-heading {
-    font-family: var(--main-heading-font);
-    color: var(--main-text-colour);
-    font-weight: 800;
-    letter-spacing: 3px;
-    font-style: italic;
-}
-.subheading1{
-    font-family: var(--subheading-1-font);
-    font-size: 1.5em;
-    color: var(--main-text-colour);
-    letter-spacing: 3px;
-}
-.subheading2{
-    font-family: var(--subheading-2-font);
-    font-size: 2em;
-    color: var(--main-text-colour);
-}
-.subheading3{
-    font-family: var(--subheading-1-font);
-    color: var(--main-text-colour);
-    letter-spacing: 2px;
-    font-weight: 200;
-    font-size: 1.8em;
+/* Universal Styles */
+
+.light-bg {
+    background-color: var(--main-text-colour);
 }
 .dark-text {
     color: var(--dark-text-color);
 }
-
-/* Background Styles */
-
-.light-bg {
+.light-text{
+    color: var(--main-text-colour);
+}
+hr.divider{
     background-color: var(--main-text-colour);
+    height: 0px;
+    width: 80%;
+    margin:0 auto;
 }
 
 /* Navigation */
@@ -51,31 +34,125 @@
 nav a:hover{
     color:  var(--accent-colour);
 }
-nav.brand-logo {
+nav i.logo {
     color: var(--accent-colour) !important;
-    padding: 2px;
+    margin-left: 20px;
 }
 
 /* Home Page */
 
-div.intro-buttons a{
-    width: 70%;
+.homepage-heading {
+    font-family: var(--main-heading-font);
+    color: var(--main-text-colour);
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-style: italic;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
 }
-
+.homepage-subheading1{
+    font-family: var(--subheading-1-font);
+    font-size: 1.5em;
+    color: var(--main-text-colour);
+    letter-spacing: 3px;
+}
+.homepage-subheading2{
+    font-family: var(--subheading-serif-font);
+    font-size: 2em;
+    color: var(--main-text-colour);
+}
+.homepage-subheading3{
+    font-family: var(--subheading-1-font);
+    color: var(--main-text-colour);
+    letter-spacing: 2px;
+    font-weight: 200;
+    font-size: 1.8em;
+}
+.homepage-subheading4{
+    font-family: var(--subheading-1-font);
+    font-size: 2.4em;
+    letter-spacing: 3px;
+    padding: 1.3em 0;
+}
+.logo-home{
+    font-size: 4em;
+    color: var(--accent-colour);
+    padding-top: 20px;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
+}
+div.home-buttons{
+    margin-top: 5em;
+    margin-bottom: 5em; 
+}
+div.home-buttons a{
+    width: 30%;
+    background-color: var(--accent-colour);
+    border-radius: 24px;
+}
+div.home-buttons a:hover{
+    background-color: var(--dark-accent-colour);
+}
+.home-button{
+    margin-bottom: 1em;
+}
+.section-home-1{
+    padding-bottom: 4.5em;
+}
 img.home-image {
     width: 100%;
     height: 200px;
+    object-fit: cover;
 }
 ol.home-list {
     font-size: 1.6em;
+    font-family: var(--subheading-1-font);
 }
-
 button.register-btn {
     width: 100%;
 }
+.intro{
+    padding-bottom: 50px;
+    margin-bottom: 0;
+}
+.points,
+.schedule {
+    font-family: var(--subheading-1-font);
+    font-size: 1.1em;
+}
+.em{
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--dark-accent-colour);
+    text-decoration-thickness: 2px;
+    font-size: 1.17em;
+}
+.em-points{
+    font-weight: 600;
+    font-size: 1.2em;
+    padding: 10px;
+}
+.section-home-3{
+    padding-bottom: 4.5em;
+}
+.contact-send-btn{
+    width: 100%;
+    background-color: var(--accent-colour);
+    border-radius: 24px;
+    font-family: var(--subheading-font);
+    font-size: 1.3em;
+    color: var(--main-text-colour);
+}
+.contact-send-btn:hover{
+    background-color: var(--dark-accent-colour);
+}
+.section-home-4{
+    padding-bottom: 4em;
+}
 
 /* User profile Page */
-
 .avatar {
     width: 100px;
     height: 100px;
@@ -84,7 +161,6 @@ button.register-btn {
     padding: 10px;
     background-color: var(--accent-colour);
 }
-
 img.profile-image{
     width: 300x;
     height: 200px;
@@ -96,6 +172,47 @@ h4.flashmsg {
     line-height: 2;
     color: var(--main-text-colour);
     background-color: var(--accent-colour);
+}
+/* Forms */
+
+
+/* Override Materialize Form Colours */
+input:not([type]):focus:not([readonly]), 
+input[type=text]:not(.browser-default):focus:not([readonly]), 
+input[type=password]:not(.browser-default):focus:not([readonly]), 
+input[type=email]:not(.browser-default):focus:not([readonly]), 
+input[type=url]:not(.browser-default):focus:not([readonly]), 
+input[type=time]:not(.browser-default):focus:not([readonly]), 
+input[type=date]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]), 
+input[type=tel]:not(.browser-default):focus:not([readonly]), 
+input[type=number]:not(.browser-default):focus:not([readonly]), 
+input[type=search]:not(.browser-default):focus:not([readonly]), 
+textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom: 1px solid var(--accent-colour);
+    -webkit-box-shadow: 0 1px 0 0 var(--accent-colour);
+    box-shadow: 0 1px 0 0 var(--accent-colour);
+}
+
+/* Login Page */
+.login-heading{
+    font-style: var(--subheading-font);
+    font-size: 4em;
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+.login-btn{
+    width: 100%;
+    background-color: var(--accent-colour);
+    border-radius: 24px;
+}
+.login-btn:hover{
+    background-color: var(--dark-accent-colour);
+}
+.login-form{
+    padding: 4em 5em 5em;
+    margin-top: 2em;
 }
 
 /* Competition Page */
@@ -113,4 +230,10 @@ textarea {
 
 .collapsible-body {
     border: none;
+}
+
+/* Footer */
+footer p{
+    padding-top: 3em;
+    color: var(--main-text-colour);
 }

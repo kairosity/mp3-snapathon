@@ -2,29 +2,33 @@
 
 {% block content %}
 
-<section class="row">
+<section class="row section-home-1">
     <div class="col s12 m6 offset-m3 center-align">
-   <h2 class="subheading1">Love photography?</h2>
-    <h1 class="main-page-heading">Welcome to Snapathon!</h1>
-    <h3 class="subheading2">Shoot, Compete, Rate, Repeat!</h3>
+    <i class="s4 m6 center-align logo-home fas fa-spa"></i>
+   <h2 class="homepage-subheading1">Love photography?</h2>
+    <h1 class="homepage-heading">Welcome to Snapathon!</h1>
+    <h3 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h3>
     {% if not session['user']%}
-        <div class="intro-buttons">
-            <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">LOGIN</a>
-            <p class="grey-text text-lighten-5">not a member yet?</p>
-            <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large deep-purple accent-2 z-depth-3">REGISTER</a>
+        <div class="home-buttons">
+            <div class="col s12">
+                <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large z-depth-3">LOGIN</a>  
+            </div>
+            <div class="col s12">
+                <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large z-depth-3">REGISTER</a>
+            </div>
         </div>
     {% else %}
-        <h4 class="subheading3">welcome {{ session['user'] }}</h4>
+        <h4 class="homepage-subheading3">welcome {{ session['user'] }}</h4>
     {% endif %}
 </div>
 </section>
-<section class="light-bg">
+<section class="light-bg section-home-2">
     <div class="row">
         <div class="col s12 m6 offset-m3">
-            <h2 class="center-align subheading2 dark-text">Weekly Photography Competitions</h2>
+            <h2 class="center-align homepage-subheading4 dark-text">Weekly Photography Competitions</h2>
         </div>
     </div>
-    <div class="row">
+    <div class="row intro">
         <div class="col s12 m2 offset-m3">
             <ol class="home-list">
                 <li>Register</li>
@@ -36,6 +40,48 @@
         <div class="col s12 m4 "><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
     </div>
 </section>
+<section class="light-bg section-home-3">
+    <div class="row">
+        <div class="schedule col s12 m7 offset-m1">
+            <h3 class="left-align homepage-subheading4 dark-text">Be the contestant and the judge!</h3>
+            <p><span class="em">Monday:</span> A new photography competition.</p>
+            <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
+            <p><span class="em">Saturday & Sunday until 22:00:</span> Entrants must cast their vote (entrants may not vote for their own images). If they do not use their vote, their entry will be discarded. </p>
+            <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
+        </div> 
+        <div class="col s12 m3">
+            <h3 class="right-align homepage-subheading4 dark-text">Point Scoring:</h3>
+            <div class="points right-align">
+                <p>1st Place Image: <span class="em-points">7</span></p>
+                <p>2nd Place Image: <span class="em-points">5</span></p>
+                <p>3rd Place Image: <span class="em-points">3</span></p>
+                <p>Vote for winning image: <span class="em-points">3</span></p>
+                <p>Vote for 2nd place image: <span class="em-points">2</span></p>
+                <p>Vote for 3rd place image: <span class="em-points">1</span></p>
+            </div>
+        </div>  
+    </div>
+</section>
+<section id="contact-form" class="dark-bg section-home-4">
+    <div class="row">
+        <div class="contact-form col s12 m4 offset-m4">
+            <h2 class="center-align homepage-subheading4 light-text">Contact Us</h2>
+            <form>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" name="email" type="text" class="validate" required>
+                        <label for="email">Email Address:</label>
+                    </div> 
+                    <div class="input-field col s12">
+                        <textarea id="message" name="message" class="validate" required></textarea> 
+                    </div> 
+                </div>
+                <a class="contact-send-btn btn-large z-depth-3" type="submit" value="Submit">SEND</a>
+            </form>
+        </div>
+    </div>
+</section>
+
 
 
 {% endblock %}
