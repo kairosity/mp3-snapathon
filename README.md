@@ -318,3 +318,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
     The GridFS docs. Crucial. 
 
 - ## [Jinja Documentation](https://jinja.palletsprojects.com/en/2.11.x/)
+
+- ## [Save and Retrieve Files In a MongoDB with Flask-Pymongo](https://www.youtube.com/watch?v=DsgAuceHha4)
+
+    Wonderfully concise tutorial that perfectly demonstrates how to save & retrieve images with GridFS & Flask. 

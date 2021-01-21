@@ -184,6 +184,25 @@ def edit_photo(filename):
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"_id": photo["created_by"]})
 
+    if request.method == "POST":
+
+        edited_entry = {
+            "photo_title": request.form.get("title").lower(),
+            "photo_story": request.form.get("story").lower(),
+            "camera": request.form.get("camera").lower(),
+            "lens": request.form.get("lens").lower(),
+            "aperture": request.form.get("aperture").lower(),
+            "shutter": request.form.get("shutter").lower(),
+            "iso": request.form.get("iso").lower(),
+            "created_by": user["_id"],
+            "file_id": photo["file_id"],
+            "filename": filename
+            }
+        
+        mongo.db.photos.update({"_id": photo["_id"]}, edited_entry)
+        flash("Photo details edited successfully!")
+        return redirect(url_for("get_photo", filename=filename))
+
     if session:
         return render_template("edit_photo.html", photo=photo, user=user)
     else:
