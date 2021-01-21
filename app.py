@@ -124,6 +124,7 @@ def compete():
         if 'photo' in request.files:
             photo = request.files['photo']
 
+            print(request.files)
             # Upload the photo to the gridfs mongo storage
             file_id = mongo.save_file(photo.filename, photo)
 

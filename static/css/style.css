@@ -34,6 +34,10 @@ hr.divider{
     width: 80%;
     margin:0 auto;
 }
+.row,
+.col{
+    padding: 0 !important;
+}
 
 /* Navigation */
 
@@ -157,21 +161,6 @@ button.register-btn {
 .section-home-4{
     padding-bottom: 4em;
 }
-
-/* User profile Page */
-.avatar {
-    width: 100px;
-    height: 100px;
-    border: var(--accent-colour) 2px solid;
-    border-radius: 50%;
-    padding: 10px;
-    background-color: var(--accent-colour);
-}
-img.profile-image{
-    width: 300x;
-    height: 200px;
-}
-
 /* Flash Messages */
 
 h4.flashmsg {
@@ -220,6 +209,34 @@ textarea.materialize-textarea:focus:not([readonly]){
     padding: 4em 5em 5em;
     margin-top: 2em;
 }
+/* User profile Page */
+.profile-page-header{
+    padding-top: 3em;
+}
+.profile-page-heading{
+    font-family: var(--subheading-font);
+    color: var(--main-text-colour);
+    font-size: 3.4em;
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+.avatar {
+    width: 100px;
+    height: 100px;
+    border: var(--accent-colour) 2px solid;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: var(--accent-colour);
+}
+img.thumbnail-photo{
+    width: 100%;
+    height: auto;
+}
+div.profile-photos-row,
+div.profile-photos-col{
+    padding: 0 !important;
+}
+
 
 /* Competition Page */
 

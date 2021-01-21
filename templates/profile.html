@@ -2,27 +2,49 @@
 
 {% block content %}
 
-    <img class="avatar" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/>
-    <h1>{{ username }}'s profile</h1>
+<section class="profile-page-header">
+    <div class="row">
+        <div class="col s12 m8 offset-m2 left-align">
+            <img class="avatar" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/>
+        </div>
+        <div class="col s12 m8 offset-m2 left-align">
+            <h1 class="profile-page-heading">{{ username|capitalize }}'s profile</h1>
+        </div>
+    </div>
+</section>
     
-
-
+    
     <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a class="active" href="#">Entries</a></li>
-        <li class="tab col s3"><a href="#">Votes</a></li>
-        <li class="tab col s3"><a href="#">Awards</a></li>
+        <li class="tab col s3"><a href="#entries">Entries</a></li>
+        <li class="tab col s3"><a href="#votes">Votes</a></li>
+        <li class="tab col s3"><a href="#awards">Awards</a></li>
       </ul>
     </div>
 
+    <div id="entries" class="col s12">
+        <div class="row profile-photos-row"></div>
             {% for photo in user_photos %}
-                <h2>{{ photo.photo_title }}</h2>
-                <p>{{ photo.photo_story }}</p>
-                <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="profile-image" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+            
+                <div class="col s12 m4 l3 profile-photos-col">
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+                </div>
+            
             {% endfor %}
+            </div>
 
-           
+    </div>
+     <div id="votes" class="col s12">
+
+            <h1>Photos {{username|capitalize}} has voted for.</h1>
+
+    </div>
+    <div id="awards" class="col s12">
+
+            <h1>These are {{username|capitalize}}'s award-winning images.</h1>
+
+    </div>
   </div>
 
 {% endblock %}

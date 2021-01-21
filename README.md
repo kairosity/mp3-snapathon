@@ -313,9 +313,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Useful blog post on form validation. 
 
-- ## [GridFS](https://docs.mongodb.com/manual/core/gridfs/)
-
-    The GridFS docs. Crucial. 
+- ## [GridFS Documentation](https://docs.mongodb.com/manual/core/gridfs/)
 
 - ## [Jinja Documentation](https://jinja.palletsprojects.com/en/2.11.x/)
 
@@ -326,3 +324,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Keeping your footer at the bottom of the page](https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/)
 
     This is always a useful article.
+
+- ## [Change color of underline input and label in Materialize.css framework](https://stackoverflow.com/questions/37127123/change-color-of-underline-input-and-label-in-materialize-css-framework)
+
+    This Stack Overflow question was useful when customizing form elements. 
+
+- ## [GridFS & MongoDB: Pros & Cons](https://www.compose.com/articles/gridfs-and-mongodb-pros-and-cons/)
+
+    Article about whether to use GridFS or just store smaller files (<16MB> as binary data in a mongo collection.)
