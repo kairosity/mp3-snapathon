@@ -209,6 +209,27 @@ def edit_photo(filename):
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
 
+
+@app.route("/delete_photo/<filename>")
+def delete_photo(filename):
+
+    if session: 
+        file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
+        chunk_to_delete = mongo.db.fs.chunks.find_one({"files_id": file_to_delete["_id"]})
+        
+        # Remove the photo obj associated with this pic
+        mongo.db.photos.delete_one({"filename": filename})
+        # Remove the GridFS file associated with this filename
+        mongo.db.fs.files.delete_one(file_to_delete)
+        # Remove the GridFS chunk(s) associated with this filename
+        mongo.db.fs.chunks.delete_one(chunk_to_delete)
+       
+        flash("Photograph deleted successfully!")
+        return redirect(url_for('profile', username=session["user"]))
+    else:
+        flash("Sorry, you must be logged in to delete a photograph.")
+        return redirect(url_for('login/'))
+
 @app.route("/logout")
 def logout():
     # remove user from session cookies
