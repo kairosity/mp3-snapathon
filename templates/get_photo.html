@@ -14,7 +14,7 @@
     <!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
     {% if user.username == session.user %}
         <!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. -->
-        <a class="waves-effect waves-light btn-large">Edit Photo Details</a>
+        <a href="{{ url_for('edit_photo', photo=photo, user=user, filename=photo.filename) }}" class="waves-effect waves-light btn-large">Edit Photo Details</a>
         <a class="waves-effect waves-light btn-large">Delete Photograph</a>
     {% endif %}
 

@@ -62,3 +62,7 @@ Various validations were employed to ensure the registration form saved the corr
 
 ## Compete form for uploading user's photos into competition
 
+- Validations:
+    - Photos need to be no larger than a certain size
+    - Files uploaded need to be photos - (limit to .jpg or .png)?
+    - Photos need to be a min resolution? 

@@ -175,11 +175,27 @@ def get_photo(filename):
     
     return render_template("get_photo.html", photo=photo, user=user)
 
+
+@app.route("/edit_photo/<filename>", methods=["GET", "POST"])
+def edit_photo(filename):
+
+    # Add a rule that you have to be logged in to reach this page.
+
+    photo = mongo.db.photos.find_one({"filename": filename})
+    user = mongo.db.users.find_one({"_id": photo["created_by"]})
+
+    if session:
+        return render_template("edit_photo.html", photo=photo, user=user)
+    else:
+        flash("You need to be logged in to edit photos.")
+        return redirect(url_for("login"))
+
 @app.route("/logout")
 def logout():
     # remove user from session cookies
     flash("You've been logged out")
     session.pop("user")
+    
     return redirect(url_for("login"))
 
 
