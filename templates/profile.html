@@ -19,7 +19,7 @@
             {% for photo in user_photos %}
                 <h2>{{ photo.photo_title }}</h2>
                 <p>{{ photo.photo_story }}</p>
-                <img class="profile-image" src="{{ url_for('file', filename=photo.filename) }}" alt="f">
+                <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="profile-image" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
             {% endfor %}
 
            

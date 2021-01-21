@@ -101,14 +101,11 @@ def profile(username):
     username which we will use to return the profile page.
     '''
 
-    if session["user"]:
-
-        # grab the array of all the photo_ids this user has under their name 
-        current_user = mongo.db.users.find_one({"username": username})
-        user_photos = list(mongo.db.photos.find({"created_by": current_user["_id"]}))
-        return render_template("profile.html", username=username, user_photos=user_photos)
+    # grab the array of all the photo_ids this user has under their name 
+    current_user = mongo.db.users.find_one({"username": username})
+    user_photos = list(mongo.db.photos.find({"created_by": current_user["_id"]}))
+    return render_template("profile.html", username=username, user_photos=user_photos)
     
-    return redirect(url_for("login"))
 
 @app.route("/compete", methods=['GET', 'POST'])
 def compete():
@@ -175,11 +172,6 @@ def get_photo(filename):
 
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"_id": photo["created_by"]})
-
-    if session["user"]:
-        session_user = session["user"]
-        return render_template("get_photo.html", 
-            photo=photo, user=user, session_user=session_user)
     
     return render_template("get_photo.html", photo=photo, user=user)
 
@@ -189,7 +181,6 @@ def logout():
     flash("You've been logged out")
     session.pop("user")
     return redirect(url_for("login"))
-
 
 
 if __name__ == "__main__":

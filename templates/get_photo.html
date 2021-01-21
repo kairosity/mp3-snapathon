@@ -12,7 +12,7 @@
     <h5>ISO: {{ photo.iso }}</h5>
 
     <!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
-    {% if user.username == session_user %}
+    {% if user.username == session.user %}
         <!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. -->
         <a class="waves-effect waves-light btn-large">Edit Photo Details</a>
         <a class="waves-effect waves-light btn-large">Delete Photograph</a>
