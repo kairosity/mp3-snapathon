@@ -2,7 +2,7 @@
 
 {% block content %}
 <!-- If the day of the week is Mon - Friday until 22:00 show the competition entry form. -->
-{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
+{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "10") ) %}
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s8 offset-s2">
@@ -97,7 +97,8 @@
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
         </li>
     </ul>
-    {% elif datetime.strftime("%w") == "5" %}
+    </div>
+    {% else %}
             <section class="comp-intro center-align">
             <div class="row">
                 <div class="col s8 offset-s2">
@@ -111,20 +112,22 @@
                 </div>
             </div>
         </section>
-    {% endif %}
+    
 
-    <div id="entries" class="col s12">
-        <div class="row profile-photos-row"></div>
+    <div id="entries" class="row s12">
+       
         {% for photo in this_weeks_entries %}
 
         <div class="col s12 m4 l3 profile-photos-col">
-            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo"
-                    src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/>
+        </a>
+        <a class="vote-link" href="#"><i class="fas fa-vote-yea vote-btn"></i></a>
         </div>
 
         {% endfor %}
     </div>
+    {% endif %}
 
-</div>
+
 
 {% endblock %}

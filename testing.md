@@ -37,6 +37,15 @@ this to create a filename for each image that is completely unique and identical
 
 
 
+## base.html template
+
+### Issue 1 
+I needed a way to reference datetime in my navigation html and because the navigation html code was written in the base.html template, there was no route leading to it that I could use to include the datetime 
+variables. 
+
+### Fix 1 
+
+I discovered @app.context_processor functions which run before the templates are rendered and allow you to inject things into the entire application. I used a context_processor for datetime. 
 
 # Input Validation
 

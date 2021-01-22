@@ -264,16 +264,30 @@ textarea {
     height: 100px;
     background-color: var(--accent-colour);
 }
-
 .collapsible-body {
     border: none;
+}
+.vote-btn{
+    position: absolute; 
+    font-size: 5em;
+    top:42%;
+    left: 42%;
+    opacity: 0;
+    color: var(--accent-colour);
+}
+.vote-btn:hover{
+    opacity: 100%;
+}
+.profile-photos-col{
+    position: relative;
 }
 
 /* Footer */
 #footer {
   position: absolute;
-  bottom: 0;
+  bottom: -10;
   width: 100%;
+  margin-top: 150px;
 }
 footer p {
     padding-top: 3em;

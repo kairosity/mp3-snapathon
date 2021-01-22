@@ -108,11 +108,10 @@ def profile(username):
     username which we will use to return the profile page.
     '''
 
-    date_time = datetime.now()
     # grab the array of all the photo_ids this user has under their name 
     user = mongo.db.users.find_one({"username": username})
     user_photos = list(mongo.db.photos.find({"created_by": user["_id"]}))
-    return render_template("profile.html", username=username, user_photos=user_photos, user=user, datetime=date_time)
+    return render_template("profile.html", username=username, user_photos=user_photos, user=user)
     
 
 @app.route("/compete", methods=['GET', 'POST'])
@@ -157,7 +156,7 @@ def compete():
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower(),
             "created_by": current_user["_id"],
-            "date_entered": date_time,
+            "date_entered": datetime.now(),
             "week_and_year": datetime.now().strftime("%V%G"),
             "file_id": file_id,
             "filename": new_filename
@@ -202,6 +201,7 @@ def edit_photo(filename):
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"_id": photo["created_by"]})
 
+
     if request.method == "POST":
 
         edited_entry = {
@@ -211,13 +211,10 @@ def edit_photo(filename):
             "lens": request.form.get("lens").lower(),
             "aperture": request.form.get("aperture").lower(),
             "shutter": request.form.get("shutter").lower(),
-            "iso": request.form.get("iso").lower(),
-            "created_by": user["_id"],
-            "file_id": photo["file_id"],
-            "filename": filename
+            "iso": request.form.get("iso").lower()
             }
         
-        mongo.db.photos.update({"_id": photo["_id"]}, edited_entry)
+        mongo.db.photos.update({"_id": photo["_id"]}, {"$set": edited_entry})
         flash("Photo details edited successfully!")
         return redirect(url_for("get_photo", filename=filename))
 

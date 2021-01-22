@@ -343,3 +343,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [GridFS & MongoDB: Pros & Cons](https://www.compose.com/articles/gridfs-and-mongodb-pros-and-cons/)
 
     Article about whether to use GridFS or just store smaller files (<16MB> as binary data in a mongo collection.)
+
+- ## [Flask templates information](https://flask.palletsprojects.com/en/1.1.x/templating/#context-processors)
+
+    Used to integrate a context processor for datetime into my application. 
