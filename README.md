@@ -347,3 +347,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Flask templates information](https://flask.palletsprojects.com/en/1.1.x/templating/#context-processors)
 
     Used to integrate a context processor for datetime into my application. 
+
+- ## [How to update a document in MongoDB instead of overwriting the exisiting one](https://stackoverflow.com/questions/49343649/how-to-update-a-document-without-overwriting-the-existing-one)
+
+    Solved an issue I was having with this exact query.

@@ -30,7 +30,7 @@
                         <li><a href="#">Browse</a></li>
                         {% if session['user'] %}
                         <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
-                        {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "10") ) %}
+                        {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "14") ) %}
                         <li><a href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
                         {% else %}
                         <li><a href="{{url_for('compete', username=session['user'])}}">Vote</a></li>

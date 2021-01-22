@@ -58,7 +58,11 @@ def register():
         register = {
             "username": request.form.get("username").lower(),
             "email": request.form.get("email").lower(),
-            "password": generate_password_hash(request.form.get("password"))
+            "password": generate_password_hash(request.form.get("password")),
+            "votes": 0,
+            "user_points": 0,
+            "photos_entered": [],
+            "photos_voted_for": []
         }
         mongo.db.users.insert_one(register)
 
@@ -110,7 +114,7 @@ def profile(username):
 
     # grab the array of all the photo_ids this user has under their name 
     user = mongo.db.users.find_one({"username": username})
-    user_photos = list(mongo.db.photos.find({"created_by": user["_id"]}))
+    user_photos = list(mongo.db.photos.find({"created_by": user["username"]}))
     return render_template("profile.html", username=username, user_photos=user_photos, user=user)
     
 
@@ -155,11 +159,12 @@ def compete():
             "aperture": request.form.get("aperture").lower(),
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower(),
-            "created_by": current_user["_id"],
+            "created_by": session["user"],
             "date_entered": datetime.now(),
             "week_and_year": datetime.now().strftime("%V%G"),
             "file_id": file_id,
-            "filename": new_filename
+            "filename": new_filename,
+            "photo_points": 0
             }
             mongo.db.photos.insert_one(new_entry)
 
@@ -167,9 +172,10 @@ def compete():
             photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
             photo_id_to_add_to_user = photo_to_add_to_user["_id"]
           
-            # Add the photo obj id into the user's photos array
+            # Add the photo obj id into the user's photos array and give the user a vote.
             mongo.db.users.update_one({"_id": current_user["_id"]},
-                                  { '$push':{"photos": photo_id_to_add_to_user}})
+                                      {'$push':{"photos": photo_id_to_add_to_user},
+                                       '$inc':{"votes_to_use": 1 }})
    
             flash("Entry Received!")
         
@@ -244,6 +250,37 @@ def delete_photo(filename):
     else:
         flash("Sorry, you must be logged in to delete a photograph.")
         return redirect(url_for('login'))
+
+
+@app.route("/vote/<filename>", methods=["POST"])
+def vote(filename):
+
+    photo = mongo.db.photos.find_one({"filename": filename})
+
+    if not session:
+        flash("You must be logged in to vote.")
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        
+        # Check that the photo does not belong to the user. If it does send the user a message that they cannot vote for their own photo.
+        if session["user"] == photo["created_by"]:
+            flash("You cannot vote for your photo...obviously.")
+            return redirect(url_for("compete"))
+
+        else:
+            # If it is not their photo:
+            #1. Remove the user's vote 
+            # #2. Place that image in the user's photos_voted_for array.
+            mongo.db.users.update({"username": session["user"]},
+                                    {'$inc':{"votes_to_use": -1}})
+
+            mongo.db.users.update({"username": session["user"]},
+                                    {'$push': {"photos_voted_for": photo["_id"]}})
+            
+            flash("Thank you for voting!")
+            return redirect(url_for('compete', username=session['user']))
+        
 
 @app.route("/logout")
 def logout():

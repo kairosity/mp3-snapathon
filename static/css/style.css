@@ -258,7 +258,6 @@ input[type=text],
 textarea {
     color: #f5f5f5;
 }
-
 .upload-photo {
     width: 200px;
     height: 100px;
@@ -267,19 +266,20 @@ textarea {
 .collapsible-body {
     border: none;
 }
-.vote-btn{
-    position: absolute; 
-    font-size: 5em;
-    top:42%;
-    left: 42%;
-    opacity: 0;
+button.vote-button{
+    width: 100%;
+}
+.vote-icon{
+    font-size: 3em;
     color: var(--accent-colour);
 }
-.vote-btn:hover{
-    opacity: 100%;
+.vote-btn-text{
+    font-size: 1em;
+    color: var(--accent-colour);
+    font-family: var(--subheading-font);
 }
-.profile-photos-col{
-    position: relative;
+.vote-container{
+    background-color: RGBA(255,255,255,0.3)
 }
 
 /* Footer */
