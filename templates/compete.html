@@ -1,98 +1,130 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- If the day of the week is Mon - Friday until 22:00 show the competition entry form. -->
+{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s8 offset-s2">
-        <h1 class="grey-text text-lighten-4">COMPETE</h1>
+            <h1 class="grey-text text-lighten-4">COMPETE</h1>
 
-        <h2 class="grey-text text-lighten-4">This week's theme is Portraiture</h2>
+            <h2 class="grey-text text-lighten-4">This week's theme is Portraiture</h2>
 
-        <h5 class="grey-text text-lighten-4">Enter your portraits now! 
-        These can be of animals or humans and can be close up or full length.
-        They should communicate something substantial about the subject.</h5>
+            <h5 class="grey-text text-lighten-4">Enter your portraits now!
+                These can be of animals or humans and can be close up or full length.
+                They should communicate something substantial about the subject.</h5>
         </div>
     </div>
 </section>
 <div class="row">
     <ul class="collapsible">
-    <li class="col s12">
-      <div class="collapsible-header"><i class="fas fa-plus"></i>Add a Photo!</div>
-      <div class="collapsible-body">
-    <form class="col s8 offset-s2" method="post" action="{{ url_for('compete') }}" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                    <input id="title" name="title" type="text" class="validate" required>
-                    <label for="title">Title</label>
-                    </div> 
-                    <div class="file-field input-field col s12 m6">
-                <div class="btn">
-                    <span>Click to upload your entry</span>
-                    <input type="file" name="photo">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-                </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                    <textarea id="story" name="story" class="materialize-textarea"></textarea>
-                    <label for="story">Story</label>
+        <li class="col s12">
+            <div class="collapsible-header"><i class="fas fa-plus"></i>Add a Photo!</div>
+            <div class="collapsible-body">
+                <form class="col s8 offset-s2" method="post" action="{{ url_for('compete') }}"
+                    enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <input id="title" name="title" type="text" class="validate" required>
+                            <label for="title">Title</label>
+                        </div>
+                        <div class="file-field input-field col s12 m6">
+                            <div class="btn">
+                                <span>Click to upload your entry</span>
+                                <input type="file" name="photo">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                    <input id="camera" name="camera" type="text" class="validate" required>
-                    <label for="camera">Camera</label>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="story" name="story" class="materialize-textarea"></textarea>
+                            <label for="story">Story</label>
+                        </div>
                     </div>
-                    <div class="input-field col s12 m6">
-                    <input id="lens" name="lens" type="text" class="validate">
-                    <label for="lens">Lens</label>
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <input id="camera" name="camera" type="text" class="validate" required>
+                            <label for="camera">Camera</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input id="lens" name="lens" type="text" class="validate">
+                            <label for="lens">Lens</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m4">
-                    <input id="aperture" name="aperture" type="text" class="validate">
-                    <label for="aperture">Aperture</label>
+                    <div class="row">
+                        <div class="input-field col s12 m4">
+                            <input id="aperture" name="aperture" type="text" class="validate">
+                            <label for="aperture">Aperture</label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <input id="shutter" name="shutter" type="text" class="validate">
+                            <label for="shutter">Shutter Speed</label>
+                        </div>
+                        <div class="input-field col s12 m4 white-text">
+                            <input id="iso" name="iso" type="text" class="validate">
+                            <label for="iso">ISO</label>
+                        </div>
                     </div>
-                    <div class="input-field col s12 m4">
-                    <input id="shutter" name="shutter" type="text" class="validate">
-                    <label for="shutter">Shutter Speed</label>
-                    </div>
-                    <div class="input-field col s12 m4 white-text">
-                    <input id="iso" name="iso" type="text" class="validate">
-                    <label for="iso">ISO</label>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col s12">
-                    <p class="grey-text">I guarantee that this photograph is my own work and I have the right to share it. I further guarantee that it 
-                        contains no explicit imagery, or violence, or anything offensive. (worded better) I further promise that this 
-                        photograph has not been heavily edited other than simple tweaks to contrast and exposure. 
-                        <label> <input type="checkbox" class="filled-in" required />
-                    <span>I have read and agree to these terms and conditions</span>
-                </label></p>
-                    </div>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Compete!
-            </button>
-    </form>
 
-      </div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-  </ul>
-    
-  </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <p class="grey-text">I guarantee that this photograph is my own work and I have the right to
+                                share it. I further guarantee that it
+                                contains no explicit imagery, or violence, or anything offensive. (worded better) I
+                                further promise that this
+                                photograph has not been heavily edited other than simple tweaks to contrast and
+                                exposure.
+                                <label> <input type="checkbox" class="filled-in" required />
+                                    <span>I have read and agree to these terms and conditions</span>
+                                </label></p>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Compete!
+                    </button>
+                </form>
+
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+    </ul>
+    {% elif datetime.strftime("%w") == "5" %}
+            <section class="comp-intro center-align">
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <h1 class="grey-text text-lighten-4">VOTE</h1>
+
+                    <h2 class="grey-text text-lighten-4">This week's theme is Portraiture</h2>
+
+                    <h5 class="grey-text text-lighten-4">Vote for your favourite entries now! Obviously you cannot vote for your own image. 
+                        If you do not vote by 22:00PM on Sunday evening UTC, your entry will be deleted. 
+                    </h5>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <div id="entries" class="col s12">
+        <div class="row profile-photos-row"></div>
+        {% for photo in this_weeks_entries %}
+
+        <div class="col s12 m4 l3 profile-photos-col">
+            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo"
+                    src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
 
 {% endblock %}

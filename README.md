@@ -45,6 +45,7 @@ Snapathon aims to entice users to register and upload their images in weekly com
 - Enter an image for competition. 
 - Edit the details of the image I entered for competition. 
 - Delete the image I entered for competition.
+- View all the images entered into this week's competition.
 - Use my vote to vote for the image I think is the best (other than my own).
 - See all the images I've entered in my profile section.
 - View my winning images separetly from the main collection. 

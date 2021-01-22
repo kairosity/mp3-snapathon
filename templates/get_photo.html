@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ photo.photo_title }}</h1>
-    <h3>by {{ user.username }}</h3>
-    <p>{{ photo.photo_story }}</p>
-    <img src="{{ url_for('file', filename=photo.filename) }}">
-    <h5>Camera: {{ photo.camera }}</h5>
-    <h5>Lens: {{ photo.lens }}</h5>
-    <h5>Aperture: {{photo.aperture }}</h5>
-    <h5>Shutter Speed: {{ photo.shutter }}</h5>
-    <h5>ISO: {{ photo.iso }}</h5>
+<div class="row">
+    <div class="col s12 m6">
+        <a href="{{url_for('profile', username=user.username)}}"><i class="fas fa-long-arrow-alt-left"></i>Back to {{user.username|capitalize}}'s Profile</a>
+        <h1>{{ photo.photo_title }}</h1>
+        <h3>by {{ user.username }}</h3>
+        <p>{{ photo.photo_story }}</p>
+        <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
+        <h5>Camera: {{ photo.camera }}</h5>
+        <h5>Lens: {{ photo.lens }}</h5>
+        <h5>Aperture: {{photo.aperture }}</h5>
+        <h5>Shutter Speed: {{ photo.shutter }}</h5>
+        <h5>ISO: {{ photo.iso }}</h5>
+
+    </div>
+</div>
 
     <!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
     {% if user.username == session.user %}

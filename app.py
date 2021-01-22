@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env 
@@ -101,10 +102,11 @@ def profile(username):
     username which we will use to return the profile page.
     '''
 
+    date_time = datetime.now()
     # grab the array of all the photo_ids this user has under their name 
-    current_user = mongo.db.users.find_one({"username": username})
-    user_photos = list(mongo.db.photos.find({"created_by": current_user["_id"]}))
-    return render_template("profile.html", username=username, user_photos=user_photos)
+    user = mongo.db.users.find_one({"username": username})
+    user_photos = list(mongo.db.photos.find({"created_by": user["_id"]}))
+    return render_template("profile.html", username=username, user_photos=user_photos, user=user, datetime=date_time)
     
 
 @app.route("/compete", methods=['GET', 'POST'])
@@ -120,11 +122,13 @@ def compete():
     6. Get that photo object's id using the file_id. 
     7. Save that photo object's id into the current user object's photo's array.
     '''
+    date_time = datetime.now()
+   
+
     if request.method == 'POST':
         if 'photo' in request.files:
             photo = request.files['photo']
 
-            print(request.files)
             # Upload the photo to the gridfs mongo storage
             file_id = mongo.save_file(photo.filename, photo)
 
@@ -147,6 +151,8 @@ def compete():
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower(),
             "created_by": current_user["_id"],
+            "date_entered": date_time,
+            "week_and_year": datetime.now().strftime("%V%G"),
             "file_id": file_id,
             "filename": new_filename
             }
@@ -161,8 +167,13 @@ def compete():
                                   { '$push':{"photos": photo_id_to_add_to_user}})
    
             flash("Entry Received!")
+        
+    # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
+    this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
 
-    return render_template("compete.html")
+    print(date_time.strftime("%H"))
+
+    return render_template("compete.html", this_weeks_entries=this_weeks_entries, datetime=date_time)
 
 @app.route("/file/<filename>")
 def file(filename):

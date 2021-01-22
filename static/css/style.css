@@ -235,13 +235,22 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 img.thumbnail-photo{
     width: 100%;
-    height: auto;
+    height: 250px;
+    object-fit: cover;
 }
 div.profile-photos-row,
 div.profile-photos-col{
     padding: 0 !important;
 }
-
+span.user-points-badge{
+    float: left;
+}
+.date{
+    font-family: var(--subheading-font);
+    color: var(--main-text-colour);
+    font-weight: 300;
+    font-size: 1em;
+}
 
 /* Competition Page */
 
@@ -269,4 +278,10 @@ textarea {
 footer p {
     padding-top: 3em;
     color: var(--main-text-colour);
+}
+
+/* Get Photo Page */
+
+.get-photo-img{
+    width: 100%;;
 }
