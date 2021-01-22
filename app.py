@@ -106,16 +106,24 @@ def login():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    '''
-    The session variable stores the email address because that's
-    what the user logs in with. This uses that to return the
-    username which we will use to return the profile page.
-    '''
 
     # grab the array of all the photo_ids this user has under their name 
     user = mongo.db.users.find_one({"username": username})
     user_photos = list(mongo.db.photos.find({"created_by": user["username"]}))
-    return render_template("profile.html", username=username, user_photos=user_photos, user=user)
+
+    '''
+    Grabs the list of photo ids that this user has voted on & then 
+    for each id it looks in the photos db for the image that matches 
+    it and appends it to an array that we pass to the profile template.
+    '''
+    photos_voted_for_array = user["photos_voted_for"]
+    photos_voted_for_objs = []
+
+    for img in photos_voted_for_array:
+        photo_obj = list(mongo.db.photos.find({"_id": img}))
+        photos_voted_for_objs.append(photo_obj[0])
+
+    return render_template("profile.html", username=username, user_photos=user_photos, user=user, photos_voted_for=photos_voted_for_objs)
     
 
 @app.route("/compete", methods=['GET', 'POST'])
@@ -263,9 +271,15 @@ def vote(filename):
 
     if request.method == "POST":
         
-        # Check that the photo does not belong to the user. If it does send the user a message that they cannot vote for their own photo.
-        if session["user"] == photo["created_by"]:
-            flash("You cannot vote for your photo...obviously.")
+        user_voting = mongo.db.users.find_one({"username": session["user"]})
+
+        if user_voting["votes_to_use"] < 1:
+            flash("Sorry, but you've already voted, you only have 1 vote.")
+            return redirect(url_for("compete"))
+
+         # Check that the photo does not belong to the user. If it does send the user a message that they cannot vote for their own photo.
+        elif user_voting["username"] == photo["created_by"]:
+            flash("You cannot vote for your own photos...obviously.")
             return redirect(url_for("compete"))
 
         else:
@@ -277,6 +291,11 @@ def vote(filename):
 
             mongo.db.users.update({"username": session["user"]},
                                     {'$push': {"photos_voted_for": photo["_id"]}})
+
+            #3. Add a point to that photo's points field. 
+            mongo.db.photos.update_one({"_id": photo["_id"]},
+                                      {'$inc': {"photo_points": 1} })
+
             
             flash("Thank you for voting!")
             return redirect(url_for('compete', username=session['user']))

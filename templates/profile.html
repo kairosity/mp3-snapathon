@@ -42,12 +42,19 @@
     </div>
 
     </div>
-     <div id="votes" class="col s12">
+     <div id="votes" class="row s12">
 
             <h1>Photos {{username|capitalize}} has voted for.</h1>
+             {% for photo in photos_voted_for %}
+            
+                <div class="col s12 m4 l3 profile-photos-col">
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+                </div>
+            
+            {% endfor %}
 
     </div>
-    <div id="awards" class="col s12">
+    <div id="awards" class="row s12">
 
             <h1>These are {{username|capitalize}}'s award-winning images.</h1>
 

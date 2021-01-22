@@ -165,7 +165,7 @@ button.register-btn {
 
 h4.flashmsg {
     line-height: 2;
-    color: var(--main-text-colour);
+    color: var(--dark-text-color);
     background-color: var(--accent-colour);
 }
 /* Forms */
