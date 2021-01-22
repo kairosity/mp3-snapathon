@@ -7,7 +7,7 @@
     <div class="col s12 m4 offset-m4">
         
         <form class="login-form card-panel grey darken-4" method="POST" action="{{ url_for('login') }}">
-            <h1 class="center-align grey-text text-lighten-5 login-heading">LOGIN</h1>
+            <h1 class="center-align login-heading">LOGIN</h1>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" name="email" type="text" class="validate" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
@@ -17,7 +17,7 @@
                     <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25" required>
                     <label for="password">password</label>
                 </div>
-                <button class="login-btn btn waves-effect waves-light center-align" type="submit" name="action">LOGIN
+                <button class="login-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">LOGIN
                 </button>
             </div>
         </form>

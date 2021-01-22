@@ -170,7 +170,6 @@ h4.flashmsg {
 }
 /* Forms */
 
-
 /* Override Materialize Form Colours */
 input:not([type]):focus:not([readonly]), 
 input[type=text]:not(.browser-default):focus:not([readonly]), 
@@ -190,22 +189,28 @@ textarea.materialize-textarea:focus:not([readonly]){
     box-shadow: 0 1px 0 0 var(--accent-colour);
 }
 
-/* Login Page */
-.login-heading{
+/* Login & Register Pages */
+.login-heading,
+.register-heading{
     font-style: var(--subheading-font);
     font-size: 4em;
     font-weight: 300;
     letter-spacing: 3px;
+    color: var(--main-text-colour);
 }
-.login-btn{
+.login-btn,
+.register-btn{
     width: 100%;
     background-color: var(--accent-colour);
     border-radius: 24px;
+    margin-top: 2em;
 }
-.login-btn:hover{
+.login-btn:hover,
+.register-btn:hover{
     background-color: var(--dark-accent-colour);
 }
-.login-form{
+.login-form,
+.register-form{
     padding: 4em 5em 5em;
     margin-top: 2em;
 }

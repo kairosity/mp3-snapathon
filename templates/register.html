@@ -6,8 +6,8 @@
         
     <div class="col s12 m4 offset-m4">
         
-        <form class="card-panel grey darken-4" method="POST" action="{{ url_for('register') }}">
-            <h1 class="center-align grey-text text-lighten-5">REGISTER</h1>
+        <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('register') }}">
+            <h1 class="center-align register-heading">REGISTER</h1>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="username" name="username" type="text" class="validate" minlength="5" maxlength="25" required>
@@ -25,7 +25,7 @@
                     <input id="password-confirmation" name="password-confirmation" type="password" class="validate" minlength="6" maxlength="25" required>
                     <label for="password-confirmation">password confirmation</label>
                 </div>
-                <button class="register-btn btn waves-effect waves-light deep-purple accent-2 center-align" type="submit" name="action">SUBMIT
+                <button class="register-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">REGISTER
                 </button>
             </div>
         </form>
