@@ -208,8 +208,18 @@ There is no linearity to these options, but as the options are limited to a few 
 
 When a user selects an image to view its details, a hub and spoke structure is employed insofar as a "back to all images" link is the only option afforded that user when they are inside the image view. 
 
- # Skeleton
+# Skeleton
 
+
+# Features
+
+## Compete/Vote Page
+
+- used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
+
+- Navigation shows "Compete" monday to friday until 22:00PM and then VOTE from 22:00PM until Sunday at 00:00PM 
+
+- The compete.html page also transforms to vote after friday at 22:00 and the content is different. Users can no longer upload photos. 
 
 
 

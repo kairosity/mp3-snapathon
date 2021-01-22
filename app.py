@@ -18,6 +18,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+
+@app.context_processor
+def inject_datetime():
+    date_time = datetime.now()
+    return dict(datetime=date_time)
+
 @app.route("/")
 @app.route("/home")
 def home():
