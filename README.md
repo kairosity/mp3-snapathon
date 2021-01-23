@@ -351,3 +351,12 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [How to update a document in MongoDB instead of overwriting the exisiting one](https://stackoverflow.com/questions/49343649/how-to-update-a-document-without-overwriting-the-existing-one)
 
     Solved an issue I was having with this exact query.
+
+- ## [W3Schools Python Datetime Information](https://www.w3schools.com/python/python_datetime.asp)
+
+    Used to help me write the datetime aspects of my code. 
+
+
+# Libraries
+
+## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 

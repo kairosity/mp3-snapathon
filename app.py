@@ -47,16 +47,45 @@ def awards():
     #4 Identify the non-voters' image entered & bring the image votes to 0. 
 
     for user in non_voters:
-        mongo.db.photos.findOneAndUpdate({"created_by": user["username"]}, {"photo_votes": 0})
+        mongo.db.photos.update_one({"created_by": user["username"]}, {'$set': {"photo_votes": 0}})
 
-    print(non_voters)
-    print(valid_users)
+   
+    #5. When all the valid entries are in an array - determine the 3 highest points scorers. 
+    this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": datetime.now().strftime("%V%G")}, '$orderby': { 'photo_votes' : -1 } } ))
+
+    i = 0
+    first_place = [] 
+    for photo in this_weeks_entries:
+        if photo["photo_votes"] >= i:
+            i = photo["photo_votes"]
+            first_place.append(photo)
+            this_weeks_entries.remove(photo)
+    i=0
+    second_place = []   
+    for photo in this_weeks_entries:
+        if photo["photo_votes"] >= i:
+            i = photo["photo_votes"]
+            second_place.append(photo)
+            this_weeks_entries.remove(photo)
+    i=0
+    third_place = []
+    for photo in this_weeks_entries:
+        if photo["photo_votes"] >= i:
+            i = photo["photo_votes"]
+            third_place.append(photo)
+            this_weeks_entries.remove(photo)
+    
+    #6. For each photo in first place array add "1st Place" to their awards field. - Same for 2nd & 3rd place images. 
+
+    #7. Give the creator of the images the correct number of points. 
+    
+    #8. Take that images _id and give any user who has it in their photos_voted_for array the correct number of points. 
 
 
 # awards()
    
 
-    #6. When all the valid entries are in an array - determine the 3 highest points scorers. 
+    
 
     #7 Assign them awards: "1st place", "2nd place", "3rd place"
 
