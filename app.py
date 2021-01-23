@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
@@ -17,6 +18,62 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
+
+
+def awards():
+    #1. Identify all the photos entered into this week's competition.
+
+    this_weeks_entries = list(mongo.db.photos.find({"week_and_year": datetime.now().strftime("%V%G") }) )
+    
+    #2. Identify all the user's who entered photos into this week's competition.
+    this_weeks_usernames = []
+    for img in this_weeks_entries:
+        this_weeks_usernames.append(img["created_by"])
+
+    this_weeks_users = []
+    for username in this_weeks_usernames:
+        this_weeks_users.append(mongo.db.users.find_one({"username": username}))
+
+    #3. Make sure that those users actually voted. I.e. votes_to_use must be 0. 
+    valid_users = []
+    non_voters = []
+
+    for user in this_weeks_users:
+        if user["votes_to_use"] > 0:
+            non_voters.append(user)
+        else:
+            valid_users.append(user)
+    
+    #4 Identify the non-voters' image entered & bring the image votes to 0. 
+
+    for user in non_voters:
+        mongo.db.photos.findOneAndUpdate({"created_by": user["username"]}, {"photo_votes": 0})
+
+    print(non_voters)
+    print(valid_users)
+
+
+# awards()
+   
+
+    #6. When all the valid entries are in an array - determine the 3 highest points scorers. 
+
+    #7 Assign them awards: "1st place", "2nd place", "3rd place"
+
+    #8 Give the users points for their images' awards
+
+    #9 Give users who voted for those images points for voting for them. e.g. 3 points for 1st place image... etc.. 
+
+
+# awards()
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(scheduler_test, 'interval', minutes=1)
+# scheduler.start()
+
+def delete_collection():
+    mongo.db.fs.chunks.remove({})
+
+    
 
 
 @app.context_processor
@@ -172,7 +229,7 @@ def compete():
             "week_and_year": datetime.now().strftime("%V%G"),
             "file_id": file_id,
             "filename": new_filename,
-            "photo_points": 0
+            "photo_votes": 0
             }
             mongo.db.photos.insert_one(new_entry)
 
@@ -202,7 +259,7 @@ def file(filename):
 def get_photo(filename):
 
     photo = mongo.db.photos.find_one({"filename": filename})
-    user = mongo.db.users.find_one({"_id": photo["created_by"]})
+    user = mongo.db.users.find_one({"username": photo["created_by"]})
     
     return render_template("get_photo.html", photo=photo, user=user)
 
@@ -292,9 +349,9 @@ def vote(filename):
             mongo.db.users.update({"username": session["user"]},
                                     {'$push': {"photos_voted_for": photo["_id"]}})
 
-            #3. Add a point to that photo's points field. 
+            #3. Add a point to that photo's votes field. 
             mongo.db.photos.update_one({"_id": photo["_id"]},
-                                      {'$inc': {"photo_points": 1} })
+                                      {'$inc': {"photo_votes": 1} })
 
             
             flash("Thank you for voting!")
