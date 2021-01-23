@@ -53,56 +53,43 @@ def awards():
     #5. When all the valid entries are in an array - determine the 3 highest points scorers. 
     this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": datetime.now().strftime("%V%G")}, '$orderby': { 'photo_votes' : -1 } } ))
 
-    i = 0
-    first_place = [] 
+    list_of_votes = []
+
     for photo in this_weeks_entries:
-        if photo["photo_votes"] >= i:
-            i = photo["photo_votes"]
-            first_place.append(photo)
-            this_weeks_entries.remove(photo)
-    i=0
-    second_place = []   
-    for photo in this_weeks_entries:
-        if photo["photo_votes"] >= i:
-            i = photo["photo_votes"]
-            second_place.append(photo)
-            this_weeks_entries.remove(photo)
-    i=0
-    third_place = []
-    for photo in this_weeks_entries:
-        if photo["photo_votes"] >= i:
-            i = photo["photo_votes"]
-            third_place.append(photo)
-            this_weeks_entries.remove(photo)
-    
-    #6. For each photo in first place array add "1st Place" to their awards field. - Same for 2nd & 3rd place images. 
+        list_of_votes.append(photo["photo_votes"])
+
+    # Determine the votes needed for 1st, 2nd & 3rd place. 
+    first_place_vote_count = max(list_of_votes)
+    second_place_vote_array = [n for n in list_of_votes if n!= first_place_vote_count]
+    second_place_vote_count = max(second_place_vote_array)
+    third_place_vote_array = [n for n in second_place_vote_array if n!= second_place_vote_count]
+    third_place_vote_count = max(third_place_vote_array)
+
+    #Determine which photos in this week's entries have those particular vote numbers and assign them awards. 
+
+    for entry in this_weeks_entries:
+        if entry["photo_votes"] == first_place_vote_count:
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "first"}})
+        elif entry["photo_votes"] == second_place_vote_count:
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "second"}})
+        elif entry["photo_votes"] == third_place_vote_count:
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "third"}})
+            
+awards()
+
+
 
     #7. Give the creator of the images the correct number of points. 
-    
+
     #8. Take that images _id and give any user who has it in their photos_voted_for array the correct number of points. 
 
-
-# awards()
    
-
-    
-
-    #7 Assign them awards: "1st place", "2nd place", "3rd place"
-
-    #8 Give the users points for their images' awards
-
-    #9 Give users who voted for those images points for voting for them. e.g. 3 points for 1st place image... etc.. 
-
-
-# awards()
 # scheduler = BackgroundScheduler()
 # scheduler.add_job(scheduler_test, 'interval', minutes=1)
 # scheduler.start()
 
 def delete_collection():
     mongo.db.fs.chunks.remove({})
-
-    
 
 
 @app.context_processor
