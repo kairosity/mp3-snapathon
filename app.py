@@ -67,19 +67,45 @@ def awards():
 
     #Determine which photos in this week's entries have those particular vote numbers and assign them awards. 
 
+    first_place_users =[]
+    second_place_users = []
+    third_place_users = []
+
     for entry in this_weeks_entries:
         if entry["photo_votes"] == first_place_vote_count:
             mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "first"}})
+            user = mongo.db.users.find_one({"username":entry["created_by"]})
+            if user not in first_place_users:
+                first_place_users.append(user)    
         elif entry["photo_votes"] == second_place_vote_count:
             mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "second"}})
+            user = mongo.db.users.find_one({"username":entry["created_by"]})
+            if user not in second_place_users:
+                second_place_users.append(user) 
         elif entry["photo_votes"] == third_place_vote_count:
             mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "third"}})
-            
-awards()
+            user = mongo.db.users.find_one({"username":entry["created_by"]})
+            if user not in third_place_users:
+                third_place_users.append(user)
+
+
+    #7. Give the creator of the images the correct number of points.   
+    for user in first_place_users:
+        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 7}})
+    
+    for user in second_place_users:
+        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 5}})
+    
+    for user in third_place_users:
+        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})
+
+      
+
+# awards()
 
 
 
-    #7. Give the creator of the images the correct number of points. 
+    
 
     #8. Take that images _id and give any user who has it in their photos_voted_for array the correct number of points. 
 
