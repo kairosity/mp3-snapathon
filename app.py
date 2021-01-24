@@ -122,23 +122,16 @@ def awards():
             if photo_as_obj:
                 photo_as_obj = photo_as_obj[0]
                 if photo_as_obj["awards"] == "first":
-                    print("Yes this photo won first place!")
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})
-                if photo_as_obj["awards"] == "second":
-                    print("Yes this photo won second place!")
+                if photo_as_obj["awards"] == "second": 
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})
                 if photo_as_obj["awards"] == "third":
-                    print("Yes this photo won third place!")
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
 
-
-# awards()
-
-
    
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(scheduler_test, 'interval', minutes=1)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(awards, 'interval', day_of_week='sun', hour=22, minute=0, second=0, start_date='2021-01-25 00:00:00')
+scheduler.start()
 
 def delete_collection():
     mongo.db.fs.chunks.remove({})
