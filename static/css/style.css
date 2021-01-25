@@ -38,6 +38,9 @@ hr.divider{
 .col{
     padding: 0 !important;
 }
+html {
+    scroll-behavior: smooth;
+}
 
 /* Navigation */
 
@@ -56,20 +59,23 @@ nav i.logo {
     color: var(--main-text-colour);
     font-weight: 800;
     letter-spacing: 3px;
+    font-size: 2.5rem;
     font-style: italic;
+    padding: 0 2rem;
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
              0px 8px 13px rgba(0,0,0,0.1),
              0px 18px 23px rgba(0,0,0,0.1);
 }
 .homepage-subheading1{
     font-family: var(--subheading-1-font);
-    font-size: 1.5em;
+    font-size: 1rem;
     color: var(--main-text-colour);
     letter-spacing: 3px;
+    margin-top: 5rem;
 }
 .homepage-subheading2{
     font-family: var(--subheading-serif-font);
-    font-size: 2em;
+    font-size: 1.3rem;
     color: var(--main-text-colour);
 }
 .homepage-subheading3{
@@ -86,7 +92,7 @@ nav i.logo {
     padding: 1.3em 0;
 }
 .logo-home{
-    font-size: 4em;
+    font-size: 2rem;
     color: var(--accent-colour);
     padding-top: 20px;
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
@@ -95,10 +101,13 @@ nav i.logo {
 }
 div.home-buttons{
     margin-top: 5em;
-    margin-bottom: 5em; 
+    margin-bottom: 5em;
+}
+div.register-button-home{
+     padding-bottom: 5em !important; 
 }
 div.home-buttons a{
-    width: 30%;
+    width: 60%;
     background-color: var(--accent-colour);
     border-radius: 24px;
 }
@@ -110,6 +119,17 @@ div.home-buttons a:hover{
 }
 .section-home-1{
     padding-bottom: 4.5em;
+}
+p.content-hinting{
+    font-family: var(--subheading-font);
+    margin-top: 1rem;
+}
+.content-hinting{
+    color: var(--accent-colour);
+    font-size: 1rem;
+}
+i.content-hinting{
+    margin-bottom: 1rem;
 }
 img.home-image {
     width: 100%;
@@ -146,6 +166,14 @@ button.register-btn {
 }
 .section-home-3{
     padding-bottom: 4.5em;
+}
+.cta{
+    font-size: 2.2em;
+    font-family: var(--subheading-serif-font);
+    color: var(--dark-accent-colour);
+}
+.cta:hover{
+    text-decoration: underline;
 }
 .contact-send-btn{
     width: 100%;
@@ -192,11 +220,14 @@ textarea.materialize-textarea:focus:not([readonly]){
 /* Login & Register Pages */
 .login-heading,
 .register-heading{
-    font-style: var(--subheading-font);
+    font-family: var(--main-heading-font);
     font-size: 4em;
-    font-weight: 300;
+    font-weight: 500;
     letter-spacing: 3px;
     color: var(--main-text-colour);
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
 }
 .login-btn,
 .register-btn{
@@ -298,4 +329,66 @@ footer p {
 
 .get-photo-img{
     width: 100%;;
+}
+
+/* MEDIA QUERIES - (based on the Materialize screen size categorizations) */
+
+/* Tablet Devices */
+
+@media screen and (min-width: 600px) {
+
+/* Homepage */
+.homepage-heading {
+    font-size: 3rem;
+}
+.homepage-subheading1{
+    font-size: 1.5rem; 
+}
+.homepage-subheading2{
+    font-size: 1.7rem;
+}
+.logo-home{
+    font-size: 3rem;
+}
+div.home-buttons{
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+div.register-button-home{
+     padding-bottom: 5rem !important; 
+}
+div.home-buttons a{
+    width: 85%;
+}
+p.content-hinting{
+    margin-top: 1rem;
+}
+.content-hinting{
+    font-size: 1.3em;
+}
+i.content-hinting{
+    margin-bottom: 1rem;
+}
+
+}
+/* Desktop Devices */
+@media screen and (min-width: 992px) {
+.homepage-heading {
+    font-size: 4rem;
+}
+.homepage-subheading2{
+    font-size: 2em;
+}
+.logo-home{
+    font-size: 4rem;
+}
+div.home-buttons a{
+    width: 50%;
+}
+}
+/* Large Desktop Devices */
+@media screen and (min-width: 1200px) {
+  div.home-buttons a{
+    width: 40%;
+}
 }

@@ -45,11 +45,11 @@ def awards():
             valid_users.append(user)
     
     #4 Identify the non-voters' image entered & bring the image votes to 0. 
-
+    #This is filtered further to only target this week's image.
     for user in non_voters:
-        mongo.db.photos.update_one({"created_by": user["username"]}, {'$set': {"photo_votes": 0}})
+        mongo.db.photos.update_one({"created_by": user["username"], "week_and_year": datetime.now().strftime("%V%G") }, {'$set': {"photo_votes": 0}})
 
-   
+    
     #5. When all the valid entries are in an array - determine the 3 highest points scorers. 
     this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": datetime.now().strftime("%V%G")}, '$orderby': { 'photo_votes' : -1 } } ))
 
@@ -127,10 +127,12 @@ def awards():
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})
                 if photo_as_obj["awards"] == "third":
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
+        
+    print("This was run with APSheduler!")
 
    
 scheduler = BackgroundScheduler()
-scheduler.add_job(awards, 'interval', day_of_week='sun', hour=22, minute=0, second=0, start_date='2021-01-25 00:00:00')
+scheduler.add_job(awards, 'cron', day_of_week='sun', hour=22, minute=00, second=0, start_date='2021-01-24 00:00:00')
 scheduler.start()
 
 def delete_collection():
@@ -177,10 +179,10 @@ def register():
             "username": request.form.get("username").lower(),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
-            "votes": 0,
             "user_points": 0,
             "photos_entered": [],
-            "photos_voted_for": []
+            "photos_voted_for": [],
+            "votes_to_use": 0
         }
         mongo.db.users.insert_one(register)
 
@@ -237,9 +239,13 @@ def profile(username):
     photos_voted_for_array = user["photos_voted_for"]
     photos_voted_for_objs = []
 
-    for img in photos_voted_for_array:
-        photo_obj = list(mongo.db.photos.find({"_id": img}))
-        photos_voted_for_objs.append(photo_obj[0])
+    print(photos_voted_for_array)
+    if photos_voted_for_array != []:
+        for img in photos_voted_for_array:
+            photo_obj = list(mongo.db.photos.find({"_id": img}))
+            photos_voted_for_objs.append(photo_obj[0])
+    else:
+        print("This user has not voted for any images yet")
 
     return render_template("profile.html", username=username, user_photos=user_photos, user=user, photos_voted_for=photos_voted_for_objs)
     
@@ -319,10 +325,13 @@ def file(filename):
 @app.route("/photos/<filename>", methods=["GET", "POST"])
 def get_photo(filename):
 
+    source_url = request.referrer
+    print(source_url)
+
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"username": photo["created_by"]})
     
-    return render_template("get_photo.html", photo=photo, user=user)
+    return render_template("get_photo.html", photo=photo, user=user, source_url=source_url)
 
 
 @app.route("/edit_photo/<filename>", methods=["GET", "POST"])
@@ -392,12 +401,12 @@ def vote(filename):
         user_voting = mongo.db.users.find_one({"username": session["user"]})
 
         if user_voting["votes_to_use"] < 1:
-            flash("Sorry, but you've already voted, you only have 1 vote.")
+            flash("Sorry, but you don't have any votes to use. You've either already voted, or you did not enter this week's competition.")
             return redirect(url_for("compete"))
 
          # Check that the photo does not belong to the user. If it does send the user a message that they cannot vote for their own photo.
         elif user_voting["username"] == photo["created_by"]:
-            flash("You cannot vote for your own photos...obviously.")
+            flash(" Sorry, but you cannot vote for your own photo... obviously.")
             return redirect(url_for("compete"))
 
         else:

@@ -3,8 +3,8 @@
 {% block content %}
 
 <section class="row section-home-1">
-    <div class="col s12 m6 offset-m3 center-align">
-    <i class="s4 m6 center-align logo-home fas fa-spa"></i>
+    <div class="col s12 m8 offset-m2 center-align">
+    <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down"></i>
    <h2 class="homepage-subheading1">Love photography?</h2>
     <h1 class="homepage-heading">Welcome to Snapathon!</h1>
     <h3 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h3>
@@ -13,16 +13,22 @@
             <div class="col s12">
                 <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large z-depth-3">LOGIN</a>  
             </div>
-            <div class="col s12">
+            <div class="col s12 register-button-home">
                 <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large z-depth-3">REGISTER</a>
             </div>
         </div>
     {% else %}
         <h4 class="homepage-subheading3">welcome {{ session['user'] }}</h4>
     {% endif %}
+
+    <a class="content-hinting-link" href="#rules-section">
+        <p class="content-hinting">Learn More</p>
+        <i class="fas fa-angle-double-down content-hinting"></i>
+    </a>
+
 </div>
 </section>
-<section class="light-bg section-home-2">
+<section id="rules-section" class="light-bg section-home-2">
     <div class="row">
         <div class="col s12 m6 offset-m3">
             <h2 class="center-align homepage-subheading4 dark-text">Weekly Photography Competitions</h2>
@@ -61,6 +67,11 @@
             </div>
         </div>  
     </div>
+    {% if not session['user']%}
+    <div class="row">
+        <a href="{{ url_for('register') }}"><h3 class="cta center-align">Register to get started today!</h3></a>
+    </div>
+    {% endif %}
 </section>
 <section id="contact-form" class="dark-bg section-home-4">
     <div class="row">
