@@ -486,6 +486,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to change the back link on the photo details page, depending on what the source url (request.referrer) was.
 
+- ## [How to enable CSRF protection in the Python / Flask app?](https://dev.to/dev0928/how-to-enable-csrf-protection-in-the-python-flask-app-5age)
+
+    Decent introduction to using Flask-WTF extension to protect against CRSF attacks. 
+
 ## MongoDB 
 
 - ## [GridFS Documentation](https://docs.mongodb.com/manual/core/gridfs/)
@@ -534,3 +538,7 @@ Used in this application to schedule the awards & points process that happens ea
 ## [Werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/)
 
 A WSGI web application library used in this application for hashing and reading user passwords securely. 
+
+## [Flask-Mail](https://pythonhosted.org/Flask-Mail/)
+
+A Flask extension that allows users to send emails via the application. 

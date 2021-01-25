@@ -1,8 +1,12 @@
-import os
+
 from flask import (
     Flask, flash, render_template, 
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+# from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
+from flask_wtf.csrf import CSRFProtect
+from flask_mail import Mail, Message
+import os
 from bson.objectid import ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
@@ -11,12 +15,27 @@ if os.path.exists("env.py"):
     import env 
 
 
+
 app = Flask(__name__)
+
+csrf = CSRFProtect(app)
+
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
+mail_settings = {
+    "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
+    "MAIL_PORT": os.environ.get('MAIL_PORT'),
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": os.environ.get('MAIL_USE_SSL'),
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD')
+}
+
+app.config.update(mail_settings)
+mail = Mail(app)
 mongo = PyMongo(app)
 
 
@@ -145,8 +164,17 @@ def inject_datetime():
     return dict(datetime=date_time)
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
+    if request.method == "POST":
+        msg = Message(subject="New Email From Contact Form",
+                    sender=request.form.get("email").lower(),
+                    recipients=[os.environ.get('MAIL_USERNAME')],
+                    body=request.form.get("message").lower() )
+        mail.send(msg)
+        flash("Email Sent!")
+        return redirect(url_for('home'))
+
     return render_template("index.html")
 
 

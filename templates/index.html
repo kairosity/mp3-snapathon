@@ -57,7 +57,7 @@
             <h3 class="left-align homepage-subheading4 dark-text">Be the contestant and the judge!</h3>
             <p><span class="em">Monday:</span> A new photography competition.</p>
             <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
-            <p><span class="em">Saturday & Sunday until 22:00:</span> Entrants must cast their vote (entrants may not vote for their own images). If they do not use their vote, their entry will be discarded. </p>
+            <p><span class="em">Saturday & Sunday until 22:00:</span> Competitors must cast their vote (users may not vote for their own images). If they do not use their vote, their entry will be discarded. </p>
             <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
         </div> 
         <div class="col s10 offset-s1 m5 offset-m6 right-align">
@@ -82,17 +82,18 @@
     <div class="row">
         <div class="contact-form-box col s8 offset-s2 m6 offset-m3">
             <h2 class="center-align homepage-subheading4 light-text">Contact Us</h2>
-            <form>
+            <form method="POST" action="{{ url_for('home') }}">
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="email" name="email" type="text" class="validate" required>
                         <label for="email">Email Address:</label>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     </div> 
                     <div class="input-field col s12">
                         <textarea id="message" name="message" class="validate"  required></textarea> 
                     </div> 
                 </div>
-                <a class="contact-send-btn btn-large z-depth-3" type="submit" value="Submit">SEND</a>
+                <button class="contact-send-btn btn-large z-depth-3" type="submit" name="action" value="Submit">SEND</button>
             </form>
         </div>
     </div>
