@@ -18,44 +18,49 @@
             </div>
         </div>
     {% else %}
-        <h4 class="homepage-subheading3">welcome {{ session['user'] }}</h4>
+        <i class="fas fa-leaf welcome-icon"></i>
+        <h4 class="homepage-subheading3 welcome-user">welcome {{ session['user'] }}</h4>
     {% endif %}
-
-    <a class="content-hinting-link" href="#rules-section">
-        <p class="content-hinting">Learn More</p>
-        <i class="fas fa-angle-double-down content-hinting"></i>
-    </a>
+    {% if not session['user']%}
+        <a class="content-hinting-link" href="#rules-section">
+            <p class="content-hinting">Learn More</p>
+            <i class="fas fa-angle-double-down content-hinting"></i>
+        </a>
+    {% endif %}
 
 </div>
 </section>
 <section id="rules-section" class="light-bg section-home-2">
     <div class="row">
-        <div class="col s12 m6 offset-m3">
+        <div class="col s12 show-on-small hide-on-med-and-up"><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
             <h2 class="center-align homepage-subheading4 dark-text">Weekly Photography Competitions</h2>
         </div>
     </div>
     <div class="row intro">
-        <div class="col s12 m2 offset-m3">
-            <ol class="home-list">
-                <li>Register</li>
-                <li>Compete</li>
-                <li>Rate Others</li>
-                <li>Win Points!</li>
+        <div class="col s6 offset-s3 m4 offset-m1 xl2 offset-xl3 ">
+            <ol class="home-list">      
+                <li>Register <i class="far fa-id-badge cta-icons"></i></i></li>
+                <li>Compete <i class="fas fa-chess-knight cta-icons"></i></li>
+                <li>Rate Others <i class="fas fa-star cta-icons"></i></li>
+                <li>Win Points! <i class="fas fa-trophy cta-icons"></i></li>
             </ol>
         </div>
-        <div class="col s12 m4 "><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
+        <div class="col m6 xl4 hide-on-small-only"><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
     </div>
 </section>
 <section class="light-bg section-home-3">
     <div class="row">
-        <div class="schedule col s12 m7 offset-m1">
+        <div class="schedule col s10 offset-s1 m9 offset-m1">
             <h3 class="left-align homepage-subheading4 dark-text">Be the contestant and the judge!</h3>
             <p><span class="em">Monday:</span> A new photography competition.</p>
             <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
             <p><span class="em">Saturday & Sunday until 22:00:</span> Entrants must cast their vote (entrants may not vote for their own images). If they do not use their vote, their entry will be discarded. </p>
             <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
         </div> 
-        <div class="col s12 m3">
+        <div class="col s10 offset-s1 m5 offset-m6 right-align">
             <h3 class="right-align homepage-subheading4 dark-text">Point Scoring:</h3>
             <div class="points right-align">
                 <p>1st Place Image: <span class="em-points">7</span></p>
@@ -75,7 +80,7 @@
 </section>
 <section id="contact-form" class="dark-bg section-home-4">
     <div class="row">
-        <div class="contact-form col s12 m4 offset-m4">
+        <div class="contact-form-box col s8 offset-s2 m6 offset-m3">
             <h2 class="center-align homepage-subheading4 light-text">Contact Us</h2>
             <form>
                 <div class="row">
@@ -84,7 +89,7 @@
                         <label for="email">Email Address:</label>
                     </div> 
                     <div class="input-field col s12">
-                        <textarea id="message" name="message" class="validate" required></textarea> 
+                        <textarea id="message" name="message" class="validate"  required></textarea> 
                     </div> 
                 </div>
                 <a class="contact-send-btn btn-large z-depth-3" type="submit" value="Submit">SEND</a>
