@@ -168,7 +168,6 @@ def inject_datetime():
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        try:
             with app.app_context():
                 msg = Message(subject="New Email From Contact Form")
                 msg.sender=request.form.get("sender")
@@ -178,8 +177,6 @@ def home():
                 mail.send(msg)
                 flash("Email Sent!")
                 return redirect(url_for('home'))
-        except Exception, e:
-            return(str(e))
 
     return render_template("index.html")
 
