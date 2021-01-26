@@ -8,6 +8,7 @@
                 <div class="row">
                     <div class="input-field col s12 m6">
                     <input id="title" name="title" type="text" value="{{photo.photo_title}}" class="validate" required>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <label for="title">Title</label>
                     </div> 
                     <img src="{{ url_for('file', filename=photo.filename) }}">

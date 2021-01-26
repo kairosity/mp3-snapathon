@@ -20,6 +20,7 @@
                 <div class="input-field col s12">
                     <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25" required>
                     <label for="password">password</label>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 </div>
                 <div class="input-field col s12">
                     <input id="password-confirmation" name="password-confirmation" type="password" class="validate" minlength="6" maxlength="25" required>

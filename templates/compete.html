@@ -24,6 +24,7 @@
                 <form class="col s8 offset-s2" method="post" action="{{ url_for('compete') }}"
                     enctype="multipart/form-data">
                     <div class="row">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="input-field col s12 m6">
                             <input id="title" name="title" type="text" class="validate" required>
                             <label for="title">Title</label>
@@ -124,6 +125,7 @@
         </a>
         <div class="vote-container">
         <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i>Vote for this image</button>
         </form>
         </div>

@@ -47,6 +47,14 @@ variables.
 
 I discovered @app.context_processor functions which run before the templates are rendered and allow you to inject things into the entire application. I used a context_processor for datetime. 
 
+## Integrating Email functionality
+
+### Issue 1
+I got the email working after collating many online tutorials, but the "sender" information that I was extracting from the form was not translating over to gmail where the emails could be read. So it looked like all 
+the emails were being sent from the Snapathon gmail account. 
+
+### Fix 1
+
 # Input Validation
 
 ## Registration Form
@@ -75,3 +83,8 @@ Various validations were employed to ensure the registration form saved the corr
     - Photos need to be no larger than a certain size
     - Files uploaded need to be photos - (limit to .jpg or .png)?
     - Photos need to be a min resolution? 
+
+## Security Considerations
+
+### WTF-forms & CSRF Protection
+

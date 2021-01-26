@@ -57,7 +57,7 @@
             <h3 class="left-align homepage-subheading4 dark-text">Be the contestant and the judge!</h3>
             <p><span class="em">Monday:</span> A new photography competition.</p>
             <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
-            <p><span class="em">Saturday & Sunday until 22:00:</span> Competitors must cast their vote (users may not vote for their own images). If they do not use their vote, their entry will be discarded. </p>
+            <p><span class="em">Saturday & Sunday until 22:00:</span> Competitors must cast their vote (users may not vote for their own images). If they do not use their vote, their entry's points will be reset to 0. </p>
             <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
         </div> 
         <div class="col s10 offset-s1 m5 offset-m6 right-align">
@@ -85,8 +85,8 @@
             <form method="POST" action="{{ url_for('home') }}">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" name="email" type="text" class="validate" required>
-                        <label for="email">Email Address:</label>
+                        <input id="sender" name="sender" type="text" class="validate" required>
+                        <label for="sender">Email Address:</label>
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     </div> 
                     <div class="input-field col s12">

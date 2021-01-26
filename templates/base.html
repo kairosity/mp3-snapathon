@@ -40,7 +40,7 @@
                         <li><a href="{{url_for('login')}}">Login</a></li>
                         <li><a href="{{url_for('register')}}">Register</a></li>
                         {% endif %}
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                     </ul>
                 </div>
             </nav>
@@ -52,7 +52,7 @@
                 <li><a href="{{url_for('register')}}">Register</a></li>
                 <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
-                <li><a class="grey-text text-lighten-5" href="#">Contact Us</a></li>
+                <li><a class="grey-text text-lighten-5" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
             </ul>
             <section>
                 <!-- Flash Messages displayed here -->

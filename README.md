@@ -359,8 +359,15 @@ User passwords are hashed and then read by the Werkzeug
 
 - The compete.html page also transforms to vote after friday at 22:00 and the content is different. Users can no longer upload photos. 
 
+## Contact Form 
 
+At the very bottom of the homepage is a contact form for getting in touch with the application creator. Direct lines of communication are important with an application such as this where
+creative work is displayed. If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch. 
 
+The contact form was built as a regular HTML form and the emails are sent to a Snapathon gmail account using flask-mail. I've also integrated the flask-wtf-csrf extension to protect against csrf attacks, by using a hidden
+input field holding the csrf token. 
+
+Users arrive at the Contact Form either by finding it organically by scrolling down the homepage, or by clicking on the link that is always in the navbar. 
  # Attribution
 
 # Deployment

@@ -167,10 +167,11 @@ def inject_datetime():
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        msg = Message(subject="New Email From Contact Form",
-                    sender=request.form.get("email").lower(),
-                    recipients=[os.environ.get('MAIL_USERNAME')],
-                    body=request.form.get("message").lower() )
+        msg = Message(subject="New Email From Contact Form")
+        msg.sender=request.form.get("sender")
+        msg.recipients=[os.environ.get('MAIL_USERNAME')]
+        msg.body=request.form.get("message").lower()
+        print(msg)
         mail.send(msg)
         flash("Email Sent!")
         return redirect(url_for('home'))
@@ -468,4 +469,4 @@ def logout():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=False)
