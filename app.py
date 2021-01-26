@@ -174,7 +174,6 @@ def home():
                 msg.recipients=[os.environ.get('MAIL_USERNAME')]
                 message = request.form.get("message")
                 msg.body=f"Sender: {msg.sender} \n Message: {message}"
-                print(msg)
                 mail.send(msg)
                 flash("Email Sent!")
                 return redirect(url_for('home'))
