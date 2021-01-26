@@ -170,9 +170,10 @@ def home():
     if request.method == "POST":
             with app.app_context():
                 msg = Message(subject="New Email From Contact Form")
-                msg.sender=request.form.get("sender")
+                msg.sender=request.form.get("email_of_sender")
                 msg.recipients=[os.environ.get('MAIL_USERNAME')]
-                msg.body=request.form.get("message").lower()
+                message = request.form.get("message")
+                msg.body=f"Sender: {msg.sender} \n Message: {message}"
                 print(msg)
                 mail.send(msg)
                 flash("Email Sent!")
@@ -471,4 +472,4 @@ def logout():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)

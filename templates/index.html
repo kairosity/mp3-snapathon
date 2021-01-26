@@ -83,11 +83,11 @@
         <div class="contact-form-box col s8 offset-s2 m6 offset-m3">
             <h2 class="center-align homepage-subheading4 light-text">Contact Us</h2>
             <form method="POST" action="{{ url_for('home') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="sender" name="sender" type="text" class="validate" required>
-                        <label for="sender">Email Address:</label>
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <input id="email_of_sender" name="email_of_sender" type="text" class="validate" required>
+                        <label for="email_of_sender">Email Address:</label> 
                     </div> 
                     <div class="input-field col s12">
                         <textarea id="message" name="message" class="validate"  required></textarea> 
