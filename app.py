@@ -32,7 +32,8 @@ mail_settings = {
     "MAIL_USE_SSL": os.environ.get('MAIL_USE_SSL'),
     "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
     "MAIL_DEFAULT_SENDER": os.environ.get("MAIL_DEFAULT_SENDER"),
-    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD')
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
+    "SECURITY_EMAIL_SENDER": os.environ.get("SECURITY_EMAIL_SENDER")
 }
 
 app.config.update(mail_settings)
@@ -173,7 +174,7 @@ def home():
                 msg.sender=request.form.get("email_of_sender")
                 msg.recipients=[os.environ.get('MAIL_USERNAME')]
                 message = request.form.get("message")
-                msg.body=f"Sender: {msg.sender} \n Message: {message}"
+                msg.body=f"Email From: {msg.sender} \nMessage: {message}"
                 mail.send(msg)
                 flash("Email Sent!")
                 return redirect(url_for('home'))
