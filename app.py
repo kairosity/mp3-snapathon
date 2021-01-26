@@ -31,7 +31,6 @@ mail_settings = {
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": os.environ.get('MAIL_USE_SSL'),
     "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
-    "MAIL_DEFAULT_SENDER": os.environ.get("MAIL_DEFAULT_SENDER"),
     "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
     "SECURITY_EMAIL_SENDER": os.environ.get("SECURITY_EMAIL_SENDER")
 }

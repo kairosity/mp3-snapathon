@@ -353,11 +353,19 @@ User passwords are hashed and then read by the Werkzeug
 
 ## Compete/Vote Page
 
-- used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
+The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
+week it is. 
 
-- Navigation shows "Compete" monday to friday until 22:00PM and then VOTE from 22:00PM until Sunday at 00:00PM 
+The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Friday until 22:00PM. 
 
-- The compete.html page also transforms to vote after friday at 22:00 and the content is different. Users can no longer upload photos. 
+The "Compete" Page allows users to upload one image per competition, it asks for various image detail information.
+
+At 22:00 every Friday, the compete html page is replaced by the Vote HTML page, and "Compete" becomes "Vote" in the navbar. 
+
+Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. Both pages' functionality ceases and the "Vote" page shows a message linking to 
+the "Recent Winners" page where the winning images are displayed. It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
+
+
 
 ## Contact Form 
 
@@ -368,6 +376,9 @@ The contact form was built as a regular HTML form and the emails are sent to a S
 input field holding the csrf token. 
 
 Users arrive at the Contact Form either by finding it organically by scrolling down the homepage, or by clicking on the link that is always in the navbar. 
+
+The form fields are limited to an email: field and the message field as the kind of application this is, does not necessitate a long complicated email form. 
+
  # Attribution
 
 # Deployment
@@ -496,6 +507,28 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [How to enable CSRF protection in the Python / Flask app?](https://dev.to/dev0928/how-to-enable-csrf-protection-in-the-python-flask-app-5age)
 
     Decent introduction to using Flask-WTF extension to protect against CRSF attacks. 
+
+## Flask-Mail
+
+- ## [Configure Flask-Mail to use GMail](https://stackoverflow.com/questions/37058567/configure-flask-mail-to-use-gmail)
+
+    Stack overflow article I found useful when figuring out how to connect Flask-Mail to gmail correctly.
+
+- ## [Send Email programmatically with Gmail, Python, and Flask](https://www.twilio.com/blog/2018/03/send-email-programmatically-with-gmail-python-and-flask.html)
+
+    Great blog article about sending email via Flask-Mail. 
+
+- ## [Send Email with Gmail, Python, and Flask](https://medium.com/analytics-vidhya/send-email-with-gmail-python-and-flask-1810c25cf5f5)
+
+    Useful blog post about Flask-Mail
+
+- ## [The Flask Mega-Tutorial Part X: Email Support](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-x-email-support)
+
+    This tutorial is useful for all aspects of Flask, but this bit was very useful when configuring Flask-Mail.
+
+- ## [Python Flask e-mail form example](https://stackoverflow.com/questions/43728500/python-flask-e-mail-form-example)
+
+    Another useful Stack Overflow question re: Flask-Mail.
 
 ## MongoDB 
 

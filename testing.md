@@ -37,6 +37,10 @@ this to create a filename for each image that is completely unique and identical
 
 
 
+- used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
+
+
+
 ## base.html template
 
 ### Issue 1 
@@ -51,9 +55,36 @@ I discovered @app.context_processor functions which run before the templates are
 
 ### Issue 1
 I got the email working after collating many online tutorials, but the "sender" information that I was extracting from the form was not translating over to gmail where the emails could be read. So it looked like all 
-the emails were being sent from the Snapathon gmail account. 
+the emails were being sent from the Snapathon gmail account, as below:
+
+<p align="center">
+  <img src="static/images/issues/email-issue2.png">
+</p>
+
 
 ### Fix 1
+I realised that this is expected behaviour, because it is the connected gmail account sending emails to itself. To pass on the sender information, I added the form sender into the message that gets delivered to the app's gmail, as below: 
+
+            if request.method == "POST":
+                with app.app_context():
+                    msg = Message(subject="New Email From Contact Form")
+                    msg.sender=request.form.get("email_of_sender")
+                    msg.recipients=[os.environ.get('MAIL_USERNAME')]
+                    message = request.form.get("message")
+             -->    msg.body=f"Email From: {msg.sender} \nMessage: {message}"
+                    mail.send(msg)
+                    flash("Email Sent!")
+                    return redirect(url_for('home'))
+
+### Issue 2 
+The email functionality was working fine in the local port, but when deployed to Heroku I was getting the following error: 
+
+<p align="center">
+  <img src="static/images/issues/email-error.png">
+</p>
+
+### Fix 2
+I had not inputed my new mail configuration variables in the Heroku config vars input area. Once I did it connected perfectly.
 
 # Input Validation
 
