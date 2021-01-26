@@ -31,6 +31,7 @@ mail_settings = {
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": os.environ.get('MAIL_USE_SSL'),
     "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
+    "MAIL_DEFAULT_SENDER": os.environ.get("MAIL_DEFAULT_SENDER"),
     "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD')
 }
 
@@ -167,14 +168,18 @@ def inject_datetime():
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        msg = Message(subject="New Email From Contact Form")
-        msg.sender=request.form.get("sender")
-        msg.recipients=[os.environ.get('MAIL_USERNAME')]
-        msg.body=request.form.get("message").lower()
-        print(msg)
-        mail.send(msg)
-        flash("Email Sent!")
-        return redirect(url_for('home'))
+        try:
+            with app.app_context():
+                msg = Message(subject="New Email From Contact Form")
+                msg.sender=request.form.get("sender")
+                msg.recipients=[os.environ.get('MAIL_USERNAME')]
+                msg.body=request.form.get("message").lower()
+                print(msg)
+                mail.send(msg)
+                flash("Email Sent!")
+                return redirect(url_for('home'))
+        except Exception, e:
+            return(str(e))
 
     return render_template("index.html")
 
