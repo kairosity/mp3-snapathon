@@ -6,11 +6,11 @@
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s8 offset-s2">
-            <h1 class="grey-text text-lighten-4">COMPETE</h1>
+            <h1 class="grey-text text-lighten-4 page-heading">Compete</h1>
 
-            <h2 class="grey-text text-lighten-4">This week's theme is Portraiture</h2>
+            <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is Portraiture</h2>
 
-            <h5 class="grey-text text-lighten-4">Enter your portraits now!
+            <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Enter your portraits now!
                 These can be of animals or humans and can be close up or full length.
                 They should communicate something substantial about the subject.</h5>
         </div>
@@ -18,10 +18,12 @@
 </section>
 <div class="row">
     <ul class="collapsible">
-        <li class="col s12">
-            <div class="collapsible-header"><i class="fas fa-plus"></i>Add a Photo!</div>
+        <li class="col s12 m8 offset-m2">
+            <div class="collapsible-header add-photo-collapsible-header valign-wrapper">
+                <i class="fas fa-plus center-align"></i><p class="center-align add-a-photo-text">Add a Photo!</p>
+            </div>
             <div class="collapsible-body">
-                <form class="col s8 offset-s2" method="post" action="{{ url_for('compete') }}"
+                <form class="col s12 m12" method="post" action="{{ url_for('compete') }}"
                     enctype="multipart/form-data">
                     <div class="row">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -89,13 +91,11 @@
 
             </div>
         </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        <li class="col s12 m8 offset-m2">
+            <div class="collapsible-header valign-wrapper review-rules-collapsible-header"><i class="far fa-list-alt"></i><p class="review-rules-text">Review the competition rules</p></div>
+            <div class="collapsible-body competition-rules">
+                
+            </div>
         </li>
     </ul>
     </div>

@@ -41,6 +41,28 @@ hr.divider{
 html {
     scroll-behavior: smooth;
 }
+.page-heading{
+    font-family: var(--main-heading-font);
+    font-weight: 500;
+    color: var(--main-text-colour);
+    font-size: 4.5rem;
+    letter-spacing: 3px;
+}
+.page-subheading{
+    font-family: var(--subheading-font);
+    font-weight: 300;
+    color: var(--main-text-colour);
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+.page-sub-subheading-text{
+    font-family: var(--subheading-font);
+    font-weight: 200;
+    color: var(--main-text-colour);
+    font-size: 1.5rem;
+    letter-spacing: 1px; 
+    line-height: 2.5rem;
+}
 
 /* Navigation */
 
@@ -145,6 +167,12 @@ img.home-image {
     height: 200px;
     object-fit: cover;
 }
+img.home-image-2{
+    width: 100%;
+    height: 300px;
+    margin-top: 7rem;
+    object-fit: cover;
+}
 ol.home-list {
     font-size: 1.4em;
     font-family: var(--subheading-1-font);
@@ -197,7 +225,7 @@ div.contact-form-box{
     border-radius: 24px;
     font-family: var(--subheading-font);
     font-size: 1.3em;
-    color: var(--main-text-colour);
+    color: var(--dark-text-color);
 }
 .contact-send-btn:hover{
     background-color: var(--dark-accent-colour);
@@ -234,17 +262,6 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 
 /* Login & Register Pages */
-.login-heading,
-.register-heading{
-    font-family: var(--main-heading-font);
-    font-size: 4em;
-    font-weight: 500;
-    letter-spacing: 3px;
-    color: var(--main-text-colour);
-    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
-             0px 8px 13px rgba(0,0,0,0.1),
-             0px 18px 23px rgba(0,0,0,0.1);
-}
 .login-btn,
 .register-btn{
     width: 100%;
@@ -298,8 +315,46 @@ span.user-points-badge{
     font-weight: 300;
     font-size: 1em;
 }
-
+.profile-tabs{
+    background-color: var(--main-text-colour);
+}
+.profile-tab{
+    border-left: var(--dark-text-color) solid 3px;
+}
+ul.profile-tabs li.profile-tab > a{
+    color: var(--dark-text-color);
+    font-family: var(--subheading-font);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+ul.profile-tabs .indicator{
+    background-color: var(--dark-accent-colour);
+}
+ul.profile-tabs li.profile-tab > a:active,
+ul.profile-tabs li.profile-tab > a.active,
+ul.profile-tabs li.profile-tab > a:hover{
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+}
+ul.profile-tabs li.profile-tab > a:focus{
+    color: var(--dark-text-color);
+    background-color: var(--accent-colour);
+}
+ul.profile-tabs .profile-tab a:focus, 
+ul.profile-tabs .profile-tab a:focus.active {
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+}
 /* Competition Page */
+
+/* Text */
+.compete-main-heading{
+    font-family: var(--main-heading-font);
+    font-size: 5rem;
+    font-weight: 500;
+}
+
+
 
 input[type=text],
 textarea {
@@ -310,8 +365,39 @@ textarea {
     height: 100px;
     background-color: var(--accent-colour);
 }
+ul.collapsible{
+    border-top: None;
+}
+div.add-photo-collapsible-header,
+div.review-rules-collapsible-header{
+    background-color: var(--main-text-colour); 
+    justify-content: center;
+}
+div.add-photo-collapsible-header:hover,
+div.review-rules-collapsible-header:hover{
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+}
+div.add-photo-collapsible-header .indicator{
+    background-color: var(--dark-accent-colour);
+}
+.add-a-photo-text,
+.review-rules-text{
+    font-size: 1.4rem;
+    font-family: var(--subheading-font);
+    letter-spacing: 1px;
+    font-weight: 600;
+}
 .collapsible-body {
     border: none;
+}
+div.competition-rules{
+    background-color: var(--main-text-colour);
+    color: var(--dark-text-color);
+    font-family: var(--subheading-font);
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 button.vote-button{
     width: 100%;

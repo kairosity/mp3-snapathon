@@ -7,7 +7,7 @@
     <div class="col s12 m4 offset-m4">
         
         <form class="login-form card-panel grey darken-4" method="POST" action="{{ url_for('login') }}">
-            <h1 class="center-align login-heading">Login</h1>
+            <h1 class="center-align page-heading">Login</h1>
             <div class="row">
                 <div class="input-field col s12">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
