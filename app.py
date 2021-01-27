@@ -64,10 +64,11 @@ def awards():
         else:
             valid_users.append(user)
     
-    #4 Identify the non-voters' image entered & bring the image votes to 0. 
+    #4 Identify the non-voters' image entered & bring the image votes to 0. & then bring their votes to use to 0 as well. 
     #This is filtered further to only target this week's image.
     for user in non_voters:
         mongo.db.photos.update_one({"created_by": user["username"], "week_and_year": datetime.now().strftime("%V%G") }, {'$set': {"photo_votes": 0}})
+        mongo.db.users.update_one({"username": user["username"]},{'$set': {"votes_to_use": 0}})  
 
     
     #5. When all the valid entries are in an array - determine the 3 highest points scorers. 
