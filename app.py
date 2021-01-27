@@ -40,6 +40,34 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
+competitions = [
+    {
+        "category": "portraiture",
+        "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
+    },
+    {
+        "category": "landscape",
+        "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
+    },
+    {
+        "category": "architecture",
+        "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+    }
+
+]
+
+def get_competition(week_number):
+    if week_number % 3 == 1:
+        return competitions[0]
+    elif week_number % 3 == 2:
+        return competitions[1]
+    elif week_number % 3 == 0:
+        return competitions[2]
+
+
+current_week_number = int(datetime.now().strftime("%V"))
+print(get_competition(current_week_number))
+
 def awards():
     #1. Identify all the photos entered into this week's competition.
 
