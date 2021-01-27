@@ -280,22 +280,33 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 /* User profile Page */
 .profile-page-header{
-    padding-top: 3em;
+    padding-top: 2rem;
 }
 .profile-page-heading{
     font-family: var(--subheading-font);
     color: var(--main-text-colour);
-    font-size: 3.4em;
     font-weight: 300;
     letter-spacing: 3px;
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.8rem;
+}
+.avatar-wrapper{
+    position: relative;
 }
 .avatar {
     width: 100px;
     height: 100px;
-    border: var(--accent-colour) 2px solid;
     border-radius: 50%;
     padding: 10px;
-    background-color: var(--accent-colour);
+    background-color: var(--main-text-colour);
+}
+.small-avatar{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: var(--main-text-colour);
 }
 img.thumbnail-photo{
     width: 100%;
@@ -306,8 +317,21 @@ div.profile-photos-row,
 div.profile-photos-col{
     padding: 0 !important;
 }
-span.user-points-badge{
-    float: left;
+h5.user-points-badge{
+    font-size: 1rem;
+    color: var(--dark-text-color);
+    background-color: var(--accent-colour);
+    padding: 0.4rem;
+    border-radius: 14%;
+    display: inline-block;
+    margin: 0;
+}
+p.avatar-username{
+    color: var(--main-text-colour);
+    font-family: var(--subheading-font);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin: 0 0 5px;
 }
 .date{
     font-family: var(--subheading-font);
@@ -315,17 +339,23 @@ span.user-points-badge{
     font-weight: 300;
     font-size: 1em;
 }
+.profile-row{
+    margin-bottom: 0;
+}
 .profile-tabs{
     background-color: var(--main-text-colour);
 }
 .profile-tab{
     border-left: var(--dark-text-color) solid 3px;
 }
+li.profile-tab.remove-border{
+    border-left: none;
+}
 ul.profile-tabs li.profile-tab > a{
     color: var(--dark-text-color);
     font-family: var(--subheading-font);
-    font-size: 1.3rem;
-    letter-spacing: 2px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
 }
 ul.profile-tabs .indicator{
     background-color: var(--dark-accent-colour);
@@ -353,8 +383,6 @@ ul.profile-tabs .profile-tab a:focus.active {
     font-size: 5rem;
     font-weight: 500;
 }
-
-
 
 input[type=text],
 textarea {
@@ -474,6 +502,32 @@ i.content-hinting{
     font-size: 2.4em;
     padding: 1.3em 0;
 }
+/* Profile Page */
+.profile-page-header{
+    padding-top: 4rem;
+}
+ul.profile-tabs li.profile-tab > a{
+    color: var(--dark-text-color);
+    font-family: var(--subheading-font);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+h5.user-points-badge{
+    font-size: 1rem;
+    top: -17%;
+    right: 1%;
+    display: inline-block;
+    position: absolute;
+}
+.profile-page-heading{
+    font-family: var(--subheading-font);
+    color: var(--main-text-colour);
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-top: 0;
+    text-align: left;
+    font-size: 2.6rem;
+}
 /* Footer */
 footer{
     margin-top: 50px;
@@ -493,6 +547,21 @@ footer{
 div.home-buttons a{
     width: 50%;
 }
+/* Profile Page */
+ul.profile-tabs li.profile-tab > a{
+    color: var(--dark-text-color);
+    font-family: var(--subheading-font);
+    font-size: 1rem;
+    letter-spacing: 2px;
+}
+h5.user-points-badge{
+    font-size: 1.1rem;
+    top: -17%;
+    right: 21%;
+}
+.profile-title-username{
+    font-size: 2.4rem;
+}
 /* Footer */
 footer{
     margin-top: 100px;
@@ -502,5 +571,20 @@ footer{
 @media screen and (min-width: 1200px) {
   div.home-buttons a{
     width: 40%;
+}
+/* Profile Page */
+ul.profile-tabs li.profile-tab > a{
+    color: var(--dark-text-color);
+    font-family: var(--subheading-font);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+h5.user-points-badge{
+    font-size: 1.3rem;
+    padding: 0.4rem;
+    border-radius: 14%;
+    position: absolute;
+    top: -17%;
+    right: 22%;
 }
 }
