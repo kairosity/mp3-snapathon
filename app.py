@@ -9,7 +9,8 @@ from flask_mail import Mail, Message
 import os
 from bson.objectid import ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
-from datetime import datetime
+from datetime import datetime, date, time
+from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env 
@@ -182,6 +183,12 @@ def home():
     return render_template("index.html")
 
 
+@app.route("/browse", methods=["GET", "POST"])
+def browse():
+
+    return render_template("browse.html")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -264,8 +271,8 @@ def profile(username):
     user_photos = list(mongo.db.photos.find({"created_by": user["username"]}))
 
     '''
-    Grabs the list of photo ids that this user has voted on & then 
-    for each id it looks in the photos db for the image that matches 
+    Grabs the list of photo ids that this user has voted on & then
+    for each id it looks in the photos db for the image that matches
     it and appends it to an array that we pass to the profile template.
     '''
     photos_voted_for_array = user["photos_voted_for"]
@@ -279,7 +286,9 @@ def profile(username):
     else:
         print("This user has not voted for any images yet")
 
-    return render_template("profile.html", username=username, user_photos=user_photos, user=user, photos_voted_for=photos_voted_for_objs)
+    return render_template("profile.html",
+                           username=username, user_photos=user_photos,
+                           user=user, photos_voted_for=photos_voted_for_objs)
     
 
 @app.route("/compete", methods=['GET', 'POST'])
