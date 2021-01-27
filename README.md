@@ -493,6 +493,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     This Stack Overflow question was useful when customizing form elements. 
 
+- ## [Change color of checkbox in Materialize framework](https://stackoverflow.com/questions/35261021/change-color-of-checkbox-in-materialize-framework)
+
+    Stack Overflow article enabled me to override the Materialize checkbox colour styles. 
 ## Python 
 
 - ## [W3Schools Python Datetime Information](https://www.w3schools.com/python/python_datetime.asp)

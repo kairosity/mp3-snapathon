@@ -22,20 +22,13 @@
 .light-bg {
     background-color: var(--main-text-colour);
 }
-.dark-text {
-    color: var(--dark-text-color);
-}
-.light-text{
-    color: var(--main-text-colour);
-}
 hr.divider{
     background-color: var(--main-text-colour);
     height: 0px;
     width: 80%;
     margin:0 auto;
 }
-.row,
-.col{
+.no-padding{
     padding: 0 !important;
 }
 html {
@@ -45,23 +38,43 @@ html {
     font-family: var(--main-heading-font);
     font-weight: 500;
     color: var(--main-text-colour);
-    font-size: 4.5rem;
-    letter-spacing: 3px;
+    font-size: 3rem;
+    letter-spacing: 2px;
 }
 .page-subheading{
     font-family: var(--subheading-font);
     font-weight: 300;
     color: var(--main-text-colour);
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     letter-spacing: 2px;
 }
 .page-sub-subheading-text{
     font-family: var(--subheading-font);
     font-weight: 200;
     color: var(--main-text-colour);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     letter-spacing: 1px; 
-    line-height: 2.5rem;
+    line-height: 2rem;
+}
+.btn{
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+    border-radius: 24px;
+}
+.btn:hover{
+    background-color: var(--dark-accent-colour);
+    color: var(--dark-text-color);  
+}
+.checkbox-yellow[type="checkbox"].filled-in:checked + label:after,
+.checkbox-yellow[type="checkbox"].filled-in:checked+span:not(.lever):after {
+     border: 2px solid var(--accent-colour);
+     background-color: var(--accent-colour);
+}
+.dark-text {
+    color: var(--dark-text-color);
+}
+.light-text{
+    color: var(--main-text-colour);
 }
 
 /* Navigation */
@@ -400,6 +413,7 @@ div.add-photo-collapsible-header,
 div.review-rules-collapsible-header{
     background-color: var(--main-text-colour); 
     justify-content: center;
+    padding: 0;
 }
 div.add-photo-collapsible-header:hover,
 div.review-rules-collapsible-header:hover{
@@ -411,13 +425,31 @@ div.add-photo-collapsible-header .indicator{
 }
 .add-a-photo-text,
 .review-rules-text{
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-family: var(--subheading-font);
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 500;
 }
 .collapsible-body {
     border: none;
+}
+.compete-form-btn{
+    width: 100%;
+    margin-bottom: 2rem;
+}
+h3.rules-heading{
+    font-size: 2rem;
+}
+ul.rules{
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+ul.rules li{
+    list-style-type: circle;   
+}
+.input-field{
+    padding: 1rem;
 }
 div.competition-rules{
     background-color: var(--main-text-colour);
@@ -466,6 +498,14 @@ footer p {
 
 @media screen and (min-width: 600px) {
 
+.page-heading{
+    font-size: 4.5rem;
+    letter-spacing: 3px;
+}
+.page-subheading{
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
 /* Homepage */
 .homepage-heading {
     font-size: 3rem;
@@ -527,6 +567,16 @@ h5.user-points-badge{
     margin-top: 0;
     text-align: left;
     font-size: 2.6rem;
+}
+/* Compete */
+div.add-photo-collapsible-header,
+div.review-rules-collapsible-header{
+    padding: 1rem;
+}
+.add-a-photo-text,
+.review-rules-text{
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 /* Footer */
 footer{

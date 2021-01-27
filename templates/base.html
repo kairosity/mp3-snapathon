@@ -27,7 +27,7 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{url_for('home')}}">Home</a></li>
                         <li><a href="#">Recent Winners</a></li>
-                        <li><a href="#">Browse</a></li>
+                        <li><a href="{{url_for('browse')}}">Browse</a></li>
                         {% if session['user'] %}
                         <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                         {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "14") ) %}
@@ -47,7 +47,7 @@
             <ul class="sidenav grey darken-4" id="mobile-nav">
                 <li class="grey-text text-lighten-5"><a href="{{url_for('home')}}">Home</a></li>
                 <li><a class="grey-text text-lighten-5" href="#">Recent Winners</a></li>
-                <li><a class="grey-text text-lighten-5" href="#">Browse</a></li>
+                <li><a class="grey-text text-lighten-5" href="{{url_for('browse')}}">Browse</a></li>
                 <li><a class="grey-text text-lighten-5" href="{{url_for('login')}}">Login</a></li>
                 <li><a href="{{url_for('register')}}">Register</a></li>
                 <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>

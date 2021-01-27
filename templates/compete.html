@@ -5,8 +5,8 @@
 {% if (datetime.strftime("%w") == "0") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
 <section class="comp-intro center-align">
     <div class="row">
-        <div class="col s8 offset-s2">
-            <h1 class="grey-text text-lighten-4 page-heading">Compete</h1>
+        <div class="col s10 offset-s1">
+            <h1 class="page-heading">Compete</h1>
 
             <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is {{category|capitalize}}</h2>
 
@@ -16,7 +16,7 @@
 </section>
 <div class="row">
     <ul class="collapsible">
-        <li class="col s12 m8 offset-m2">
+        <li class="col s12 m10 offset-m1">
             <div class="collapsible-header add-photo-collapsible-header valign-wrapper">
                 <i class="fas fa-plus center-align"></i><p class="center-align add-a-photo-text">Add a Photo!</p>
             </div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="file-field input-field col s12 m6">
                             <div class="btn">
-                                <span>Click to upload your entry</span>
+                                <span>Upload Photo</span>
                                 <input type="file" name="photo">
                             </div>
                             <div class="file-path-wrapper">
@@ -72,27 +72,45 @@
 
                     <div class="row">
                         <div class="col s12">
-                            <p class="grey-text">I guarantee that this photograph is my own work and I have the right to
-                                share it. I further guarantee that it
-                                contains no explicit imagery, or violence, or anything offensive. (worded better) I
-                                further promise that this
-                                photograph has not been heavily edited other than simple tweaks to contrast and
-                                exposure.
-                                <label> <input type="checkbox" class="filled-in" required />
+                            <p class="grey-text terms-and-conditions">I confirm that this photograph is my own original creation and I have the right to
+                                share and distribute it. I certify that this photograph does not violate the rights of any third party or
+                                any copyright. I understand that I am prohibited from entering sexual imagery, violent imagery or
+                                any images that might be deemed offensive. I also confirm that this photo has not been heavily edited with the
+                                only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree 
+                                to grant SNAPATHON the free of charge right to use and distribute this photograph in any manner and using any media, including
+                                and without limitation, the right to distribute, publish, adapt, display and copy the image.<br><br>
+                                <label> <input type="checkbox" class="filled-in checkbox-yellow" required />
                                     <span>I have read and agree to these terms and conditions</span>
                                 </label></p>
                         </div>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Compete!
+                    <button class="btn waves-effect waves-light compete-form-btn" type="submit" name="action">Compete!
                     </button>
                 </form>
 
             </div>
         </li>
-        <li class="col s12 m8 offset-m2">
+        <li class="col s12 m10 offset-m1">
             <div class="collapsible-header valign-wrapper review-rules-collapsible-header"><i class="far fa-list-alt"></i><p class="review-rules-text">Review the competition rules</p></div>
             <div class="collapsible-body competition-rules">
-                <h2>Welcome to this week's competition! The theme is </h2>
+                <div class="row">
+                <h3 class="center-align rules-heading">The rules are as follows:</h3>
+                <ul class="rules col s12 m10 offset-m1">
+                    <li>As a member you may enter 1 photograph into each weekly competition.</li>
+                    <li>The photograph must be your own original creation.</li>
+                    <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
+                    <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
+                    <li>The photograph must not violate the rights of any third party.</li>
+                    <li>The photograph must not breach copyright law.</li>
+                    <li>Entries are accepted through our online form (above) each week from 0:00AM Monday until 22:00PM Friday.</li>
+                    <li>Voting takes place from 22:00PM Friday until 22:00PM Sunday.</li>
+                    <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
+                    <li>If you enter a photograph into competition, you MUST vote for 1 photograph (not your own).</li>
+                    <li>If you fail to vote between Friday after 22:00PM and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
+                    <li>All times quoted are UTC+00:00</li>
+                </ul>
+                </div>
+
             </div>
         </li>
     </ul>
