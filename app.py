@@ -40,34 +40,6 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
-competitions = [
-    {
-        "category": "portraiture",
-        "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
-    },
-    {
-        "category": "landscape",
-        "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
-    },
-    {
-        "category": "architecture",
-        "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
-    }
-
-]
-
-def get_competition(week_number):
-    if week_number % 3 == 1:
-        return competitions[0]
-    elif week_number % 3 == 2:
-        return competitions[1]
-    elif week_number % 3 == 0:
-        return competitions[2]
-
-
-current_week_number = int(datetime.now().strftime("%V"))
-print(get_competition(current_week_number))
-
 def awards():
     #1. Identify all the photos entered into this week's competition.
 
@@ -323,7 +295,6 @@ def compete():
     7. Save that photo object's id into the current user object's photo's array.
     '''
     date_time = datetime.now()
-   
 
     if request.method == 'POST':
         if 'photo' in request.files:
@@ -335,7 +306,7 @@ def compete():
             filename_suffix = photo.filename[-4:]
             new_filename = str(file_id) + filename_suffix
 
-             # Update the gridFS "Filename" attribute to be equal to the file_id
+                # Update the gridFS "Filename" attribute to be equal to the file_id
             mongo.db.fs.files.update_one({"_id": file_id},
                                     { '$set': {"filename": new_filename}})
 
@@ -362,20 +333,47 @@ def compete():
             # Get the photo obj's id and put in a variable? 
             photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
             photo_id_to_add_to_user = photo_to_add_to_user["_id"]
-          
+            
             # Add the photo obj id into the user's photos array and give the user a vote.
             mongo.db.users.update_one({"_id": current_user["_id"]},
-                                      {'$push':{"photos": photo_id_to_add_to_user},
-                                       '$inc':{"votes_to_use": 1 }})
-   
+                                        {'$push':{"photos": photo_id_to_add_to_user},
+                                        '$inc':{"votes_to_use": 1 }})
+
             flash("Entry Received!")
         
     # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
     this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
 
-    print(date_time.strftime("%H"))
+    competitions = [
+        {
+            "category": "portraiture",
+            "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
+        },
+        {
+            "category": "landscape",
+            "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
+        },
+        {
+            "category": "architecture",
+            "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+        }
+    ]
 
-    return render_template("compete.html", this_weeks_entries=this_weeks_entries, datetime=date_time)
+    def get_competition(week_number):
+        if week_number % 3 == 1:
+            return competitions[0]
+        elif week_number % 3 == 2:
+            return competitions[1]
+        elif week_number % 3 == 0:
+            return competitions[2]
+
+
+    current_week_number = int(datetime.now().strftime("%V"))
+
+    this_weeks_comp_category = get_competition(current_week_number)["category"]
+    this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
+
+    return render_template("compete.html", this_weeks_entries=this_weeks_entries, datetime=date_time, category=this_weeks_comp_category, instructions=this_weeks_comp_instructions)
 
 @app.route("/file/<filename>")
 def file(filename):
