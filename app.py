@@ -305,6 +305,23 @@ def profile(username):
                            user=user, photos_voted_for=photos_voted_for_objs)
     
 
+@app.route("/edit_profile/<username>", methods=['GET', 'POST'])
+def edit_profile(username):
+
+    if session:
+        if session["user"] != username:
+            return redirect(url_for('home'))
+            flash("Sorry, but you cannot edit another user's profile.")
+
+        user = mongo.db.users.find_one({"username": username})
+        
+        return render_template('edit_profile.html', user=user)
+    
+    else:
+        return redirect(url_for('login'))
+        flash("You must be logged in to edit your profile.")
+
+
 @app.route("/compete", methods=['GET', 'POST'])
 def compete():
     '''
@@ -368,11 +385,11 @@ def compete():
 
             # Get the photo obj's id and put in a variable? 
             photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
-            photo_id_to_add_to_user = photo_to_add_to_user["_id"]
+            photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
             
             # Add the photo obj id into the user's photos array and give the user a vote.
             mongo.db.users.update_one({"_id": current_user["_id"]},
-                                        {'$push':{"photos": photo_id_to_add_to_user},
+                                        {'$push':{"photos": photo_filename_to_add_to_user},
                                         '$inc':{"votes_to_use": 1 }})
 
             flash("Entry Received!")
@@ -465,20 +482,32 @@ def edit_photo(filename):
 @app.route("/delete_photo/<filename>")
 def delete_photo(filename):
 
-    if session: 
-        file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
-        chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
-        
-        # Remove the photo obj associated with this pic
-        mongo.db.photos.delete_one({"filename": filename})
-        # Remove the GridFS file associated with this filename
-        mongo.db.fs.files.delete_one(file_to_delete)
-        # Remove the GridFS chunk(s) associated with this filename
-        for chunk in chunks_to_delete:
-            mongo.db.fs.chunks.delete_one(chunk)
-       
-        flash("Photograph deleted successfully!")
-        return redirect(url_for('profile', username=session["user"]))
+    if session:
+        photo_to_del = mongo.db.photos.find_one({"filename": filename})
+        if session["user"] == photo_to_del["created_by"]:
+            file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
+            chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
+            
+            # Remove the photo obj associated with this pic
+            mongo.db.photos.delete_one({"filename": filename})
+            # Remove the GridFS file associated with this filename
+            mongo.db.fs.files.delete_one(file_to_delete)
+            # Remove the GridFS chunk(s) associated with this filename
+            for chunk in chunks_to_delete:
+                mongo.db.fs.chunks.delete_one(chunk)
+            # Remove this filename from the user photos array
+            user = mongo.db.users.find_one({"username": session["user"]})
+            user_photos = user["photos"]
+
+            for photo in user_photos:
+                if photo == filename:
+                    mongo.db.users.update_one({"username": session["user"]}, {'$pull': {"photos": photo}})
+
+            flash("Photograph deleted successfully!")
+            return redirect(url_for('profile', username=session["user"]))
+        else:
+            flash("You may not delete another user's photo.")
+            return redirect(url_for('home'))
     else:
         flash("Sorry, you must be logged in to delete a photograph.")
         return redirect(url_for('login'))
