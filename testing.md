@@ -1,3 +1,32 @@
+## get_photo() 
+
+### Issue 1
+
+This is the photo detail page, and I wanted to dynamically set the "back to..." button to check what the source url was and then insert a link to go back to that particular page. 
+
+This was coded using request.referrer in the get_photo() route and then that was passed into the template using a "source_url" variable, which was then reference conditionally for example:
+
+            {% if "profile" in source_url %}
+
+            <a href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left"></i>Back to {{username|capitalize}}'s Profile</a>
+            
+            {% elif "compete" in source_url %}
+
+And so on... However if the user is logged in and viewing her/his own photo, they have the option of editing that photo's details. They see an "edit photo" button which brings them to the edit_photo
+view, they edit a form that is pre-filled with the photo's details and click save. This then brings them back to the photo detail view. With the source_url code in the template, the act of them saving
+changes to their image was causing the following error: 
+
+<p align="center">
+  <img src="static/images/issues/edit-photo-error.png">
+</p>
+
+### Fix 1
+
+Some investigation led me to the fact that "POST" methods do not have a "source_url" insofar as the request.referrer from a POST is None, which was throwing this error. As a fix, I added another IF statement
+to the template, first checking IF there is a source_url, and if there is not, then it's most likely coming from the edit_photo view and does not require a "back to.." link as the user can just click on the "Edit photo
+details" button again.
+
+
 ## compete() function
 
 ### Issue 1 & Fix 1

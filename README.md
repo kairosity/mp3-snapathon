@@ -518,7 +518,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 - ## [How to enable CSRF protection in the Python / Flask app?](https://dev.to/dev0928/how-to-enable-csrf-protection-in-the-python-flask-app-5age)
 
-    Decent introduction to using Flask-WTF extension to protect against CRSF attacks. 
+    Decent introduction to using Flask-WTF extension to protect against CRSF attacks.
+
+- ## [Handling File Uploads With Flask](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask) 
+
+    Wonderful walkthrough for explaining how to do various file upload validations. 
 
 ## Flask-Mail
 
@@ -578,6 +582,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     A random key generator to create super secure keys & passwords. 
 
+- ## [Bytes to bits to MBs to KBs to GBs converter](http://www.beesky.com/newsite/bit_byte.htm)
+
+    Super useful for setting file size limits on uploads.
 
 
 # Libraries

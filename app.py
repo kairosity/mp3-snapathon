@@ -27,7 +27,7 @@ csrf = CSRFProtect(app)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 750 * 750
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']
 
 mail_settings = {
@@ -331,7 +331,7 @@ def compete():
             # To make sure that the file type is one of the acceptable image file types
             file_extension = os.path.splitext(photo.filename)[1]
             if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-                abort(400, "Sorry that file extension is not allowed. Please reformat your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+                abort(400, "Sorry that file extension is not allowed. Please re-format your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
 
             # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
             photo.filename = secure_filename(photo.filename)
@@ -423,8 +423,10 @@ def get_photo(filename):
 
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"username": photo["created_by"]})
+     
+    username = user["username"]
     
-    return render_template("get_photo.html", photo=photo, user=user, source_url=source_url)
+    return render_template("get_photo.html", photo=photo, username=username, source_url=source_url)
 
 
 @app.route("/edit_photo/<filename>", methods=["GET", "POST"])
@@ -433,8 +435,9 @@ def edit_photo(filename):
     # Add a rule that you have to be logged in to reach this page.
 
     photo = mongo.db.photos.find_one({"filename": filename})
-    user = mongo.db.users.find_one({"_id": photo["created_by"]})
+    user = mongo.db.users.find_one({"username": photo["created_by"]})
 
+    username = user["username"]
 
     if request.method == "POST":
 
@@ -453,7 +456,7 @@ def edit_photo(filename):
         return redirect(url_for("get_photo", filename=filename))
 
     if session:
-        return render_template("edit_photo.html", photo=photo, user=user)
+        return render_template("edit_photo.html", photo=photo)
     else:
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
