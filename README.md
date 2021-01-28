@@ -502,6 +502,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to help me write the datetime aspects of my code. 
 
+- ## [Python | os.path.splitext() method](https://www.geeksforgeeks.org/python-os-path-splitext-method/)
+
+    Very useful Python method for splitting files into roots & extensions. Used in this application to rename all incoming images.
+
 ## Flask
 
 - ## [Flask templates information](https://flask.palletsprojects.com/en/1.1.x/templating/#context-processors)

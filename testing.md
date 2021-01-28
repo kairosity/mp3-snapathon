@@ -111,9 +111,32 @@ Various validations were employed to ensure the registration form saved the corr
 ## Compete form for uploading user's photos into competition
 
 - Validations:
-    - Photos need to be no larger than a certain size
-    - Files uploaded need to be photos - (limit to .jpg or .png)?
-    - Photos need to be a min resolution? 
+
+### Limiting the maximum size of uploaded files
+
+This was achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024``` This effectively stops any request body that is larger
+than 1MB. Flask automatically halts any large requests and returns a 413 status code. This is a useful validation for two reasons: it stops overly massive images from being uploaded
+that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes. 
+
+### Limiting the type of files that can be uploaded 
+
+This was achieved again by using a config instruction: ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']``` Which was then referenced in 
+the compete() method for uploading photos. When the file is received but before it is saved to the database, the compete() function checks if it is one of these acceptable 
+file types and if not, it throws an error: 
+
+        file_extension = os.path.splitext(photo.filename)[1]
+            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+                abort(400, "Sorry that file extension is not allowed. Please reformat your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+
+This further limits the ability of users with malicious intent to upload damaging files to the database.
+
+### Sanitizing the filenames for further security 
+
+Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any
+dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage. 
+
+
+
 
 ## Security Considerations
 

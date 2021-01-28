@@ -1,7 +1,8 @@
 
 from flask import (
     Flask, flash, render_template, 
-    redirect, request, session, url_for)
+    redirect, request, session, url_for,
+    abort)
 from flask_pymongo import PyMongo
 # from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
 from flask_wtf.csrf import CSRFProtect
@@ -12,6 +13,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, date, time
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 if os.path.exists("env.py"):
     import env 
 
@@ -25,6 +27,8 @@ csrf = CSRFProtect(app)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']
 
 mail_settings = {
     "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
@@ -159,12 +163,17 @@ scheduler.start()
 
 def delete_collection():
     mongo.db.fs.chunks.remove({})
+    mongo.db.fs.files.remove({})
+    mongo.db.photos.remove({})
+    mongo.db.users.remove({})
 
 
 @app.context_processor
 def inject_datetime():
     date_time = datetime.now()
     return dict(datetime=date_time)
+
+inject_datetime()
 
 @app.route("/")
 @app.route("/home", methods=["GET", "POST"])
@@ -186,7 +195,12 @@ def home():
 @app.route("/browse", methods=["GET", "POST"])
 def browse():
 
-    return render_template("browse.html")
+    all_photos = list(mongo.db.photos.find())
+
+
+    print(datetime.now().strftime("%w%Y"))
+
+    return render_template("browse_images.html", photos=all_photos)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -296,13 +310,17 @@ def compete():
     '''
     If the method is POST
     1. Grab the file that was uploaded & store it in a var called photo.
-    2. Save that image to mongodb using gridfs at the same time store the file id
+    2. Make sure that the uploaded file is an acceptable file type. Reject it if it's not. 
+    3. Nullify any malicious filenames using werkzeug.
+    4. Save that image to mongodb using gridfs at the same time store the file id
     into a var called file_id.
-    3. Select the current user and save it into a var called current_user
-    4. Create a new_entry dict with the data from the form and current_user & the file_id
-    5. Add that dict entry into the photos collection.
-    6. Get that photo object's id using the file_id. 
-    7. Save that photo object's id into the current user object's photo's array.
+    5. Create a new_filename using the new file's '_id' attribute making the filename unique - add the original extension to that.
+    6. Update the gridFS's filename attr to equal that new file id.
+    7. Select the current user and save it into a var called current_user
+    8. Create a new_entry dict with the data from the form and current_user & the file_id
+    9. Add that dict entry into the photos collection.
+    10. Get that photo object's id using the file_id. 
+    11. Save that photo object's id into the current user object's photo's array.
     '''
     date_time = datetime.now()
 
@@ -310,13 +328,21 @@ def compete():
         if 'photo' in request.files:
             photo = request.files['photo']
 
+            # To make sure that the file type is one of the acceptable image file types
+            file_extension = os.path.splitext(photo.filename)[1]
+            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+                abort(400, "Sorry that file extension is not allowed. Please reformat your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+
+            # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
+            photo.filename = secure_filename(photo.filename)
+
             # Upload the photo to the gridfs mongo storage
             file_id = mongo.save_file(photo.filename, photo)
 
-            filename_suffix = photo.filename[-4:]
-            new_filename = str(file_id) + filename_suffix
+            # This makes the filename unique 
+            new_filename = str(file_id) + file_extension
 
-                # Update the gridFS "Filename" attribute to be equal to the file_id
+            # Update the gridFS "Filename" attribute to be equal to the file_id
             mongo.db.fs.files.update_one({"_id": file_id},
                                     { '$set': {"filename": new_filename}})
 

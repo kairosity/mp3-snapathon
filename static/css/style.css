@@ -273,7 +273,61 @@ textarea.materialize-textarea:focus:not([readonly]){
     -webkit-box-shadow: 0 1px 0 0 var(--accent-colour);
     box-shadow: 0 1px 0 0 var(--accent-colour);
 }
-
+/* Browse Images */
+.browse-images-container {
+  position: relative;
+}
+/* The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
+.browse-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: RGBA(255,196,0,0.7);
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+}
+.browse-images-container:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+.overlay-text{
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;  
+}
+.overlay-text-title {
+  top: 10%;
+  left: 50%;
+  font-size: 1.6rem;
+}
+.overlay-text-username{
+  top: 30%;
+  left: 50%;
+  font-size: 1.3rem;
+}
+/* W3 Image overlay slide code ends here */
+.overlay-text-awards{
+  top: 45%;
+  left: 50%;
+  font-size: 1rem;
+}
+.overlay-text-instruc{
+  top: 60%;
+  left: 50%;
+  font-size: 1rem;
+}
 /* Login & Register Pages */
 .login-btn,
 .register-btn{

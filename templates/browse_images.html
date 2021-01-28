@@ -2,4 +2,27 @@
 
 {% block content %}
 
+<h1 class="page-heading center-align">Browse Images</h1>
+
+<div id="entries" class="row s12">
+        <!-- <div class="row profile-photos-row"></div> -->
+            {% for photo in photos %}
+            
+                <div class="col s12 m4 l3 profile-photos-col browse-images-container">
+                    <img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="overlay">
+                        <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                        <h4 class="overlay-text overlay-text-title">{{photo.photo_title}}</h4>
+                        <h5 class="overlay-text overlay-text-username">by {{photo.created_by}}</h5>
+                        {% if photo.week_and_year == datetime.strftime("%V%G") %}
+                            <p class="overlay-text overlay-text-awards">This photo is in this week's competition.</p>
+                        {% endif %}
+                        <p class="overlay-text overlay-text-instruc">Click to see image details</p>
+                        </a>
+                    </div>
+                </div>
+            
+            {% endfor %}
+    </div>
+
 {% endblock %}
