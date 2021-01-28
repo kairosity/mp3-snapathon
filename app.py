@@ -467,14 +467,15 @@ def delete_photo(filename):
 
     if session: 
         file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
-        chunk_to_delete = mongo.db.fs.chunks.find_one({"files_id": file_to_delete["_id"]})
+        chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
         
         # Remove the photo obj associated with this pic
         mongo.db.photos.delete_one({"filename": filename})
         # Remove the GridFS file associated with this filename
         mongo.db.fs.files.delete_one(file_to_delete)
         # Remove the GridFS chunk(s) associated with this filename
-        mongo.db.fs.chunks.delete_one(chunk_to_delete)
+        for chunk in chunks_to_delete:
+            mongo.db.fs.chunks.delete_one(chunk)
        
         flash("Photograph deleted successfully!")
         return redirect(url_for('profile', username=session["user"]))
