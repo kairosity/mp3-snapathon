@@ -244,7 +244,6 @@ def register():
         flash("Registration successful!")
 
         username = session["user"]
-        print(username)
 
         return redirect(url_for("profile", username=username))
     return render_template("register.html")
@@ -292,7 +291,6 @@ def profile(username):
     photos_voted_for_array = user["photos_voted_for"]
     photos_voted_for_objs = []
 
-    print(photos_voted_for_array)
     if photos_voted_for_array != []:
         for img in photos_voted_for_array:
             photo_obj = list(mongo.db.photos.find({"_id": img}))
@@ -309,14 +307,79 @@ def profile(username):
 def edit_profile(username):
 
     if session:
-        if session["user"] != username:
-            return redirect(url_for('home'))
-            flash("Sorry, but you cannot edit another user's profile.")
+        if session["user"] == username:
+            user = mongo.db.users.find_one({"username": username})
+            if request.method == "POST":
 
-        user = mongo.db.users.find_one({"username": username})
-        
-        return render_template('edit_profile.html', user=user)
-    
+                # values from form
+                form_username = request.form.get("username").lower()
+                form_email = request.form.get("email").lower()
+                form_current_password = request.form.get("current_password")
+                form_new_password = request.form.get("new_password")
+                form_new_password_confirmation = request.form.get("new_password_confirmation")
+
+                update_user = {}
+                update_photos = {}
+
+                # If the user has changed their username
+                if form_username != user["username"]:
+                    existing_username = mongo.db.users.find_one({"username": form_username})
+                    if existing_username:
+                        flash("Username is already in use, please choose a different one.")
+                        return redirect(url_for('edit_profile', user=user, username=username))      
+                    else:
+                        update_user["username"] = form_username
+                        update_photos["created_by"] = form_username
+
+                # If the user has changed their email address        
+                if form_email != user["email"]:
+                    # check if email address already exists in db
+                    existing_email = mongo.db.users.find_one({"email": form_email})
+                    if existing_email:
+                        flash("That email is already in use, please choose a different one.")
+                        return redirect(url_for('edit_profile', user=user, username=username))
+                    else:
+                        update_user["email"] = form_email
+                
+                if form_current_password:
+                    if check_password_hash(user["password"], request.form.get("current_password")):
+                        if form_new_password != None:
+                            if form_new_password == form_new_password_confirmation:
+                                update_user["password"] = generate_password_hash(form_new_password)
+                            else:
+                                flash("Your new passwords do not match, please try again.")
+                                return redirect(url_for('edit_profile', username=username))
+                        else:
+                            flash("Your new password cannot be nothing. Please try again.")
+
+                    else: 
+                        flash("Sorry, but your current password was entered incorrectly. Please try again.")
+                        return redirect(url_for('edit_profile', user=user, username=username))
+                
+                if update_photos:
+                    mongo.db.photos.update_many({"created_by": username}, {"$set": update_photos})
+                if update_user:
+                    mongo.db.users.update_one({"username": username}, {'$set': update_user})
+                    session["user"] = form_username
+
+                user = mongo.db.users.find_one({"username": session["user"]})
+                user_photos = list(mongo.db.photos.find({"created_by": session["user"]}))
+                photos_voted_for_array = user["photos_voted_for"]
+                photos_voted_for_objs = []
+
+                if photos_voted_for_array != []:
+                    for img in photos_voted_for_array:
+                        photo_obj = list(mongo.db.photos.find({"_id": img}))
+                        photos_voted_for_objs.append(photo_obj[0])
+                flash("Profile updated successfully!")
+                return render_template('profile.html', user=user, user_photos=user_photos, photos_voted_for=photos_voted_for_objs)
+
+            return render_template('edit_profile.html', user=user)
+
+        else:
+            flash("Sorry, but you cannot edit another user's profile.")
+            return redirect(url_for('home'))
+
     else:
         return redirect(url_for('login'))
         flash("You must be logged in to edit your profile.")
@@ -508,6 +571,7 @@ def delete_photo(filename):
         else:
             flash("You may not delete another user's photo.")
             return redirect(url_for('home'))
+    # Why is the below not working?
     else:
         flash("Sorry, you must be logged in to delete a photograph.")
         return redirect(url_for('login'))

@@ -2,9 +2,43 @@
 
 {% block content %}
 
-    {{ session["user"] }}
-    {{ user.username }}
-    {{ user.email }}
+    <div class="row">
+        
+    <div class="col s12 m6 offset-m3">
+        
+        <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}">
+            <h1 class="center-align page-heading">Update Profile</h1>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" name="username" type="text" class="validate" minlength="5" maxlength="25" value="{{user.username}}" required>
+                    <label for="username">username</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="email" name="email" type="text" class="validate" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"  value="{{user.email}}" required>
+                    <label for="email">email</label>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                </div>
+                <div class="input-field col s12">
+                    <p>If you'd like to change your password, please enter your current password below and then your new password twice.</p>
+                    <input id="current_password" name="current_password" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="current_password">current password</label>  
+                </div>
+                <div class="input-field col s12">
+                    <input id="new_password" name="new_password" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="new_password">new password</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="new_password_confirmation" name="new_password_confirmation" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="new_password_confirmation">new password confirmation</label>
+                </div>
+                <button class="register-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+  </div>
+    
+    
 
 
 {% endblock %}

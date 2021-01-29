@@ -7,19 +7,22 @@
         <div class="col s10 m2 offset-m1 center-align avatar-wrapper hide-on-small-only">
             <img class="avatar" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/>
             <h5 class="badge user-points-badge">{{ user.user_points }}</h5>
-             <p class="avatar-username">{{ username|capitalize }}</p>
+             <p class="avatar-username">{{ user.username|capitalize }}</p>
         </div>
          <div class="col s10 offset-s1 center-align">
             <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/><br>
-             <p class="center-align avatar-username hide-on-med-and-up">{{ username|capitalize }}</p>
+             <p class="center-align avatar-username hide-on-med-and-up">{{ user.username|capitalize }}</p>
              <h5 class="center-align badge user-points-badge hide-on-med-and-up">{{ user.user_points }}</h5>
        </div>
     </div>
     <div class="row">
         <div class="col s10 offset-s1 m6 offset-m1">  
-            <h1 class="profile-page-heading">{{ username|capitalize }}'s profile</h1>
+            <h1 class="profile-page-heading">{{ user.username|capitalize }}'s profile</h1>
         </div>
        <div class="col s12 m2 offset-m2 right-align valign-center">
+           {% if user.username == session.user %}
+            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn-large">Edit Profile</a> 
+           {% endif %}
             <h4 class="date">UTC Date:{{ datetime.strftime("%A, %d %B %Y") }}</h4>
             <h4 class="date">Local Date & Time:{{ datetime.strftime("%X") }}</h4>
        </div>
@@ -29,9 +32,9 @@
     <div class="row profile-row">
     <div class="col s12 no-padding">
       <ul class="tabs profile-tabs">
-        <li class="tab profile-tab remove-border col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ username|capitalize }} has entered into competition" href="#entries">Entries</a></li>
-        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ username|capitalize }} has voted for" href="#votes">Votes</a></li>
-        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="All of {{ username|capitalize }}'s award-winning images" href="#awards">Awards</a></li>
+        <li class="tab profile-tab remove-border col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has entered into competition" href="#entries">Entries</a></li>
+        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has voted for" href="#votes">Votes</a></li>
+        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="All of {{ user.username|capitalize }}'s award-winning images" href="#awards">Awards</a></li>
       </ul>
     </div>
 
