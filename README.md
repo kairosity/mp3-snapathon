@@ -139,9 +139,10 @@ Some of the features developed with this aim in mind are listed below:
 2.| The profile page shows all the photos that user has voted for. |7 | 7 | 14
 3.| The profile page displays the user's total points. |9 | 8 | 17
 4.| The profile page displays badges the user has won by engaging with the application in various ways. |4 | 5 | 9
-5.| Other users can comment individual photos on the profile page.  |2 | 2 | 4
-6.| Other users can like photos on the profile page |1 | 2 | 3
-7.| A user's total points score is displayed next to their username. |8 | 7 | 15
+5.| A user can change their username, email address & password |7 | 8 | 15
+6.| Other users can comment on individual photos on the profile page.  |2 | 2 | 4
+7.| Other users can like photos on the profile page |1 | 2 | 3
+8.| A user's total points score is displayed next to their username. |8 | 7 | 15
 . | __*COMPETITION FUNCTIONALITY & FEATURES*__ 
 1.| Users can upload images to competitions. |10 | 10 | 20
 2.| Users can edit their uploaded image details. |8 | 9 | 17
@@ -174,6 +175,7 @@ be implemented if the application is to work at a fundamental level. Those are t
 6. They can enter competitions and vote when they are logged in, and only registered and logged in users can compete or vote.
 7. A user's profile page shows their uploaded photograph entries, other user's photographs they have voted for and any photographs of theirs that have won awards.
 8. A user's profile page also shows their total number of points. 
+9. A user can change their username, email address & password.
 9. A user can upload images to the weekly competitions, and they can edit or delete those images at any point. 
 10. If a user uploads an image they get a single vote which they can use to vote for any image that is not theirs. Voting takes place on Saturday & Sunday until 22:00PM.
 11. Users can vote by clicking the "Vote" button under their photo of choice.
@@ -307,6 +309,9 @@ This is where users who have registered can login to the application. They can l
 
 This is where first time users can register to become members. They fill in a username, email address and password. They are asked to type in their password twice. 
 
+
+
+
 ## Interaction Design 
 
 
@@ -350,6 +355,23 @@ usernames, as they usually differ from application to application.
 Users enter their login email address and their password and are immediately brought to their profile page, where a welcome message is displayed referencing their username.
 
 User passwords are hashed and then read by the Werkzeug 
+
+### Profile Pages
+
+A user's profile page is their calling card on the application.
+Anyone whether logged in or not, can visit a user's profile page, either by entering the url: /profile/username 
+Or by clicking in via an image on the site.
+
+Features:
+
+1. When a user is logged in, they see "My Profile" in the navigation.
+2. Their profile page displays their username, their total competition points, their entries into competition, other user's photos that they've voted for and any of their images that have won
+awards. 
+3. When logged in and on their own profile page, a user will see an "edit profile" button which they can use to change any of their profile details including their password.
+
+
+
+
 
 ## Compete/Vote Page
 
@@ -586,6 +608,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Super useful for setting file size limits on uploads.
 
+- ## [MDN Web Docs: Request.referrer](https://developer.mozilla.org/en-US/docs/Web/API/Request/referrer)
+
+    Information on using request.referrer.
 
 # Libraries
 

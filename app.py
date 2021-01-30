@@ -173,7 +173,9 @@ def inject_datetime():
     date_time = datetime.now()
     return dict(datetime=date_time)
 
+
 inject_datetime()
+
 
 @app.route("/")
 @app.route("/home", methods=["GET", "POST"])
@@ -303,6 +305,29 @@ def profile(username):
                            user=user, photos_voted_for=photos_voted_for_objs)
     
 
+''' 
+1. This function checks if there is a user logged in. 
+2. If so, is that user trying to edit her own profile page?
+3. If so, it checks if the request method is POST. 
+4. If it is POST, it takes all the form data and saves it in variables.
+5. It creates 2 empty dicts to store the data.
+6. It checks if the user has changed their username.
+7. If they have it checks to make sure that username is not already in use, as usernames must be unique. 
+8. If it's not already used, it pushes the new username into both new dicts, as the new username will need to be saved not only 
+to the user doc, but also to every photo that user has uploaded in the created_by field. 
+9. The function then runs the same logic for the user email, but this only needs to be changed on the user doc. 
+10. Then it checks if the user has entered something into the current password field.
+11. Then it checks if that password is correct.
+12. If it is the right password, it checks if she has entered anything into the new password field.
+13. If she has, it checks if that is equal to the new password confirmation field. 
+14. If all three password fields have been entered correctly it pushes the new password to the update_user dict using the Werkzeug 
+password hash. 
+15. Then it checks if there is anything in either of the new dicts. If they contain data, the function updates the Mongo DB with that 
+new data.
+16. If the user data has been changed it also sets the session["user"] to be the new username.
+17. Then it returns the profile page, which will reflect any updates immediately. 
+'''
+
 @app.route("/edit_profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
 
@@ -404,6 +429,34 @@ def compete():
     '''
     date_time = datetime.now()
 
+    competitions = [
+        {
+            "category": "portraiture",
+            "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
+        },
+        {
+            "category": "landscape",
+            "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
+        },
+        {
+            "category": "architecture",
+            "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+        }
+        ]      
+
+    def get_competition(week_number):
+        if week_number % 3 == 1:
+            return competitions[0]
+        elif week_number % 3 == 2:
+            return competitions[1]
+        elif week_number % 3 == 0:
+            return competitions[2]
+
+    current_week_number = int(datetime.now().strftime("%V"))
+
+    this_weeks_comp_category = get_competition(current_week_number)["category"]
+    this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
+
     if request.method == 'POST':
         if 'photo' in request.files:
             photo = request.files['photo']
@@ -430,6 +483,8 @@ def compete():
                 {"username": session["user"]})
 
             new_entry = {
+            "file_id": file_id,
+            "filename": new_filename,
             "photo_title": request.form.get("title").lower(),
             "photo_story": request.form.get("story").lower(),
             "camera": request.form.get("camera").lower(),
@@ -439,9 +494,8 @@ def compete():
             "iso": request.form.get("iso").lower(),
             "created_by": session["user"],
             "date_entered": datetime.now(),
+            "competition_category": this_weeks_comp_category,
             "week_and_year": datetime.now().strftime("%V%G"),
-            "file_id": file_id,
-            "filename": new_filename,
             "photo_votes": 0
             }
             mongo.db.photos.insert_one(new_entry)
@@ -460,34 +514,6 @@ def compete():
     # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
     this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
 
-    competitions = [
-        {
-            "category": "portraiture",
-            "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
-        },
-        {
-            "category": "landscape",
-            "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
-        },
-        {
-            "category": "architecture",
-            "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
-        }
-    ]
-
-    def get_competition(week_number):
-        if week_number % 3 == 1:
-            return competitions[0]
-        elif week_number % 3 == 2:
-            return competitions[1]
-        elif week_number % 3 == 0:
-            return competitions[2]
-
-
-    current_week_number = int(datetime.now().strftime("%V"))
-
-    this_weeks_comp_category = get_competition(current_week_number)["category"]
-    this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
 
     return render_template("compete.html", this_weeks_entries=this_weeks_entries, datetime=date_time, category=this_weeks_comp_category, instructions=this_weeks_comp_instructions)
 
