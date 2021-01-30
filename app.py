@@ -101,7 +101,7 @@ def awards():
 
     for entry in this_weeks_entries:
         if entry["photo_votes"] == first_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "first"}})
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 1}})
             user = mongo.db.users.find_one({"username": entry["created_by"]})
 
             if user not in first_place_users:
@@ -110,7 +110,7 @@ def awards():
             if photo not in first_place_photos:
                 first_place_photos.append(photo)
         elif entry["photo_votes"] == second_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "second"}})
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 2}})
             user = mongo.db.users.find_one({"username": entry["created_by"]})
 
             if user not in second_place_users:
@@ -119,7 +119,7 @@ def awards():
             if photo not in second_place_photos:
                 second_place_photos.append(photo) 
         elif entry["photo_votes"] == third_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": "third"}})
+            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 3}})
             user = mongo.db.users.find_one({"username":entry["created_by"]})
 
             if user not in third_place_users:
@@ -147,11 +147,11 @@ def awards():
             photo_as_obj = list(mongo.db.photos.find({"_id": photo})) 
             if photo_as_obj:
                 photo_as_obj = photo_as_obj[0]
-                if photo_as_obj["awards"] == "first":
+                if photo_as_obj["awards"] == 1:
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})
-                if photo_as_obj["awards"] == "second": 
+                if photo_as_obj["awards"] == 2: 
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})
-                if photo_as_obj["awards"] == "third":
+                if photo_as_obj["awards"] == 3:
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
         
     print("This was run with APSheduler!")
@@ -194,16 +194,36 @@ def home():
     return render_template("index.html")
 
 
+
 @app.route("/browse", methods=["GET", "POST"])
 def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-
-    print(datetime.now().strftime("%w%Y"))
-
     return render_template("browse_images.html", photos=all_photos)
 
+@app.route('/search', methods=["GET", "POST"])
+def search():
+
+    if request.method == 'POST':
+        category = request.form.get("category")
+        query = request.form.get("query")
+        awards = request.form.getlist("award")
+
+
+        if category:
+            if awards: 
+                full_search = f"\"{category}\" \"{query}\""
+                awards = [int(n) for n in awards] 
+                print(awards)
+                filtered_photos = list(mongo.db.photos.find({"$text": {"$search": full_search}, "awards": {"$in": awards}}))
+                print(filtered_photos)
+                return render_template("browse_images.html", photos=filtered_photos)
+        else:
+            full_search = query
+            filtered_photos = list(mongo.db.photos.find({"$text": {"$search": full_search}}))
+            return render_template("browse_images.html", photos=filtered_photos)
+        
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -304,6 +324,7 @@ def profile(username):
                            username=username, user_photos=user_photos,
                            user=user, photos_voted_for=photos_voted_for_objs)
     
+
 
 ''' 
 1. This function checks if there is a user logged in. 
@@ -496,7 +517,8 @@ def compete():
             "date_entered": datetime.now(),
             "competition_category": this_weeks_comp_category,
             "week_and_year": datetime.now().strftime("%V%G"),
-            "photo_votes": 0
+            "photo_votes": 0,
+            "awards": None
             }
             mongo.db.photos.insert_one(new_entry)
 

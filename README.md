@@ -518,6 +518,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Change color of checkbox in Materialize framework](https://stackoverflow.com/questions/35261021/change-color-of-checkbox-in-materialize-framework)
 
     Stack Overflow article enabled me to override the Materialize checkbox colour styles. 
+
 ## Python 
 
 - ## [W3Schools Python Datetime Information](https://www.w3schools.com/python/python_datetime.asp)
@@ -545,6 +546,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Handling File Uploads With Flask](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask) 
 
     Wonderful walkthrough for explaining how to do various file upload validations. 
+
+- ## [How to actually upload a file using Flask WTF FileField](https://stackoverflow.com/questions/14589393/how-to-actually-upload-a-file-using-flask-wtf-filefield?rq=1)
+
+    Good information on using WTF File Field.
 
 ## Flask-Mail
 
@@ -587,6 +592,14 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [MongoDB: how to filter by multiple fields](https://developerslogblog.wordpress.com/2019/10/15/mongodb-how-to-filter-by-multiple-fields/)
     
     Good article on Mongo Filtering.
+
+- ## [Text Indexes](https://docs.mongodb.com/manual/core/index-text/)
+
+    Official documentation on building text indexes with Mongo DB.
+
+- ## [How to AND and NOT in MongoDB $text search](https://stackoverflow.com/questions/23985464/how-to-and-and-not-in-mongodb-text-search)
+
+    Useful stack overflow question, as the information is missing from the Mongo DB docs.
 
 ## Jinja
 

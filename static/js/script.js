@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('.tabs').tabs();
     $('.collapsible').collapsible();
     $('.tooltipped').tooltip();
+    $('select').formSelect();
 
 
     // // not working yet

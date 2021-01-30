@@ -1,3 +1,20 @@
+
+## browse()
+
+### Issue 1
+
+When developing my search / filter method, I wanted to give users the option of filtering their searches by keywords, categories and awards. 
+The default mongo db index $search method for $text indexes is an 'or' search, i.e. if a user types in "Mountain" and then chooses "Landscape" from
+the category dropdown menu, the search would return all photos entered into landscape competitions AND all images with mountain as a keyword. 
+What I wanted is an "and" search, so that the search would return all images entered into landscape competitions with "mountain" as a keyword.
+
+### Fix 1
+
+Unfortunately the mongoDB documentation was of no use here. It doesn't cover "and" searches, thankfully stack overflow had the answer. Separating 
+the search terms with "" works as below: 
+
+                { "$search": "\"mountain\" \"landscape\"" }
+
 ## get_photo() 
 
 ### Issue 1

@@ -277,6 +277,10 @@ textarea.materialize-textarea:focus:not([readonly]){
 .browse-images-container {
   position: relative;
 }
+
+.search-card{
+    background-color: var(--main-text-colour);
+}
 /* The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
 .browse-photo {
   display: block;
