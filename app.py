@@ -208,21 +208,26 @@ def search():
     if request.method == 'POST':
         category = request.form.get("category")
         query = request.form.get("query")
-        awards = request.form.getlist("award")
+        awards = [int(n) for n in request.form.getlist("award")] 
+        
+        full_search = query
+        full_query = {}
 
+        if query:
+            full_query["$text"]={"$search": full_search}
 
+        if awards:
+             full_query["awards"]={"$in": awards}
+            
         if category:
-            if awards: 
-                full_search = f"\"{category}\" \"{query}\""
-                awards = [int(n) for n in awards] 
-                print(awards)
-                filtered_photos = list(mongo.db.photos.find({"$text": {"$search": full_search}, "awards": {"$in": awards}}))
-                print(filtered_photos)
-                return render_template("browse_images.html", photos=filtered_photos)
-        else:
-            full_search = query
-            filtered_photos = list(mongo.db.photos.find({"$text": {"$search": full_search}}))
-            return render_template("browse_images.html", photos=filtered_photos)
+            full_query["competition_category"] = category
+
+        print(full_query)
+        
+        filtered_photos = list(mongo.db.photos.find(full_query))
+        
+        return render_template("browse_images.html", photos=filtered_photos)
+
         
 
 @app.route("/register", methods=["GET", "POST"])
