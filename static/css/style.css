@@ -327,10 +327,28 @@ textarea.materialize-textarea:focus:not([readonly]){
 .browse-images-container {
   position: relative;
 }
-
-.search-card{
-    background-color: var(--main-text-colour);
+div.search-card form.search-form{
+     background-color: var(--dark-text-color);
+     padding: 3rem;
 }
+.search-card{
+   background-color: var(--dark-text-color);
+}
+p.filter-award{
+    color: var(--main-text-colour);
+}
+.award-status-row{
+    padding-bottom: 1.5rem;
+}
+.award-search-label{
+    padding: 1rem 1rem 1rem 0;
+    color: var(--main-text-colour);
+}
+div.col a.reset-btn {
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+}
+
 /* The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
 .browse-photo {
   display: block;

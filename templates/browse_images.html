@@ -4,21 +4,20 @@
 
 <h1 class="page-heading center-align">Browse Images</h1>
 
-      <div class="card-panel search-card row">
+      <div class="search-card row">
          
-          <form action="{{ url_for('search') }}" method="post" class="col s10 offset-s1 m10 offset-m1">
+          <form action="{{ url_for('search') }}" method="post" class="col s12 m10 offset-m1 search-form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="row valign-wrapper center-align">
 
                 <div class="input-field col s12 m8 offset-m2">
                      <input type="text" name="query" id="query" class="validate" minlength="3">
-                     <label for="query">Filter by keyword, camera, lens, or username.</label>
+                     <label for="query">Filter by keyword</label>
                 </div>
                 
             </div>
             <div class="row valign-wrapper center-align">
-
-                <div class="input-field col s12 m4 offset-m2">
+                <div class="input-field col s12 m8 offset-m2">
                       <div class="input-field col s12">
                         <select id="category" name="category">
                         <option value="" disabled selected>Select category:</option>
@@ -33,27 +32,29 @@
                         <label for="category">Filter by competition category</label>
                     </div>
                 </div>
-                <div class="col s10 offset-s1 m4 left-align">
-                    <p>Filter by award status</p>
-                    <label>
+            </div>
+                <div class="row award-status-row">
+                <div class="col s10 offset-s1 m8 offset-m2">
+                    <p class="filter-award">Filter by award status</p>
+                    <label class="award-search-label">
                         <input type="checkbox" class="filled-in" name="award" value="1" />
-                        <span>1st Place Winners</span>
+                        <span>1st Place</span>
                     </label>    
-                    <label>
+                    <label class="award-search-label">
                         <input type="checkbox" class="filled-in" name="award" value="2" />
-                        <span>2nd Place Winners</span>
+                        <span>2nd Place</span>
                     </label>    
-                    <label>
+                    <label class="award-search-label">
                         <input type="checkbox" class="filled-in" name="award" value="3" />
-                        <span>3rd Place Winners</span>
+                        <span>3rd Place</span>
                     </label>
                 </div>
             </div>
             <div class="row">
-            <div class="col s12 m4 offset-m4">
-                    <a href="{{ url_for('browse') }}" class="btn"><i class="fas fa-undo-alt"></i>Reset</a>
-                    <button type="submit" class="btn">
-                        <i class="fas fa-search"></i>Search
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
+                    <a href="{{ url_for('browse') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn"><i class="fas fa-undo-alt"></i> Reset</a>
+                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn">
+                        <i class="fas fa-search"></i> Search
                     </button>  
                 </div>
             </div>

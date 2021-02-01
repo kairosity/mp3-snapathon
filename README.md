@@ -566,6 +566,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Good information on using WTF File Field.
 
+- ## [Get Form Checkbox Data in Flask with .getlist](https://www.youtube.com/watch?v=_sgVt16Q4O4)
+
+    Quick tutorial on how to get and use the form checkbox data in Flask.
+
 ## Flask-Mail
 
 - ## [Configure Flask-Mail to use GMail](https://stackoverflow.com/questions/37058567/configure-flask-mail-to-use-gmail)
