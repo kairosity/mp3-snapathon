@@ -403,10 +403,21 @@ The form fields are limited to an email: field and the message field as the kind
 
 # Attribution
 
+- [Adding class to li after page is loaded](https://stackoverflow.com/questions/40506710/adding-class-to-li-after-page-is-loaded/40506822#40506822)
+
+    I used Rafal Cz.'s solution to this stack overflow question to change the active class on my navbar on desktop and mobile. 
+
 ## Unsplash Images Used in the Application
 
 - <span>Photo by <a href="https://unsplash.com/@cdx2?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">C D-X</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@ronaldcuyan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ronald Cuyan</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@spencerdavis?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Spencer Davis</a> on <a href="https://unsplash.com/t/nature?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@stangad?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Davide Stanga</a> on <a href="https://unsplash.com/t/nature?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@sajad_sqs9966b?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sajad Nori</a> on <a href="https://unsplash.com/t/nature?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@sickle?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sergey Pesterev</a> on <a href="https://unsplash.com/t/travel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@maxwhtd?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Max Whitehead</a> on <a href="https://unsplash.com/t/travel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@etiennegirardet?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Etienne Girardet</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
 
 # Deployment
 
@@ -518,6 +529,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Change color of checkbox in Materialize framework](https://stackoverflow.com/questions/35261021/change-color-of-checkbox-in-materialize-framework)
 
     Stack Overflow article enabled me to override the Materialize checkbox colour styles. 
+
+- ## [Beautiful CSS box-shadow examples](https://getcssscan.com/css-box-shadow-examples)
+
+    A great collection of box-shadows
 
 ## Python 
 

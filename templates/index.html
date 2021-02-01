@@ -6,7 +6,7 @@
     <div class="col s12 m8 offset-m2 center-align">
     <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down"></i>
    <h2 class="homepage-subheading1">Love photography?</h2>
-    <h1 class="homepage-heading">Welcome to Snapathon!</h1>
+    <h1 class="homepage-heading">SNAPATHON</h1>
     <h3 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h3>
     {% if not session['user']%}
         <div class="home-buttons">
@@ -32,7 +32,9 @@
 </section>
 <section id="rules-section" class="light-bg section-home-2">
     <div class="row">
-        <div class="col s12 show-on-small hide-on-med-and-up"><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
+        <div class="col s12 show-on-small hide-on-med-and-up homepage-mobile-image-1">
+            <img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt="">
+        </div>
     </div>
     <div class="row">
         <div class="col s12 m8 offset-m2">
@@ -40,30 +42,32 @@
         </div>
     </div>
     <div class="row intro">
-        <div class="col s6 offset-s3 m4 offset-m1 xl2 offset-xl3 ">
-            <ol class="home-list">      
-                <li>Register <i class="far fa-id-badge cta-icons"></i></li>
-                <li>Compete <i class="fas fa-chess-knight cta-icons"></i></li>
-                <li>Rate Others <i class="fas fa-star cta-icons"></i></li>
-                <li>Win Points! <i class="fas fa-trophy cta-icons"></i></li>
-            </ol>
+        <div class="col s12 m4 offset-m1 xl2 offset-xl3 center-align valign-wrapper">
+            <div class="block">
+            <ul class="home-list">      
+                <li>1. Register <i class="far fa-id-badge cta-icons"></i></li>
+                <li>2. Compete <i class="fas fa-chess-knight cta-icons"></i></li>
+                <li>3. Rate Others <i class="fas fa-star cta-icons"></i></li>
+                <li>4. Win Points! <i class="fas fa-trophy cta-icons"></i></li>
+            </ul>
+            </div>
         </div>
-        <div class="col m6 xl4 hide-on-small-only"><img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt=""></div>
+        <div class="col m6 xl4 hide-on-small-only"><img class="home-image home-image-desktop" src="{{url_for('static', filename='images/in-app/pic4-dark-navy.jpg')}}" alt=""></div>
     </div>
 </section>
 <section class="light-bg section-home-3">
-    <div class="row">
+    <div class="row schedule-row">
         <div class="schedule col s10 offset-s1 m9 offset-m1">
-            <h3 class="left-align homepage-subheading4 dark-text">Be the contestant and the judge!</h3>
+            <h3 class="left-align homepage-subheading4 light-text">Be the contestant and the judge!</h3>
             <p><span class="em">Monday:</span> A new photography competition.</p>
             <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
             <p><span class="em">Saturday & Sunday until 22:00:</span> Competitors must cast their vote (users may not vote for their own images). If they do not use their vote, their entry's points will be reset to 0. </p>
             <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
         </div> 
     </div>
-    <div class="row">
-        <img class="home-image-2 col l6 offset-l1 hide-on-med-and-down" src="{{url_for('static', filename='images/in-app/makethissmaller.jpg')}}" alt="">
-        <div class="col s10 offset-s1 m4 offset-m7 l4 offset-l0  right-align">
+    <div class="row points-scoring-row">
+        <img class="home-image-2 col l6 offset-l1 hide-on-med-and-down" src="{{url_for('static', filename='images/in-app/pic5-blue-plane.jpg')}}" alt="">
+        <div class="col s10 offset-s1 m4 offset-m7 l4 offset-l0  right-align points-box">
             <h3 class="right-align homepage-subheading4 dark-text">Point Scoring:</h3>
             <div class="points right-align">
                 <p>1st Place Image: <span class="em-points">7</span></p>
@@ -73,13 +77,12 @@
                 <p>Vote for 2nd place image: <span class="em-points">2</span></p>
                 <p>Vote for 3rd place image: <span class="em-points">1</span></p>
             </div>
-        </div>  
+        </div> <br> 
+         {% if not session['user']%}
+                <a class="col s10 offset-s1 m12 center-align" href="{{ url_for('register') }}"><h3 class="cta center-align">Register to get started today!</h3></a>
+            {% endif %}
     </div>
-    {% if not session['user']%}
-    <div class="row">
-        <a href="{{ url_for('register') }}"><h3 class="cta center-align">Register to get started today!</h3></a>
-    </div>
-    {% endif %}
+   
 </section>
 <section id="contact-form" class="dark-bg section-home-4">
     <div class="row">

@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Zilla+Slab+Highlight:wght@400;700&display=swap');
+
 /* Variables */
 
 :root {
-    --main-heading-font: "Fraunces", serif;
+    /* --main-heading-font: "Fraunces", serif; */
+    --main-heading-font: "Anton", sans-serif;
     --subheading-font: "Open Sans", sans-serif;
-    --subheading-serif-font: "Fraunces", serif;
+    --subheading-serif-font: "Open Sans", serif;
     --main-text-colour: #e0e0e0;
     --accent-colour: #ffc400;
     --dark-text-color: #212121;
@@ -79,8 +82,27 @@ html {
 
 /* Navigation */
 
-nav a:hover{
-    color:  var(--accent-colour);
+nav ul.navbar-nav a,
+ul.mobile-nav-ul a {
+    color: var(--main-text-colour);
+    
+}
+ul.mobile-nav-ul a{
+    font-size: 1.2rem;
+}
+
+nav ul.navbar-nav a:hover,
+ul.mobile-nav-ul a:hover{
+    color:  var(--dark-text-color);
+    background-color: var(--accent-colour);
+}
+nav ul.navbar-nav li.active,
+ul.mobile-nav-ul li.active{
+    background-color: var(--accent-colour);
+}
+nav ul.navbar-nav li.active a,
+ul.mobile-nav-ul li.active a{
+     color: var(--dark-text-color);
 }
 nav i.logo {
     color: var(--accent-colour) !important;
@@ -92,14 +114,10 @@ nav i.logo {
 .homepage-heading {
     font-family: var(--main-heading-font);
     color: var(--main-text-colour);
-    font-weight: 800;
-    letter-spacing: 3px;
+    font-weight: 400;
+    letter-spacing: 10px;
     font-size: 2.5rem;
-    font-style: italic;
     padding: 0 2rem;
-    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
-             0px 8px 13px rgba(0,0,0,0.1),
-             0px 18px 23px rgba(0,0,0,0.1);
 }
 .homepage-subheading1{
     font-family: var(--subheading-1-font);
@@ -133,7 +151,7 @@ nav i.logo {
     font-family: var(--subheading-1-font);
     font-size: 2rem;
     letter-spacing: 3px;
-    padding: 0.7em 0.2em;
+    padding: 0.7em 0.5em;
 }
 .logo-home{
     font-size: 2rem;
@@ -144,25 +162,23 @@ nav i.logo {
              0px 18px 23px rgba(0,0,0,0.1);
 }
 div.home-buttons{
-    margin-top: 5em;
+    margin-top: 8em;
     margin-bottom: 5em;
 }
 div.register-button-home{
-     padding-bottom: 5em !important; 
+     /* padding-bottom: 5em !important;  */
 }
 div.home-buttons a{
     width: 60%;
     background-color: var(--accent-colour);
     border-radius: 24px;
+    color: var(--dark-text-color);
 }
 div.home-buttons a:hover{
     background-color: var(--dark-accent-colour);
 }
 .home-button{
     margin-bottom: 1em;
-}
-.section-home-1{
-    padding-bottom: 4.5em;
 }
 p.content-hinting{
     font-family: var(--subheading-font);
@@ -177,19 +193,39 @@ i.content-hinting{
 }
 img.home-image {
     width: 100%;
-    height: 200px;
+    height: 210px;
     object-fit: cover;
 }
-img.home-image-2{
+.section-home-2{
+    background-color: var(--accent-colour);
+}
+img.home-image-desktop{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+.row .homepage-mobile-image-1{
+    padding: 0;
+}
+.row img.home-image-2{
     width: 100%;
     height: 300px;
     margin-top: 7rem;
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    padding: 0;
 }
-ol.home-list {
+ul.home-list {
     font-size: 1.4em;
     font-family: var(--subheading-1-font);
     margin-bottom: 4em;
+    padding-top: 1.7rem;
+}
+.block{
+    background-color: var(--accent-colour);
+    width: 210px;
+    height: 210px;
+    border-radius: 5%;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 .cta-icons{
     margin-left: 0.8em;
@@ -200,6 +236,12 @@ button.register-btn {
 .intro{
     padding-bottom: 50px;
     margin-bottom: 0;
+}
+section div.schedule-row{
+    background-color: var(--dark-text-color);
+    color: var(--main-text-colour);
+    margin-bottom: 0;
+    padding-bottom: 4rem;
 }
 .points,
 .schedule {
@@ -218,13 +260,21 @@ button.register-btn {
     font-size: 1.2em;
     padding: 10px;
 }
-.section-home-3{
-    padding-bottom: 4.5em;
+.points-scoring-row{
+    background-color: var(--accent-colour);
+    padding-bottom: 3rem;
+}
+.points-box{
+    margin-bottom: 2rem;
+}
+.cta-row{
+    background-color: var(--accent-colour);
 }
 .cta{
     font-size: 2.2em;
-    font-family: var(--subheading-serif-font);
-    color: var(--dark-accent-colour);
+    font-family: var(--subheading-font);
+    color: var(--dark-text-color);
+    margin: 0;
 }
 .cta:hover{
     text-decoration: underline;
@@ -572,13 +622,13 @@ footer p {
     font-size: 1.5rem; 
 }
 .homepage-subheading2{
-    font-size: 1.7rem;
+    font-size: 1.3rem;
 }
 .logo-home{
     font-size: 3rem;
 }
 div.home-buttons{
-    margin-top: 5rem;
+    margin-top: 9rem;
     margin-bottom: 5rem;
 }
 div.register-button-home{
@@ -647,7 +697,7 @@ footer{
     font-size: 4rem;
 }
 .homepage-subheading2{
-    font-size: 2em;
+    font-size: 1.4em;
 }
 .logo-home{
     font-size: 4rem;
@@ -677,7 +727,13 @@ footer{
 }
 /* Large Desktop Devices */
 @media screen and (min-width: 1200px) {
-  div.home-buttons a{
+.homepage-heading {
+    font-size: 6rem;
+}  
+.homepage-subheading2{
+    font-size: 2em;
+}
+div.home-buttons a{
     width: 40%;
 }
 /* Profile Page */
