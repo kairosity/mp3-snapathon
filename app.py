@@ -194,6 +194,64 @@ def home():
     return render_template("index.html")
 
 
+@app.route("/recent_winners")
+def recent_winners():
+
+    # Get date & time
+    today = datetime.now()
+    day_of_week = today.weekday()
+    hour_of_day = today.time().hour
+    week_and_year = datetime.now().strftime("%V%G")
+
+    week_before = today - timedelta(weeks = 1)
+    last_week_and_year = week_before.strftime("%V%G")
+
+
+    def get_winning_images_by_week_and_year(w_a_y):
+        return list(mongo.db.photos.find({"week_and_year": w_a_y} ))
+    
+
+    # If dow is Mon-Sat  Sun BEFORE 22:00PM:
+    if day_of_week in range(0,5) or day_of_week == 6 and hour_of_day < 22:
+        images_to_display = get_winning_images_by_week_and_year(last_week_and_year)
+        last_mon = week_before
+        while last_mon.weekday() != 0:
+            last_mon = last_mon - timedelta(days=1)
+    # If dow is sun and it's after 22:00
+    else:
+        images_to_display = get_winning_images_by_week_and_year(week_and_year)
+        last_mon = today
+        while last_mon.weekday() !=0:
+            last_mon = today - timedelta(days=1)
+    
+
+    first_place = []
+    second_place = []
+    third_place = []
+
+    list_of_users = []
+    week_starting = last_mon.strftime("%A, %d of %B")
+
+    for img in images_to_display:
+        if img["awards"] == 1:
+            first_place.append(img)
+            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            competition_category = img["competition_category"]
+        elif img["awards"] == 2:
+            second_place.append(img)
+            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+        elif img["awards"] == 3:
+            third_place.append(img)
+            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+
+
+    return render_template("recent_winners.html", first_place=first_place, 
+                                                  second_place=second_place, 
+                                                  third_place=third_place, 
+                                                  users=list_of_users,
+                                                  week_starting=week_starting,
+                                                  competition_category=competition_category)
+
 
 @app.route("/browse", methods=["GET", "POST"])
 def browse():
@@ -221,8 +279,6 @@ def search():
             
         if category:
             full_query["competition_category"] = category
-
-        print(full_query)
         
         filtered_photos = list(mongo.db.photos.find(full_query))
         
@@ -324,10 +380,16 @@ def profile(username):
             photos_voted_for_objs.append(photo_obj[0])
     else:
         print("This user has not voted for any images yet")
+    award_winners = []
+    for img in user_photos:
+        if img["awards"] != None:
+            award_winners.append(img)
+            
 
     return render_template("profile.html",
                            username=username, user_photos=user_photos,
-                           user=user, photos_voted_for=photos_voted_for_objs)
+                           user=user, photos_voted_for=photos_voted_for_objs,
+                           award_winners=award_winners)
     
 
 

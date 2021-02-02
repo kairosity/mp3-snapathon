@@ -4,31 +4,33 @@
 
 <section class="row section-home-1">
     <div class="col s12 m8 offset-m2 center-align">
-    <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down"></i>
-   <h2 class="homepage-subheading1">Love photography?</h2>
-    <h1 class="homepage-heading">SNAPATHON</h1>
-    <h3 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h3>
-    {% if not session['user']%}
+        <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down"></i>
+        <h2 class="homepage-subheading1">Love photography?</h2>
+        <h1 class="homepage-heading">SNAPATHON</h1>
+        <h3 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h3>
+        {% if not session['user']%}
         <div class="home-buttons">
             <div class="col s12">
-                <a href="{{ url_for('login') }}" class="home-button waves-effect waves-light btn-large z-depth-3">LOGIN</a>  
+                <a href="{{ url_for('login') }}"
+                    class="home-button waves-effect waves-light btn-large z-depth-3">LOGIN</a>
             </div>
             <div class="col s12 register-button-home">
-                <a href="{{ url_for('register') }}" class="home-button waves-effect waves-light btn-large z-depth-3">REGISTER</a>
+                <a href="{{ url_for('register') }}"
+                    class="home-button waves-effect waves-light btn-large z-depth-3">REGISTER</a>
             </div>
         </div>
-    {% else %}
+        {% else %}
         <i class="fas fa-leaf welcome-icon"></i>
         <h4 class="homepage-subheading3 welcome-user">welcome {{ session['user'] }}</h4>
-    {% endif %}
-    {% if not session['user']%}
+        {% endif %}
+        {% if not session['user']%}
         <a class="content-hinting-link" href="#rules-section">
             <p class="content-hinting">Learn More</p>
             <i class="fas fa-angle-double-down content-hinting"></i>
         </a>
-    {% endif %}
+        {% endif %}
 
-</div>
+    </div>
 </section>
 <section id="rules-section" class="light-bg section-home-2">
     <div class="row">
@@ -38,37 +40,109 @@
     </div>
     <div class="row">
         <div class="col s12 m8 offset-m2">
-            <h2 class="center-align homepage-subheading4 dark-text">Weekly Photography Competitions</h2>
+            <h2 class="center-align homepage-subheading4 dark-text">WEEKLY PHOTOGRAPHY COMPETITIONS</h2>
         </div>
     </div>
     <div class="row intro">
-        <div class="col s12 m4 offset-m1 xl2 offset-xl3 center-align valign-wrapper">
-            <div class="block">
-            <ul class="home-list">      
-                <li>1. Register <i class="far fa-id-badge cta-icons"></i></li>
-                <li>2. Compete <i class="fas fa-chess-knight cta-icons"></i></li>
-                <li>3. Rate Others <i class="fas fa-star cta-icons"></i></li>
-                <li>4. Win Points! <i class="fas fa-trophy cta-icons"></i></li>
-            </ul>
+
+        <div class="col s12 m6 word-col">
+
+            <div class="row">
+
+                <div class="col s6 m6 center-align">
+                    <i class="far fa-id-badge cta-icons "></i>
+                    <h2 class="intro-words ">REGISTER</h2>
+                </div>
+                <div class="col s6 m6 center-align">
+                    <i class="fas fa-chess-knight cta-icons"></i>
+                    <h2 class="intro-words ">COMPETE</h2>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col s6 m6 center-align">
+                    <i class="fas fa-star cta-icons"></i>
+                    <h2 class="intro-words ">RATE OTHERS</h2>
+                </div>
+                <div class="col s6 m6 center-align">
+                    <i class="fas fa-trophy cta-icons "></i>
+                    <h2 class="intro-words ">WIN POINTS</h2>
+                </div>
+            </div>
+
         </div>
-        <div class="col m6 xl4 hide-on-small-only"><img class="home-image home-image-desktop" src="{{url_for('static', filename='images/in-app/pic4-dark-navy.jpg')}}" alt=""></div>
+
+        <div class="col m6 l5 img-col hide-on-small-only right-align">
+            <img class="home-image home-image-desktop right-align"
+                src="{{url_for('static', filename='images/in-app/pic4-dark-navy.jpg')}}" alt="mountains at sunset">
+        </div>
+
     </div>
 </section>
 <section class="light-bg section-home-3">
     <div class="row schedule-row">
         <div class="schedule col s10 offset-s1 m9 offset-m1">
-            <h3 class="left-align homepage-subheading4 light-text">Be the contestant and the judge!</h3>
-            <p><span class="em">Monday:</span> A new photography competition.</p>
-            <p><span class="em">Monday - Friday at 22:00:</span> Users may enter one image each.</p>
-            <p><span class="em">Saturday & Sunday until 22:00:</span> Competitors must cast their vote (users may not vote for their own images). If they do not use their vote, their entry's points will be reset to 0. </p>
-            <p><span class="em">Sunday @ 22:00:</span> Awards and points are announced.</p>
-        </div> 
+            <h3 class="center-align homepage-subheading4 light-text">BE THE CONTESTANT AND THE JUDGE!</h3>
+
+            <div id="content">
+                <ul class="timeline">
+                    <!-- Item 1 -->
+                    <li>
+                        <div class="direction-r">
+                            <div class="flag-wrapper">
+                                <span class="hexa"></span>
+                                <span class="flag">MONDAY</span>
+                                <span class="time-wrapper"><span class="time">@00:00</span></span>
+                            </div>
+                            <div class="desc">A new photography competition begins.</div>
+                        </div>
+                    </li>
+
+                    <!-- Item 2 -->
+                    <li>
+                        <div class="direction-l">
+                            <div class="flag-wrapper">
+                                <span class="hexa"></span>
+                                <span class="flag">MONDAY-FRIDAY</span>
+                                <span class="time-wrapper"><span class="time">All day</span></span>
+                            </div>
+                            <div class="desc">Enter an image to compete in this week's competition.</div>
+                        </div>
+                    </li>
+
+                    <!-- Item 3 -->
+                    <li>
+                        <div class="direction-r">
+                            <div class="flag-wrapper">
+                                <span class="hexa"></span>
+                                <span class="flag">SATURDAY & SUNDAY</span>
+                                <span class="time-wrapper"><span class="time">Until 22:00 Sun</span></span>
+                            </div>
+                            <div class="desc">Competitors must cast their vote for any photo other than their own. If
+                                they do not use their vote, their entry's points will be reset to 0.</div>
+                        </div>
+                    </li>
+                    <!-- Item 4 -->
+                    <li>
+                        <div class="direction-l">
+                            <div class="flag-wrapper">
+                                <span class="hexa"></span>
+                                <span class="flag">SUNDAY</span>
+                                <span class="time-wrapper"><span class="time">@22:00</span></span>
+                            </div>
+                            <div class="desc">All image & user awards and points are announced.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
     <div class="row points-scoring-row">
-        <img class="home-image-2 col l6 offset-l1 hide-on-med-and-down" src="{{url_for('static', filename='images/in-app/pic5-blue-plane.jpg')}}" alt="">
+        <img class="home-image-2 col l6 offset-l1 hide-on-med-and-down"
+            src="{{url_for('static', filename='images/in-app/pic5-blue-plane.jpg')}}" alt="">
         <div class="col s10 offset-s1 m4 offset-m7 l4 offset-l0  right-align points-box">
-            <h3 class="right-align homepage-subheading4 dark-text">Point Scoring:</h3>
+            <h3 class="right-align homepage-subheading4 dark-text">POINT SCORING:</h3>
             <div class="points right-align">
                 <p>1st Place Image: <span class="em-points">7</span></p>
                 <p>2nd Place Image: <span class="em-points">5</span></p>
@@ -77,29 +151,32 @@
                 <p>Vote for 2nd place image: <span class="em-points">2</span></p>
                 <p>Vote for 3rd place image: <span class="em-points">1</span></p>
             </div>
-        </div> <br> 
-         {% if not session['user']%}
-                <a class="col s10 offset-s1 m12 center-align" href="{{ url_for('register') }}"><h3 class="cta center-align">Register to get started today!</h3></a>
-            {% endif %}
+        </div> <br>
+        {% if not session['user']%}
+        <a class="col s10 offset-s1 m12 center-align" href="{{ url_for('register') }}">
+            <h3 class="cta center-align">Register to get started today!</h3>
+        </a>
+        {% endif %}
     </div>
-   
+
 </section>
 <section id="contact-form" class="dark-bg section-home-4">
     <div class="row">
         <div class="contact-form-box col s8 offset-s2 m6 offset-m3">
-            <h2 class="center-align homepage-subheading4 light-text">Contact Us</h2>
+            <h2 class="center-align page-heading light-text">Contact Us</h2>
             <form method="POST" action="{{ url_for('home') }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="email_of_sender" name="email_of_sender" type="text" class="validate" required>
-                        <label for="email_of_sender">Email Address:</label> 
-                    </div> 
+                        <label for="email_of_sender">Email Address:</label>
+                    </div>
                     <div class="input-field col s12">
-                        <textarea id="message" name="message" class="validate"  required></textarea> 
-                    </div> 
+                        <textarea id="message" name="message" class="validate" required></textarea>
+                    </div>
                 </div>
-                <button class="contact-send-btn btn-large z-depth-3" type="submit" name="action" value="Submit">SEND</button>
+                <button class="contact-send-btn btn-large z-depth-3" type="submit" name="action"
+                    value="Submit">SEND</button>
             </form>
         </div>
     </div>

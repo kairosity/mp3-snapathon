@@ -407,6 +407,10 @@ The form fields are limited to an email: field and the message field as the kind
 
     I used Rafal Cz.'s solution to this stack overflow question to change the active class on my navbar on desktop and mobile. 
 
+- [CSS based responsive timeline](https://codepen.io/krishnab/pen/OPwqbW/)
+
+    I used Krishna Babu's responsive CSS Timeline on my homepage to outline the competition schedule. 
+
 ## Unsplash Images Used in the Application
 
 - <span>Photo by <a href="https://unsplash.com/@cdx2?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">C D-X</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
@@ -508,6 +512,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     The icons used in this application were sourced from Font Awesome. 
 
+- ## [Unsplash](https://unsplash.com/)
+
+    Used throughout the application for images.
+
 ## HTML/CSS 
 
 - ## [Regex use vs. Regex abuse](https://blog.codinghorror.com/regex-use-vs-regex-abuse/)
@@ -543,6 +551,15 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Python | os.path.splitext() method](https://www.geeksforgeeks.org/python-os-path-splitext-method/)
 
     Very useful Python method for splitting files into roots & extensions. Used in this application to rename all incoming images.
+
+- ## [How to add leading zeros to a number in Python](https://www.kite.com/python/answers/how-to-add-leading-zeros-to-a-number-in-python#:~:text=Use%20str.,0%20to%20the%20specified%20width%20.)
+
+    Used briefly for a function that has since been removed. Good to know though.
+
+- ## [Python List Comprehension](https://www.programiz.com/python-programming/list-comprehension)
+
+    List comprehension used in a number of places throughout the application. A much more efficient and nicer way to loop through arrays. 
+
 
 ## Flask
 
@@ -623,6 +640,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 ## Jinja
 
 - ## [Jinja Documentation](https://jinja.palletsprojects.com/en/2.11.x/)
+
+- ## [Get lengths of a list in a jinja2 template](https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-template)
+
+    Used on the recent winners page to determine whether or not there was a tie. 
 
 ## APScheduler
 

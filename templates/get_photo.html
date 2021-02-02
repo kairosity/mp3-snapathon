@@ -17,11 +17,11 @@
             
             {% elif "recent_winners" in source_url %}
 
-            <h2>Recent winners link to go here</h2>
+            <a href="{{url_for('recent_winners')}}"><i class="fas fa-long-arrow-alt-left"></i>Back to recent winners!</a>
 
             {% elif "browse" in source_url %}
 
-            <h2>Browse all images link to go here</h2>
+            <a href="{{url_for('browse')}}"><i class="fas fa-long-arrow-alt-left"></i>Back to browse!</a>
 
             {% endif %}
         

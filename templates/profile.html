@@ -62,7 +62,13 @@
 
     </div>
     <div id="awards" class="row s12">
-
+        {% for photo in award_winners %}
+            
+                <div class="col s12 m4 l3 profile-photos-col">
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+                </div>
+            
+            {% endfor %}
     </div>
   </div>
 
