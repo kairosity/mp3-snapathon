@@ -411,6 +411,10 @@ The form fields are limited to an email: field and the message field as the kind
 
     I used Krishna Babu's responsive CSS Timeline on my homepage to outline the competition schedule. 
 
+- [Finding the date of the next Saturday](https://stackoverflow.com/questions/16769902/finding-the-date-of-the-next-saturday)
+
+    I used Emmanuel's answer to this question to write user specific messages on my user's profile pages, when they login. 
+
 ## Unsplash Images Used in the Application
 
 - <span>Photo by <a href="https://unsplash.com/@cdx2?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">C D-X</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>

@@ -4,29 +4,67 @@
 
 <section class="profile-page-header">
     <div class="row">
+        <div class="col s10 offset-s1 m7 offset-m1 hide-on-med-and-up">  
+            <h1 class="profile-page-heading">{{ user.username|capitalize }}'s profile</h1>
+        </div>
+    </div>
+    <div class="row">
         <div class="col s10 m2 offset-m1 center-align avatar-wrapper hide-on-small-only">
             <img class="avatar" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/>
             <h5 class="badge user-points-badge">{{ user.user_points }}</h5>
              <p class="avatar-username">{{ user.username|capitalize }}</p>
         </div>
-         <div class="col s10 offset-s1 center-align">
+         <div class="col s10 offset-s1 m2 offset-m1 center-align">
             <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/><br>
              <p class="center-align avatar-username hide-on-med-and-up">{{ user.username|capitalize }}</p>
              <h5 class="center-align badge user-points-badge hide-on-med-and-up">{{ user.user_points }}</h5>
        </div>
+       
+      <div class="col s6 offset-s3 center-align edit-profile-btn-col hide-on-med-and-up">
+            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a> 
+        </div>
+
+        <div class="col s10 offset-s1 m6 offset-m2 center-align">
+            {% if user.username == session.user %}
+            <!-- If it is Mon-Fri -->
+            {% if datetime.weekday() in range(0,5) %}
+                <!-- If the user has yet to compete -->
+                {% if can_enter %} 
+                    <h4 class="time-msg">You still have to enter an image into this week's competition. You have {{comp_closes}} left to enter.</h4>
+                    <h4 class="time-msg">Go to <a class="profile-link" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to 
+                        enter an image.</h4>
+                {% endif %}
+            <!-- If it is Sat or Sunday before 22:00PM -->
+            {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") <= "22") ) %}
+                <!-- If the user has not voted yet -->
+                {% if votes_to_use > 0 %}
+                    <h4 class="time-msg"> You still have to vote for your favourite image. You have {voting_closes} left to vote. If you don't vote, your entry's points will be reduced to 0.</h4>
+                <!-- If the user has voted already OR has no votes b/c they did not enter -->
+                {% else %}
+                    <h4 class="time-msg">Voting ends at 22:00 this Sunday, when awards, points & winners will be announced.</h4>
+                {% endif %}
+            {% endif %}
+            {% endif %}
+        </div>
+
     </div>
     <div class="row">
-        <div class="col s10 offset-s1 m6 offset-m1">  
+        <div class="col s10 offset-s1 m7 offset-m1 hide-on-small-only">  
             <h1 class="profile-page-heading">{{ user.username|capitalize }}'s profile</h1>
         </div>
-       <div class="col s12 m2 offset-m2 right-align valign-center">
-           {% if user.username == session.user %}
-            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn-large edit-profile-btn">Edit Profile</a> 
-           {% endif %}
-            <h4 class="date">UTC Date:{{ datetime.strftime("%A, %d %B %Y") }}</h4>
-            <h4 class="date">Local Date & Time:{{ datetime.strftime("%X") }}</h4>
-       </div>
+       
+        {% if user.username == session.user %}
+       
+
+         <div class="col s6 offset-s1 m6 offset-m1 left-align hide-on-small-only">
+            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a> 
+        </div>
+
+        <!-- End if user is logged in -->
+        {% endif %}
+       
     </div>
+    
 </section>
      
     <div class="row profile-row">

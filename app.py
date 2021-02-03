@@ -159,7 +159,7 @@ def awards():
 def new_comp():
     all_users = list(mongo.db.users.find())
     for user in all_users:
-        mongo.db.users.update_one({"username": user["username"]}, {'$set':{"can_enter": True}})
+        mongo.db.users.update_one({"username": user["username"]}, {'$set': {"can_enter": True}})
     print("All users can now enter a new image in competition")
 
 
@@ -188,15 +188,15 @@ inject_datetime()
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-            with app.app_context():
-                msg = Message(subject="New Email From Contact Form")
-                msg.sender=request.form.get("email_of_sender")
-                msg.recipients=[os.environ.get('MAIL_USERNAME')]
-                message = request.form.get("message")
-                msg.body=f"Email From: {msg.sender} \nMessage: {message}"
-                mail.send(msg)
-                flash("Email Sent!")
-                return redirect(url_for('home'))
+        with app.app_context():
+            msg = Message(subject="New Email From Contact Form")
+            msg.sender = request.form.get("email_of_sender")
+            msg.recipients = [os.environ.get('MAIL_USERNAME')]
+            message = request.form.get("message")
+            msg.body = f"Email From: {msg.sender} \nMessage: {message}"
+            mail.send(msg)
+            flash("Email Sent!")
+            return redirect(url_for('home'))
 
     return render_template("index.html")
 
@@ -210,7 +210,7 @@ def recent_winners():
     hour_of_day = today.time().hour
     week_and_year = datetime.now().strftime("%V%G")
 
-    week_before = today - timedelta(weeks = 1)
+    week_before = today - timedelta(weeks=1)
     last_week_and_year = week_before.strftime("%V%G")
 
 
@@ -231,7 +231,6 @@ def recent_winners():
         while last_mon.weekday() !=0:
             last_mon = today - timedelta(days=1)
     
-
     first_place = []
     second_place = []
     third_place = []
@@ -250,7 +249,6 @@ def recent_winners():
         elif img["awards"] == 3:
             third_place.append(img)
             list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
-
 
     return render_template("recent_winners.html", first_place=first_place, 
                                                   second_place=second_place, 
@@ -394,12 +392,54 @@ def profile(username):
     for img in user_photos:
         if img["awards"] != None:
             award_winners.append(img)
-            
+    
+    can_enter = user["can_enter"]
+    votes_to_use = user["votes_to_use"]
+
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Code from Emmanuel's Stack Overflow answer (attributed in README.md)
+    def get_next_weekday(startdate, weekday):
+        """
+        @startdate: given date, in format '2013-05-25'
+        @weekday: week day as a integer, between 0 (Monday) to 6 (Sunday)
+        """
+        d = datetime.strptime(startdate, '%Y-%m-%d')
+        t = timedelta((7 + weekday - d.weekday()) % 7)
+        date = d + t
+        return date
+    
+    competition_ends = get_next_weekday(today, 5)
+    next_competition_starts = get_next_weekday(today, 1)
+    voting_ends = get_next_weekday(today, 7) - timedelta(hours=2)
+
+    now = datetime.now()
+    time_til_comp_ends = competition_ends - now
+    time_til_voting_ends = voting_ends - now
+    time_til_next_comp_starts = next_competition_starts - now
+ 
+    def get_time_remaining_string(timedelta):
+        days = timedelta.days 
+        timedelta_string = str(timedelta)
+        time_array = timedelta_string.split(",").pop().split(":")
+        hours = time_array[0]
+        minutes = time_array[1]
+        final_time_string = f"{days} days,{hours} hours and {minutes} minutes"
+        return final_time_string
+
+    comp_closes = get_time_remaining_string(time_til_comp_ends)
+    voting_closes = get_time_remaining_string(time_til_voting_ends)
+    next_comp_starts = get_time_remaining_string(time_til_next_comp_starts)
 
     return render_template("profile.html",
                            username=username, user_photos=user_photos,
                            user=user, photos_voted_for=photos_voted_for_objs,
-                           award_winners=award_winners)
+                           award_winners=award_winners,
+                           can_enter=can_enter,
+                           votes_to_use=votes_to_use,
+                           comp_closes=comp_closes,
+                           voting_closes=voting_closes,
+                           next_comp_starts=next_comp_starts)
     
 
 

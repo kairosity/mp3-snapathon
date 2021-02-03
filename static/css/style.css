@@ -796,11 +796,18 @@ p.avatar-username{
     letter-spacing: 2px;
     margin: 0 0 5px;
 }
-.date{
-    font-family: var(--subheading-font);
+.time-msg{
+    font-family: var(--subheading-serif-font);
     color: var(--main-text-colour);
-    font-weight: 300;
-    font-size: 1em;
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+.profile-link{
+    color: var(--accent-colour);
+    text-shadow: 1px 1px 1px #000;
+}
+.edit-profile-btn-col{
+    margin-top: 1rem;
 }
 .profile-row{
     margin-bottom: 0;
