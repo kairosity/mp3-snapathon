@@ -286,8 +286,11 @@ def search():
             full_query["competition_category"] = category
         
         filtered_photos = list(mongo.db.photos.find(full_query))
+
+        source_url = request.referrer
         
-        return render_template("browse_images.html", photos=filtered_photos)
+        return render_template("browse_images.html", 
+                                photos=filtered_photos, source_url=source_url)
 
         
 
@@ -537,7 +540,9 @@ def edit_profile(username):
                 flash("Profile updated successfully!")
                 return render_template('profile.html', user=user, user_photos=user_photos, photos_voted_for=photos_voted_for_objs)
 
-            return render_template('edit_profile.html', user=user)
+            source_url = request.referrer
+
+            return render_template('edit_profile.html', user=user, source_url=source_url)
 
         else:
             flash("Sorry, but you cannot edit another user's profile.")
@@ -671,7 +676,6 @@ def file(filename):
 def get_photo(filename):
 
     source_url = request.referrer
-    print(source_url)
 
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"username": photo["created_by"]})

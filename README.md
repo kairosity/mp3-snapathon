@@ -334,6 +334,10 @@ This is where first time users can register to become members. They fill in a us
 
 # Features
 
+## Browse Images
+
+- When a user searches for a particular sub-section of images, the returning page scrolls down automatically to feature the images rather than the search box. 
+
 ## Register as a new user. 
 
 When users sign up they must enter a username that must be unique, an email that must also be unique and a password. 
@@ -545,6 +549,12 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Beautiful CSS box-shadow examples](https://getcssscan.com/css-box-shadow-examples)
 
     A great collection of box-shadows
+
+## JavaScript 
+
+- ## [W3 Schools - Location hash Property](https://www.w3schools.com/jsref/prop_loc_hash.asp)
+
+    Used on the browse page to scroll down to the images when a user searches.
 
 ## Python 
 

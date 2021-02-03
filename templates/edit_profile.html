@@ -2,9 +2,21 @@
 
 {% block content %}
 
+{% if source_url %}
+        {% if "profile" in source_url %}
+          
+                <div class="row back-link-div">
+                    <a class="back-link" href="{{url_for('profile', username=user.username)}}">
+                        <i class="fas fa-long-arrow-alt-left"></i> Cancel and back to profile.</a>
+                </div>
+            
+        {% endif %}
+{% endif %}
+
+
     <div class="row">
         
-    <div class="col s12 m6 offset-m3">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
         
         <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}">
             <h1 class="center-align page-heading">Update Profile</h1>
@@ -18,8 +30,8 @@
                     <label for="email">email</label>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 </div>
+                <p class=" col s12 password-change-instructions">If you'd like to change your password, please enter your current password below and then your new password twice.</p>
                 <div class="input-field col s12">
-                    <p>If you'd like to change your password, please enter your current password below and then your new password twice.</p>
                     <input id="current_password" name="current_password" type="password" class="validate" minlength="6" maxlength="25">
                     <label for="current_password">current password</label>  
                 </div>

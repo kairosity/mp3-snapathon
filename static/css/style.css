@@ -47,7 +47,7 @@ html {
 }
 .page-subheading{
     font-family: var(--subheading-font);
-    font-weight: 600;
+    font-weight: 400;
     color: var(--main-text-colour);
     font-size: 1.6rem;
     letter-spacing: 2px;
@@ -877,15 +877,19 @@ ul.profile-tabs .profile-tab a:focus.active {
 .edit-profile-btn:hover{
     background-color: var(--dark-accent-colour);
 }
+/* Edit Profile Page */
+
+p.password-change-instructions{
+    color: var(--main-text-colour);
+    font-size: 1.1rem;
+    font-weight: 400;
+}
 /* Competition Page */
 
 /* Text */
-.compete-main-heading{
-    font-family: var(--main-heading-font);
-    font-size: 5rem;
-    font-weight: 500;
+.compete-subheading{
+    font-weight: 400;
 }
-
 input[type=text],
 textarea {
     color: #f5f5f5;
@@ -917,7 +921,7 @@ div.add-photo-collapsible-header .indicator{
     font-size: 1.1rem;
     font-family: var(--subheading-font);
     letter-spacing: 1px;
-    font-weight: 500;
+    font-weight: 400;
 }
 .collapsible-body {
     border: none;
@@ -1061,7 +1065,7 @@ div.review-rules-collapsible-header{
 .add-a-photo-text,
 .review-rules-text{
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 /* Footer */
 footer{
