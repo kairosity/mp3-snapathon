@@ -80,6 +80,39 @@ html {
 .light-text{
     color: var(--main-text-colour);
 }
+input{
+    color:  var(--main-text-colour);
+}
+#content-wrap > div.search-card.row > form > div:nth-child(3) > div > div > div > input{
+    font-size: 0.9rem;
+}
+ul.dropdown-content.select-dropdown li span {
+    color: var(--dark-text-color); 
+    font-size: 1rem;
+}
+ul.dropdown-content.select-dropdown li span:hover{
+    background-color: var(--accent-colour);
+}
+
+/* Overriding Materialize form label colours */
+/* label color */
+.input-field label,
+.input-field label.active {
+    color: var(--accent-colour) !important;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: var(--accent-colour);
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid var(--accent-colour);
+    box-shadow: 0 1px 0 0 #000;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: var(--accent-colour);
+}
 
 /* Navigation */
 
@@ -334,7 +367,7 @@ textarea.materialize-textarea:focus:not([readonly]){
     font-size: 1.5rem;
 }
 section.first_place{
-    border: #FFD700 solid 9px;
+    /* border: #FFD700 solid 9px; */
     width: 90%;
 }
 .first-place-title{
@@ -342,11 +375,43 @@ section.first_place{
     text-decoration-color: #FFD700;
 }
 .tie-announcement-first{
-    background-color: #FFD700;
+    /* background-color: #FFD700; */
     color: var(--dark-text-color);
 }
+.award-overlay-container{
+    position: relative;
+    width: 100%;
+}
+img.award-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.award-overlay{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height:100%;
+  transition: .5s ease;   
+  background-color: #d5d5d7;
+}
+i.award{
+    font-size: 3rem;
+    position: absolute;
+    top: 50%;
+    left: 26%;
+    text-align: center;
+    padding: 2rem 0.5rem;
+    background-color: white;
+
+}
+i.award-1{
+    color:#FFD700;
+}
 section.second_place{
-    border: #d5d5d7 solid 9px;
+    /* border: #d5d5d7 solid 9px; */
     width: 90%;
 }
 .second-place-title{
@@ -354,11 +419,14 @@ section.second_place{
     text-decoration-color: #d5d5d7;
 }
 .tie-announcement-second{
-    background-color: #d5d5d7;
+    /* background-color: #d5d5d7; */
     color: var(--dark-text-color);
 }
+i.award-2{
+    color: #d5d5d7;
+}
 section.third_place{
-    border: #cd7f32 solid 9px;
+    /* border: #cd7f32 solid 9px; */
     width: 90%;
 }
 .third-place-title{
@@ -366,8 +434,11 @@ section.third_place{
     text-decoration-color: #cd7f32;
 }
 .tie-announcement-third{
-    background-color: #cd7f32;
+    /* background-color: #cd7f32; */
     color: var(--dark-text-color);
+}
+i.award-3{
+    color: #cd7f32;
 }
 .award-text{
     font-family: var(--subheading-font);

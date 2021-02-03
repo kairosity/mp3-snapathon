@@ -7,7 +7,7 @@
     <h2 class="page-subheading center-align col s10 offset-s1">Congratulations to the following users:</h2>
 </div>
 <section class="row first_place">
-    
+    <div class="row">
         <h2 class="page-subheading center-align first-place-title">FIRST PLACE</h2>
         {% if first_place|length > 1 %}
         <h2 class="page-sub-subheading-text center-align tie-announcement-first">IT'S A TIE!</h2>
@@ -18,12 +18,24 @@
             <a class="award-text-link" href="{{ url_for('get_photo', filename=img.filename) }}"><p class="award-text center-align">with "{{img.photo_title|capitalize}}"</p></a>
             <p class="award-text center-align">which received {{img.photo_votes}} votes!</p>
         </div>
-        
-            <a href="{{ url_for('get_photo', filename=img.filename) }}"><img class="thumbnail-photo browse-photo award-photo-first col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}"></a>
+    </div>
+        <div class="row">
+         <div class="award-overlay-container">
+            <a href="{{ url_for('get_photo', filename=img.filename) }}"> 
+                <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+            </a>
+           <div class="award-overlay award-overlay-1">
+                 <i class="fas fa-award award award-1"></i>
+            </div>
+           
+        </div>
+        </div>
+
         {% endfor %}
 </section>
 
 <section class="second_place row">
+    <div class="row">
      <h2 class="page-subheading center-align second-place-title">SECOND PLACE</h2>
      {% if second_place|length > 1 %}
     <h2 class="page-sub-subheading-text center-align tie-announcement-second">IT'S A TIE!</h2>
@@ -34,11 +46,22 @@
         <a class="award-text-link" href="{{ url_for('get_photo', filename=img.filename) }}"><p class="award-text center-align">with "{{img.photo_title|capitalize}}"</p></a>
         <p class="center-align award-text">which received {{img.photo_votes}} votes!</p>
         </div>
-        <a href="{{ url_for('get_photo', filename=img.filename) }}"><img class="thumbnail-photo browse-photo award-photo-second col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}"></a>
+    </div>
+    <div class="row">
+         <div class="award-overlay-container">
+        <a href="{{ url_for('get_photo', filename=img.filename) }}">
+            <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+        </a>
+        <div class="award-overlay award-overlay-2">
+            <i class="fas fa-award award award-2"></i>
+        </div>
+         </div>
+        </div>
         
         {% endfor %}
 </section>
 <section class="third_place row">
+    <div class="row">
      <h2 class="page-subheading center-align third-place-title">THIRD PLACE</h2>
      {% if third_place|length > 1 %}
     <h2 class="page-sub-subheading-text center-align tie-announcement-third">IT'S A TIE!</h2>
@@ -49,7 +72,18 @@
         <a class="award-text-link" href="{{ url_for('get_photo', filename=img.filename) }}"><p class="center-align award-text">with "{{img.photo_title|capitalize}}"</p></a>
         <p class="center-align award-text">which received {{img.photo_votes}} votes!</p>
         </div>
-        <a href="{{ url_for('get_photo', filename=img.filename) }}"><img class="thumbnail-photo browse-photo award-photo-third col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}"></a>
+    </div>
+     <div class="row">
+         <div class="award-overlay-container">
+
+        <a href="{{ url_for('get_photo', filename=img.filename) }}">
+            <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+        </a>
+         <div class="award-overlay award-overlay-3">
+            <i class="fas fa-award award award-3"></i>
+        </div>
+     </div>
+        </div>
     {% endfor %}
 </section>
 
