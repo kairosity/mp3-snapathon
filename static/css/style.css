@@ -693,6 +693,7 @@ div.back-link-div{
     font-size: 2rem;
     color: var(--main-text-colour);
     font-weight: 500;
+    margin-bottom: 0.2rem;
 }
 .artist-name{
     font-family: var(--subheading-font);
@@ -721,6 +722,31 @@ div.back-link-div{
 .edit-photo-btn,
 .del-photo-btn{
     background-color: var(--accent-colour);
+}
+
+.get-photo-img{
+    width: 100%;;
+}
+.edit-photo-btn{
+    margin-bottom: 1rem;
+}
+.photo-points,
+.awards{
+    color: var(--main-text-colour);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+.first-place-award{
+    color: #FFD700;
+    margin-bottom: 1.4rem;
+}
+.second-place-award{
+    color: #d5d5d7;
+    margin-bottom: 1.4rem;
+}
+.third-place-award{
+    color: #cd7f32;
+    margin-bottom: 1.4rem;
 }
 
 
@@ -949,11 +975,7 @@ footer p {
     color: var(--main-text-colour);
 }
 
-/* Get Photo Page */
 
-.get-photo-img{
-    width: 100%;;
-}
 
 /* MEDIA QUERIES - (based on the Materialize screen size categorizations) */
 

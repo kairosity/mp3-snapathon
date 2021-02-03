@@ -2,16 +2,22 @@
 
 {% block content %}
 
-    <h1>Edit Your Photograph Details</h1>
+<div class="row back-link">
+    <a class="back-link" href="{{url_for('get_photo', filename=photo.filename)}}"><i
+            class="fas fa-long-arrow-alt-left"></i> Back to "{{photo.photo_title|capitalize}}" without editing.</a>
+</div>
 
-    <form class="col s8 offset-s2" method="post" action="{{ url_for('edit_photo', filename=photo.filename) }}">
+<div class="row">
+    <h1 class="page-heading col s10 offset-s1 center-align">Edit Photo</h1>
+
+    <form class="col s10 offset-s1 m8 offset-m2 l6 offset-l3" method="post" action="{{ url_for('edit_photo', filename=photo.filename) }}">
                 <div class="row">
                     <div class="input-field col s12 m6">
                     <input id="title" name="title" type="text" value="{{photo.photo_title}}" class="validate" required>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <label for="title">Title</label>
                     </div> 
-                    <img src="{{ url_for('file', filename=photo.filename) }}">
+                    <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
@@ -48,16 +54,16 @@
                     <div class="col s12">
                     <p class="grey-text">I guarantee that this photograph is my own work and I have the right to share it. I further guarantee that it 
                         contains no explicit imagery, or violence, or anything offensive. (worded better) I further promise that this 
-                        photograph has not been heavily edited other than simple tweaks to contrast and exposure. 
+                        photograph has not been heavily edited other than simple tweaks to contrast and exposure. <br>
                         <label> <input type="checkbox" class="filled-in" required />
                     <span>I have read and agree to these terms and conditions</span>
                 </label></p>
                     </div>
                 </div>
-                <button class="btn waves-effect waves-light" type="submit">Update Photo Details
+                <button class="btn waves-effect waves-light col s10 offset-s1 m8 offset-m2" type="submit">Update Photo Details
             </button>
     </form>
-
+</div>
 
 
 {% endblock %}
