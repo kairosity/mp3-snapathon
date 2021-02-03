@@ -154,11 +154,18 @@ def awards():
                 if photo_as_obj["awards"] == 3:
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
         
-    print("This was run with APSheduler!")
+    print("Awards & points have been calculated and awarded.")
 
-   
+def new_comp():
+    all_users = list(mongo.db.users.find())
+    for user in all_users:
+        mongo.db.users.update_one({"username": user["username"]}, {'$set':{"can_enter": True}})
+    print("All users can now enter a new image in competition")
+
+
 scheduler = BackgroundScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='sun', hour=22, minute=00, second=0, start_date='2021-01-24 00:00:00')
+scheduler.add_job(new_comp, 'cron', day_of_week='mon', hour=00, minute=00, second=0, start_date='2021-01-24 00:00:00')
 scheduler.start()
 
 def delete_collection():
