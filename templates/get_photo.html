@@ -2,50 +2,73 @@
 
 {% block content %}
 <div class="row">
-    <div class="col s12 m6">
 
-        
-        {% if source_url %}
+    {% if source_url %}
 
-            {% if "profile" in source_url %}
-
-            <a href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left"></i>Back to {{username|capitalize}}'s Profile</a>
-            
-            {% elif "compete" in source_url %}
-
-            <a href="{{url_for('compete', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left"></i>Back to the competition!</a>
-            
-            {% elif "recent_winners" in source_url %}
-
-            <a href="{{url_for('recent_winners')}}"><i class="fas fa-long-arrow-alt-left"></i>Back to recent winners!</a>
-
-            {% elif "browse" in source_url %}
-
-            <a href="{{url_for('browse')}}"><i class="fas fa-long-arrow-alt-left"></i>Back to browse!</a>
-
-            {% endif %}
-        
-        {% else %}
-            <h2>Edit photo</h2>
+        {% if "profile" in source_url %}
+        <div class="row back-link">
+            <a class="back-link" href="{{url_for('profile', username=photo.created_by)}}"><i
+                    class="fas fa-long-arrow-alt-left"></i> Back to {{username|capitalize}}'s Profile</a>
+        </div>
+        {% elif "compete" in source_url %}
+        <div class="row">
+            <a class="back-link" href="{{url_for('compete', username=photo.created_by)}}"><i
+                    class="fas fa-long-arrow-alt-left"></i> Back to the competition!</a>
+        </div>
+        {% elif "recent_winners" in source_url %}
+        <div class="row">
+            <a class="back-link" href="{{url_for('recent_winners')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+                recent winners!</a>
+        </div>
+        {% elif "browse" in source_url %}
+        <div class="row back-link-div">
+            <a class="back-link" href="{{url_for('browse')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+                browse!</a>
+        </div>
         {% endif %}
-        <h1>{{ photo.photo_title }}</h1>
-        <h3>by {{ username }}</h3>
-        <p>{{ photo.photo_story }}</p>
+
+        {% else %}
+        {% endif %}
+
+</div>
+
+<div class="row">
+    <div class="col s12 m6 offset-m3">
+
+        <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title|capitalize }}</h1>
+        <h2 class="artist-name col s10 offset-s1 center-align">by {{ username|capitalize }}</h2>
         <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
-        <h5>Camera: {{ photo.camera }}</h5>
-        <h5>Lens: {{ photo.lens }}</h5>
-        <h5>Aperture: {{photo.aperture }}</h5>
-        <h5>Shutter Speed: {{ photo.shutter }}</h5>
-        <h5>ISO: {{ photo.iso }}</h5>
+        <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story|capitalize }}</p>
+        <h3 class="first-tech-spec tech-specs col s10 offset-s1 left-align"><em>Camera:</em> {{ photo.camera|capitalize }}</h3>
+        {% if photo.lens %}
+        <h3 class="tech-specs col s10 offset-s1 left-align"><em>Lens:</em> {{ photo.lens }}</h3>
+        {% endif %}
+        {% if photo.aperture %}
+        <h3 class="tech-specs col s10 offset-s1  left-align"><em>Aperture:</em> {{photo.aperture }}</h3>
+        {% endif %}
+        {% if photo.shutter %}
+        <h3 class="tech-specs col s10 offset-s1  left-align"><em>Shutter Speed:</em> {{ photo.shutter }}</h3>
+        {% endif %}
+        {% if photo.iso %}
+        <h3 class="tech-specs col s10 offset-s1  left-align"><em>ISO:</em> {{ photo.iso }}</h3>
+        {% endif %}
 
     </div>
 </div>
 
-    <!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
-    {% if username == session.user %}
-        <!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. deleted user=user from editphoto url-->
-        <a href="{{ url_for('edit_photo', photo=photo, filename=photo.filename) }}" class="waves-effect waves-light btn-large">Edit Photo Details</a> 
-        <a href="{{ url_for('delete_photo', filename=photo.filename) }}"class="waves-effect waves-light btn-large">Delete Photograph</a>
-    {% endif %}
+<!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
+{% if username == session.user %}
+<!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. deleted user=user from editphoto url-->
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+<a href="{{ url_for('edit_photo', photo=photo, filename=photo.filename) }}"
+    class="waves-effect waves-light btn-large edit-photo-btn col s10 offset-s1 center-align">Edit Photo Details</a>
+    </div>
+     <div class="col s12 m8 offset-m2">
+<a href="{{ url_for('delete_photo', filename=photo.filename) }}" class="waves-effect waves-light btn-large del-photo-btn col s10 offset-s1">Delete
+    Photograph</a>
+</div>
+</div>
+{% endif %}
 
 {% endblock %}

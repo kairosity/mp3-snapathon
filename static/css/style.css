@@ -7,7 +7,7 @@
 :root {
     /* --main-heading-font: "Fraunces", serif; */
     --main-heading-font: "Anton", sans-serif;
-    --subheading-font: "Open Sans", sans-serif;
+    --subheading-font: "Raleway", sans-serif;
     --subheading-serif-font: "Open Sans", sans-serif;
     --main-text-colour: #e0e0e0;
     --accent-colour: #ffd54f ;
@@ -47,14 +47,14 @@ html {
 }
 .page-subheading{
     font-family: var(--subheading-font);
-    font-weight: 300;
+    font-weight: 600;
     color: var(--main-text-colour);
     font-size: 1.6rem;
     letter-spacing: 2px;
 }
 .page-sub-subheading-text{
     font-family: var(--subheading-font);
-    font-weight: 200;
+    font-weight: 300;
     color: var(--main-text-colour);
     font-size: 1.3rem;
     letter-spacing: 1px; 
@@ -153,7 +153,7 @@ nav i.logo {
     font-size: 2rem;
     letter-spacing: 5px;
     padding: 0.7em 0.5em;
-    font-weight: 600;
+    font-weight: bold;
 }
 .logo-home{
     font-size: 2rem;
@@ -166,9 +166,6 @@ nav i.logo {
 div.home-buttons{
     margin-top: 8em;
     margin-bottom: 5em;
-}
-div.register-button-home{
-     /* padding-bottom: 5em !important;  */
 }
 div.home-buttons a{
     width: 60%;
@@ -400,10 +397,9 @@ section.row a img.award-photo-third{
 
 /* Homepage Timeline - Code taken from Krishna Babu's Codepen (attributed in README.md) */
 
-body{
-  font-family: 'Raleway', sans-serif;
-  color: #333;
-}
+/* body{
+  color: var(--dark-text-color);
+} */
 
 header h1{
   text-align: center;
@@ -605,119 +601,6 @@ header h1{
   z-index: 15;
 }
 
-@media(min-width: 768px){
-  .timeline {
-    width: 660px;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-
-  .timeline li:after {
-    content: "";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-  }
-  
-  .timeline .hexa {
-    left: -28px;
-    right: auto;
-    top: 8px;
-  }
-
-  .timeline .direction-l .hexa {
-    left: auto;
-    right: -28px;
-  }
-
-  .direction-l {
-    position: relative;
-    width: 310px;
-    float: left;
-    text-align: right;
-  }
-
-  .direction-r {
-    position: relative;
-    width: 310px;
-    float: right;
-    text-align: left;
-  }
-
-  .flag-wrapper {
-    display: inline-block;
-  }
-  
-  .flag {
-    font-size: 18px;
-  }
-
-  .direction-l .flag:after {
-    left: auto;
-    right: -16px;
-    top: 50%;
-    margin-top: -8px;
-    border: solid transparent;
-    border-left-color: var(--main-text-colour);
-    border-width: 8px;
-  }
-
-  .direction-r .flag:after {
-    top: 50%;
-    margin-top: -8px;
-    border: solid transparent;
-    border-right-color: var(--main-text-colour);
-    border-width: 8px;
-    left: -8px;
-  }
-
-  .time-wrapper {
-    display: inline;
-    vertical-align: middle;
-    margin: 0;
-  }
-
-  .direction-l .time-wrapper {
-    float: left;
-  }
-
-  .direction-r .time-wrapper {
-    float: right;
-  }
-
-  .time {
-    padding: 5px 10px;
-  }
-
-  .direction-r .desc {
-    margin: 1em 0 0 0.75em;
-  }
-}
-
-@media(min-width: 992px){
-  .timeline {
-    width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-
-  .direction-l {
-    position: relative;
-    width: 380px;
-    float: left;
-    text-align: right;
-  }
-
-  .direction-r {
-    position: relative;
-    width: 380px;
-    float: right;
-    text-align: left;
-  }
-}
-
-
 /* Browse Images */
 .browse-images-container {
   position: relative;
@@ -795,6 +678,52 @@ div.col a.reset-btn {
   left: 50%;
   font-size: 1rem;
 }
+/* Photo Details Page */
+
+a.back-link{
+    color: var(--accent-colour);
+    font-size: 1.3rem;
+    padding: 2rem;
+}
+div.back-link-div{
+    margin-top: 2rem;
+}
+.photo-title{
+    font-family: var(--subheading-font);
+    font-size: 2rem;
+    color: var(--main-text-colour);
+    font-weight: 500;
+}
+.artist-name{
+    font-family: var(--subheading-font);
+    font-size: 1.3rem;
+    color: var(--main-text-colour);
+    font-weight: 400;
+}
+.photo-story{
+    font-family: var(--subheading-serif-font);
+    font-size: 1.2rem;
+    color: var(--main-text-colour);
+    font-weight: 300;
+}
+.first-tech-spec{
+    padding-top: 2rem;
+}
+.tech-specs{
+    font-family: var(--subheading-serif-font);
+    font-size: 1.4rem;
+    color: var(--main-text-colour);  
+    font-weight: 300;
+}
+.tech-specs em{
+    font-weight: 400;
+}
+.edit-photo-btn,
+.del-photo-btn{
+    background-color: var(--accent-colour);
+}
+
+
 /* Login & Register Pages */
 .login-btn,
 .register-btn{
@@ -908,6 +837,12 @@ ul.profile-tabs .profile-tab a:focus,
 ul.profile-tabs .profile-tab a:focus.active {
     background-color: var(--accent-colour);
     color: var(--dark-text-color);
+}
+.edit-profile-btn{
+    background-color: var(--accent-colour);
+}
+.edit-profile-btn:hover{
+    background-color: var(--dark-accent-colour);
 }
 /* Competition Page */
 
@@ -1062,7 +997,6 @@ i.content-hinting{
 .homepage-subheading4{
     font-size: 2.4em;
     padding: 1.3em 0;
-    font-weight: 600;
 }
 /* Profile Page */
 .profile-page-header{
@@ -1105,6 +1039,96 @@ footer{
     margin-top: 50px;
 }
 }
+@media(min-width: 768px){
+  .timeline {
+    width: 660px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .timeline li:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  
+  .timeline .hexa {
+    left: -28px;
+    right: auto;
+    top: 8px;
+  }
+
+  .timeline .direction-l .hexa {
+    left: auto;
+    right: -28px;
+  }
+
+  .direction-l {
+    position: relative;
+    width: 310px;
+    float: left;
+    text-align: right;
+  }
+
+  .direction-r {
+    position: relative;
+    width: 310px;
+    float: right;
+    text-align: left;
+  }
+
+  .flag-wrapper {
+    display: inline-block;
+  }
+  
+  .flag {
+    font-size: 18px;
+  }
+
+  .direction-l .flag:after {
+    left: auto;
+    right: -16px;
+    top: 50%;
+    margin-top: -8px;
+    border: solid transparent;
+    border-left-color: var(--main-text-colour);
+    border-width: 8px;
+  }
+
+  .direction-r .flag:after {
+    top: 50%;
+    margin-top: -8px;
+    border: solid transparent;
+    border-right-color: var(--main-text-colour);
+    border-width: 8px;
+    left: -8px;
+  }
+
+  .time-wrapper {
+    display: inline;
+    vertical-align: middle;
+    margin: 0;
+  }
+
+  .direction-l .time-wrapper {
+    float: left;
+  }
+
+  .direction-r .time-wrapper {
+    float: right;
+  }
+
+  .time {
+    padding: 5px 10px;
+  }
+
+  .direction-r .desc {
+    margin: 1em 0 0 0.75em;
+  }
+}
+
 /* Desktop Devices */
 @media screen and (min-width: 992px) {
 .homepage-heading {
@@ -1119,6 +1143,26 @@ footer{
 div.home-buttons a{
     width: 50%;
 }
+/* Homepage Timeline */
+.timeline {
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .direction-l {
+    position: relative;
+    width: 380px;
+    float: left;
+    text-align: right;
+  }
+
+  .direction-r {
+    position: relative;
+    width: 380px;
+    float: right;
+    text-align: left;
+  }
 /* Recent Winners */
 section.first_place,
 section.second_place,

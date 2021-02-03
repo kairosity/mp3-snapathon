@@ -310,6 +310,8 @@ def register():
         if password1 != password2:
             flash("Passwords do not match, please try again.")
             return redirect(url_for('register'))
+        
+        #If it is Mon-Friday can_enter = True If it is Sat or Sun it's False? Does it need to be False? 
 
         register = {
             "username": request.form.get("username").lower(),
@@ -318,7 +320,8 @@ def register():
             "user_points": 0,
             "photos_entered": [],
             "photos_voted_for": [],
-            "votes_to_use": 0
+            "votes_to_use": 0,
+            "can_enter": True
         }
         mongo.db.users.insert_one(register)
 
@@ -546,60 +549,67 @@ def compete():
     this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
 
     if request.method == 'POST':
-        if 'photo' in request.files:
-            photo = request.files['photo']
 
-            # To make sure that the file type is one of the acceptable image file types
-            file_extension = os.path.splitext(photo.filename)[1]
-            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-                abort(400, "Sorry that file extension is not allowed. Please re-format your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
-
-            # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
-            photo.filename = secure_filename(photo.filename)
-
-            # Upload the photo to the gridfs mongo storage
-            file_id = mongo.save_file(photo.filename, photo)
-
-            # This makes the filename unique 
-            new_filename = str(file_id) + file_extension
-
-            # Update the gridFS "Filename" attribute to be equal to the file_id
-            mongo.db.fs.files.update_one({"_id": file_id},
-                                    { '$set': {"filename": new_filename}})
-
-            current_user = mongo.db.users.find_one(
+        current_user = mongo.db.users.find_one(
                 {"username": session["user"]})
-
-            new_entry = {
-            "file_id": file_id,
-            "filename": new_filename,
-            "photo_title": request.form.get("title").lower(),
-            "photo_story": request.form.get("story").lower(),
-            "camera": request.form.get("camera").lower(),
-            "lens": request.form.get("lens").lower(),
-            "aperture": request.form.get("aperture").lower(),
-            "shutter": request.form.get("shutter").lower(),
-            "iso": request.form.get("iso").lower(),
-            "created_by": session["user"],
-            "date_entered": datetime.now(),
-            "competition_category": this_weeks_comp_category,
-            "week_and_year": datetime.now().strftime("%V%G"),
-            "photo_votes": 0,
-            "awards": None
-            }
-            mongo.db.photos.insert_one(new_entry)
-
-            # Get the photo obj's id and put in a variable? 
-            photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
-            photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
-            
-            # Add the photo obj id into the user's photos array and give the user a vote.
-            mongo.db.users.update_one({"_id": current_user["_id"]},
-                                        {'$push':{"photos": photo_filename_to_add_to_user},
-                                        '$inc':{"votes_to_use": 1 }})
-
-            flash("Entry Received!")
         
+        if current_user["can_enter"] == True:
+
+            if 'photo' in request.files:
+                photo = request.files['photo']
+
+                # To make sure that the file type is one of the acceptable image file types
+                file_extension = os.path.splitext(photo.filename)[1]
+                if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+                    abort(400, "Sorry that file extension is not allowed. Please re-format your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+
+                # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
+                photo.filename = secure_filename(photo.filename)
+
+                # Upload the photo to the gridfs mongo storage
+                file_id = mongo.save_file(photo.filename, photo)
+
+                # This makes the filename unique 
+                new_filename = str(file_id) + file_extension
+
+                # Update the gridFS "Filename" attribute to be equal to the file_id
+                mongo.db.fs.files.update_one({"_id": file_id},
+                                        { '$set': {"filename": new_filename}})
+
+
+                new_entry = {
+                "file_id": file_id,
+                "filename": new_filename,
+                "photo_title": request.form.get("title").lower(),
+                "photo_story": request.form.get("story").lower(),
+                "camera": request.form.get("camera").lower(),
+                "lens": request.form.get("lens").lower(),
+                "aperture": request.form.get("aperture").lower(),
+                "shutter": request.form.get("shutter").lower(),
+                "iso": request.form.get("iso").lower(),
+                "created_by": session["user"],
+                "date_entered": datetime.now(),
+                "competition_category": this_weeks_comp_category,
+                "week_and_year": datetime.now().strftime("%V%G"),
+                "photo_votes": 0,
+                "awards": None
+                }
+                mongo.db.photos.insert_one(new_entry)
+
+                # Get the photo obj's id and put in a variable? 
+                photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
+                photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+                
+                # Add the photo obj id into the user's photos array and give the user a vote.
+                # Set can_enter to false
+                mongo.db.users.update_one({"_id": current_user["_id"]},
+                                            {'$push':{"photos": photo_filename_to_add_to_user},
+                                            '$inc':{"votes_to_use": 1 },
+                                            '$set':{"can_enter": False }})
+
+                flash("Entry Received!")
+        else:
+            flash("I'm sorry, but you've already entered an image in this week's competition!")
     # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
     this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
 
