@@ -2,8 +2,9 @@
 from flask import (
     Flask, flash, render_template, 
     redirect, request, session, url_for,
-    abort)
-from flask_pymongo import PyMongo
+    abort, jsonify)
+from flask_pymongo import PyMongo, pymongo
+from flask_paginate import Pagination, get_page_args
 # from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail, Message
@@ -263,12 +264,32 @@ def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-    return render_template("browse_images.html", photos=all_photos)
+    def get_all_photos(offset, per_page):
+        return all_photos[offset: offset + per_page]
 
+   
+    
+    page, per_page, offset = get_page_args(page_parameter='page',
+                                           per_page_parameter='per_page')
+
+
+    PER_PAGE = 10
+
+    offset = page * PER_PAGE - PER_PAGE
+
+    total = len(all_photos)
+
+    pagination_photos = get_all_photos(offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=total)
+
+
+    return render_template("browse_images.html", photos=pagination_photos, page=page, per_page=per_page, pagination=pagination)
+
+   
 @app.route('/search', methods=["GET", "POST"])
 def search():
 
-    if request.method == 'POST':
+    # if request.method == 'POST':
         category = request.form.get("category")
         query = request.form.get("query")
         awards = [int(n) for n in request.form.getlist("award")] 
@@ -287,10 +308,28 @@ def search():
         
         filtered_photos = list(mongo.db.photos.find(full_query))
 
+
+        def get_filtered_photos(offset, per_page):
+            return filtered_photos[offset: offset + per_page]
+    
+        page, per_page, offset = get_page_args(page_parameter='page',
+                                           per_page_parameter='per_page')
+    
+        PER_PAGE = 10
+
+        offset = page * PER_PAGE - PER_PAGE
+
+        total = len(filtered_photos)
+        print(total)
+
+        pagination_photos = get_filtered_photos(offset=offset, per_page=per_page)
+        pagination = Pagination(page=page, per_page=per_page, total=total)
+
         source_url = request.referrer
         
         return render_template("browse_images.html", 
-                                photos=filtered_photos, source_url=source_url)
+                                photos=pagination_photos, page=page, per_page=per_page, pagination=pagination, source_url=source_url)
+
 
         
 

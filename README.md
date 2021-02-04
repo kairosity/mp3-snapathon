@@ -671,7 +671,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 - ## [Simple Flask Pagination](https://medium.com/better-programming/simple-flask-pagination-example-4190b12c2e2e)
 
+## Flask Paginate
 
+- ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
+
+    Used to help me integrate flask paginate. Especially useful was the comment by "hephzibahponcellat" on how to change the number of resuts per page. 
 
 ## Flask-Mail
 
@@ -765,3 +769,8 @@ A WSGI web application library used in this application for hashing and reading 
 ## [Flask-Mail](https://pythonhosted.org/Flask-Mail/)
 
 A Flask extension that allows users to send emails via the application. 
+
+## [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
+
+A Flask extension to paginate. Says it's for use with bootstrap, but integrated fine with Materialize.
+
