@@ -114,6 +114,20 @@ ul.dropdown-content.select-dropdown li span:hover{
     color: var(--accent-colour);
 }
 
+/* Pagination */
+.pagination-page-info{
+    color: var(--main-text-colour);
+}
+.pagination li.active{
+    background-color: var(--accent-colour);
+}
+.pagination li.active a {
+    color: var(--dark-text-color);
+}
+.pagination li a{
+    color: var(--main-text-colour);
+}
+
 /* Navigation */
 
 nav ul.navbar-nav a,

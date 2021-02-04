@@ -18,7 +18,19 @@ $(document).ready(function(){
                        $(this).parent().addClass("active");
                }
        });
-});
+    });
+
+    $(function(){
+
+       let paginationLi = $(".pagination li")
+       let activeLi = $(".pagination").find('li.active');
+       activeLi.removeClass('active')
+
+       paginationLi.click(function(){   
+            $(this).addClass('active')
+            console.log(this)
+       })
+    });
 
 
 });

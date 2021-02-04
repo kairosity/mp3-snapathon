@@ -309,6 +309,8 @@ def search():
         filtered_photos = list(mongo.db.photos.find(full_query))
 
 
+        # Pagination - not quite working yet. 
+
         def get_filtered_photos(offset, per_page):
             return filtered_photos[offset: offset + per_page]
     
@@ -320,7 +322,6 @@ def search():
         offset = page * PER_PAGE - PER_PAGE
 
         total = len(filtered_photos)
-        print(total)
 
         pagination_photos = get_filtered_photos(offset=offset, per_page=per_page)
         pagination = Pagination(page=page, per_page=per_page, total=total)
