@@ -401,7 +401,7 @@ i.award{
     font-size: 3rem;
     position: absolute;
     top: 0;
-    left: 20%;
+    left: 6%;
     text-align: center;
     padding: 2rem 0.5rem;
     background-color: white;
@@ -718,8 +718,8 @@ div.col a.reset-btn {
   height: 100%;
 }
 .overlay-text{
-  color: white;
-  font-size: 20px;
+  color: var(--dark-text-color);
+  font-family: var(--subheading-font);
   position: absolute;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -727,14 +727,16 @@ div.col a.reset-btn {
   text-align: center;  
 }
 .overlay-text-title {
-  top: 10%;
+  top: 8%;
   left: 50%;
-  font-size: 1.6rem;
+  font-size: 1.45rem;
+  font-weight: 600;
 }
 .overlay-text-username{
   top: 30%;
   left: 50%;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 /* W3 Image overlay slide code ends here */
 .overlay-text-awards{
