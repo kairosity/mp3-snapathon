@@ -84,10 +84,47 @@
     <div id="entries" class="row s12">
         <!-- <div class="row profile-photos-row"></div> -->
             {% for photo in user_photos %}
+
+                {% if photo.awards == 1 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-1">
+                        <i class="fas fa-award award award-1"></i>
+                    </div>
+                    </div>
+                    </a>
+
+                 {% elif photo.awards == 2 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-2">
+                        <i class="fas fa-award award award-2"></i>
+                    </div>
+                    </div>
+                    </a>
+                
+                {% elif photo.awards == 3 %}
+
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                <div class="award-overlay award-overlay-3">
+                    <i class="fas fa-award award award-3"></i>
+                </div>
+                </div>
+                </a>
+
+                {% else %}
             
                 <div class="col s12 m4 l3 profile-photos-col">
                     <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
                 </div>
+
+                {% endif %}
             
             {% endfor %}
     </div>
@@ -96,23 +133,94 @@
      <div id="votes" class="row s12">
 
              {% for photo in photos_voted_for %}
+
+             {% if photo.awards == 1 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-1">
+                        <i class="fas fa-award award award-1"></i>
+                    </div>
+                    </div>
+                    </a>
+            {% elif photo.awards == 2 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-2">
+                        <i class="fas fa-award award award-2"></i>
+                    </div>
+                    </div>
+                    </a>
+                
+                {% elif photo.awards == 3 %}
+
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                <div class="award-overlay award-overlay-3">
+                    <i class="fas fa-award award award-3"></i>
+                </div>
+                </div>
+                </a>
+
+                {% else %}
             
                 <div class="col s12 m4 l3 profile-photos-col">
                     <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
                 </div>
+                {% endif %}
             
             {% endfor %}
 
     </div>
     <div id="awards" class="row s12">
         {% for photo in award_winners %}
+
+            {% if photo.awards == 1 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-1">
+                        <i class="fas fa-award award award-1"></i>
+                    </div>
+                    </div>
+                    </a>
+            {% elif photo.awards == 2 %}
+
+                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-2">
+                        <i class="fas fa-award award award-2"></i>
+                    </div>
+                    </div>
+                    </a>
+                
+                {% elif photo.awards == 3 %}
+
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                <div class="award-overlay award-overlay-3">
+                    <i class="fas fa-award award award-3"></i>
+                </div>
+                </div>
+                </a>
+
+                {% else %}
             
                 <div class="col s12 m4 l3 profile-photos-col">
                     <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
                 </div>
+
+                {% endif %}
             
             {% endfor %}
     </div>
-  </div>
+
 
 {% endblock %}

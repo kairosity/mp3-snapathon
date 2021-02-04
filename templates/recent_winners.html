@@ -19,20 +19,26 @@
             <p class="award-text center-align">which received {{img.photo_votes}} votes!</p>
         </div>
     </div>
+
+</section>
+<!-- First Place Image(s) -->
+
         <div class="row">
-         <div class="award-overlay-container">
             <a href="{{ url_for('get_photo', filename=img.filename) }}"> 
-                <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
-            </a>
+         <div class="award-overlay-container  col s12 m8 offset-m2 l6 offset-l3">
+            
+                <img class="award-photo " src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+            
            <div class="award-overlay award-overlay-1">
                  <i class="fas fa-award award award-1"></i>
             </div>
            
         </div>
+        </a>
         </div>
 
-        {% endfor %}
-</section>
+
+  {% endfor %}
 
 <section class="second_place row">
     <div class="row">
@@ -47,19 +53,28 @@
         <p class="center-align award-text">which received {{img.photo_votes}} votes!</p>
         </div>
     </div>
-    <div class="row">
-         <div class="award-overlay-container">
-        <a href="{{ url_for('get_photo', filename=img.filename) }}">
-            <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
-        </a>
-        <div class="award-overlay award-overlay-2">
-            <i class="fas fa-award award award-2"></i>
-        </div>
-         </div>
-        </div>
-        
-        {% endfor %}
+
 </section>
+<!-- Second Place Image(s) -->
+
+    <div class="row">
+         <a class="" href="{{ url_for('get_photo', filename=img.filename) }}">
+            <div class="award-overlay-container col s12 m8 offset-m2 l6 offset-l3">
+               
+                    
+                <img class="award-photo" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+                   
+              
+            <div class="award-overlay award-overlay-2">
+                <i class="fas fa-award award award-2"></i>
+            </div>
+            </div>
+              </a>
+    </div>
+          
+
+ {% endfor %}
+
 <section class="third_place row">
     <div class="row">
      <h2 class="page-subheading center-align third-place-title">THIRD PLACE</h2>
@@ -73,19 +88,26 @@
         <p class="center-align award-text">which received {{img.photo_votes}} votes!</p>
         </div>
     </div>
-     <div class="row">
-         <div class="award-overlay-container">
+</section>
 
-        <a href="{{ url_for('get_photo', filename=img.filename) }}">
-            <img class="thumbnail-photo browse-photo award-photo col s12 m8 offset-m2 xl6 offset-xl3" src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
-        </a>
+    <!-- Third Place Image(s) -->
+
+     <div class="row">
+          <a href="{{ url_for('get_photo', filename=img.filename) }}">
+         <div class="award-overlay-container  col s12 m8 offset-m2 l6 offset-l3">
+
+       
+            <img class="award-photo " src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
+      
          <div class="award-overlay award-overlay-3">
             <i class="fas fa-award award award-3"></i>
         </div>
      </div>
+       </a>
         </div>
-    {% endfor %}
-</section>
+   
+
+ {% endfor %}
 
 
 

@@ -250,9 +250,9 @@ def recent_winners():
             third_place.append(img)
             list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
 
-    return render_template("recent_winners.html", first_place=first_place, 
-                                                  second_place=second_place, 
-                                                  third_place=third_place, 
+    return render_template("recent_winners.html", first_place=first_place,
+                                                  second_place=second_place,
+                                                  third_place=third_place,
                                                   users=list_of_users,
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
