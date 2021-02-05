@@ -20,7 +20,11 @@ the search terms with "" works as below:
 
 When integrating pagination with my search function, it worked fine for the regular browsing page, where all images are displayed. The full number of photos returned 
 were correctly divided up and pagination laid out, however when the search was filtered, the pagination stopped working once a user clicked to go to page 2. The initial pagination
-worked correctly, but then page 2 would just return all the images again, unfiltered. As below: 
+worked correctly, but then page 2 would just return all the images again, unfiltered. 
+
+### Fix 2
+
+This took a lot of re-shuffling and with help from [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute. 
 
 
 ## get_photo() 

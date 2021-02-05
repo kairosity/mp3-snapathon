@@ -258,15 +258,13 @@ def recent_winners():
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
 
-def paginated(photos_arr):
-    PER_PAGE = 10
+def paginated(photos_arr, PER_PAGE):
     page, per_page, offset = get_page_args(page_parameter='page',
                                         per_page_parameter='per_page')
     offset = page * PER_PAGE - PER_PAGE
     return photos_arr[offset: offset + PER_PAGE]
 
-def pagination_args(photos_arr):
-    PER_PAGE = 10
+def pagination_args(photos_arr, PER_PAGE):
     page, per_page, offset = get_page_args(page_parameter='page',
                                         per_page_parameter='per_page')
     total = len(photos_arr)
@@ -280,22 +278,21 @@ def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-    photos_paginated = paginated(all_photos)
-    pagination = pagination_args(all_photos)
+    photos_paginated = paginated(all_photos, 10)
+    pagination = pagination_args(all_photos, 10)
 
 
     return render_template("browse_images.html", photos=photos_paginated, pagination=pagination)
 
    
-@app.route('/search', methods=["GET", "POST"])
+@app.route('/search')
 def search():
 
     source_url = request.referrer
 
-    # if request.method == 'POST':
-    category = request.form.get("category")
-    query = request.form.get("query")
-    awards = [int(n) for n in request.form.getlist("award")]
+    category = request.args.get("category")
+    query = request.args.get("query")
+    awards = [int(n) for n in request.args.getlist("award")]
 
     full_search = query
     full_query = {}
@@ -311,17 +308,21 @@ def search():
     
     filtered_photos = list(mongo.db.photos.find(full_query))
 
-    photos_paginated = paginated(filtered_photos)
-    pagination = pagination_args(filtered_photos)
+    print(query)
+    print(category)
+    print(awards)
+    print(request)
 
-    
+    photos_paginated = paginated(filtered_photos, 10)
+    pagination = pagination_args(filtered_photos, 10)
+
+   
     return render_template("browse_images.html", 
                             photos=photos_paginated, pagination=pagination, source_url=source_url)
 
 
 
         
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -462,15 +463,21 @@ def profile(username):
     voting_closes = get_time_remaining_string(time_til_voting_ends)
     next_comp_starts = get_time_remaining_string(time_til_next_comp_starts)
 
+    #Pagination - limited here because we have 3 different groups of photos - need a way to separate out pagination var into 3 different ones? 
+
+    user_photos_paginated = paginated(user_photos, 4)
+    user_photos_pagination = pagination_args(user_photos, 4)
+
     return render_template("profile.html",
-                           username=username, user_photos=user_photos,
+                           username=username, user_photos=user_photos_paginated,
                            user=user, photos_voted_for=photos_voted_for_objs,
                            award_winners=award_winners,
                            can_enter=can_enter,
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
-                           next_comp_starts=next_comp_starts)
+                           next_comp_starts=next_comp_starts,
+                           pagination=user_photos_pagination)
     
 
 
