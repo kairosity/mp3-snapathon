@@ -292,31 +292,31 @@ def search():
 
     source_url = request.referrer
 
-    if request.method == 'POST':
-        category = request.form.get("category")
-        query = request.form.get("query")
-        awards = [int(n) for n in request.form.getlist("award")]
+    # if request.method == 'POST':
+    category = request.form.get("category")
+    query = request.form.get("query")
+    awards = [int(n) for n in request.form.getlist("award")]
 
-        full_search = query
-        full_query = {}
+    full_search = query
+    full_query = {}
 
-        if query:
-            full_query["$text"]={"$search": full_search}
+    if query:
+        full_query["$text"]={"$search": full_search}
 
-        if awards:
-                full_query["awards"]={"$in": awards}
-            
-        if category:
-            full_query["competition_category"] = category
+    if awards:
+            full_query["awards"]={"$in": awards}
         
-        filtered_photos = list(mongo.db.photos.find(full_query))
+    if category:
+        full_query["competition_category"] = category
+    
+    filtered_photos = list(mongo.db.photos.find(full_query))
 
-        photos_paginated = paginated(filtered_photos)
-        pagination = pagination_args(filtered_photos)
+    photos_paginated = paginated(filtered_photos)
+    pagination = pagination_args(filtered_photos)
 
-        
-        return render_template("browse_images.html", 
-                                photos=photos_paginated, pagination=pagination, source_url=source_url)
+    
+    return render_template("browse_images.html", 
+                            photos=photos_paginated, pagination=pagination, source_url=source_url)
 
 
 
