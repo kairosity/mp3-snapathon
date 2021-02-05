@@ -258,42 +258,45 @@ def recent_winners():
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
 
+def paginated(photos_arr):
+    PER_PAGE = 10
+    page, per_page, offset = get_page_args(page_parameter='page',
+                                        per_page_parameter='per_page')
+    offset = page * PER_PAGE - PER_PAGE
+    return photos_arr[offset: offset + PER_PAGE]
+
+def pagination_args(photos_arr):
+    PER_PAGE = 10
+    page, per_page, offset = get_page_args(page_parameter='page',
+                                        per_page_parameter='per_page')
+    total = len(photos_arr)
+
+    return Pagination(page=page, per_page=PER_PAGE, total=total)
+
+
 
 @app.route("/browse", methods=["GET", "POST"])
 def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-    def get_all_photos(offset, per_page):
-        return all_photos[offset: offset + per_page]
-
-   
-    
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
+    photos_paginated = paginated(all_photos)
+    pagination = pagination_args(all_photos)
 
 
-    PER_PAGE = 10
-
-    offset = page * PER_PAGE - PER_PAGE
-
-    total = len(all_photos)
-
-    pagination_photos = get_all_photos(offset=offset, per_page=per_page)
-    pagination = Pagination(page=page, per_page=per_page, total=total)
-
-
-    return render_template("browse_images.html", photos=pagination_photos, page=page, per_page=per_page, pagination=pagination)
+    return render_template("browse_images.html", photos=photos_paginated, pagination=pagination)
 
    
 @app.route('/search', methods=["GET", "POST"])
 def search():
 
-    # if request.method == 'POST':
+    source_url = request.referrer
+
+    if request.method == 'POST':
         category = request.form.get("category")
         query = request.form.get("query")
-        awards = [int(n) for n in request.form.getlist("award")] 
-        
+        awards = [int(n) for n in request.form.getlist("award")]
+
         full_search = query
         full_query = {}
 
@@ -301,35 +304,20 @@ def search():
             full_query["$text"]={"$search": full_search}
 
         if awards:
-             full_query["awards"]={"$in": awards}
+                full_query["awards"]={"$in": awards}
             
         if category:
             full_query["competition_category"] = category
         
         filtered_photos = list(mongo.db.photos.find(full_query))
 
+        photos_paginated = paginated(filtered_photos)
+        pagination = pagination_args(filtered_photos)
 
-        # Pagination - not quite working yet. 
-
-        def get_filtered_photos(offset, per_page):
-            return filtered_photos[offset: offset + per_page]
-    
-        page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    
-        PER_PAGE = 10
-
-        offset = page * PER_PAGE - PER_PAGE
-
-        total = len(filtered_photos)
-
-        pagination_photos = get_filtered_photos(offset=offset, per_page=per_page)
-        pagination = Pagination(page=page, per_page=per_page, total=total)
-
-        source_url = request.referrer
         
         return render_template("browse_images.html", 
-                                photos=pagination_photos, page=page, per_page=per_page, pagination=pagination, source_url=source_url)
+                                photos=photos_paginated, pagination=pagination, source_url=source_url)
+
 
 
         
@@ -624,19 +612,45 @@ def compete():
         {
             "category": "architecture",
             "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+        },
+        {
+            "category": "wildlife",
+            "instructions": "Enter your wildlife and nature photos now. Flora OR fauna are acceptable. Capture amazing images of the natural world at its most spectacular."
+        },
+        {
+            "category": "street",
+            "instructions": "Enter your street photography now. Encounters and imagery from urban jungles."
+        },
+        {
+            "category": "monochrome",
+            "instructions": "Enter your monochrome photography now. Any subject, any place, black and white imagery only. PLEASE no sepia tones!"
+        },
+        {
+            "category": "event",
+            "instructions": "Enter your event photography now. Weddings, baptisms, concerts, theatre etc.. If it has guests, it's an event!"
         }
         ]      
 
     def get_competition(week_number):
-        if week_number % 3 == 1:
+        if week_number % 7 == 0:
             return competitions[0]
-        elif week_number % 3 == 2:
-            return competitions[1]
-        elif week_number % 3 == 0:
+        elif week_number % 7 == 1:
+            return competitions[5]
+        elif week_number % 7 == 2:
             return competitions[2]
+        elif week_number % 7 == 3:
+            return competitions[3]
+        elif week_number % 7 == 4:
+            return competitions[4]
+        elif week_number % 7 == 5:
+            return competitions[1]
+        elif week_number % 7 == 6:
+            return competitions[6]
+    
+    
 
     current_week_number = int(datetime.now().strftime("%V"))
-
+    print(current_week_number)
     this_weeks_comp_category = get_competition(current_week_number)["category"]
     this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
 

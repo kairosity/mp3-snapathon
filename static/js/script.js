@@ -26,6 +26,10 @@ $(document).ready(function(){
        let activeLi = $(".pagination").find('li.active');
        activeLi.removeClass('active')
 
+    //    Add the active class to number of the page it starts on. 
+        let currentPage = window.location.href;
+        console.log(currentPage)
+
        paginationLi.click(function(){   
             $(this).addClass('active')
             console.log(this)

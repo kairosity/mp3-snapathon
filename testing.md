@@ -15,6 +15,14 @@ the search terms with "" works as below:
 
                 { "$search": "\"mountain\" \"landscape\"" }
 
+
+### Issue 2 
+
+When integrating pagination with my search function, it worked fine for the regular browsing page, where all images are displayed. The full number of photos returned 
+were correctly divided up and pagination laid out, however when the search was filtered, the pagination stopped working once a user clicked to go to page 2. The initial pagination
+worked correctly, but then page 2 would just return all the images again, unfiltered. As below: 
+
+
 ## get_photo() 
 
 ### Issue 1
