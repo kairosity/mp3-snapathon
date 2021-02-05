@@ -259,13 +259,13 @@ def recent_winners():
                                                   competition_category=competition_category)
 
 def paginated(photos_arr, PER_PAGE):
-    page, per_page, offset = get_page_args(page_parameter='page',
+    page, _, offset = get_page_args(page_parameter='page',
                                         per_page_parameter='per_page')
     offset = page * PER_PAGE - PER_PAGE
     return photos_arr[offset: offset + PER_PAGE]
 
 def pagination_args(photos_arr, PER_PAGE):
-    page, per_page, offset = get_page_args(page_parameter='page',
+    page, _, offset = get_page_args(page_parameter='page',
                                         per_page_parameter='per_page')
     total = len(photos_arr)
 
@@ -468,16 +468,26 @@ def profile(username):
     user_photos_paginated = paginated(user_photos, 4)
     user_photos_pagination = pagination_args(user_photos, 4)
 
+    user_votes_paginated = paginated(photos_voted_for_objs, 3)
+    user_votes_pagination = pagination_args(photos_voted_for_objs, 3)
+
+    user_awards_paginated = paginated(award_winners, 2)
+    user_awards_pagination = pagination_args(award_winners, 2)
+
+    print()
+
     return render_template("profile.html",
                            username=username, user_photos=user_photos_paginated,
-                           user=user, photos_voted_for=photos_voted_for_objs,
-                           award_winners=award_winners,
+                           user=user, photos_voted_for=user_votes_paginated,
+                           award_winners=user_awards_paginated,
                            can_enter=can_enter,
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
                            next_comp_starts=next_comp_starts,
-                           pagination=user_photos_pagination)
+                           user_photos_pagination=user_photos_pagination, 
+                           user_votes_pagination = user_votes_pagination,
+                           user_awards_pagination = user_awards_pagination)
     
 
 
