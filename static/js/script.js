@@ -20,21 +20,21 @@ $(document).ready(function(){
        });
     });
 
-    $(function(){
+    // $(function(){
 
-       let paginationLi = $(".pagination li")
-       let activeLi = $(".pagination").find('li.active');
-       activeLi.removeClass('active')
+    //    let paginationLi = $(".pagination li")
+    //    let activeLi = $(".pagination").find('li.active');
+    //    activeLi.removeClass('active')
 
-    //    Add the active class to number of the page it starts on. 
-        let currentPage = window.location.href;
-        console.log(currentPage)
+    // //    Add the active class to number of the page it starts on. 
+    //     let currentPage = window.location.href;
+    //     console.log(currentPage)
 
-       paginationLi.click(function(){   
-            $(this).addClass('active')
-            console.log(this)
-       })
-    });
+    //    paginationLi.click(function(){   
+    //         $(this).addClass('active')
+    //         console.log(this)
+    //    })
+    // });
 
 
 });

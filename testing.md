@@ -27,6 +27,27 @@ worked correctly, but then page 2 would just return all the images again, unfilt
 This took a lot of re-shuffling and with help from [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute. 
 
 
+## recent_winners()
+
+### Issue 1
+When testing this function and page over the course of a week, all was working well until suddenly I was getting a 504 Gateway Time-out error message. 
+<p align="center">
+  <img src="static/images/issues/recent_winners_timeout.png">
+</p>
+
+### Fix 1 
+I used a number of print statements in the function and discovered that the issue was here:
+
+       
+        if day_of_week in range(0,5) or day_of_week == 6 and hour_of_day < 22:
+            images_to_display = get_winning_images_by_week_and_year(last_week_and_year)
+            last_mon = week_before
+            while last_mon.weekday() != 0:
+                last_mon = last_mon - timedelta(days=1)
+
+I had mistakenly used range(0,5) thinking that would *include* 5 (or weekday() == saturday), but range is not inclusive of the outer number, so it was ignoring
+Saturday, and thankfully I was testing it on a Saturday, otherwise it probably would have gone unnoticed. Changing range to ```range(0,6)``` solved the issue. 
+
 ## get_photo() 
 
 ### Issue 1

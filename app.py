@@ -214,13 +214,14 @@ def recent_winners():
     week_before = today - timedelta(weeks=1)
     last_week_and_year = week_before.strftime("%V%G")
 
-
+    
     def get_winning_images_by_week_and_year(w_a_y):
-        return list(mongo.db.photos.find({"week_and_year": w_a_y} ))
+        winning_images = list(mongo.db.photos.find({"week_and_year": w_a_y} ))
+        return winning_images
     
 
     # If dow is Mon-Sat  Sun BEFORE 22:00PM:
-    if day_of_week in range(0,5) or day_of_week == 6 and hour_of_day < 22:
+    if day_of_week in range(0,6) or day_of_week == 6 and hour_of_day < 22:
         images_to_display = get_winning_images_by_week_and_year(last_week_and_year)
         last_mon = week_before
         while last_mon.weekday() != 0:
@@ -232,6 +233,7 @@ def recent_winners():
         while last_mon.weekday() !=0:
             last_mon = today - timedelta(days=1)
     
+
     first_place = []
     second_place = []
     third_place = []
@@ -258,28 +260,50 @@ def recent_winners():
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
 
-def paginated(photos_arr, PER_PAGE):
-    page, _, offset = get_page_args(page_parameter='page',
-                                        per_page_parameter='per_page')
+def paginated(photos_arr, PER_PAGE, page_name_str):
+    page, pp, o, = get_page_args(page_parameter=page_name_str, per_page_parameter='per_page')
+
+    
     offset = page * PER_PAGE - PER_PAGE
+
+    print(f"Page: {page}")
+    print(f"PER_PAGE: {PER_PAGE}")
+    print(f"pp: {pp}")
+    print(f"o: {o}")
+    print(f"Offset after offset variable: {offset}")
+   
     return photos_arr[offset: offset + PER_PAGE]
 
-def pagination_args(photos_arr, PER_PAGE):
-    page, _, offset = get_page_args(page_parameter='page',
+def pagination_args(photos_arr, PER_PAGE, page_name_str):
+    page, pp2, o2 = get_page_args(page_parameter=page_name_str,
                                         per_page_parameter='per_page')
     total = len(photos_arr)
 
-    return Pagination(page=page, per_page=PER_PAGE, total=total)
+    print(f"Page: {page}")
+    print(f"PER_PAGE: {PER_PAGE}")
+    print(f"pp: {pp2}")
+    print(f"o: {o2}")
+
+    return Pagination(page=page, per_page=PER_PAGE, total=total, page_parameter=page_name_str, per_page_parameter='per_page', )
 
 
+def paginated_and_pagination_args(photos_arr, PER_PAGE, page_name_str):
+    page, _, _, = get_page_args(page_parameter=page_name_str, per_page_parameter='per_page')
 
-@app.route("/browse", methods=["GET", "POST"])
+    offset = page * PER_PAGE - PER_PAGE
+    total = len(photos_arr)
+
+    pagination_args = Pagination(page=page, per_page=PER_PAGE, total=total, page_parameter=page_name_str, per_page_parameter='per_page', css_framework='materialize')
+    photos_to_display = photos_arr[offset: offset + PER_PAGE]
+
+    return pagination_args, photos_to_display
+
+@app.route("/browse")
 def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-    photos_paginated = paginated(all_photos, 10)
-    pagination = pagination_args(all_photos, 10)
+    pagination, photos_paginated = paginated_and_pagination_args(all_photos, 10, "page")
 
 
     return render_template("browse_images.html", photos=photos_paginated, pagination=pagination)
@@ -308,13 +332,8 @@ def search():
     
     filtered_photos = list(mongo.db.photos.find(full_query))
 
-    print(query)
-    print(category)
-    print(awards)
-    print(request)
 
-    photos_paginated = paginated(filtered_photos, 10)
-    pagination = pagination_args(filtered_photos, 10)
+    pagination, photos_paginated = paginated_and_pagination_args(filtered_photos, 10, "page")
 
    
     return render_template("browse_images.html", 
@@ -465,16 +484,15 @@ def profile(username):
 
     #Pagination - limited here because we have 3 different groups of photos - need a way to separate out pagination var into 3 different ones? 
 
-    user_photos_paginated = paginated(user_photos, 4)
-    user_photos_pagination = pagination_args(user_photos, 4)
+    user_photos_paginated = paginated(user_photos, 4, "user_photos_page")
+    user_photos_pagination = pagination_args(user_photos, 4, "user_photos_page")
 
-    user_votes_paginated = paginated(photos_voted_for_objs, 3)
-    user_votes_pagination = pagination_args(photos_voted_for_objs, 3)
+    user_votes_paginated = paginated(photos_voted_for_objs, 3, "user_votes_page")
+    user_votes_pagination = pagination_args(photos_voted_for_objs, 3, "user_votes_page")
 
-    user_awards_paginated = paginated(award_winners, 2)
-    user_awards_pagination = pagination_args(award_winners, 2)
+    user_awards_paginated = paginated(award_winners, 2, "user_awards_page")
+    user_awards_pagination = pagination_args(award_winners, 2, "user_awards_page")
 
-    print()
 
     return render_template("profile.html",
                            username=username, user_photos=user_photos_paginated,
