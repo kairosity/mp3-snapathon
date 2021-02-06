@@ -468,6 +468,10 @@ def profile(username):
     user_votes_pagination, user_votes_paginated = paginated_and_pagination_args(photos_voted_for_objs, 3, "user_votes_page", "user_votes_per_page")
     user_awards_pagination, user_awards_paginated = paginated_and_pagination_args(award_winners, 2, "user_awards_page", "user_awards_per_page")
 
+    print(f"Links: {user_photos_pagination.links}")
+    print(f"Info: {user_photos_pagination.info}")
+    print(f"Length of photo array: {len(user_photos)}")
+
     return render_template("profile.html",
                            username=username,
                            user=user, 
@@ -730,8 +734,15 @@ def compete():
     # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
     this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
 
+    pagination, photos_paginated = paginated_and_pagination_args(this_weeks_entries, 10, "page", "per_page")
 
-    return render_template("compete.html", this_weeks_entries=this_weeks_entries, datetime=date_time, category=this_weeks_comp_category, instructions=this_weeks_comp_instructions)
+
+
+    return render_template("compete.html", this_weeks_entries=photos_paginated, 
+                                           datetime=date_time, 
+                                           category=this_weeks_comp_category, 
+                                           instructions=this_weeks_comp_instructions,
+                                           pagination=pagination)
 
 @app.route("/file/<filename>")
 def file(filename):
