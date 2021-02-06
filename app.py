@@ -260,42 +260,22 @@ def recent_winners():
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
 
-def paginated(photos_arr, PER_PAGE, page_name_str):
-    page, pp, o, = get_page_args(page_parameter=page_name_str, per_page_parameter='per_page')
-
-    
-    offset = page * PER_PAGE - PER_PAGE
-
-    print(f"Page: {page}")
-    print(f"PER_PAGE: {PER_PAGE}")
-    print(f"pp: {pp}")
-    print(f"o: {o}")
-    print(f"Offset after offset variable: {offset}")
-   
-    return photos_arr[offset: offset + PER_PAGE]
-
-def pagination_args(photos_arr, PER_PAGE, page_name_str):
-    page, pp2, o2 = get_page_args(page_parameter=page_name_str,
-                                        per_page_parameter='per_page')
-    total = len(photos_arr)
-
-    print(f"Page: {page}")
-    print(f"PER_PAGE: {PER_PAGE}")
-    print(f"pp: {pp2}")
-    print(f"o: {o2}")
-
-    return Pagination(page=page, per_page=PER_PAGE, total=total, page_parameter=page_name_str, per_page_parameter='per_page', )
-
-
 def paginated_and_pagination_args(photos_arr, PER_PAGE, page_name_str):
+
     page, _, _, = get_page_args(page_parameter=page_name_str, per_page_parameter='per_page')
 
     offset = page * PER_PAGE - PER_PAGE
     total = len(photos_arr)
 
-    pagination_args = Pagination(page=page, per_page=PER_PAGE, total=total, page_parameter=page_name_str, per_page_parameter='per_page', css_framework='materialize')
+    pagination_args = Pagination(page=page,
+                                 per_page=PER_PAGE,
+                                 total=total,
+                                 page_parameter=page_name_str,
+                                 per_page_parameter='per_page',
+                                 css_framework='materialize')
+    
     photos_to_display = photos_arr[offset: offset + PER_PAGE]
-
+    
     return pagination_args, photos_to_display
 
 @app.route("/browse")
