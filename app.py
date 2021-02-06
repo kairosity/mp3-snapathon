@@ -260,9 +260,9 @@ def recent_winners():
                                                   week_starting=week_starting,
                                                   competition_category=competition_category)
 
-def paginated_and_pagination_args(photos_arr, PER_PAGE, page_name_str):
+def paginated_and_pagination_args(photos_arr, PER_PAGE, page_param, per_page_param):
 
-    page, _, _, = get_page_args(page_parameter=page_name_str, per_page_parameter='per_page')
+    page, _, _, = get_page_args(page_parameter=page_param, per_page_parameter=per_page_param)
 
     offset = page * PER_PAGE - PER_PAGE
     total = len(photos_arr)
@@ -270,9 +270,8 @@ def paginated_and_pagination_args(photos_arr, PER_PAGE, page_name_str):
     pagination_args = Pagination(page=page,
                                  per_page=PER_PAGE,
                                  total=total,
-                                 page_parameter=page_name_str,
-                                 per_page_parameter='per_page',
-                                 css_framework='materialize')
+                                 page_parameter=page_param,
+                                 per_page_parameter=per_page_param)
     
     photos_to_display = photos_arr[offset: offset + PER_PAGE]
     
@@ -283,7 +282,7 @@ def browse():
 
     all_photos = list(mongo.db.photos.find())
 
-    pagination, photos_paginated = paginated_and_pagination_args(all_photos, 10, "page")
+    pagination, photos_paginated = paginated_and_pagination_args(all_photos, 10, "page", "per_page")
 
 
     return render_template("browse_images.html", photos=photos_paginated, pagination=pagination)
@@ -313,7 +312,7 @@ def search():
     filtered_photos = list(mongo.db.photos.find(full_query))
 
 
-    pagination, photos_paginated = paginated_and_pagination_args(filtered_photos, 10, "page")
+    pagination, photos_paginated = paginated_and_pagination_args(filtered_photos, 10, "page", "per_page")
 
    
     return render_template("browse_images.html", 
@@ -465,20 +464,22 @@ def profile(username):
     #Pagination - limited here because we have 3 different groups of photos - need a way to separate out pagination var into 3 different ones? 
 
 
-    user_photos_pagination, user_photos_paginated = paginated_and_pagination_args(user_photos, 4, "user_photos_page")
-    user_votes_pagination, user_votes_paginated = paginated_and_pagination_args(photos_voted_for_objs, 3, "user_votes_page")
-    user_awards_pagination, user_awards_paginated = paginated_and_pagination_args(award_winners, 2, "user_awards_page")
+    user_photos_pagination, user_photos_paginated = paginated_and_pagination_args(user_photos, 4, "user_photos_page", "user_per_page")
+    user_votes_pagination, user_votes_paginated = paginated_and_pagination_args(photos_voted_for_objs, 3, "user_votes_page", "user_votes_per_page")
+    user_awards_pagination, user_awards_paginated = paginated_and_pagination_args(award_winners, 2, "user_awards_page", "user_awards_per_page")
 
     return render_template("profile.html",
-                           username=username, user_photos=user_photos_paginated,
-                           user=user, photos_voted_for=user_votes_paginated,
+                           username=username,
+                           user=user, 
+                           user_photos=user_photos_paginated,
+                           photos_voted_for=user_votes_paginated,
                            award_winners=user_awards_paginated,
                            can_enter=can_enter,
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
                            next_comp_starts=next_comp_starts,
-                           user_photos_pagination = user_photos_pagination, 
+                           user_photos_pagination = user_photos_pagination,
                            user_votes_pagination = user_votes_pagination,
                            user_awards_pagination = user_awards_pagination)
     
