@@ -461,31 +461,19 @@ def profile(username):
     voting_closes = get_time_remaining_string(time_til_voting_ends)
     next_comp_starts = get_time_remaining_string(time_til_next_comp_starts)
 
-    #Pagination - limited here because we have 3 different groups of photos - need a way to separate out pagination var into 3 different ones? 
 
-
-    user_photos_pagination, user_photos_paginated = paginated_and_pagination_args(user_photos, 4, "user_photos_page", "user_per_page")
-    user_votes_pagination, user_votes_paginated = paginated_and_pagination_args(photos_voted_for_objs, 3, "user_votes_page", "user_votes_per_page")
-    user_awards_pagination, user_awards_paginated = paginated_and_pagination_args(award_winners, 2, "user_awards_page", "user_awards_per_page")
-
-    print(f"Links: {user_photos_pagination.links}")
-    print(f"Info: {user_photos_pagination.info}")
-    print(f"Length of photo array: {len(user_photos)}")
 
     return render_template("profile.html",
                            username=username,
                            user=user, 
-                           user_photos=user_photos_paginated,
-                           photos_voted_for=user_votes_paginated,
-                           award_winners=user_awards_paginated,
+                           user_photos=user_photos,
+                           photos_voted_for=photos_voted_for_objs,
+                           award_winners=award_winners,
                            can_enter=can_enter,
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
-                           next_comp_starts=next_comp_starts,
-                           user_photos_pagination = user_photos_pagination,
-                           user_votes_pagination = user_votes_pagination,
-                           user_awards_pagination = user_awards_pagination)
+                           next_comp_starts=next_comp_starts)
     
 
 

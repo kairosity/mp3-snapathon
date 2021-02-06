@@ -144,7 +144,7 @@
         <div class="vote-container">
         <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i>Vote for this image</button>
+            <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
         </form>
         </div>
         </div>

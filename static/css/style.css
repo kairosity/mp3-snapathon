@@ -1039,15 +1039,25 @@ div.competition-rules{
 }
 button.vote-button{
     width: 100%;
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+    font-weight: 500;
+    transition: 0.3s ease-in;
+}
+button.vote-button:hover{
+    background-color: var(--dark-accent-colour);
+    transform: scale(1.03);
+
 }
 .vote-icon{
     font-size: 3em;
-    color: var(--accent-colour);
+    color: var(--dark-text-color);
 }
-.vote-btn-text{
+/* .vote-btn-text{
     font-size: 1em;
-    color: var(--accent-colour);
+    color: var(--dark-text-color);
     font-family: var(--subheading-font);
+     */
 }
 .vote-container{
     background-color: RGBA(255,255,255,0.3)
