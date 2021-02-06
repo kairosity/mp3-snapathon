@@ -673,9 +673,13 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 ## Flask Paginate
 
-- ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
+- ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
 
     Used to help me integrate flask paginate. Especially useful was the comment by "hephzibahponcellat" on how to change the number of resuts per page. 
+
+- ## [Flask Paginate __init__.py File](https://github.com/lixxu/flask-paginate/blob/master/flask_paginate/__init__.py)
+
+    Used to get a better understanding of this extension in order to customise it to use 3 times on my profile page. 
 
 ## Flask-Mail
 

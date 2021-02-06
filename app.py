@@ -484,15 +484,10 @@ def profile(username):
 
     #Pagination - limited here because we have 3 different groups of photos - need a way to separate out pagination var into 3 different ones? 
 
-    user_photos_paginated = paginated(user_photos, 4, "user_photos_page")
-    user_photos_pagination = pagination_args(user_photos, 4, "user_photos_page")
 
-    user_votes_paginated = paginated(photos_voted_for_objs, 3, "user_votes_page")
-    user_votes_pagination = pagination_args(photos_voted_for_objs, 3, "user_votes_page")
-
-    user_awards_paginated = paginated(award_winners, 2, "user_awards_page")
-    user_awards_pagination = pagination_args(award_winners, 2, "user_awards_page")
-
+    user_photos_pagination, user_photos_paginated = paginated_and_pagination_args(user_photos, 4, "user_photos_page")
+    user_votes_pagination, user_votes_paginated = paginated_and_pagination_args(photos_voted_for_objs, 3, "user_votes_page")
+    user_awards_pagination, user_awards_paginated = paginated_and_pagination_args(award_winners, 2, "user_awards_page")
 
     return render_template("profile.html",
                            username=username, user_photos=user_photos_paginated,
@@ -503,7 +498,7 @@ def profile(username):
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
                            next_comp_starts=next_comp_starts,
-                           user_photos_pagination=user_photos_pagination, 
+                           user_photos_pagination = user_photos_pagination, 
                            user_votes_pagination = user_votes_pagination,
                            user_awards_pagination = user_awards_pagination)
     
