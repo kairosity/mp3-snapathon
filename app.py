@@ -314,6 +314,9 @@ def search():
 
     pagination, photos_paginated = paginated_and_pagination_args(filtered_photos, 10, "page", "per_page")
 
+    if not filtered_photos:
+        flash("I'm sorry, but your search did not return any images.")
+
    
     return render_template("browse_images.html", 
                             photos=photos_paginated, pagination=pagination, source_url=source_url)
@@ -576,8 +579,10 @@ def edit_profile(username):
             return render_template('edit_profile.html', user=user, source_url=source_url)
 
         else:
-            flash("Sorry, but you cannot edit another user's profile.")
-            return redirect(url_for('home'))
+            # Which is better a forbidden abort? or a specific flash message?
+            abort(403)
+            # flash("Sorry, but you cannot edit another user's profile.")
+            # return redirect(url_for('home'))
 
     else:
         return redirect(url_for('login'))
@@ -653,7 +658,6 @@ def compete():
     
 
     current_week_number = int(datetime.now().strftime("%V"))
-    print(current_week_number)
     this_weeks_comp_category = get_competition(current_week_number)["category"]
     this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
 
@@ -670,7 +674,7 @@ def compete():
                 # To make sure that the file type is one of the acceptable image file types
                 file_extension = os.path.splitext(photo.filename)[1]
                 if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-                    abort(400, "Sorry that file extension is not allowed. Please re-format your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+                    abort(415)
 
                 # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
                 photo.filename = secure_filename(photo.filename)
@@ -865,6 +869,44 @@ def logout():
     session.pop("user")
     
     return redirect(url_for("login"))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    error = 404
+    error_msg = "I'm sorry, we've searched everywhere, but the page you are looking for does not exist."
+    return render_template('error.html', error=error, error_msg=error_msg), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    error = 500
+    error_msg = "We're so sorry! There's been an internal server error. It's not you, it's definitely us, but maybe try again later?"
+    return render_template('error.html', error=error, error_msg=error_msg), 500
+
+
+@app.errorhandler(403)
+def forbidden_error(e):
+    error = 403
+    error_msg = "I actually can't believe you tried to do that. Totally Forbidden, sorry."
+    return render_template('error.html', error=error, error_msg=error_msg), 403
+
+
+@app.errorhandler(413)
+def payload_too_large(e):
+    print(e)
+    error = 413
+    error_msg = "Sorry, but the file you're trying to upload is too large. If you are entering the competition, please have a look at the file size guidelines in the rules section. Thanks!"
+    return render_template('error.html', error=error, error_msg=error_msg), 413
+
+
+@app.errorhandler(415)
+def unsupported_media_type(e):
+    print(e)
+    error = 415
+    error_msg = "Sorry, but the file you're trying to upload is an unsupported file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
+    return render_template('error.html', error=error, error_msg=error_msg), 415
 
 
 if __name__ == "__main__":

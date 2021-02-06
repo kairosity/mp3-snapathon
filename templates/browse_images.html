@@ -65,7 +65,9 @@
    
 
 {% if "browse" in source_url %}
-   <script> window.location.hash="entries"; </script>
+    {% if photos|length > 0 %}
+        <script> window.location.hash="entries"; </script>
+    {% endif %}
 {% endif %}
 <div id="entries" class="row s12">
         <!-- <div class="row profile-photos-row"></div> -->
@@ -76,7 +78,7 @@
                     <div class="overlay">
                         <a href="{{ url_for('get_photo', filename=photo.filename )}}">
                         <h4 class="overlay-text overlay-text-title">{{photo.photo_title|capitalize}}</h4>
-                        <h5 class="overlay-text overlay-text-username">by {{photo.competition_category|capitalize}}</h5>
+                        <h5 class="overlay-text overlay-text-username">by {{photo.created_by|capitalize}}</h5>
                         {% if photo.awards == 1 %}
                             <i class="fas fa-award award award-1"></i>
                         {% elif photo.awards == 2 %}
