@@ -298,10 +298,14 @@ section div.schedule-row{
 .points,
 .schedule {
     font-family: var(--subheading-1-font);
-    font-size: 1.5rem;
+   
 }
 .points{
     line-height: 1.8;
+    font-size: 1.5rem;
+}
+.timeline-explanations{
+    font-size: 1.1rem;
 }
 .em{
     font-weight: 600;
@@ -1016,6 +1020,15 @@ p.password-change-instructions{
     font-size: 1.1rem;
     font-weight: 400;
 }
+.delete-account-btn{
+    background-color: darkred;
+    color: var(--main-text-colour);
+}
+.delete-account-btn:hover{
+    background-color: red;
+    box-shadow: darkred 2px;
+    color: var(--main-text-colour);
+}
 /* Competition Page */
 
 /* Text */
@@ -1182,6 +1195,9 @@ i.content-hinting{
 .homepage-subheading4{
     font-size: 2.4em;
     padding: 1.3em 0;
+}
+.timeline-explanations{
+    font-size: 1.35rem;
 }
 .review-rules-text-homepage{
     font-size: 2.1rem;

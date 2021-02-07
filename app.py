@@ -67,6 +67,7 @@ def awards():
     for user in this_weeks_users:
         if user["votes_to_use"] > 0:
             non_voters.append(user)
+            print(f"This week's non-votes are:{non_voters}")
         else:
             valid_users.append(user)
     
@@ -249,9 +250,11 @@ def recent_winners():
         elif img["awards"] == 2:
             second_place.append(img)
             list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            competition_category = img["competition_category"]
         elif img["awards"] == 3:
             third_place.append(img)
             list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            competition_category = img["competition_category"]
 
     return render_template("recent_winners.html", first_place=first_place,
                                                   second_place=second_place,
@@ -579,14 +582,63 @@ def edit_profile(username):
             return render_template('edit_profile.html', user=user, source_url=source_url)
 
         else:
-            # Which is better a forbidden abort? or a specific flash message?
+            flash("You cannot edit someone else's account...obvz!")
             abort(403)
-            # flash("Sorry, but you cannot edit another user's profile.")
-            # return redirect(url_for('home'))
 
     else:
-        return redirect(url_for('login'))
-        flash("You must be logged in to edit your profile.")
+        flash("You must be logged in to edit your account, and obviously, you are not allowed to edit someone else's account!")
+        abort(403)
+
+
+@app.route('/delete_account/<username>', methods=['GET', 'POST'])
+def delete_account(username):
+
+    if request.method == "POST":
+       
+        #This mucks up a bit because the session cookie lingers. Consider removing this and just leaving if session["user"] == username? 
+        # Same issue above with edit_profile. 
+        if session:
+            if session["user"] == username:
+                user = mongo.db.users.find_one({"username": username})
+
+                #form vars
+                form_password = request.form.get("password")
+                form_password_confirmation = request.form.get("password_confirmation")
+
+                # Security check first - user must enter her password twice in order to delete account. (Modal window with two password fields and a confirm button)
+                if form_password:
+                    if check_password_hash(user["password"], form_password):
+                        if form_password == form_password_confirmation:
+                            #1.Delete all this user's photos (files & chunks) from the mongo DB
+
+                            #2. Pop the session. 
+
+                            #3. Delete the user from the DB.
+                            
+
+                            flash("Account deleted successfully")
+                            return redirect(url_for('home'))
+
+                        else:
+                            flash("Incorrect password. Please try again.")
+                            return redirect(url_for('edit_profile', username=username))
+                    else:
+                        flash("Incorrect password. Please try again.")
+                        return redirect(url_for('edit_profile', username=username))
+                else:
+                    flash("You must enter your password in order to delete your account. This is a security measure.")
+                    return redirect(url_for('edit_profile', username=username))
+    else:
+        flash("You must be logged in to delete your account, and obviously, you are not allowed to delete someone else's account!")
+        abort(403)
+        
+
+        # All the user's photos must be deleted 
+
+        # The user's session must be ended
+
+        # The user must be deleted
+
 
 
 @app.route("/compete", methods=['GET', 'POST'])
@@ -876,7 +928,7 @@ def vote(filename):
 def logout():
     # remove user from session cookies
     flash("You've been logged out")
-    session.pop("user")
+    session.pop("user", None)
     
     return redirect(url_for("login"))
 

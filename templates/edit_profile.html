@@ -45,8 +45,36 @@
                 </div>
                 <button class="register-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">Save Changes
                 </button>
+                 <a href="#confirm-account-deletion" id="delete-account-btn" class=" modal-trigger register-btn delete-account-btn btn-large btn waves-effect waves-light center-align">Delete Account
+                 </a>
             </div>
         </form>
+
+        <!-- Confirm Account Deletion Modal -->
+  <div id="confirm-account-deletion" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure you want to delete your account {{user.username|capitalize}}?</h4>
+      <p>This will delete your account, your points and all uploaded photos permanently.</p>
+        <p>If you're sure you want to delete your account, please enter your account password twice and then click "delete"</p>
+    </div>
+    <div class="modal-footer">
+        <form class="account-deletion-form" method="POST" action="{{ url_for('delete_account', username=user.username) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="input-field col s12 m4">
+                    <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="password">password</label>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input id="password_confirmation" name="password_confirmation" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="password_confirmation">password confirmation</label>
+                </div>
+            <button class="btn" type="submit">Delete</button>
+            <a class="modal-close btn" href="#!">Cancel</a>
+        </form>
+      
+    </div>
+  </div>
+        
     </div>
   </div>
     
