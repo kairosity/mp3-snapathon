@@ -165,6 +165,33 @@ The email functionality was working fine in the local port, but when deployed to
 ### Fix 2
 I had not inputed my new mail configuration variables in the Heroku config vars input area. Once I did it connected perfectly.
 
+
+## Error Messages
+
+### Issue 1
+413 Errors (request entity too large / Payload too large) were not passing to the error.html template to render correctly. In development I was getting a message 
+saying the port was unresponsive. 
+
+### Fix 1 
+Using print() I was able to see that the error view was working correctly right up until the rendering of the template. If I switched from rendering a template to just 
+returning the error message like this:
+
+            @app.errorhandler(413)
+            def payload_too_large(e):
+                error = 413
+                error_msg = "Sorry, but the file you're trying to upload is too large."
+                return error_msg, 413
+
+It worked fine, but I wanted my nicely styled error page to load, as with all other errors. Especially since this particular error would likely be thrown a lot as users try 
+to upload large files. 
+
+After some research I found the following note in the Flask documentation:
+
+            Connection Reset Issue
+            When using the local development server, you may get a connection reset error instead of a 413 response. 
+            You will get the correct status response when running the app with a production WSGI server.
+
+
 # Input Validation
 
 ## Registration Form

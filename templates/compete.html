@@ -2,7 +2,7 @@
 
 {% block content %}
 <!-- If the day of the week is Mon - Friday until 22:00 show the competition entry form. -->
-{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "6") and (datetime.strftime("%H") <= "22") ) %}
+{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "0") and (datetime.strftime("%H") <= "22") ) %}
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s10 offset-s1">

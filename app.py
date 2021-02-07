@@ -893,11 +893,13 @@ def forbidden_error(e):
     return render_template('error.html', error=error, error_msg=error_msg), 403
 
 #The print statement is working, but the template is not rendering? Not sure why. 
+
 @app.errorhandler(413)
 def payload_too_large(e):
     print(f"This specific error is: {e}")
     error = 413
     error_msg = "Sorry, but the file you're trying to upload is too large. If you are entering the competition, please have a look at the file size guidelines in the rules section. Thanks!"
+    print(error_msg)
     return render_template('error.html', error=error, error_msg=error_msg), 413
 
 
