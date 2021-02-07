@@ -85,10 +85,21 @@
     class="waves-effect waves-light btn edit-photo-btn col s10 offset-s1 center-align">Edit Photo Details</a>
     </div>
      <div class="col s12 m8 offset-m2 l3 ">
-<a href="{{ url_for('delete_photo', filename=photo.filename) }}" class="waves-effect waves-light btn del-photo-btn col s10 offset-s1">Delete
+<a href="#confirm-photo-deletion" class="modal-trigger waves-effect waves-light btn del-photo-btn col s10 offset-s1">Delete
     Photograph</a>
 </div>
 </div>
+<!-- Modal Structure -->
+  <div id="confirm-photo-deletion" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure you want to delete {{photo.filename|capitalize}}?</h4>
+      <p>This will delete this image permanently. Any points you have won because of this image will also be deducted from your total points score.</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" href="{{ url_for('delete_photo', filename=photo.filename) }}">Yes, delete it.</a>
+      <a class="modal-close btn" href="#!">No, cancel.</a>
+    </div>
+  </div>
 {% endif %}
 
 {% endblock %}
