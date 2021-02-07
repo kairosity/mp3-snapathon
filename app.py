@@ -792,6 +792,15 @@ def delete_photo(filename):
     if session:
         photo_to_del = mongo.db.photos.find_one({"filename": filename})
         if session["user"] == photo_to_del["created_by"]:
+
+            # If the photo to delete has won the user points, we need to remove those points when that image is deleted.
+            if photo_to_del["awards"] == 1:
+                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -7}})
+            elif photo_to_del["awards"] == 2:
+                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -5}})
+            elif photo_to_del["awards"] == 3:
+                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -3}})
+            
             file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
             chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
             
@@ -809,6 +818,7 @@ def delete_photo(filename):
             for photo in user_photos:
                 if photo == filename:
                     mongo.db.users.update_one({"username": session["user"]}, {'$pull': {"photos": photo}})
+
 
             flash("Photograph deleted successfully!")
             return redirect(url_for('profile', username=session["user"]))
@@ -919,10 +929,10 @@ def request_timeout(e):
     return render_template('error.html', error=error, error_msg=error_msg), 408
 
 
-#Check this works.
-@app.errorhandler(Exception)
-def all_other_exceptions(e):
-    return f"Something went wrong! Specifically: {e}"
+#Check this works. This works - it just looks really boring. 
+# @app.errorhandler(Exception)
+# def all_other_exceptions(e):
+#     return f"Something went wrong! Specifically: {e}"
 
 
 if __name__ == "__main__":

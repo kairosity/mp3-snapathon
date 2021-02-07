@@ -89,11 +89,18 @@
     Photograph</a>
 </div>
 </div>
-<!-- Modal Structure -->
+<!-- Confirm Photo Deletion Modal -->
   <div id="confirm-photo-deletion" class="modal">
     <div class="modal-content">
-      <h4>Are you sure you want to delete {{photo.filename|capitalize}}?</h4>
-      <p>This will delete this image permanently. Any points you have won because of this image will also be deducted from your total points score.</p>
+      <h4>Are you sure you want to delete "{{photo.photo_title|capitalize}}"?</h4>
+      <p>This will delete this image permanently.</p>
+      {% if photo.awards == 1 %}
+        <p>This image has won a 1st place Gold award, if you delete it, 7 points will be deducted from your points total.</p>
+      {% elif photo.awards == 2 %}
+        <p>This image has won a 2nd place Silver award, if you delete it, 5 points will be deducted from your points total.</p>
+      {% elif photo.awards == 3 %}
+        <p>This image has won a 3rd place Bronze award, if you delete it, 3 points will be deducted from your points total.</p>
+      {% endif %}
     </div>
     <div class="modal-footer">
       <a class="btn" href="{{ url_for('delete_photo', filename=photo.filename) }}">Yes, delete it.</a>
