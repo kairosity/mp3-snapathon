@@ -892,10 +892,10 @@ def forbidden_error(e):
     error_msg = "I actually can't believe you tried to do that. Totally Forbidden, sorry."
     return render_template('error.html', error=error, error_msg=error_msg), 403
 
-
+#The print statement is working, but the template is not rendering? Not sure why. 
 @app.errorhandler(413)
 def payload_too_large(e):
-    print(e)
+    print(f"This specific error is: {e}")
     error = 413
     error_msg = "Sorry, but the file you're trying to upload is too large. If you are entering the competition, please have a look at the file size guidelines in the rules section. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 413
@@ -903,10 +903,18 @@ def payload_too_large(e):
 
 @app.errorhandler(415)
 def unsupported_media_type(e):
-    print(e)
+    print(f"Error:{e}")
     error = 415
     error_msg = "Sorry, but the file you're trying to upload is an unsupported file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 415
+
+
+@app.errorhandler(408)
+def unsupported_media_type(e):
+    print(e)
+    error = 408
+    error_msg = "Sorry, but the server timed out waiting for the request. You might try again."
+    return render_template('error.html', error=error, error_msg=error_msg), 408
 
 
 if __name__ == "__main__":
