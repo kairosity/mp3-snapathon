@@ -191,6 +191,8 @@ After some research I found the following note in the Flask documentation:
             When using the local development server, you may get a connection reset error instead of a 413 response. 
             You will get the correct status response when running the app with a production WSGI server.
 
+I checked it on the deployed version and it still wasn't working. (FINISH)
+
 
 # Input Validation
 

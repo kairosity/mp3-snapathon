@@ -912,11 +912,17 @@ def unsupported_media_type(e):
 
 
 @app.errorhandler(408)
-def unsupported_media_type(e):
+def request_timeout(e):
     print(e)
     error = 408
     error_msg = "Sorry, but the server timed out waiting for the request. You might try again."
     return render_template('error.html', error=error, error_msg=error_msg), 408
+
+
+#Check this works.
+@app.errorhandler(Exception)
+def all_other_exceptions(e):
+    return f"Something went wrong! Specifically: {e}"
 
 
 if __name__ == "__main__":
