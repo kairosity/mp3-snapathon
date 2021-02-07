@@ -50,7 +50,7 @@
             <div class="row">
 
                 <div class="col s6 m6 center-align">
-                    <i class="far fa-id-badge cta-icons "></i>
+                    <i class="fas fa-id-badge cta-icons "></i>
                     <h2 class="intro-words ">REGISTER</h2>
                 </div>
                 <div class="col s6 m6 center-align">
@@ -137,29 +137,63 @@
         </div>
 
     </div>
-    <div class="row points-scoring-row">
-        <img class="home-image-2 col l6 offset-l1 hide-on-med-and-down"
+    <div class="row points-scoring-row valign-wrapper">
+        <img class="home-image-2 col l4 offset-l1 hide-on-med-and-down"
             src="{{url_for('static', filename='images/in-app/pic5-blue-plane.jpg')}}" alt="">
-        <div class="col s10 offset-s1 m4 offset-m7 l4 offset-l0  right-align points-box">
-            <h3 class="right-align homepage-subheading4 dark-text">HOW DOES THIS WORK?</h3>
-            <div class="points right-align">
-                <p>When you enter a photograph in a SNAPATHON weekly competition you can win points in two ways. Firstly, if your image places 1st, 2nd or 3rd by 
-                    getting the most votes, you receive 7, 5 or 3 points. Secondly, if you vote for an image that places 1st, 2nd or 3rd, you also receive points.
-                Points and awards are calculated on Sunday evening. </p>
-                <p>1st Place Image: <span class="em-points">7</span></p>
-                <p>2nd Place Image: <span class="em-points">5</span></p>
-                <p>3rd Place Image: <span class="em-points">3</span></p>
-                <p>Vote for winning image: <span class="em-points">3</span></p>
-                <p>Vote for 2nd place image: <span class="em-points">2</span></p>
-                <p>Vote for 3rd place image: <span class="em-points">1</span></p>
+        <div class="col s10 offset-s1 m8 offset-m2 l5 offset-l1  right-align points-box">
+            <h3 class="center-align homepage-subheading4 dark-text">HOW DOES THIS WORK?</h3>
+            <div class="points center-align">
+                <p>When you enter a photograph in a SNAPATHON weekly competition you can win points if your entry wins 1st, 2nd or 3rd place, AND/OR if you vote for 
+                    the 1st, 2nd or 3rd placed photo. Click below for a complete explanation of the rules and how to enter.</p>
             </div>
         </div> <br>
-        {% if not session['user']%}
-        <a class="col s10 offset-s1 m12 center-align" href="{{ url_for('register') }}">
-            <h3 class="cta center-align">Register to get started today!</h3>
-        </a>
-        {% endif %}
     </div>
+     <div class="row review-rules-homepage-row">
+    <ul class="collapsible homepage-collapsible-rules">
+        <li class="col s12 homepage-rules-li">
+            <div class="collapsible-header valign-wrapper review-rules-collapsible-header-homepage">
+                <i class="far fa-list-alt"></i><p class="review-rules-text-homepage">Review the competition rules</p>
+            </div>
+            <div class="collapsible-body competition-rules competition-rules-homepage">
+                <div class="row">
+                <h3 class="center-align rules-heading">The rules are as follows:</h3>
+                <ul class="rules col s12 m10 offset-m1">
+                    <li>To get involved and enter competitions, you must first register as a member.</li>
+                    <li>As a member you may enter 1 photograph into each weekly competition.</li>
+                    <li>The photograph must be your own original creation.</li>
+                    <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
+                    <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
+                    <li>The photograph must not violate the rights of any third party.</li>
+                    <li>The photograph must not breach copyright law.</li>
+                    <li>Entries are accepted through our online form each week from 0:00AM Monday until Friday at midnight.</li>
+                    <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
+                    <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
+                    <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
+                    <li>If you fail to vote between Saturday morning at 0:00 and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
+                    <li>All times quoted are UTC+00:00</li>
+                    <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins 
+                        a 1st place gold award badge and its' creator receives 7 points. The next placed photo receives a 2nd place silver award badge and its' creator receives
+                        5 points. Finally the 3rd placed photo receives a bronze award badge and its' creator receives 3 points. 
+                    </li>
+                     <li>Users can also win points by voting for winning images. If a user votes for the 1st placed photo, that user receives 3 points. If a user votes for the 
+                         2nd placed photo, that user receives 2 points. Finally if a user votes for the 3rd placed photo, that user receives 1 point.
+                     </li>
+                     <li>It follows that the highest number of points a user can receive per competition is 9 (by winning 1st place and voting for the 2nd place image).
+                     </li>
+                </ul>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+    </div>  
+     {% if not session['user']%}
+    <div class="row">
+        <a class="col s12 cta-link valign-wrapper" href="{{ url_for('register') }}">
+            <i class="fas fa-id-badge"></i><h3 class="cta "> Register to get started today!</h3>
+        </a>
+    </div>
+     {% endif %}
 
 </section>
 <section id="contact-form" class="dark-bg section-home-4">

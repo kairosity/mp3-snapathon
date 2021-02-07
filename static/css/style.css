@@ -298,7 +298,10 @@ section div.schedule-row{
 .points,
 .schedule {
     font-family: var(--subheading-1-font);
-    font-size: 1.1em;
+    font-size: 1.5rem;
+}
+.points{
+    line-height: 1.8;
 }
 .em{
     font-weight: 600;
@@ -314,22 +317,66 @@ section div.schedule-row{
 }
 .points-scoring-row{
     background-color: var(--accent-colour);
-    padding-bottom: 3rem;
+    /* padding-bottom: 3rem; */
 }
 .points-box{
     margin-bottom: 2rem;
+}
+div.points-scoring-row{
+    margin-bottom: 0;
+}
+ul.homepage-collapsible-rules{
+    margin: 0;
+}
+.review-rules-collapsible-header-homepage{
+    background-color: var(--accent-colour);
+    justify-content: center;
+}
+.review-rules-collapsible-header-homepage:hover{
+    background-color: var(--dark-accent-colour);
+}
+ul li div.competition-rules-homepage{
+    background-color: var(--dark-text-color);
+    color: var(--main-text-colour);
+}
+div.row ul li.homepage-rules-li{
+    padding: 0;
+}
+div.rules-arrow-down{
+    display: block;
+}
+.review-rules-text-homepage{
+    font-family: var(--subheading-1-font);
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+div.review-rules-homepage-row{
+    margin-bottom: 0;
 }
 .cta-row{
     background-color: var(--accent-colour);
 }
 .cta{
-    font-size: 2.2em;
-    font-family: var(--subheading-font);
-    color: var(--dark-text-color);
+    font-family: var(--subheading-1-font);
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
     margin: 0;
+    padding: 1.8rem 1.2rem;
 }
-.cta:hover{
+div.row a.cta-link:hover{
     text-decoration: underline;
+    background-color: var(--dark-accent-colour);
+}
+div.row a.cta-link{
+    background-color: var(--accent-colour);
+    color: var(--dark-text-color);
+    padding: 1.2rem;
+    width: 2rem;
+    font-size: 1.6rem;
+    justify-content: center;
+    margin-right: 1rem;
 }
 div.contact-form-box{
     margin-top: 2em;
@@ -1091,7 +1138,7 @@ footer p {
 
 @media screen and (min-width: 600px) {
 
-/* Homepage */
+/* Universal Styles */
 .page-heading{
     font-size: 4.5rem;
     letter-spacing: 3px;
@@ -1135,6 +1182,15 @@ i.content-hinting{
 .homepage-subheading4{
     font-size: 2.4em;
     padding: 1.3em 0;
+}
+.review-rules-text-homepage{
+    font-size: 2.1rem;
+}
+.cta{
+    font-size: 2.1rem;
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 3rem 1.2rem;
 }
 /* Recent Winners */
 img.award-photo {
