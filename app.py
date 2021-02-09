@@ -16,14 +16,11 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 if os.path.exists("env.py"):
-    import env 
-
+    import env
 
 
 app = Flask(__name__)
-
 csrf = CSRFProtect(app)
-
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
@@ -46,32 +43,44 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
-# datetime.now().strftime("%V%G") - put this back in this week's entries. line 54 & line
-# actual_one = datetime.now().strftime("%V%G")
-# this_week_and_year_formatted = "052021"
-# print(actual_one)
-# print(this_week_and_year_formatted)
+'''
+This function automatically calculates awards and points.
+1. It declares a var representing the current week and year.
+2. It uses that var to find all the photo entries in this week's competition.
+3. It finds all the users who entered photos in this week's competition.
+4. It checks to make sure that every user that entered also voted.
+5. If they didn't vote, it reduces their entries' points to 0.
+6. It looks at this week's entries and puts all their votes in an array.
+7. It determines the votes needed for 1st, 2nd & 3rd place.
+8. It looks at each entry and checks if they have the number needed for a 1st,
+   2nd or 3rd place award.
+9. If they do, it adds those awards to the photo object and it adds the user
+   who created that image into a respective awards array.
+10. It then uses those arrays to assign those users the correct number of
+    points for winning that specific award.
+11. It then looks at all of the users who entered this week's competition
+    again and it looks through their "photos_voted_for" field and checks
+    to see if they voted for a winning image. If they did it assigns them
+    the correct points for doing so.
+'''
 
 
 def awards():
-    actual_one = datetime.now().strftime("%V%G")
-    this_week_and_year_formatted = "052021"
-    #1. Identify all the photos entered into this week's competition.
-
-    this_weeks_entries = list(mongo.db.photos.find({"week_and_year": this_week_and_year_formatted }) )
-    
-    #2. Identify all the user's who entered photos into this week's competition.
+    # 1.
+    this_week_and_year_formatted = datetime.now().strftime("%V%G")
+    # 2.
+    this_weeks_entries = list(mongo.db.photos.find(
+        {"week_and_year": this_week_and_year_formatted}))
+    #3.
     this_weeks_usernames = []
     for img in this_weeks_entries:
         this_weeks_usernames.append(img["created_by"])
-    
-    print(f"This week's usernames: {this_weeks_usernames}")
 
     this_weeks_users = []
     for username in this_weeks_usernames:
         this_weeks_users.append(mongo.db.users.find_one({"username": username}))
 
-    #3. Make sure that those users actually voted. I.e. votes_to_use must be 0. 
+    #4. 
     valid_users = []
     non_voters = []
 
@@ -82,23 +91,21 @@ def awards():
         else:
             valid_users.append(user)
     
-    #4 Identify the non-voters' image entered & bring the image votes to 0. & then bring their votes to use to 0 as well. 
-    #This is filtered further to only target this week's image.
+    #5. 
     for user in non_voters:
         mongo.db.photos.update_one({"created_by": user["username"], "week_and_year": this_week_and_year_formatted }, {'$set': {"photo_votes": 0}})
         mongo.db.users.update_one({"username": user["username"]},{'$set': {"votes_to_use": 0}}) 
         print(f"This user did not vote and so her/his entries points have been reduced to 0: {user}") 
 
     
-    #5. When all the valid entries are in an array - determine the 3 highest points scorers. 
-    this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": this_week_and_year_formatted}, '$orderby': { 'photo_votes' : -1 } } ))
+    #6.
+    # this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": this_week_and_year_formatted}, '$orderby': { 'photo_votes' : -1 } } ))
 
     list_of_votes = []
 
     for photo in this_weeks_entries:
         list_of_votes.append(photo["photo_votes"])
     
-
     # Determine the votes needed for 1st, 2nd & 3rd place. 
     first_place_vote_count = max(list_of_votes)
     second_place_vote_array = [n for n in list_of_votes if n!= first_place_vote_count]
@@ -146,7 +153,7 @@ def awards():
                 third_place_photos.append(photo)
         
 
-    #7. Give the creator of the images the correct number of points.   This goes through them twice. Need to REFACTOR THIS I think. 
+    #7. Give the creator of the images the correct number of points.  
     for user in first_place_users:
         print(f"First Place User: {user} gets 7 points")
         mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 7}})
@@ -166,13 +173,13 @@ def awards():
         for photo in user["photos_voted_for"]:
             #translate that photo id to a photo object AND make sure its entry date is from this week. 
 
-            photo_as_obj = list(mongo.db.photos.find({"_id": photo, "week_and_year": this_week_and_year_formatted })) 
+            photo_as_obj = list(mongo.db.photos.find({"_id": photo, "week_and_year": this_week_and_year_formatted }))
             if photo_as_obj:
                 photo_as_obj = photo_as_obj[0]
                 if photo_as_obj["awards"] == 1:
-                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})   
+                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})  
                 if photo_as_obj["awards"] == 2: 
-                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})     
+                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})    
                 if photo_as_obj["awards"] == 3:
                     mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
                    
@@ -181,7 +188,10 @@ def awards():
 
 
 # awards()
-
+''' 
+This function allows all users to enter a new competition, by setting everyone's 'can_enter' field
+to True. It is run automatically using APScheduler at 0:00 Monday morning. 
+'''
 def new_comp():
     all_users = list(mongo.db.users.find())
     for user in all_users:
@@ -190,6 +200,9 @@ def new_comp():
 
 
 # Development Testing Functions
+''' 
+This function brings all the user points to 0. It is used for testing. 
+'''
 def clear_user_points():
     all_users = list(mongo.db.users.find())
     for user in all_users:
@@ -198,6 +211,9 @@ def clear_user_points():
 
 # clear_user_points()
 
+''' 
+This function brings all the photo awards to null. It is only used for testing. 
+'''
 def clear_all_awards():
     all_photos = list(mongo.db.photos.find())
     for photo in all_photos:
@@ -206,11 +222,26 @@ def clear_all_awards():
 
 # clear_all_awards()
 
+
+'''
+These are the scheduled functions:
+1. awards() runs automatically on Sunday at 22:00PM
+2. new_comp() runs automatically on Monday at 0:00AM
+'''
 scheduler = BackgroundScheduler()
-scheduler.add_job(awards, 'cron', day_of_week='sun', hour=22, minute=00, second=0, start_date='2021-01-24 00:00:00')
-scheduler.add_job(new_comp, 'cron', day_of_week='mon', hour=00, minute=00, second=0, start_date='2021-01-24 00:00:00')
+scheduler.add_job(awards, 'cron', day_of_week='sun',
+                  hour=22, minute=00, second=0,
+                  start_date='2021-01-24 00:00:00')
+scheduler.add_job(new_comp, 'cron', day_of_week='mon',
+                  hour=00, minute=00, second=0,
+                  start_date='2021-01-24 00:00:00')
 scheduler.start()
 
+
+'''
+This function deletes the entire mongoDB collection.
+It is only used for testing.
+'''
 def delete_collection():
     mongo.db.fs.chunks.remove({})
     mongo.db.fs.files.remove({})
@@ -218,6 +249,10 @@ def delete_collection():
     mongo.db.users.remove({})
 
 
+'''
+This context processor function allows all templates to access the current
+datetime.now() using the var datetime.
+'''
 @app.context_processor
 def inject_datetime():
     date_time = datetime.now()
@@ -255,6 +290,8 @@ def recent_winners():
 
     week_before = today - timedelta(weeks=1)
     last_week_and_year = week_before.strftime("%V%G")
+
+    competition_category = "There was no competition last week, and therefore there are no recent winners."
 
     
     def get_winning_images_by_week_and_year(w_a_y):
@@ -296,6 +333,7 @@ def recent_winners():
             third_place.append(img)
             list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
             competition_category = img["competition_category"]
+
 
     return render_template("recent_winners.html", first_place=first_place,
                                                   second_place=second_place,
