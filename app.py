@@ -204,7 +204,6 @@ def clear_all_awards():
         mongo.db.photos.update_one({"filename": photo["filename"]}, {'$set': {"awards": None}})
     print("No photo has any awards now.")
 
-
 # clear_all_awards()
 
 scheduler = BackgroundScheduler()

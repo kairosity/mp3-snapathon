@@ -48,8 +48,11 @@
 
         <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title|capitalize }}</h1>
         <h2 class="artist-name col s10 offset-s1 center-align">by {{ username|capitalize }}</h2>
-        <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
-       
+
+        <!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
+        {% if datetime.strftime("%V%G") != photo.week_and_year %}
+            <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
+        {% endif %}
         <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
         <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story|capitalize }}</p>
          {% if photo.awards == 1 %}
