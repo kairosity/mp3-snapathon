@@ -191,7 +191,6 @@ def awards():
     #11.
     for user in valid_users:
         for photo in user["photos_voted_for"]:
-            #translate that photo id to a photo object AND make sure its entry date is from this week. 
 
             photo_as_obj = list(mongo.db.photos.find(
                 {"_id": photo, "week_and_year": this_week_and_year_formatted}))
@@ -201,10 +200,10 @@ def awards():
                     mongo.db.users.update_one(
                         {"username": user["username"]},
                         {'$inc': {"user_points": 3}})
-                if photo_as_obj["awards"] == 2: 
+                if photo_as_obj["awards"] == 2:
                     mongo.db.users.update_one(
                         {"username": user["username"]},
-                        {'$inc': {"user_points": 2}}) 
+                        {'$inc': {"user_points": 2}})
                 if photo_as_obj["awards"] == 3:
                     mongo.db.users.update_one(
                         {"username": user["username"]},
@@ -729,24 +728,30 @@ def delete_account(username):
                         if form_password == form_password_confirmation:
                             #1.Delete all this user's photos (files & chunks) from the mongo DB
 
-                            for photo in user["photos"]:
-                                # Remove the photo obj associated with this pic
-                                mongo.db.photos.delete_one({"filename": photo})
-                                # Remove the GridFS file associated with this filename
-                                file_to_delete = mongo.db.fs.files.find_one({"filename": photo})
-                                mongo.db.fs.files.delete_one({"filename": photo})
+                            if len(user["photos"]) > 0:
+                                for photo in user["photos"]:
+                                    # Remove the photo obj associated with this pic
+                                    mongo.db.photos.delete_one({"filename": photo})
+                                    # Target the GridFS file associated with this filename
+                                    file_to_delete = mongo.db.fs.files.find_one({"filename": photo})
+                                    # Target the Chunks associated with this files_id
+                                    chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
+                                    # Delete the file
+                                    mongo.db.fs.files.delete_one(file_to_delete)
 
-                                # chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]})
-                                # # Remove the GridFS chunk(s) associated with this filename
-                                # for chunk in chunks_to_delete:
-                                #     mongo.db.fs.chunks.delete_one(chunk)
+                                    if len(chunks_to_delete) > 0:
+                                        # Delete the GridFS chunk(s) associated with this filename
+                                        for chunk in chunks_to_delete:
+                                            mongo.db.fs.chunks.delete_one(chunk)
 
-                            #2. Pop the session. 
-
-                            #3. Delete the user from the DB.
                             
+                            #3. Delete the user from the DB.
+                            mongo.db.users.delete_one({"username": user["username"]})
 
-                            flash("Account deleted successfully")
+                            #2. Pop the session. (There is still a session - why?)
+                            session.pop("user", None)
+
+                            flash("Account & photos deleted successfully, we're sorry to see you go. Come back to us any time!")
                             return redirect(url_for('home'))
 
                         else:
