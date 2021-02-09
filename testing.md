@@ -263,6 +263,38 @@ as needed.
 
 This strategy helped me catch one issue that arose not because of the code logic, but because I had allowed 4 users to upload more than one image. 
 
+### Testing the "user must vote" rule contained in the awards() function. 
+
+The rules of the competition state that if you enter the competition, you must vote for an image other than you own before 22:00PM on Sunday. Users who enter 
+and who do not vote, will have their entry's points reduced to 0. This happens automatically as votes are counted. To test this, I created a dummy user called "Franny"
+who entered an image of some leaves, and whose image got 100 votes between Friday night and Sunday at 22:00. Franny did not vote for any image. I then ran the awards()
+function and made sure that her image's points were reduced to 0. 
+
+#### Franny's user document before awards() is run:
+<p align="left">
+  <img src="static/images/testing/franny_before_awards().png">
+</p>
+
+#### Franny's photo document before awards() is run:
+<p align="left">
+  <img src="static/images/testing/franny-photo-before-awards().png">
+</p>
+
+#### Franny's user document after awards() is run:
+<p align="left">
+  <img src="static/images/testing/franny_after_awards().png">
+</p>
+
+#### Franny's photo document after awards() is run:
+<p align="left">
+  <img src="static/images/testing/franny-photo-after-awards().png">
+</p>
+
+As you can see the ```awards()``` function correctly reduced Franny's ```votes_to_use``` from 1 to 0, 
+as well as reducing her photo "leaves"'s ```photo_votes``` from 100 to 0.
+Leaves received more votes than any other photo in that competition, but did not win any awards, 
+evidenced by its ```awards``` field remaining ```null```
+
 ## Testing the Vote logic
 
 ### Issue 1

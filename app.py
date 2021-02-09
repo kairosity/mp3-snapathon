@@ -43,44 +43,46 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
-'''
-This function automatically calculates awards and points.
-1. It declares a var representing the current week and year.
-2. It uses that var to find all the photo entries in this week's competition.
-3. It finds all the users who entered photos in this week's competition.
-4. It checks to make sure that every user that entered also voted.
-5. If they didn't vote, it reduces their entries' points to 0.
-6. It looks at this week's entries and puts all their votes in an array.
-7. It determines the votes needed for 1st, 2nd & 3rd place.
-8. It looks at each entry and checks if they have the number needed for a 1st,
-   2nd or 3rd place award.
-9. If they do, it adds those awards to the photo object and it adds the user
-   who created that image into a respective awards array.
-10. It then uses those arrays to assign those users the correct number of
-    points for winning that specific award.
-11. It then looks at all of the users who entered this week's competition
-    again and it looks through their "photos_voted_for" field and checks
-    to see if they voted for a winning image. If they did it assigns them
-    the correct points for doing so.
-'''
-
+# datetime.now().strftime("%V%G")
 
 def awards():
+    '''
+    This function automatically calculates awards and points.
+    1. It declares a var representing the current week and year.
+    2. It uses that var to find all the photo entries in this week's
+        competition.
+    3. It finds all the users who entered photos in this week's competition.
+    4. It checks to make sure that every user that entered also voted.
+    5. If they didn't vote, it reduces their entries' points to 0.
+    6. It looks at this week's entries and puts all their votes in an array.
+    7. It determines the votes needed for 1st, 2nd & 3rd place.
+    8. It looks at each entry and checks if they have the number needed for a
+        1st, 2nd or 3rd place award.
+    9. If they do, it adds those awards to the photo object and it adds the
+        user who created that image into a respective awards array.
+    10. It then uses those arrays to assign those users the correct number of
+        points for winning that specific award.
+    11. It then looks at all of the users who entered this week's competition
+        again and it looks through their "photos_voted_for" field and checks
+        to see if they voted for a winning image. If they did it assigns them
+        the correct points for doing so.
+    '''
     # 1.
-    this_week_and_year_formatted = datetime.now().strftime("%V%G")
+    this_week_and_year_formatted = "052021"
     # 2.
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
-    #3.
+    # 3.
     this_weeks_usernames = []
     for img in this_weeks_entries:
         this_weeks_usernames.append(img["created_by"])
 
     this_weeks_users = []
     for username in this_weeks_usernames:
-        this_weeks_users.append(mongo.db.users.find_one({"username": username}))
+        this_weeks_users.append(
+            mongo.db.users.find_one({"username": username}))
 
-    #4. 
+    # 4.
     valid_users = []
     non_voters = []
 
@@ -90,134 +92,167 @@ def awards():
             print(f"This week's non-votes are:{non_voters}")
         else:
             valid_users.append(user)
-    
-    #5. 
-    for user in non_voters:
-        mongo.db.photos.update_one({"created_by": user["username"], "week_and_year": this_week_and_year_formatted }, {'$set': {"photo_votes": 0}})
-        mongo.db.users.update_one({"username": user["username"]},{'$set': {"votes_to_use": 0}}) 
-        print(f"This user did not vote and so her/his entries points have been reduced to 0: {user}") 
 
-    
-    #6.
-    # this_weeks_entries = list(mongo.db.photos.find( { '$query': {"week_and_year": this_week_and_year_formatted}, '$orderby': { 'photo_votes' : -1 } } ))
+    # 5.
+    for user in non_voters:
+        mongo.db.photos.update_one(
+            {"created_by": user["username"],
+             "week_and_year": this_week_and_year_formatted},
+            {'$set': {"photo_votes": 0}})
+        mongo.db.users.update_one(
+            {"username": user["username"]},
+            {'$set': {"votes_to_use": 0}})
+
+
+    # 6.
+    this_weeks_entries = list(mongo.db.photos.find(
+        {'$query': {"week_and_year": this_week_and_year_formatted},
+         '$orderby': {'photo_votes': -1}}))
 
     list_of_votes = []
 
     for photo in this_weeks_entries:
         list_of_votes.append(photo["photo_votes"])
-    
-    # Determine the votes needed for 1st, 2nd & 3rd place. 
+ 
+    #7.
     first_place_vote_count = max(list_of_votes)
-    second_place_vote_array = [n for n in list_of_votes if n!= first_place_vote_count]
+    second_place_vote_array = [n for n in list_of_votes if n != first_place_vote_count]
     second_place_vote_count = max(second_place_vote_array)
-    third_place_vote_array = [n for n in second_place_vote_array if n!= second_place_vote_count]
+    third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
     third_place_vote_count = max(third_place_vote_array)
-    print(f"First Place Vote Count: {first_place_vote_count}")
-    print(f"Second Place Vote Count: {second_place_vote_count}")
-    print(f"Third Place Vote Count: {third_place_vote_count}")
 
-    #Determine which photos in this week's entries have those particular vote numbers and assign them awards. 
-    first_place_users =[]
+    first_place_users = []
     second_place_users = []
     third_place_users = []
-  
+
     first_place_photos = []
     second_place_photos = []
     third_place_photos = []
-  
 
+    # 8. & 9.
     for entry in this_weeks_entries:
         if entry["photo_votes"] == first_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 1}})
-            user = mongo.db.users.find_one({"username": entry["created_by"]})
+            mongo.db.photos.update_one(
+                {"filename": entry["filename"]},
+                {'$set': {"awards": 1}})
+            user = mongo.db.users.find_one(
+                {"username": entry["created_by"]})
+
             if user not in first_place_users:
                 first_place_users.append(user)
-            photo = mongo.db.photos.find_one({"filename": entry["filename"]})
+                photo = mongo.db.photos.find_one(
+                    {"filename": entry["filename"]})
+
             if photo not in first_place_photos:
                 first_place_photos.append(photo)
+
         elif entry["photo_votes"] == second_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 2}})
-            user = mongo.db.users.find_one({"username": entry["created_by"]})
+            mongo.db.photos.update_one(
+                {"filename": entry["filename"]},
+                {'$set': {"awards": 2}})
+            user = mongo.db.users.find_one(
+                {"username": entry["created_by"]})
+
             if user not in second_place_users:
                 second_place_users.append(user)
-            photo = mongo.db.photos.find_one({"filename": entry["filename"]})
+                photo = mongo.db.photos.find_one(
+                    {"filename": entry["filename"]})
+
             if photo not in second_place_photos:
-                second_place_photos.append(photo) 
+                second_place_photos.append(photo)
+
         elif entry["photo_votes"] == third_place_vote_count:
-            mongo.db.photos.update_one({"filename": entry["filename"]}, {'$set': {"awards": 3}})
-            user = mongo.db.users.find_one({"username": entry["created_by"]})
+            mongo.db.photos.update_one(
+                {"filename": entry["filename"]},
+                {'$set': {"awards": 3}})
+            user = mongo.db.users.find_one(
+                {"username": entry["created_by"]})
+
             if user not in third_place_users:
                 third_place_users.append(user)
-            photo = mongo.db.photos.find_one({"filename": entry["filename"]})
+            photo = mongo.db.photos.find_one(
+                {"filename": entry["filename"]})
             if photo not in third_place_photos:
                 third_place_photos.append(photo)
-        
 
-    #7. Give the creator of the images the correct number of points.  
+    #10.
     for user in first_place_users:
-        print(f"First Place User: {user} gets 7 points")
-        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 7}})
-    
-    for user in second_place_users:
-        print(f"Second Place User: {user} gets 5 points")
-        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 5}})
-    
-    for user in third_place_users:
-        print(f"Third Place User: {user} gets 3 points")
-        mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})
+        mongo.db.users.update_one(
+            {"username": user["username"]}, {'$inc': {"user_points": 7}})
 
-    #8 Assign points to users for voting for 1st, 2nd & 3rd images. 
-    #Look at each user in this week's comp.
+    for user in second_place_users:
+        mongo.db.users.update_one(
+            {"username": user["username"]}, {'$inc': {"user_points": 5}})
+
+    for user in third_place_users:
+        mongo.db.users.update_one(
+            {"username": user["username"]}, {'$inc': {"user_points": 3}})
+
+    #11.
     for user in valid_users:
-        # Look through their photos voted for list.
         for photo in user["photos_voted_for"]:
             #translate that photo id to a photo object AND make sure its entry date is from this week. 
 
-            photo_as_obj = list(mongo.db.photos.find({"_id": photo, "week_and_year": this_week_and_year_formatted }))
+            photo_as_obj = list(mongo.db.photos.find(
+                {"_id": photo, "week_and_year": this_week_and_year_formatted}))
             if photo_as_obj:
                 photo_as_obj = photo_as_obj[0]
                 if photo_as_obj["awards"] == 1:
-                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 3}})  
+                    mongo.db.users.update_one(
+                        {"username": user["username"]},
+                        {'$inc': {"user_points": 3}})
                 if photo_as_obj["awards"] == 2: 
-                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 2}})    
+                    mongo.db.users.update_one(
+                        {"username": user["username"]},
+                        {'$inc': {"user_points": 2}}) 
                 if photo_as_obj["awards"] == 3:
-                    mongo.db.users.update_one({"username": user["username"]}, {'$inc': {"user_points": 1}})
-                   
-        
+                    mongo.db.users.update_one(
+                        {"username": user["username"]},
+                        {'$inc': {"user_points": 1}})
+
     print("Awards & points have been calculated and awarded.")
 
 
 # awards()
-''' 
-This function allows all users to enter a new competition, by setting everyone's 'can_enter' field
-to True. It is run automatically using APScheduler at 0:00 Monday morning. 
-'''
 def new_comp():
+    ''' 
+    This function allows all users to enter a new competition, by setting everyone's 'can_enter' field
+    to True. It is run automatically using APScheduler at 0:00 Monday morning. 
+    '''
     all_users = list(mongo.db.users.find())
     for user in all_users:
-        mongo.db.users.update_one({"username": user["username"]}, {'$set': {"can_enter": True}})
+        mongo.db.users.update_one(
+            {"username": user["username"]},
+            {'$set': {"can_enter": True}})
     print("All users can now enter a new image in competition")
 
 
 # Development Testing Functions
-''' 
-This function brings all the user points to 0. It is used for testing. 
-'''
+
 def clear_user_points():
+    '''
+    This function brings all the user points to 0. It is used for testing.
+    '''
     all_users = list(mongo.db.users.find())
     for user in all_users:
-        mongo.db.users.update_one({"username": user["username"]}, {'$set': {"user_points": 0}})
+        mongo.db.users.update_one(
+            {"username": user["username"]},
+            {'$set': {"user_points": 0}})
     print("All user points zeroed")
 
 # clear_user_points()
 
-''' 
-This function brings all the photo awards to null. It is only used for testing. 
-'''
+
 def clear_all_awards():
+    '''
+    This function brings all the photo awards to null.
+    It is only used for testing.
+    '''
     all_photos = list(mongo.db.photos.find())
     for photo in all_photos:
-        mongo.db.photos.update_one({"filename": photo["filename"]}, {'$set': {"awards": None}})
+        mongo.db.photos.update_one(
+            {"filename": photo["filename"]},
+            {'$set': {"awards": None}})
     print("No photo has any awards now.")
 
 # clear_all_awards()
