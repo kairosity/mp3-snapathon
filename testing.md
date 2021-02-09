@@ -245,10 +245,6 @@ an inconsistency with the user_points. Once I solved it, test 2 ran correctly.
 4.| Ignacio | "Lightening Attack" | "Peace & Quiet" | 5 | 1 | 6 | 6
 
 
-
-
-
-
 I created two development functions clear_user_points() & clear_all_awards(), to quickly and easily clear the slate and re-test the awards() function as many times 
 as needed. 
 
@@ -266,6 +262,36 @@ as needed.
             print("No photo has any awards now.")
 
 This strategy helped me catch one issue that arose not because of the code logic, but because I had allowed 4 users to upload more than one image. 
+
+## Testing the Vote logic
+
+### Issue 1
+
+An issue with the functionality of the application arose when I realise that during the voting period ( Friday at midnight until Sunday at 22:00 ) users could see
+the points on the images by clicking into the photo details, or by looking at the profile "Votes" section of different users. Admittedly it would take some amount of independent 
+focused research on behalf of the contestants, however if they did it, it would make it easy for a user to score points by voting for the image doing the best just before voting ends. 
+
+### Fix 1 
+
+I looked at the locations in the application that display points and I changed the code to make the points display only occur for photos whose week_and_year field was not equal 
+to the current week_and_year. For the photo details page this line was added to the template itself: 
+
+            {% if datetime.strftime("%V%G") != photo.week_and_year %}
+                <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
+            {% endif %}
+
+
+For the user profile page, I confined the logic to the view rather than the template:
+
+
+        if photos_voted_for_array != []:
+        for img in photos_voted_for_array:
+            photo_obj = list(mongo.db.photos.find({"_id": img}))
+            for photo in photo_obj:
+                if photo["week_and_year"] != datetime.now().strftime("%V%G"):
+                    photos_voted_for_objs.append(photo)  
+
+Where ```photos_voted_for_objs``` was the array passed to the template.  
 
 # Input Validation
 

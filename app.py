@@ -457,12 +457,15 @@ def profile(username):
     it and appends it to an array that we pass to the profile template.
     '''
     photos_voted_for_array = user["photos_voted_for"]
+    # print(f"All photos voted for {photos_voted_for_array}")
     photos_voted_for_objs = []
 
     if photos_voted_for_array != []:
         for img in photos_voted_for_array:
             photo_obj = list(mongo.db.photos.find({"_id": img}))
-            photos_voted_for_objs.append(photo_obj[0])
+            for photo in photo_obj:
+                if photo["week_and_year"] != datetime.now().strftime("%V%G"):
+                    photos_voted_for_objs.append(photo)     
     else:
         print("This user has not voted for any images yet")
     award_winners = []
