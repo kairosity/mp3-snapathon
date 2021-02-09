@@ -165,6 +165,19 @@ The email functionality was working fine in the local port, but when deployed to
 ### Fix 2
 I had not inputed my new mail configuration variables in the Heroku config vars input area. Once I did it connected perfectly.
 
+## awards()
+
+### Issue 1 
+
+When the awards function was run, it was over awarding certain users. During testing I ran a number of simulations and found that 4 users in particular were being awarded
+an illogical number of points. Everyone else was being awarded the correct number of user_points, and the awards were working correctly as far as the photos were concerned. 
+
+### Fix 1 
+
+I ran through the function line by line and using print() statements on every logical segment, I discovered that the users in question were being added twice to the valid_users
+array. Eventually I realised that in testing the application I had uploaded more than the one allotted photo for each of those users and since the function is based on an assumption
+of 1 entry per user per week, that fact was breaking the code. I deleted the offending extra images and it worked well again, but there is definitely room to refactor that code *if* 
+I decide that the application could host more than a single competition per week, or if users are allowed upload more than one image per competition. 
 
 ## Error Messages
 
@@ -193,6 +206,66 @@ After some research I found the following note in the Flask documentation:
 
 I checked it on the deployed version and it still wasn't working. (FINISH)
 
+# Testing the Automated Processes
+
+The awards() function runs automatically on a Sunday evening at 22:00 - obviously to test this, I had to change those settings and run it manually. 
+
+Firstly I created a selection of dummy users and for each of them I entered 1 image into a dummy weekly competition. I then made each user vote for various images and recorded
+who voted for which image. I created two spreadsheets: one recording what the user actions were and expected results, the other recording the photograph votes received and expected
+awards. Basically a manual version of what automated tests would achieve. 
+
+#|Photo Title | Votes Received | Photo Created By | Users Who Voted For Photo | Expected Awards | Actual Awards
+---|------------ | -------------|--------------|----------------------|------------|--------
+. | __*Test 1*__ 
+1.| "Sunset of Fire"  | 7 | Eoghan | Anne1, Cathy, Frederick, Loretta, Monica, Orlaith, Derrick | 1st place | 1st place
+2.| "Best Beach Ever"  | 3 | Frederick | Eoghan, Georgina, Horatio | 2nd place | 2nd place
+3.|  "Lightening Attack"  | 3 | Ignacio | Barbara, Stephanie, Quentin | 2nd place | 2nd place
+4.|  "Peace & Quiet"  | 2 | Derrick | Ignacio, Patricia | 3rd place | 3rd place
+. | __*Test 2*__ 
+1.| "Sunset of Fire"  | 7 | Eoghan | Anne1, Cathy, Frederick, Loretta, Monica, Orlaith, Derrick | 1st place | 1st place
+2.| "Best Beach Ever"  | 3 | Frederick | Eoghan, Georgina, Horatio | 2nd place | 2nd place
+3.|  "Lightening Attack"  | 3 | Ignacio | Barbara, Stephanie, Quentin | 2nd place | 2nd place
+4.|  "Peace & Quiet"  | 2 | Derrick | Ignacio, Patricia | 3rd place | 3rd place
+
+As you can see the awards and points logic functioned perfectly in both tests, but as below illustrates this manually testing strategy caught 
+an inconsistency with the user_points. Once I solved it, test 2 ran correctly. 
+
+
+#|User | User Photo | Photo User Voted For | Expected User Points From Awards | Expected User Points From Voting | Expected User Points Total | Actual User Points Total
+---|------------ | -------------|--------------|----------------------|------------|--------|-----
+. | __*Test 1*__ 
+1.| Derrick | "Peace & Quiet" | "Sunset of Fire" | 3 | 3 | 6 | 6
+2.| Eoghan | "Sunset of Fire" | "Best Beach Ever" | 7 | 2 | 9 | _*11*_
+3.| Frederick | "Best Beach Ever" | "Sunset of Fire" | 5 | 3 | 8 | _*11*_
+4.| Ignacio | "Lightening Attack" | "Peace & Quiet" | 5 | 1 | 6 | 6
+. | __*Test 2*__ 
+1.| Derrick | "Peace & Quiet" | "Sunset of Fire" | 3 | 3 | 6 | 6
+2.| Eoghan | "Sunset of Fire" | "Best Beach Ever" | 7 | 2 | 9 | 9
+3.| Frederick | "Best Beach Ever" | "Sunset of Fire" | 5 | 3 | 8 | 8
+4.| Ignacio | "Lightening Attack" | "Peace & Quiet" | 5 | 1 | 6 | 6
+
+
+
+
+
+
+I created two development functions clear_user_points() & clear_all_awards(), to quickly and easily clear the slate and re-test the awards() function as many times 
+as needed. 
+
+        def clear_user_points():
+            all_users = list(mongo.db.users.find())
+            for user in all_users:
+                mongo.db.users.update_one({"username": user["username"]}, {'$set': {"user_points": 0}})
+            print("All user points zeroed")
+
+
+        def clear_all_awards():
+            all_photos = list(mongo.db.photos.find())
+            for photo in all_photos:
+                mongo.db.photos.update_one({"filename": photo["filename"]}, {'$set': {"awards": None}})
+            print("No photo has any awards now.")
+
+This strategy helped me catch one issue that arose not because of the code logic, but because I had allowed 4 users to upload more than one image. 
 
 # Input Validation
 
