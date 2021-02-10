@@ -46,3 +46,49 @@ else:
             "votes_to_use": 0
         }
         mongo.db.users.insert_one(register)
+
+
+ # for entry in this_weeks_entries:
+    #     if entry["photo_votes"] == first_place_vote_count:
+    #         mongo.db.photos.update_one(
+    #             {"filename": entry["filename"]},
+    #             {'$set': {"awards": 1}})
+    #         user = mongo.db.users.find_one(
+    #             {"username": entry["created_by"]})
+
+    #         if user not in first_place_users:
+    #             first_place_users.append(user)
+    #             photo = mongo.db.photos.find_one(
+    #                 {"filename": entry["filename"]})
+
+    #         if photo not in first_place_photos:
+    #             first_place_photos.append(photo)
+
+    #     elif entry["photo_votes"] == second_place_vote_count:
+    #         mongo.db.photos.update_one(
+    #             {"filename": entry["filename"]},
+    #             {'$set': {"awards": 2}})
+    #         user = mongo.db.users.find_one(
+    #             {"username": entry["created_by"]})
+
+    #         if user not in second_place_users:
+    #             second_place_users.append(user)
+    #             photo = mongo.db.photos.find_one(
+    #                 {"filename": entry["filename"]})
+
+    #         if photo not in second_place_photos:
+    #             second_place_photos.append(photo)
+
+    #     elif entry["photo_votes"] == third_place_vote_count:
+    #         mongo.db.photos.update_one(
+    #             {"filename": entry["filename"]},
+    #             {'$set': {"awards": 3}})
+    #         user = mongo.db.users.find_one(
+    #             {"username": entry["created_by"]})
+
+    #         if user not in third_place_users:
+    #             third_place_users.append(user)
+    #         photo = mongo.db.photos.find_one(
+    #             {"filename": entry["filename"]})
+    #         if photo not in third_place_photos:
+    #             third_place_photos.append(photo)

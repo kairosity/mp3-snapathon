@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for,
     abort, jsonify)
 from flask_pymongo import PyMongo, pymongo
+from helpers import *
 from flask_paginate import Pagination, get_page_args
 # from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
 from flask_wtf.csrf import CSRFProtect
@@ -47,214 +48,47 @@ mongo = PyMongo(app)
 
 def awards():
     '''
-    This function automatically calculates awards and points.
-    1. It declares a var representing the current week and year.
-    2. It uses that var to find all the photo entries in this week's
-        competition.
-    3. It finds all the users who entered photos in this week's competition.
-    4. It checks to make sure that every user that entered also voted.
-    5. If they didn't vote, it reduces their entries' points to 0.
-    6. It looks at this week's entries and puts all their votes in an array.
-    7. It determines the votes needed for 1st, 2nd & 3rd place.
-    8. It looks at each entry and checks if they have the number needed for a
-        1st, 2nd or 3rd place award.
-    9. If they do, it adds those awards to the photo object and it adds the
-        user who created that image into a respective awards array.
-    10. It then uses those arrays to assign those users the correct number of
-        points for winning that specific award.
-    11. It then looks at all of the users who entered this week's competition
-        again and it looks through their "photos_voted_for" field and checks
-        to see if they voted for a winning image. If they did it assigns them
-        the correct points for doing so.
+    * This function automatically calculates photo awards and user points from
+      the votes the competition entries have received.
+      It is run automatically using AP Scheduler on Sunday Evening at 22:00PM.
+
+    \n Args:
+       None.
+
+    \n Returns (updates db):
+    * Resets the photo_points for invalid entries to 0.
+    * Calculates & assigns points to each user who won a 1st, 2nd or 3rd
+      placement.
+    * Updates the db photo objs for photos that won 1st, 2nd or 3rd.
+    * Calculates & assigns points to each user who voted for a photo that
+      came 1st, 2nd or 3rd.
     '''
-    # 1.
     this_week_and_year_formatted = "052021"
-    # 2.
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
-    # 3.
-    this_weeks_usernames = []
-    for img in this_weeks_entries:
-        this_weeks_usernames.append(img["created_by"])
 
-    this_weeks_users = []
-    for username in this_weeks_usernames:
-        this_weeks_users.append(
-            mongo.db.users.find_one({"username": username}))
+    this_weeks_users = get_this_weeks_comp_users(this_weeks_entries, mongo)
 
-    # 4.
-    valid_users = []
-    non_voters = []
+    valid_users = filter_users_and_exclude_non_voters(this_weeks_users, mongo, this_week_and_year_formatted)
 
-    for user in this_weeks_users:
-        if user["votes_to_use"] > 0:
-            non_voters.append(user)
-            print(f"This week's non-votes are:{non_voters}")
-        else:
-            valid_users.append(user)
-
-    # 5.
-    for user in non_voters:
-        mongo.db.photos.update_one(
-            {"created_by": user["username"],
-             "week_and_year": this_week_and_year_formatted},
-            {'$set': {"photo_votes": 0}})
-        mongo.db.users.update_one(
-            {"username": user["username"]},
-            {'$set': {"votes_to_use": 0}})
-
-
-    # 6.
-    this_weeks_entries = list(mongo.db.photos.find(
-        {'$query': {"week_and_year": this_week_and_year_formatted},
-         '$orderby': {'photo_votes': -1}}))
-
-    list_of_votes = []
-
-    for photo in this_weeks_entries:
-        list_of_votes.append(photo["photo_votes"])
+    range_of_votes = get_range_of_scores(this_week_and_year_formatted, mongo)
  
-    #7.
-    first_place_vote_count = max(list_of_votes)
-    second_place_vote_array = [n for n in list_of_votes if n != first_place_vote_count]
-    second_place_vote_count = max(second_place_vote_array)
-    third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
-    third_place_vote_count = max(third_place_vote_array)
+    first_place_vote_count, second_place_vote_count, third_place_vote_count = awards_score_requirements(range_of_votes)
 
-    first_place_users = []
-    second_place_users = []
-    third_place_users = []
-
-    first_place_photos = []
-    second_place_photos = []
-    third_place_photos = []
-
-    # 8. & 9.
-    for entry in this_weeks_entries:
-        if entry["photo_votes"] == first_place_vote_count:
-            mongo.db.photos.update_one(
-                {"filename": entry["filename"]},
-                {'$set': {"awards": 1}})
-            user = mongo.db.users.find_one(
-                {"username": entry["created_by"]})
-
-            if user not in first_place_users:
-                first_place_users.append(user)
-                photo = mongo.db.photos.find_one(
-                    {"filename": entry["filename"]})
-
-            if photo not in first_place_photos:
-                first_place_photos.append(photo)
-
-        elif entry["photo_votes"] == second_place_vote_count:
-            mongo.db.photos.update_one(
-                {"filename": entry["filename"]},
-                {'$set': {"awards": 2}})
-            user = mongo.db.users.find_one(
-                {"username": entry["created_by"]})
-
-            if user not in second_place_users:
-                second_place_users.append(user)
-                photo = mongo.db.photos.find_one(
-                    {"filename": entry["filename"]})
-
-            if photo not in second_place_photos:
-                second_place_photos.append(photo)
-
-        elif entry["photo_votes"] == third_place_vote_count:
-            mongo.db.photos.update_one(
-                {"filename": entry["filename"]},
-                {'$set': {"awards": 3}})
-            user = mongo.db.users.find_one(
-                {"username": entry["created_by"]})
-
-            if user not in third_place_users:
-                third_place_users.append(user)
-            photo = mongo.db.photos.find_one(
-                {"filename": entry["filename"]})
-            if photo not in third_place_photos:
-                third_place_photos.append(photo)
-
-    #10.
-    for user in first_place_users:
-        mongo.db.users.update_one(
-            {"username": user["username"]}, {'$inc': {"user_points": 7}})
-
-    for user in second_place_users:
-        mongo.db.users.update_one(
-            {"username": user["username"]}, {'$inc': {"user_points": 5}})
-
-    for user in third_place_users:
-        mongo.db.users.update_one(
-            {"username": user["username"]}, {'$inc': {"user_points": 3}})
-
-    #11.
-    for user in valid_users:
-        for photo in user["photos_voted_for"]:
-
-            photo_as_obj = list(mongo.db.photos.find(
-                {"_id": photo, "week_and_year": this_week_and_year_formatted}))
-            if photo_as_obj:
-                photo_as_obj = photo_as_obj[0]
-                if photo_as_obj["awards"] == 1:
-                    mongo.db.users.update_one(
-                        {"username": user["username"]},
-                        {'$inc': {"user_points": 3}})
-                if photo_as_obj["awards"] == 2:
-                    mongo.db.users.update_one(
-                        {"username": user["username"]},
-                        {'$inc': {"user_points": 2}})
-                if photo_as_obj["awards"] == 3:
-                    mongo.db.users.update_one(
-                        {"username": user["username"]},
-                        {'$inc': {"user_points": 1}})
-
+    first_place_users, second_place_users, third_place_users = determine_winners(first_place_vote_count, second_place_vote_count, third_place_vote_count, this_weeks_entries, mongo)
+    
+    add_points_to_winning_users(first_place_users, second_place_users, third_place_users, mongo)
+    
+    add_points_to_users_who_voted_well(valid_users, this_week_and_year_formatted, mongo)
+    
     print("Awards & points have been calculated and awarded.")
 
 
 # awards()
-def new_comp():
-    ''' 
-    This function allows all users to enter a new competition, by setting everyone's 'can_enter' field
-    to True. It is run automatically using APScheduler at 0:00 Monday morning. 
-    '''
-    all_users = list(mongo.db.users.find())
-    for user in all_users:
-        mongo.db.users.update_one(
-            {"username": user["username"]},
-            {'$set': {"can_enter": True}})
-    print("All users can now enter a new image in competition")
-
 
 # Development Testing Functions
-
-def clear_user_points():
-    '''
-    This function brings all the user points to 0. It is used for testing.
-    '''
-    all_users = list(mongo.db.users.find())
-    for user in all_users:
-        mongo.db.users.update_one(
-            {"username": user["username"]},
-            {'$set': {"user_points": 0}})
-    print("All user points zeroed")
-
-# clear_user_points()
-
-
-def clear_all_awards():
-    '''
-    This function brings all the photo awards to null.
-    It is only used for testing.
-    '''
-    all_photos = list(mongo.db.photos.find())
-    for photo in all_photos:
-        mongo.db.photos.update_one(
-            {"filename": photo["filename"]},
-            {'$set': {"awards": None}})
-    print("No photo has any awards now.")
-
-# clear_all_awards()
+# clear_user_points(mongo)
+# clear_all_awards(mongo)
 
 
 '''
@@ -266,29 +100,31 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='sun',
                   hour=22, minute=00, second=0,
                   start_date='2021-01-24 00:00:00')
-scheduler.add_job(new_comp, 'cron', day_of_week='mon',
+scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='wed',
                   hour=00, minute=00, second=0,
                   start_date='2021-01-24 00:00:00')
 scheduler.start()
 
 
-'''
-This function deletes the entire mongoDB collection.
-It is only used for testing.
-'''
+
 def delete_collection():
+    '''
+    This function deletes the entire mongoDB collection.
+    It is only used for testing.
+    '''
     mongo.db.fs.chunks.remove({})
     mongo.db.fs.files.remove({})
     mongo.db.photos.remove({})
     mongo.db.users.remove({})
 
 
-'''
-This context processor function allows all templates to access the current
-datetime.now() using the var datetime.
-'''
+
 @app.context_processor
 def inject_datetime():
+    '''
+    This context processor function allows all templates to access the current
+    datetime.now() using the var datetime.
+    '''
     date_time = datetime.now()
     return dict(datetime=date_time)
 
@@ -299,6 +135,13 @@ inject_datetime()
 @app.route("/")
 @app.route("/home", methods=["GET", "POST"])
 def home():
+    '''
+    - Renders landing page
+
+    - "POST" takes message from email form &
+    - Creates a new Message object populated with that data.
+    - Sends that message to Snapathon's email (set in MAIL_SETTINGS dict).
+    '''
     if request.method == "POST":
         with app.app_context():
             msg = Message(subject="New Email From Contact Form")
@@ -315,7 +158,19 @@ def home():
 
 @app.route("/recent_winners")
 def recent_winners():
-
+    '''
+    - Gets current date, time, weekday & hour & gets current week_and_year.
+    - Calculates what the  week_and_year was last week.
+    - Function defined to find all images by their week_and_year field.
+    - Conditional: If it is Mon-Sat OR Sun before 22:00, then the above
+      function is run using LAST week - to get the last competition's
+      images & to get the date of LAST Monday (when that competition started).
+    - If it is Sunday after 22:00 then the current week_and_year is used and
+      last monday refers to the Monday just passed.
+    - Once the correct week_and_year is established those images that won
+      awards are placed in award-specific arrays to be passed to the "recent
+      winners" template alongside the competition category.
+    '''
     # Get date & time
     today = datetime.now()
     day_of_week = today.weekday()
@@ -327,26 +182,21 @@ def recent_winners():
 
     competition_category = "There was no competition last week, and therefore there are no recent winners."
 
-    
-    def get_winning_images_by_week_and_year(w_a_y):
-        winning_images = list(mongo.db.photos.find({"week_and_year": w_a_y} ))
+    def get_images_by_week_and_year(w_a_y):
+        winning_images = list(mongo.db.photos.find({"week_and_year": w_a_y}))
         return winning_images
-    
 
-    # If dow is Mon-Sat  Sun BEFORE 22:00PM:
-    if day_of_week in range(0,6) or day_of_week == 6 and hour_of_day < 22:
-        images_to_display = get_winning_images_by_week_and_year(last_week_and_year)
+    if day_of_week in range(0, 6) or day_of_week == 6 and hour_of_day < 22:
+        images_to_display = get_images_by_week_and_year(last_week_and_year)
         last_mon = week_before
         while last_mon.weekday() != 0:
             last_mon = last_mon - timedelta(days=1)
-    # If dow is sun and it's after 22:00
     else:
-        
-        images_to_display = get_winning_images_by_week_and_year(week_and_year)
+        images_to_display = get_images_by_week_and_year(week_and_year)
         last_mon = today
         while last_mon.weekday() != 0:
             last_mon = last_mon - timedelta(days=1)
-        
+
     first_place = []
     second_place = []
     third_place = []
@@ -357,26 +207,43 @@ def recent_winners():
     for img in images_to_display:
         if img["awards"] == 1:
             first_place.append(img)
-            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            list_of_users.append(mongo.db.users.find_one(
+                                {"username": img["created_by"]}))
             competition_category = img["competition_category"]
         elif img["awards"] == 2:
             second_place.append(img)
-            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            list_of_users.append(mongo.db.users.find_one(
+                                {"username": img["created_by"]}))
             competition_category = img["competition_category"]
         elif img["awards"] == 3:
             third_place.append(img)
-            list_of_users.append(mongo.db.users.find_one({"username": img["created_by"] }))
+            list_of_users.append(mongo.db.users.find_one(
+                                {"username": img["created_by"]}))
             competition_category = img["competition_category"]
 
+    return render_template("recent_winners.html",
+                           first_place=first_place,
+                           second_place=second_place,
+                           third_place=third_place,
+                           users=list_of_users,
+                           week_starting=week_starting,
+                           competition_category=competition_category)
 
-    return render_template("recent_winners.html", first_place=first_place,
-                                                  second_place=second_place,
-                                                  third_place=third_place,
-                                                  users=list_of_users,
-                                                  week_starting=week_starting,
-                                                  competition_category=competition_category)
 
-def paginated_and_pagination_args(photos_arr, PER_PAGE, page_param, per_page_param):
+def paginated_and_pagination_args(
+        photos_arr, PER_PAGE, page_param, per_page_param):
+
+    '''
+    - Unpacks the get_page_args into "page" & 2 unused vars.
+    - Sets offset manually using per_page & page.
+    - Sets total to be the length of the photos array.
+    - Creates a Pagination object with all the required args
+      & stores in "pagination_args".
+    - Creates a var that takes the array of photos given to the func
+      as an arg and splits it into the correct sized chunk using
+      offset & PER_PAGE.
+    - Returns the two latter vars.
+    '''
 
     page, _, _, = get_page_args(page_parameter=page_param, per_page_parameter=per_page_param)
 
@@ -388,25 +255,49 @@ def paginated_and_pagination_args(photos_arr, PER_PAGE, page_param, per_page_par
                                  total=total,
                                  page_parameter=page_param,
                                  per_page_parameter=per_page_param)
-    
+
     photos_to_display = photos_arr[offset: offset + PER_PAGE]
-    
+
     return pagination_args, photos_to_display
+
 
 @app.route("/browse")
 def browse():
 
+    '''
+    - Finds all photos in the DB
+    - Runs the pagination func and saves the return values into 2 vars.
+    - Passes those vars to the browse template to paginate the results.
+    '''
+
     all_photos = list(mongo.db.photos.find())
 
-    pagination, photos_paginated = paginated_and_pagination_args(all_photos, 10, "page", "per_page")
+    pagination, photos_paginated = paginated_and_pagination_args(
+                                   all_photos, 10, "page", "per_page")
+
+    return render_template("browse_images.html",
+                           photos=photos_paginated,
+                           pagination=pagination)
 
 
-    return render_template("browse_images.html", photos=photos_paginated, pagination=pagination)
-
-   
 @app.route('/search')
 def search():
-
+    '''
+    Takes the user inputted search query and finds images that
+      match the criterion.
+    - Sets a request referrer var.
+    - Sets 3 vars to take in the user's search query.
+    - Sets vars (full_search & full_query) to use to optionally chain
+      the other filters.
+    - Sets 3 conditionals to build a full search query with.
+    - Returns the filtered_photos using the results of the constructed
+      query.
+    - Runs the pagination func and saves the return values into 2 vars.
+    - If the filtered search returns no images - displays a msg to the user.
+    - Renders the results of the search query to the browse template. Passing
+      through the paginated & filtered photos, the pagination args & the source
+      url.
+    '''
     source_url = request.referrer
 
     category = request.args.get("category")
@@ -417,55 +308,63 @@ def search():
     full_query = {}
 
     if query:
-        full_query["$text"]={"$search": full_search}
+        full_query["$text"] = {"$search": full_search}
 
     if awards:
-            full_query["awards"]={"$in": awards}
-        
+        full_query["awards"] = {"$in": awards}
+
     if category:
         full_query["competition_category"] = category
-    
+
     filtered_photos = list(mongo.db.photos.find(full_query))
 
-
-    pagination, photos_paginated = paginated_and_pagination_args(filtered_photos, 10, "page", "per_page")
+    pagination, photos_paginated = paginated_and_pagination_args(
+                                   filtered_photos, 10, "page", "per_page")
 
     if not filtered_photos:
         flash("I'm sorry, but your search did not return any images.")
 
-   
-    return render_template("browse_images.html", 
-                            photos=photos_paginated, pagination=pagination, source_url=source_url)
+    return render_template("browse_images.html",
+                           photos=photos_paginated,
+                           pagination=pagination,
+                           source_url=source_url)
 
 
-
-        
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
+    '''
+    The GET request returns the registration page.
+    The POST request registers a new user.
+    - Checks if the email already exists in the db.
+    - Checks if the username already exists in the db.
+    - If they exist returns a msg to user.
+    - Checks if passwords match, if they do...
+    - Creates the register dict with required user fields.
+    - Inserts the register var into the db.
+    - Creates a new session for the user based on username.
+    - Redirects the new user to their new profile page.
+    '''
     if request.method == "POST":
-        # check if email address already exists in db
         existing_email = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower()})
+                         {"email": request.form.get("email").lower()})
         existing_username = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+                            {"username": request.form.get("username").lower()})
 
         if existing_email:
             flash("Email is already registered.")
             return redirect(url_for('register'))
-        
+
         if existing_username:
             flash("Username is already in use, please choose a different one.")
             return redirect(url_for('register'))
-        
-        # check if password fields match
+
         password1 = request.form.get("password")
         password2 = request.form.get("password-confirmation")
 
         if password1 != password2:
             flash("Passwords do not match, please try again.")
             return redirect(url_for('register'))
-        
-        #If it is Mon-Friday can_enter = True If it is Sat or Sun it's False? Does it need to be False? 
 
         register = {
             "username": request.form.get("username").lower(),
@@ -479,38 +378,43 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        # puts the new user into a session
         session["user"] = request.form.get("username").lower()
         flash("Registration successful!")
-
         username = session["user"]
 
         return redirect(url_for("profile", username=username))
+
     return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    '''
+    GET returns login page.
+    POST logs the user in.
+    - Checks to see if the username entered exists.
+    - If it does, checks to see if the (hashed) password is the
+      same as the password just entered in the form.
+    - If it is correct, creates a session for that user and
+      redirects them to their profile page with user access.
+    - If the password is incorrect or the username doesn't exist
+      it reloads the login page.
+    '''
     if request.method == "POST":
-        # does username exist?
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
 
         if existing_user:
-            # ensure that the hashed password matches this input
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    username = existing_user["username"]
-                    session["user"] = username
-                    flash(f"Welcome, {username}!")
-                    return redirect(url_for("profile", username=username))
+                    existing_user["password"], request.form.get("password")):
+                username = existing_user["username"]
+                session["user"] = username
+                flash(f"Welcome, {username}!")
+                return redirect(url_for("profile", username=username))
             else:
-                # invalid password hash
                 flash("Incorrect username and/or password!")
                 return redirect(url_for("login"))
-
         else:
-            # username doesn't exist
             flash("Incorrect username and/or password!")
             return redirect(url_for("login"))
 
@@ -519,17 +423,35 @@ def login():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
 
-    # grab the array of all the photo_ids this user has under their name 
+    '''
+    Returns a user's profile page, with extra access if it belongs
+    to the user herself.
+    - Finds the user based on the username passed to the url.
+    - Finds a list of photos created by that user.
+    - Finds a list of photo ids that this user has voted on.
+    - For each id it looks in the photo db and finds the image itself.
+    - If that image was NOT entered this week (i.e. the current competition):
+    - Then it puts that image in an array to return to the template.
+    - It creates an array of all the images created by this user that have
+      won awards.
+    - Function defined that takes a date and returns the next of a specific
+      weekday (mon, tues etc..).
+    - Three vars are declared that use this func:
+      1. The next Friday (when the competition ends).
+      2. The next Monday (when the next competition starts).
+      3. Then next Sunday at 22:00PM (when voting ends).
+    - Three more variables are then used to determine the timedeltas
+      between "now" and when those other vars occur.
+    - Another function is declared to take in these timedeltas as args
+      and it returns a final time string stating when these events will occur
+      in terms of how many days, hours etc.. are left.
+    - These strings are then saved into 3 more vars which are passed
+      to the template alongside the other important vars to display the profile.
+    '''
     user = mongo.db.users.find_one({"username": username})
     user_photos = list(mongo.db.photos.find({"created_by": user["username"]}))
 
-    '''
-    Grabs the list of photo ids that this user has voted on & then
-    for each id it looks in the photos db for the image that matches
-    it and appends it to an array that we pass to the profile template.
-    '''
     photos_voted_for_array = user["photos_voted_for"]
-    # print(f"All photos voted for {photos_voted_for_array}")
     photos_voted_for_objs = []
 
     if photos_voted_for_array != []:
@@ -537,17 +459,17 @@ def profile(username):
             photo_obj = list(mongo.db.photos.find({"_id": img}))
             for photo in photo_obj:
                 if photo["week_and_year"] != datetime.now().strftime("%V%G"):
-                    photos_voted_for_objs.append(photo)     
+                    photos_voted_for_objs.append(photo)
     else:
+        # Maybe put a msg in the template to that effect?
         print("This user has not voted for any images yet")
     award_winners = []
     for img in user_photos:
-        if img["awards"] != None:
+        if img["awards"] is not None:
             award_winners.append(img)
-    
+
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
-
     today = datetime.now().strftime('%Y-%m-%d')
 
     # Code from Emmanuel's Stack Overflow answer (attributed in README.md)
@@ -558,9 +480,9 @@ def profile(username):
         """
         d = datetime.strptime(startdate, '%Y-%m-%d')
         t = timedelta((7 + weekday - d.weekday()) % 7)
-        date = d + t
-        return date
-    
+        final_date = d + t
+        return final_date
+
     competition_ends = get_next_weekday(today, 5)
     next_competition_starts = get_next_weekday(today, 1)
     voting_ends = get_next_weekday(today, 7) - timedelta(hours=2)
@@ -571,7 +493,7 @@ def profile(username):
     time_til_next_comp_starts = next_competition_starts - now
  
     def get_time_remaining_string(timedelta):
-        days = timedelta.days 
+        days = timedelta.days
         timedelta_string = str(timedelta)
         time_array = timedelta_string.split(",").pop().split(":")
         hours = time_array[0]
@@ -583,11 +505,9 @@ def profile(username):
     voting_closes = get_time_remaining_string(time_til_voting_ends)
     next_comp_starts = get_time_remaining_string(time_til_next_comp_starts)
 
-
-
     return render_template("profile.html",
                            username=username,
-                           user=user, 
+                           user=user,
                            user_photos=user_photos,
                            photos_voted_for=photos_voted_for_objs,
                            award_winners=award_winners,
@@ -596,41 +516,42 @@ def profile(username):
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
                            next_comp_starts=next_comp_starts)
-    
 
-
-''' 
-1. This function checks if there is a user logged in. 
-2. If so, is that user trying to edit her own profile page?
-3. If so, it checks if the request method is POST. 
-4. If it is POST, it takes all the form data and saves it in variables.
-5. It creates 2 empty dicts to store the data.
-6. It checks if the user has changed their username.
-7. If they have it checks to make sure that username is not already in use, as usernames must be unique. 
-8. If it's not already used, it pushes the new username into both new dicts, as the new username will need to be saved not only 
-to the user doc, but also to every photo that user has uploaded in the created_by field. 
-9. The function then runs the same logic for the user email, but this only needs to be changed on the user doc. 
-10. Then it checks if the user has entered something into the current password field.
-11. Then it checks if that password is correct.
-12. If it is the right password, it checks if she has entered anything into the new password field.
-13. If she has, it checks if that is equal to the new password confirmation field. 
-14. If all three password fields have been entered correctly it pushes the new password to the update_user dict using the Werkzeug 
-password hash. 
-15. Then it checks if there is anything in either of the new dicts. If they contain data, the function updates the Mongo DB with that 
-new data.
-16. If the user data has been changed it also sets the session["user"] to be the new username.
-17. Then it returns the profile page, which will reflect any updates immediately. 
-'''
 
 @app.route("/edit_profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
-
+    '''
+    GET renders the edit_profile template form.
+    - Checks to see if there is a session and if the session user is the
+      same as the user being edited.
+    - If so, allows the edit_profile form to be viewed.
+    POST allows a user to edit their profile and save the changes, with an
+    option to completely delete their account.
+    - Stores form data into vars & creates 2 empty dicts.
+    - Checks to see if the user is trying to change their username.
+    - If they are, it checks to make sure that username is not already
+      in use as usernames must be unique.
+    - If it's not already used, it pushes the new username into both new dicts
+      as the new username will need to be saved not only to the user doc,
+      but also to every photo that user has uploaded in the created_by field.
+    - Same logic is then applied for the user email, but this only needs to be
+      changed in the user document.
+    - Checks if the user has entered something into the current password field.
+    - Checks if that password is correct.
+    - If it is the right password, it checks if the user has entered anything
+      into the new password field.
+    - If she has, checks if that is == to the new password confirmation field.
+    - If all 3 password fields have been entered correctly it pushes the new
+      password to the update_user dict using the Werkzeug password hash.
+    - Checks if there is anything in either of the new dicts. If they contain
+      data, the DB is updated with the new data.
+    16. If the user data has been changed it also sets the session["user"] to be the new username.
+    17. Then it returns the profile page, which will reflect any updates immediately. 
+    '''
     if session:
         if session["user"] == username:
             user = mongo.db.users.find_one({"username": username})
             if request.method == "POST":
-
-                # values from form
                 form_username = request.form.get("username").lower()
                 form_email = request.form.get("email").lower()
                 form_current_password = request.form.get("current_password")
@@ -642,26 +563,30 @@ def edit_profile(username):
 
                 # If the user has changed their username
                 if form_username != user["username"]:
-                    existing_username = mongo.db.users.find_one({"username": form_username})
+                    existing_username = mongo.db.users.find_one(
+                                        {"username": form_username})
                     if existing_username:
                         flash("Username is already in use, please choose a different one.")
-                        return redirect(url_for('edit_profile', user=user, username=username))      
+                        return redirect(url_for(
+                               'edit_profile', user=user, username=username))
                     else:
                         update_user["username"] = form_username
                         update_photos["created_by"] = form_username
 
-                # If the user has changed their email address        
                 if form_email != user["email"]:
-                    # check if email address already exists in db
-                    existing_email = mongo.db.users.find_one({"email": form_email})
+                    existing_email = mongo.db.users.find_one(
+                                    {"email": form_email})
                     if existing_email:
                         flash("That email is already in use, please choose a different one.")
-                        return redirect(url_for('edit_profile', user=user, username=username))
+                        return redirect(url_for(
+                               'edit_profile', user=user, username=username))
                     else:
                         update_user["email"] = form_email
-                
+
                 if form_current_password:
-                    if check_password_hash(user["password"], request.form.get("current_password")):
+                    if check_password_hash(user["password"],
+                                           request.form.get(
+                                               "current_password")):
                         if form_new_password != None:
                             if form_new_password == form_new_password_confirmation:
                                 update_user["password"] = generate_password_hash(form_new_password)
@@ -706,7 +631,7 @@ def edit_profile(username):
         abort(403)
 
 
-@app.route('/delete_account/<username>', methods=['GET', 'POST'])
+@app.route('/delete-account/<username>', methods=['GET', 'POST'])
 def delete_account(username):
 
     if request.method == "POST":
@@ -766,13 +691,6 @@ def delete_account(username):
     else:
         flash("You must be logged in to delete your account, and obviously, you are not allowed to delete someone else's account!")
         abort(403)
-        
-
-        # All the user's photos must be deleted 
-
-        # The user's session must be ended
-
-        # The user must be deleted
 
 
 
@@ -876,23 +794,22 @@ def compete():
                 mongo.db.fs.files.update_one({"_id": file_id},
                                         { '$set': {"filename": new_filename}})
 
-
                 new_entry = {
-                "file_id": file_id,
-                "filename": new_filename,
-                "photo_title": request.form.get("title").lower(),
-                "photo_story": request.form.get("story").lower(),
-                "camera": request.form.get("camera").lower(),
-                "lens": request.form.get("lens").lower(),
-                "aperture": request.form.get("aperture").lower(),
-                "shutter": request.form.get("shutter").lower(),
-                "iso": request.form.get("iso").lower(),
-                "created_by": session["user"],
-                "date_entered": datetime.now(),
-                "competition_category": this_weeks_comp_category,
-                "week_and_year": datetime.now().strftime("%V%G"),
-                "photo_votes": 0,
-                "awards": None
+                    "file_id": file_id,
+                    "filename": new_filename,
+                    "photo_title": request.form.get("title").lower(),
+                    "photo_story": request.form.get("story").lower(),
+                    "camera": request.form.get("camera").lower(),
+                    "lens": request.form.get("lens").lower(),
+                    "aperture": request.form.get("aperture").lower(),
+                    "shutter": request.form.get("shutter").lower(),
+                    "iso": request.form.get("iso").lower(),
+                    "created_by": session["user"],
+                    "date_entered": datetime.now(),
+                    "competition_category": this_weeks_comp_category,
+                    "week_and_year": datetime.now().strftime("%V%G"),
+                    "photo_votes": 0,
+                    "awards": None
                 }
                 mongo.db.photos.insert_one(new_entry)
 
