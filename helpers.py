@@ -54,6 +54,13 @@ def clear_all_awards(database_var):
             {'$set': {"awards": None}})
     print("No photo has any awards now.")
 
+def clear_all_photo_votes(database_var):
+    all_photos = list(database_var.db.photos.find())
+    for photo in all_photos:
+        database_var.db.photos.update_one(
+            {"filename": photo["filename"]},
+            {'$set': {"photo_votes": 0}})
+    print("No photo has any votes now.")
 
 # Scheduled/Timed Functions:
 # 1. new_comp(database_var)
@@ -175,7 +182,10 @@ def get_range_of_scores(comp_week_and_year, database_var):
     range_of_votes = []
 
     for photo in this_weeks_entries_ordered:
-        range_of_votes.append(photo["photo_votes"])
+        if photo["photo_votes"] > 0:
+            range_of_votes.append(photo["photo_votes"])
+    
+    print(f"Range of Votes:{range_of_votes}")
     
     return range_of_votes
 
@@ -191,11 +201,18 @@ def awards_score_requirements(array_of_scores):
     \n Returns:
     * 3 values: the votes needed for 1st place, 2nd place & 3rd place.
     '''
-    first_place_vote_count = max(array_of_scores)
-    second_place_vote_array = [n for n in array_of_scores if n != first_place_vote_count]
-    second_place_vote_count = max(second_place_vote_array)
-    third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
-    third_place_vote_count = max(third_place_vote_array)
+    second_place_vote_array = []
+    third_place_vote_array = []
+    first_place_vote_count = max(array_of_scores) if array_of_scores else None
+
+    if first_place_vote_count:
+        second_place_vote_array = [n for n in array_of_scores if n != first_place_vote_count]
+
+    second_place_vote_count = max(second_place_vote_array) if second_place_vote_array else None
+    if second_place_vote_count:
+        third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
+
+    third_place_vote_count = max(third_place_vote_array) if third_place_vote_array else None
 
     return first_place_vote_count, second_place_vote_count, third_place_vote_count
 
@@ -224,12 +241,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
     second_place_users = []
     third_place_users = []
 
-    first_place_photos = []
-    second_place_photos = []
-    third_place_photos = []
-
     for entry in photo_arr:
-        if entry["photo_votes"] == first_place_votes_needed:
+        if entry["photo_votes"] == first_place_votes_needed and first_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 1}})
@@ -238,13 +251,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
 
             if user not in first_place_users:
                 first_place_users.append(user)
-                photo = database_var.db.photos.find_one(
-                    {"filename": entry["filename"]})
 
-            if photo not in first_place_photos:
-                first_place_photos.append(photo)
-
-        elif entry["photo_votes"] == second_place_votes_needed:
+        elif entry["photo_votes"] == second_place_votes_needed and second_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 2}})
@@ -253,13 +261,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
 
             if user not in second_place_users:
                 second_place_users.append(user)
-                photo = database_var.db.photos.find_one(
-                    {"filename": entry["filename"]})
 
-            if photo not in second_place_photos:
-                second_place_photos.append(photo)
-
-        elif entry["photo_votes"] == third_place_votes_needed:
+        elif entry["photo_votes"] == third_place_votes_needed and second_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 3}})
@@ -268,11 +271,7 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
 
             if user not in third_place_users:
                 third_place_users.append(user)
-            photo = database_var.db.photos.find_one(
-                {"filename": entry["filename"]})
-            if photo not in third_place_photos:
-                third_place_photos.append(photo)
-        
+
     return first_place_users, second_place_users, third_place_users
 
 def add_points_to_winning_users(first_place_user_arr, second_place_user_arr, third_place_user_arr, database_var):

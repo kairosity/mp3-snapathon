@@ -179,6 +179,47 @@ array. Eventually I realised that in testing the application I had uploaded more
 of 1 entry per user per week, that fact was breaking the code. I deleted the offending extra images and it worked well again, but there is definitely room to refactor that code *if* 
 I decide that the application could host more than a single competition per week, or if users are allowed upload more than one image per competition. 
 
+### Issue 2 
+
+During testing for edge-cases, I found 3 different but related scenarios that were breaking the application:
+1. If no one voted for any of the entries during the week and the awards() function ran on schedule on Sunday night, it was throwing an error. 
+2. If one photo got all the votes - error. 
+3. If one photo got say 6 votes, one photo got 4 photos and no other photos got votes, the application was awarding 1st & 2nd place logically, but then awarding 3rd 
+place to every other entry.
+
+### Fix 2
+
+When refactoring the code to account for these edge-cases, I firstly included ternary operators in my definition of all the vote_count variables. Checking to see if 
+the arrays that they rely on had any data in them, i.e. were not 0. If they were 0, I made the count equal null. Then in defining each subsequent array, I first checked 
+to make sure the count they relied on was not null/None.
+
+            first_place_vote_count = max(array_of_scores) if array_of_scores else None
+
+            if first_place_vote_count:
+                second_place_vote_array = [n for n in array_of_scores if n != first_place_vote_count]
+
+            second_place_vote_count = max(second_place_vote_array) if second_place_vote_array else None
+            if second_place_vote_count:
+                third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
+
+            third_place_vote_count = max(third_place_vote_array) if third_place_vote_array else None
+
+            return first_place_vote_count, second_place_vote_count, third_place_vote_count
+
+In the next part of the awards logic, I then added an extra check ```and first_place_votes_needed > 0:``` to each level to ensure that the votes needed 
+to receive an award were greater than 0, and only if they were does the code assign awards to those images, and thus down the line, points to those users. 
+
+            for entry in photo_arr:
+                if entry["photo_votes"] == first_place_votes_needed and first_place_votes_needed > 0:
+                    database_var.db.photos.update_one(
+                        {"filename": entry["filename"]},
+                        {'$set': {"awards": 1}})
+                    user = database_var.db.users.find_one(
+                        {"username": entry["created_by"]})
+
+                    if user not in first_place_users:
+                        first_place_users.append(user)
+
 ## Error Messages
 
 ### Issue 1

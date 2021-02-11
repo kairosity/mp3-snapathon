@@ -89,6 +89,7 @@ def awards():
 # Development Testing Functions
 # clear_user_points(mongo)
 # clear_all_awards(mongo)
+# clear_all_photo_votes(mongo)
 
 
 '''
