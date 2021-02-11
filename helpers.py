@@ -7,6 +7,7 @@ from flask_paginate import Pagination, get_page_args
 import os
 from datetime import datetime
 from datetime import timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
     import env
@@ -534,3 +535,78 @@ def paginated_and_pagination_args(
     photos_to_display = photos_arr[offset: offset + PER_PAGE]
 
     return pagination_args, photos_to_display
+
+
+def filter_user_search(
+        select_search, keyword_search, checkbox_search, database_var):
+    '''
+    * Filters a user's search by their inputed criteria.
+
+    \n Args:
+    1. select_search (str): One of a finite number of pre-populated
+       dropdown menu search categories.
+    2. keyword_search (str): A user's text input search.
+    3. checkbox_search (arr): An array of integers representing
+       checkbox options on the search page.
+    4. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * An array of photo objects from the db filtered to match the search
+      inputs.
+    '''
+    full_search = keyword_search
+    full_query = {}
+
+    if keyword_search:
+        full_query["$text"] = {"$search": full_search}
+
+    if checkbox_search:
+        full_query["awards"] = {"$in": checkbox_search}
+
+    if select_search:
+        full_query["competition_category"] = select_search
+
+    filtered_photos = list(database_var.db.photos.find(full_query))
+
+    return filtered_photos
+
+
+def login_user(email, password, database_var):
+    '''
+    * This logs the user in, or tells them why their login
+      attempt was unsuccessful.
+
+    \n Args:
+    1. email (str): user input from login form of their email.
+       Must be unique and match the password they input.
+    2. password (str): user input from login form, must match
+       hashed password in db connected to user email from arg 1.
+    3. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * A url variable that holds the template to redirect to. For a
+      successful login, this will be the user's profile page. Otherwise
+      it will reload the login page with a flash message telling the user
+      why their login attempt failed.
+    '''
+    existing_user = database_var.db.users.find_one(
+        {"email": email})
+
+    if existing_user:
+        if check_password_hash(
+                existing_user["password"], password):
+            username = existing_user["username"]
+            session["user"] = username
+            flash(f"Welcome, {username}!")
+            url = redirect(url_for("profile", username=username))
+            return url
+        else:
+            flash("Incorrect username and/or password!")
+            url = redirect(url_for("login"))
+            return url
+    else:
+        flash("Incorrect username and/or password!")
+        url = redirect(url_for("login"))
+        return url

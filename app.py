@@ -185,9 +185,13 @@ def recent_winners():
 @app.route("/browse")
 def browse():
     '''
-    - Finds all photos in the DB
-    - Runs the pagination func and saves the return values into 2 vars.
-    - Passes those vars to the browse template to paginate the results.
+    * Fetches all the photos entered into the competition from all time
+      and paginates them for quicker loading times.
+
+    \n Args: None
+
+    \n Returns:
+    * Template displaying all the images to the user, paginated.
     '''
 
     all_photos = list(mongo.db.photos.find())
@@ -203,20 +207,15 @@ def browse():
 @app.route('/search')
 def search():
     '''
-    Takes the user inputted search query and finds images that
+    * Takes the user inputed search query and filters back images that
       match the criterion.
-    - Sets a request referrer var.
-    - Sets 3 vars to take in the user's search query.
-    - Sets vars (full_search & full_query) to use to optionally chain
-      the other filters.
-    - Sets 3 conditionals to build a full search query with.
-    - Returns the filtered_photos using the results of the constructed
-      query.
-    - Runs the pagination func and saves the return values into 2 vars.
-    - If the filtered search returns no images - displays a msg to the user.
-    - Renders the results of the search query to the browse template. Passing
-      through the paginated & filtered photos, the pagination args & the source
-      url.
+    
+    \n Args:
+    1. query (str): User input from the search form.
+
+    \n Returns:
+    * Renders an array of paginated and filtered photo objects that match
+      the search criterion on the browse template.
     '''
     source_url = request.referrer
 
@@ -224,19 +223,7 @@ def search():
     query = request.args.get("query")
     awards = [int(n) for n in request.args.getlist("award")]
 
-    full_search = query
-    full_query = {}
-
-    if query:
-        full_query["$text"] = {"$search": full_search}
-
-    if awards:
-        full_query["awards"] = {"$in": awards}
-
-    if category:
-        full_query["competition_category"] = category
-
-    filtered_photos = list(mongo.db.photos.find(full_query))
+    filtered_photos = filter_user_search(category, query, awards, mongo)
 
     pagination, photos_paginated = paginated_and_pagination_args(
                                    filtered_photos, 10, "page", "per_page")
@@ -252,19 +239,25 @@ def search():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    '''
+    * GET request displays the registration page for new users.
+      POST request registers a new user using data received
+      from a registration form.
 
+    \n Args:
+    1. user inputs (str): email, username, password taken in from
+       the registration form.
+
+    \n Returns:
+    * If GET: Renders the registration template.
+    * If POST registration is successful, it inserts a new user into the db.
+    * Logs the new user in and creates a new session for that
+      user.
+    * Redirects that user to their new profile page template.
+    * If registration is unsuccessfuly the register template is
+      reloaded with flash messages detailing why.
     '''
-    The GET request returns the registration page.
-    The POST request registers a new user.
-    - Checks if the email already exists in the db.
-    - Checks if the username already exists in the db.
-    - If they exist returns a msg to user.
-    - Checks if passwords match, if they do...
-    - Creates the register dict with required user fields.
-    - Inserts the register var into the db.
-    - Creates a new session for the user based on username.
-    - Redirects the new user to their new profile page.
-    '''
+
     if request.method == "POST":
         existing_email = mongo.db.users.find_one(
                          {"email": request.form.get("email").lower()})
@@ -286,7 +279,7 @@ def register():
             flash("Passwords do not match, please try again.")
             return redirect(url_for('register'))
 
-        register = {
+        register_user = {
             "username": request.form.get("username").lower(),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
@@ -296,7 +289,7 @@ def register():
             "votes_to_use": 0,
             "can_enter": True
         }
-        mongo.db.users.insert_one(register)
+        mongo.db.users.insert_one(register_user)
 
         session["user"] = request.form.get("username").lower()
         flash("Registration successful!")
@@ -310,33 +303,26 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     '''
-    GET returns login page.
-    POST logs the user in.
-    - Checks to see if the username entered exists.
-    - If it does, checks to see if the (hashed) password is the
-      same as the password just entered in the form.
-    - If it is correct, creates a session for that user and
-      redirects them to their profile page with user access.
-    - If the password is incorrect or the username doesn't exist
-      it reloads the login page.
+    * GET request returns the login page.
+      POST request logs the user in if inputed credentials match
+      db records.
+
+    \n Args:
+    1. user inputs (str): email & password taken in from
+       the login form.
+
+    \n Returns:
+    * If GET: Renders the login template.
+    * If POST: succesful, then logs the user in, creates a new
+      session and redirects the user to their profile page.
+    * IF POST: unsuccessful, then displays a flash message to the
+      user to tell them why, and reloads the login template.
     '''
     if request.method == "POST":
-        existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower()})
-
-        if existing_user:
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                username = existing_user["username"]
-                session["user"] = username
-                flash(f"Welcome, {username}!")
-                return redirect(url_for("profile", username=username))
-            else:
-                flash("Incorrect username and/or password!")
-                return redirect(url_for("login"))
-        else:
-            flash("Incorrect username and/or password!")
-            return redirect(url_for("login"))
+        email = request.form.get("email").lower()
+        password = request.form.get("password")
+        url = login_user(email, password, mongo)
+        return url
 
     return render_template("login.html")
 
