@@ -15,6 +15,8 @@ if os.path.exists("env.py"):
 # Development Testing Functions
 # 1. clear_user_points(database_var)
 # 2. clear_all_awards(database_var)
+# 3. clear_all_photo_votes(database_var)
+# 4. delete_collection()
 def clear_user_points(database_var):
     '''
     * This function brings all the user points to 0.
@@ -54,13 +56,40 @@ def clear_all_awards(database_var):
             {'$set': {"awards": None}})
     print("No photo has any awards now.")
 
+
 def clear_all_photo_votes(database_var):
+    '''
+    * This removes all photo vote records from all photos in the db.
+
+    \n Args:
+    1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    
+    \n Returns:
+    * Deletes all values in the photo_votes field on all photo docs in the db.
+    '''
     all_photos = list(database_var.db.photos.find())
     for photo in all_photos:
         database_var.db.photos.update_one(
             {"filename": photo["filename"]},
             {'$set': {"photo_votes": 0}})
     print("No photo has any votes now.")
+
+
+def delete_collection():
+    '''
+    * This function deletes the entire mongoDB collection.
+      It is only used for testing in development.
+    
+    \n Args: None.
+    \n Returns:
+    * Deletes the entire db collection.
+    '''
+    mongo.db.fs.chunks.remove({})
+    mongo.db.fs.files.remove({})
+    mongo.db.photos.remove({})
+    mongo.db.users.remove({})
+
 
 # Scheduled/Timed Functions:
 # 1. new_comp(database_var)
@@ -82,6 +111,8 @@ def new_comp(database_var):
             {"username": user["username"]},
             {'$set': {"can_enter": True}})
     print("All users can now enter a new image in competition")
+
+
 
 
 # awards() Helper Functions:
@@ -336,4 +367,66 @@ def add_points_to_users_who_voted_well(user_arr, comp_week_and_year, database_va
                     database_var.db.users.update_one(
                         {"username": user["username"]},
                         {'$inc': {"user_points": 1}})
+
+# Recent Winners Helper Functions
+def get_images_by_week_and_year(w_a_y, database_var):
+    '''
+    * Returns a list of images entered into a competition in a 
+      particular week.
+
+    \n Args:
+    1. w_a_y (str): A datetime formatted string of type: "052021"
+       representing the week & year the photo was entered into competition.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    
+    \n Returns:
+    * A list of photos that were entered into the competition that 
+      specific week.
+    '''
+    entries_that_week = list(database_var.db.photos.find({"week_and_year": w_a_y}))
+    return entries_that_week
+
+
+def get_last_monday_and_images(database_var, func_to_get_images):
+    '''
+    * This gets the datetime object of the 'last monday' i.e. the date of
+      commencement of the 'last' referenced competition. It also gets the 
+      collection of entries for that particular competition. 
+
+    \n Args:
+    1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    2. func_to_get_images (func): A function that takes 2 args:
+       1. The week & year in question. 
+       2. A database obj (as per #3 above)
+       This func returns an array of images from a particular competition.
+
+    \n Returns:
+    * The datetime object of the 'last monday' - if we access this Mon-Sun before
+      22:00PM, this will reference the previous week's Monday. If we access this on 
+      Sunday after 22:00PM this will reference the current week's Monday. 
+    * An array of 'images_to_display' - i.e. competition entries from that particular 
+      week.
+    '''
+    today = datetime.now()
+    day_of_week = today.weekday()
+    hour_of_day = today.time().hour
+    this_week_and_year = datetime.now().strftime("%V%G")
+
+    week_before = today - timedelta(weeks=1)
+    last_week_and_year = week_before.strftime("%V%G")
+
+    if day_of_week in range(0, 6) or day_of_week == 6 and hour_of_day < 22:
+        images_to_display = func_to_get_images(last_week_and_year, database_var)
+        last_mon = week_before
+        while last_mon.weekday() != 0:
+            last_mon = last_mon - timedelta(days=1)
+    else:
+        images_to_display = func_to_get_images(this_week_and_year, database_var)
+        last_mon = today
+        while last_mon.weekday() != 0:
+            last_mon = last_mon - timedelta(days=1)
+    
+    return images_to_display, last_mon
 

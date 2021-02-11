@@ -44,8 +44,6 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
-# datetime.now().strftime("%V%G")
-
 def awards():
     '''
     * This function automatically calculates photo awards and user points from
@@ -63,6 +61,7 @@ def awards():
     * Calculates & assigns points to each user who voted for a photo that
       came 1st, 2nd or 3rd.
     '''
+    #This needs to change to # datetime.now().strftime("%V%G")
     this_week_and_year_formatted = "052021"
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
@@ -82,7 +81,6 @@ def awards():
     add_points_to_users_who_voted_well(valid_users, this_week_and_year_formatted, mongo)
     
     print("Awards & points have been calculated and awarded.")
-
 
 # awards()
 
@@ -107,19 +105,6 @@ scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='wed',
 scheduler.start()
 
 
-
-def delete_collection():
-    '''
-    This function deletes the entire mongoDB collection.
-    It is only used for testing.
-    '''
-    mongo.db.fs.chunks.remove({})
-    mongo.db.fs.files.remove({})
-    mongo.db.photos.remove({})
-    mongo.db.users.remove({})
-
-
-
 @app.context_processor
 def inject_datetime():
     '''
@@ -129,7 +114,6 @@ def inject_datetime():
     date_time = datetime.now()
     return dict(datetime=date_time)
 
-
 inject_datetime()
 
 
@@ -137,11 +121,14 @@ inject_datetime()
 @app.route("/home", methods=["GET", "POST"])
 def home():
     '''
-    - Renders landing page
+    * Displays homepage template & allows user to send email.
 
-    - "POST" takes message from email form &
-    - Creates a new Message object populated with that data.
-    - Sends that message to Snapathon's email (set in MAIL_SETTINGS dict).
+    \n Args:
+    1. User inputs (str): email and message from contact form.
+
+    \n Returns:
+    * Template displaying the homepage
+    * POST method sends SNAPATHON an email from the user.
     '''
     if request.method == "POST":
         with app.app_context():
@@ -160,43 +147,20 @@ def home():
 @app.route("/recent_winners")
 def recent_winners():
     '''
-    - Gets current date, time, weekday & hour & gets current week_and_year.
-    - Calculates what the  week_and_year was last week.
-    - Function defined to find all images by their week_and_year field.
-    - Conditional: If it is Mon-Sat OR Sun before 22:00, then the above
-      function is run using LAST week - to get the last competition's
-      images & to get the date of LAST Monday (when that competition started).
-    - If it is Sunday after 22:00 then the current week_and_year is used and
-      last monday refers to the Monday just passed.
-    - Once the correct week_and_year is established those images that won
-      awards are placed in award-specific arrays to be passed to the "recent
-      winners" template alongside the competition category.
+    * This gets a list of the most recent competition award-winning images
+      and passes them to the 'winners' template, alongside information about
+      when the last competition was held and what the theme was.
+
+    \n Args: None. 
+
+    \n Returns: 
+    * Template displaying the most recent award-winning photographs and info
+      about when that competition was held and what its' theme was.
     '''
-    # Get date & time
-    today = datetime.now()
-    day_of_week = today.weekday()
-    hour_of_day = today.time().hour
-    week_and_year = datetime.now().strftime("%V%G")
-
-    week_before = today - timedelta(weeks=1)
-    last_week_and_year = week_before.strftime("%V%G")
-
+    
     competition_category = "There was no competition last week, and therefore there are no recent winners."
 
-    def get_images_by_week_and_year(w_a_y):
-        winning_images = list(mongo.db.photos.find({"week_and_year": w_a_y}))
-        return winning_images
-
-    if day_of_week in range(0, 6) or day_of_week == 6 and hour_of_day < 22:
-        images_to_display = get_images_by_week_and_year(last_week_and_year)
-        last_mon = week_before
-        while last_mon.weekday() != 0:
-            last_mon = last_mon - timedelta(days=1)
-    else:
-        images_to_display = get_images_by_week_and_year(week_and_year)
-        last_mon = today
-        while last_mon.weekday() != 0:
-            last_mon = last_mon - timedelta(days=1)
+    images_to_display, last_mon = get_last_monday_and_images(mongo, get_images_by_week_and_year)
 
     first_place = []
     second_place = []
