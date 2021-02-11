@@ -22,7 +22,7 @@ def clear_user_points(database_var):
     * This function brings all the user points to 0.
     It is only used in development.
 
-    \n Args: 
+    \n Args:
     1. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
 
@@ -42,10 +42,10 @@ def clear_all_awards(database_var):
     * This function brings all the photo awards to null.
     It is only used in development for testing.
 
-    \n Args: 
+    \n Args:
     1. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
-    
+
     \n Returns:
     * Set all the photo documents as having "awards": null
     '''
@@ -64,7 +64,7 @@ def clear_all_photo_votes(database_var):
     \n Args:
     1. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
-    
+
     \n Returns:
     * Deletes all values in the photo_votes field on all photo docs in the db.
     '''
@@ -76,19 +76,21 @@ def clear_all_photo_votes(database_var):
     print("No photo has any votes now.")
 
 
-def delete_collection():
+def delete_collection(database_var):
     '''
     * This function deletes the entire mongoDB collection.
       It is only used for testing in development.
-    
-    \n Args: None.
+
+    \n Args:
+     1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
     \n Returns:
     * Deletes the entire db collection.
     '''
-    mongo.db.fs.chunks.remove({})
-    mongo.db.fs.files.remove({})
-    mongo.db.photos.remove({})
-    mongo.db.users.remove({})
+    database_var.db.fs.chunks.remove({})
+    database_var.db.fs.files.remove({})
+    database_var.db.photos.remove({})
+    database_var.db.users.remove({})
 
 
 # Scheduled/Timed Functions:
@@ -113,8 +115,6 @@ def new_comp(database_var):
     print("All users can now enter a new image in competition")
 
 
-
-
 # awards() Helper Functions:
 # 1. get_this_weeks_comp_users(*args)
 # 2. filter_users_and_exclude_non_voters(*args)
@@ -122,7 +122,6 @@ def new_comp(database_var):
 # 4. determine_winners(*args)
 # 5. add_points_to_winning_users(*args)
 # 6. add_points_to_users_who_voted_well(*args)
-
 def get_this_weeks_comp_users(entries, database_var):
     '''
     * Creates a list of the users who entered a particular competition.
@@ -149,7 +148,8 @@ def get_this_weeks_comp_users(entries, database_var):
     return this_weeks_users
 
 
-def filter_users_and_exclude_non_voters(array_of_users, database_var, comp_week_and_year):
+def filter_users_and_exclude_non_voters(
+        array_of_users, database_var, comp_week_and_year):
     '''
     * This divides the arr of users who entered the competition into users
       who voted and users who did not vote. It then penalises users who entered
@@ -181,7 +181,7 @@ def filter_users_and_exclude_non_voters(array_of_users, database_var, comp_week_
     for user in non_voters:
         database_var.db.photos.update_one(
             {"created_by": user["username"],
-            "week_and_year": comp_week_and_year},
+                "week_and_year": comp_week_and_year},
             {'$set': {"photo_votes": 0}})
         database_var.db.users.update_one(
             {"username": user["username"]},
@@ -215,10 +215,11 @@ def get_range_of_scores(comp_week_and_year, database_var):
     for photo in this_weeks_entries_ordered:
         if photo["photo_votes"] > 0:
             range_of_votes.append(photo["photo_votes"])
-    
+
     print(f"Range of Votes:{range_of_votes}")
-    
+
     return range_of_votes
+
 
 def awards_score_requirements(array_of_scores):
     '''
@@ -237,24 +238,32 @@ def awards_score_requirements(array_of_scores):
     first_place_vote_count = max(array_of_scores) if array_of_scores else None
 
     if first_place_vote_count:
-        second_place_vote_array = [n for n in array_of_scores if n != first_place_vote_count]
+        second_place_vote_array = \
+            [n for n in array_of_scores if n != first_place_vote_count]
 
-    second_place_vote_count = max(second_place_vote_array) if second_place_vote_array else None
+    second_place_vote_count = \
+        max(second_place_vote_array) if second_place_vote_array else None
     if second_place_vote_count:
-        third_place_vote_array = [n for n in second_place_vote_array if n != second_place_vote_count]
+        third_place_vote_array = \
+            [n for n in second_place_vote_array
+                if n != second_place_vote_count]
 
-    third_place_vote_count = max(third_place_vote_array) if third_place_vote_array else None
+    third_place_vote_count = \
+        max(third_place_vote_array) if third_place_vote_array else None
 
-    return first_place_vote_count, second_place_vote_count, third_place_vote_count
+    return first_place_vote_count, \
+        second_place_vote_count, third_place_vote_count
 
 
-def determine_winners(first_place_votes_needed, second_place_votes_needed, third_place_votes_needed, photo_arr, database_var):
+def determine_winners(
+        first_place_votes_needed, second_place_votes_needed,
+        third_place_votes_needed, photo_arr, database_var):
     '''
     * This uses the score requirements for winning awards, to determine which
       photos and users won 1st, 2nd and 3rd place. It updates the "awards"
-      field in the db for the winning images, and it returns 3 arrays of winning
-      users.
-    
+      field in the db for the winning images, and it returns 3 arrays of
+      winning users.
+
     \n Args:
     1. first_place_votes_needed, second_place_votes_needed &
        third_place_votes_needed (int): The required number of votes a photo
@@ -273,7 +282,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
     third_place_users = []
 
     for entry in photo_arr:
-        if entry["photo_votes"] == first_place_votes_needed and first_place_votes_needed > 0:
+        if entry["photo_votes"] == \
+                first_place_votes_needed and first_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 1}})
@@ -283,7 +293,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
             if user not in first_place_users:
                 first_place_users.append(user)
 
-        elif entry["photo_votes"] == second_place_votes_needed and second_place_votes_needed > 0:
+        elif entry["photo_votes"] == \
+                second_place_votes_needed and second_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 2}})
@@ -293,7 +304,8 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
             if user not in second_place_users:
                 second_place_users.append(user)
 
-        elif entry["photo_votes"] == third_place_votes_needed and second_place_votes_needed > 0:
+        elif entry["photo_votes"] == \
+                third_place_votes_needed and second_place_votes_needed > 0:
             database_var.db.photos.update_one(
                 {"filename": entry["filename"]},
                 {'$set': {"awards": 3}})
@@ -305,7 +317,10 @@ def determine_winners(first_place_votes_needed, second_place_votes_needed, third
 
     return first_place_users, second_place_users, third_place_users
 
-def add_points_to_winning_users(first_place_user_arr, second_place_user_arr, third_place_user_arr, database_var):
+
+def add_points_to_winning_users(
+        first_place_user_arr, second_place_user_arr,
+        third_place_user_arr, database_var):
     '''
     * Takes in arrays of winning users and increases their "user_points"
       fields in the db by their respective scores.
@@ -332,17 +347,19 @@ def add_points_to_winning_users(first_place_user_arr, second_place_user_arr, thi
         database_var.db.users.update_one(
             {"username": user["username"]}, {'$inc': {"user_points": 3}})
 
-def add_points_to_users_who_voted_well(user_arr, comp_week_and_year, database_var):
+
+def add_points_to_users_who_voted_well(
+        user_arr, comp_week_and_year, database_var):
     '''
     * Adds points to users who voted for the 1st, 2nd & 3rd placed images.
 
     \n Args:
-    1. user_arr (arr): An array of users who entered the competition. 
+    1. user_arr (arr): An array of users who entered the competition.
     2. comp_week_and_year (str): A datetime formatted string of type: "052021"
        representing the week & year the competition took place.
     3. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
-    
+
     \n Returns:
     * Increments the users' "user_points" field in the db if they
       voted for the 1st, 2nd & 3rd placed images by 3, 2 & 1 points
@@ -368,10 +385,11 @@ def add_points_to_users_who_voted_well(user_arr, comp_week_and_year, database_va
                         {"username": user["username"]},
                         {'$inc': {"user_points": 1}})
 
+
 # Recent Winners Helper Functions
 def get_images_by_week_and_year(w_a_y, database_var):
     '''
-    * Returns a list of images entered into a competition in a 
+    * Returns a list of images entered into a competition in a
       particular week.
 
     \n Args:
@@ -379,35 +397,37 @@ def get_images_by_week_and_year(w_a_y, database_var):
        representing the week & year the photo was entered into competition.
     2. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
-    
+
     \n Returns:
-    * A list of photos that were entered into the competition that 
+    * A list of photos that were entered into the competition that
       specific week.
     '''
-    entries_that_week = list(database_var.db.photos.find({"week_and_year": w_a_y}))
+    entries_that_week = list(
+        database_var.db.photos.find({"week_and_year": w_a_y}))
     return entries_that_week
 
 
 def get_last_monday_and_images(database_var, func_to_get_images):
     '''
     * This gets the datetime object of the 'last monday' i.e. the date of
-      commencement of the 'last' referenced competition. It also gets the 
-      collection of entries for that particular competition. 
+      commencement of the 'last' referenced competition. It also gets the
+      collection of entries for that particular competition.
 
     \n Args:
     1. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
     2. func_to_get_images (func): A function that takes 2 args:
-       1. The week & year in question. 
-       2. A database obj (as per #3 above)
+       1. The week & year in question.
+       2. A database obj (as per #1 above)
        This func returns an array of images from a particular competition.
 
     \n Returns:
-    * The datetime object of the 'last monday' - if we access this Mon-Sun before
-      22:00PM, this will reference the previous week's Monday. If we access this on 
-      Sunday after 22:00PM this will reference the current week's Monday. 
-    * An array of 'images_to_display' - i.e. competition entries from that particular 
-      week.
+    * The datetime object of the 'last monday' - if we access this Mon-Sun
+      before 22:00PM, this will reference the previous week's Monday. If we
+      access this on Sunday after 22:00PM this will reference the current
+      week's Monday.
+    * An array of 'images_to_display'-i.e. competition entries from that
+      particular week.
     '''
     today = datetime.now()
     day_of_week = today.weekday()
@@ -418,15 +438,99 @@ def get_last_monday_and_images(database_var, func_to_get_images):
     last_week_and_year = week_before.strftime("%V%G")
 
     if day_of_week in range(0, 6) or day_of_week == 6 and hour_of_day < 22:
-        images_to_display = func_to_get_images(last_week_and_year, database_var)
+        images_to_display = \
+            func_to_get_images(last_week_and_year, database_var)
         last_mon = week_before
         while last_mon.weekday() != 0:
             last_mon = last_mon - timedelta(days=1)
     else:
-        images_to_display = func_to_get_images(this_week_and_year, database_var)
+        images_to_display = \
+            func_to_get_images(this_week_and_year, database_var)
         last_mon = today
         while last_mon.weekday() != 0:
             last_mon = last_mon - timedelta(days=1)
-    
+
     return images_to_display, last_mon
 
+
+def first_second_third_place_compcat_users(photo_array, database_var):
+    '''
+    * This divides a given array of photos into 3 arrays, for 1st,
+      2nd & 3rd placed award-winning photos. It also creates an arr
+      of the users who have created those award-winning photos. Finally
+      it returns the category of the competition in question.
+
+    \n Args:
+    1. photo_array (arr): An array of photo objects. 
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * first_place, second_place, third_place (arrs): Arrays of competition
+      winning photo objects.
+    * list_of_users (arr): An array of the users who created those images.
+    * competition_category (str): The theme of the competition in question.
+    '''
+    first_place = []
+    second_place = []
+    third_place = []
+
+    list_of_users = []
+
+    for img in photo_array:
+        if img["awards"] == 1:
+            first_place.append(img)
+            list_of_users.append(database_var.db.users.find_one(
+                                {"username": img["created_by"]}))
+            competition_category = img["competition_category"]
+        elif img["awards"] == 2:
+            second_place.append(img)
+            list_of_users.append(database_var.db.users.find_one(
+                                {"username": img["created_by"]}))
+            competition_category = img["competition_category"]
+        elif img["awards"] == 3:
+            third_place.append(img)
+            list_of_users.append(database_var.db.users.find_one(
+                                {"username": img["created_by"]}))
+            competition_category = img["competition_category"]
+
+    return first_place, second_place, \
+        third_place, list_of_users, competition_category
+
+# Pagination Helper
+def paginated_and_pagination_args(
+        photos_arr, PER_PAGE, page_param, per_page_param):
+    '''
+    * Uses the flask_paginate extension to return the specific
+      pagination options for a particular template.
+    
+    \n Args:
+    1. photos_arr (arr): The array of photos for the template to
+       be paginated.
+    2. PER_PAGE (int): The number of images to display per
+       paginated page.
+    3. page_param (str): The reference of a GET param that holds the
+       page index. It displays in the URL.
+    4. per_page_param (str): The reference to refer to 'per_page'.
+
+    \n Returns:
+    * pagination_args (obj): An instance of the Pagination object with
+      all the inputed specs.
+    * photos_to_display (arr): The array of photos that were passed in to
+      the function split using the offset & PER_PAGE variables.
+    '''
+    page, _, _, = get_page_args(
+            page_parameter=page_param, per_page_parameter=per_page_param)
+
+    offset = page * PER_PAGE - PER_PAGE
+    total = len(photos_arr)
+
+    pagination_args = Pagination(page=page,
+                                 per_page=PER_PAGE,
+                                 total=total,
+                                 page_parameter=page_param,
+                                 per_page_parameter=per_page_param)
+
+    photos_to_display = photos_arr[offset: offset + PER_PAGE]
+
+    return pagination_args, photos_to_display

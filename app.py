@@ -114,6 +114,7 @@ def inject_datetime():
     date_time = datetime.now()
     return dict(datetime=date_time)
 
+
 inject_datetime()
 
 
@@ -151,40 +152,26 @@ def recent_winners():
       and passes them to the 'winners' template, alongside information about
       when the last competition was held and what the theme was.
 
-    \n Args: None. 
+    \n Args: None.
 
-    \n Returns: 
+    \n Returns:
     * Template displaying the most recent award-winning photographs and info
       about when that competition was held and what its' theme was.
     '''
-    
-    competition_category = "There was no competition last week, and therefore there are no recent winners."
 
-    images_to_display, last_mon = get_last_monday_and_images(mongo, get_images_by_week_and_year)
+    competition_category = \
+        "There was no competition last week, \
+            and therefore there are no recent winners."
 
-    first_place = []
-    second_place = []
-    third_place = []
+    images_to_display, last_mon = \
+        get_last_monday_and_images(mongo, get_images_by_week_and_year)
 
-    list_of_users = []
     week_starting = last_mon.strftime("%A, %d of %B")
 
-    for img in images_to_display:
-        if img["awards"] == 1:
-            first_place.append(img)
-            list_of_users.append(mongo.db.users.find_one(
-                                {"username": img["created_by"]}))
-            competition_category = img["competition_category"]
-        elif img["awards"] == 2:
-            second_place.append(img)
-            list_of_users.append(mongo.db.users.find_one(
-                                {"username": img["created_by"]}))
-            competition_category = img["competition_category"]
-        elif img["awards"] == 3:
-            third_place.append(img)
-            list_of_users.append(mongo.db.users.find_one(
-                                {"username": img["created_by"]}))
-            competition_category = img["competition_category"]
+    first_place, second_place, third_place, \
+        list_of_users, competition_category = \
+        first_second_third_place_compcat_users(
+            images_to_display, mongo)
 
     return render_template("recent_winners.html",
                            first_place=first_place,
@@ -195,40 +182,8 @@ def recent_winners():
                            competition_category=competition_category)
 
 
-def paginated_and_pagination_args(
-        photos_arr, PER_PAGE, page_param, per_page_param):
-
-    '''
-    - Unpacks the get_page_args into "page" & 2 unused vars.
-    - Sets offset manually using per_page & page.
-    - Sets total to be the length of the photos array.
-    - Creates a Pagination object with all the required args
-      & stores in "pagination_args".
-    - Creates a var that takes the array of photos given to the func
-      as an arg and splits it into the correct sized chunk using
-      offset & PER_PAGE.
-    - Returns the two latter vars.
-    '''
-
-    page, _, _, = get_page_args(page_parameter=page_param, per_page_parameter=per_page_param)
-
-    offset = page * PER_PAGE - PER_PAGE
-    total = len(photos_arr)
-
-    pagination_args = Pagination(page=page,
-                                 per_page=PER_PAGE,
-                                 total=total,
-                                 page_parameter=page_param,
-                                 per_page_parameter=per_page_param)
-
-    photos_to_display = photos_arr[offset: offset + PER_PAGE]
-
-    return pagination_args, photos_to_display
-
-
 @app.route("/browse")
 def browse():
-
     '''
     - Finds all photos in the DB
     - Runs the pagination func and saves the return values into 2 vars.
