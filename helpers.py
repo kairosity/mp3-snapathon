@@ -727,8 +727,34 @@ def time_strings_for_template(
     return comp_closes, voting_closes, next_comp_starts
 
 
-def edit_user_profile(user, username, form_username, form_email, form_current_password, form_new_password, form_new_password_confirmation, database_var):
+def edit_user_profile(user, username, form_username,
+                      form_email, form_current_password, form_new_password,
+                      form_new_password_confirmation, database_var):
+    '''
+    * When successful this updates the user information. When not successful
+      it flashes a message to the user explaining why and redirects them, either
+      to an error page, or it reloads the edit_profile template.
 
+    \n Args:
+    1. user (obj): The user object from the db
+    2. username (str): The username that the user means to edit.
+    3. form_username (str): The username inputed into the form.
+    4. form_email (str): The email inputed into the form.
+    5. form_current_password (str): The string inputed by the user
+       to reference their current password.
+    6. form_new_password (str): Inputed by the user - the string they
+       want to change their password to.
+    7. form_new_password_confirmation (str): The confirmation inputed
+       by the user to confirm their password change.
+    8. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * If successful, this updates the user information in the db and returns
+      the user's profile page, with any new details updated.
+    * If unsuccessful, this returns either an error page or the edit-profile
+      template, both with flash messages detailing the issue.
+    '''
     update_user = {}
     update_photos = {}
 
@@ -738,7 +764,8 @@ def edit_user_profile(user, username, form_username, form_email, form_current_pa
                             {"username": form_username})
         if existing_username:
             flash("Username is already in use, please choose a different one.")
-            url = redirect(url_for('edit_profile', user=user, username=form_username))
+            url = redirect(url_for('edit_profile',
+                           user=user, username=form_username))
             return url
         else:
             update_user["username"] = form_username
@@ -748,52 +775,62 @@ def edit_user_profile(user, username, form_username, form_email, form_current_pa
         existing_email = database_var.db.users.find_one(
                         {"email": form_email})
         if existing_email:
-            flash("That email is already in use, please choose a different one.")
+            flash("That email is already in use, \
+                   please choose a different one.")
             url = redirect(url_for(
-                'edit_profile', user=user, username=form_username))
+                  'edit_profile', user=user, username=form_username))
             return url
         else:
             update_user["email"] = form_email
-
+    
     if form_current_password:
+
         if check_password_hash(user["password"], form_current_password):
-            if form_new_password is not None:
+            if form_new_password:
+
                 if form_new_password == form_new_password_confirmation:
                     update_user["password"] = generate_password_hash(form_new_password)
+
                 else:
                     flash("Your new passwords do not match, please try again.")
-                    url = redirect(url_for('edit_profile', username=form_username))
+                    url = redirect(url_for(
+                            'edit_profile', username=form_username))
                     return url
             else:
-                flash("Your new password cannot be nothing. Please try again.")
+                flash("Your new password cannot be nothing. If you were not\
+                       trying to change your password, there is no need to\
+                       enter your current password.")
+                url = redirect(url_for(
+                           'edit_profile', user=user, username=form_username))
+                return url
 
         else:
-            flash("Sorry, but your current password was entered incorrectly. Please try again.")
-            url = redirect(url_for('edit_profile', user=user, username=form_username))
+            flash("Sorry, but your current password was entered \
+                  incorrectly. Please try again.")
+            url = redirect(url_for(
+                           'edit_profile', user=user, username=form_username))
             return url
 
     if update_photos:
-        database_var.db.photos.update_many({"created_by": username}, {"$set": update_photos})
+        database_var.db.photos.update_many(
+            {"created_by": username}, {"$set": update_photos})
 
     if update_user:
-        database_var.db.users.update_one({"username": username}, {'$set': update_user})
+        database_var.db.users.update_one(
+                              {"username": username}, {'$set': update_user})
         session["user"] = form_username
-        user = database_var.db.users.find_one({"username": session["user"]})
-        user_photos = list(database_var.db.photos.find({"created_by": session["user"]}))
-        photos_voted_for_array = user["photos_voted_for"]
-        photos_voted_for_objs = []
-
-    # if photos_voted_for_array is not None:
-    #     for img in photos_voted_for_array:
-    #         photo_obj = list(database_var.db.photos.find({"_id": img}))
-    #         photos_voted_for_objs.append(photo_obj[0])
+        user = database_var.db.users.find_one(
+                                     {"username": session["user"]})
+        user_photos = list(database_var.db.photos.find(
+                            {"created_by": session["user"]}))
 
     user = database_var.db.users.find_one({"username": session["user"]})
     username = session["user"]
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
 
-    user_photos, photos_voted_for_objs, award_winners = get_profile_page_photos(username, database_var)
+    user_photos, photos_voted_for_objs, award_winners = \
+        get_profile_page_photos(username, database_var)
 
     today = datetime.now().strftime('%Y-%m-%d')
 
@@ -808,15 +845,15 @@ def edit_user_profile(user, username, form_username, form_email, form_current_pa
 
     flash("Profile updated successfully!")
 
-    url = render_template('profile.html', 
-                           user=user, 
-                           username=username, 
-                           user_photos=user_photos, 
-                           photos_voted_for=photos_voted_for_objs,
-                           award_winners=award_winners,
-                           can_enter=can_enter,
-                           votes_to_use=votes_to_use,
-                           comp_closes=comp_closes,
-                           voting_closes=voting_closes,
-                           next_comp_starts=next_comp_starts)
+    url = render_template('profile.html',
+                          user=user,
+                          username=username,
+                          user_photos=user_photos,
+                          photos_voted_for=photos_voted_for_objs,
+                          award_winners=award_winners,
+                          can_enter=can_enter,
+                          votes_to_use=votes_to_use,
+                          comp_closes=comp_closes,
+                          voting_closes=voting_closes,
+                          next_comp_starts=next_comp_starts)
     return url

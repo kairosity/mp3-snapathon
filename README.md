@@ -647,6 +647,17 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     List comprehension used in a number of places throughout the application. A much more efficient and nicer way to loop through arrays. 
 
+- ## [Write a long string into multiple lines of code in Python](https://note.nkmk.me/en/python-long-string/)
+    
+    How to format long strings while remaining PEP8 compliant. 
+
+- ## [Using ternary operators in Python](https://book.pythontips.com/en/latest/ternary_operators.html)
+
+    Nice short way to write conditionals.
+
+- ## [Passing a function to another function in Python](https://medium.com/@lynzt/python-pass-a-function-to-another-function-and-run-it-with-args-b24141312bd7)
+
+    Useful information for refactoring.
 
 ## Flask
 
@@ -749,6 +760,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Python timing task APScheduler](https://www.programmersought.com/article/6695232439/)
 
     Decent article explaining the basics of using APScheduler with Flask.
+
+- ## [Passing Parameters to APScheduler](https://stackoverflow.com/questions/12412708/passing-parameters-to-apscheduler-handler-function)
+
+    Used to work out how pass in db as a parameter, as the format is not intuitive.
 
 ## General/Misc
 

@@ -145,7 +145,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/recent_winners")
+@app.route("/recent-winners")
 def recent_winners():
     '''
     * This gets a list of the most recent competition award-winning images
@@ -333,9 +333,9 @@ def profile(username):
       to the user themself.
 
     \n Args:
-    1. username (str): The specific username registered to a user in 
+    1. username (str): The specific username registered to a user in
        the db.
-    
+
     \n Returns:
     * The user's profile template, complete with all their competition entries,
       all the photos that user has voted for and all that user's award-
@@ -376,35 +376,29 @@ def profile(username):
                            next_comp_starts=next_comp_starts)
 
 
-@app.route("/edit_profile/<username>", methods=['GET', 'POST'])
+@app.route("/edit-profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
     '''
-    GET renders the edit_profile template form.
-    - Checks to see if there is a session and if the session user is the
-      same as the user being edited.
-    - If so, allows the edit_profile form to be viewed.
-    POST allows a user to edit their profile and save the changes, with an
-    option to completely delete their account.
-    - Stores form data into vars & creates 2 empty dicts.
-    - Checks to see if the user is trying to change their username.
-    - If they are, it checks to make sure that username is not already
-      in use as usernames must be unique.
-    - If it's not already used, it pushes the new username into both new dicts
-      as the new username will need to be saved not only to the user doc,
-      but also to every photo that user has uploaded in the created_by field.
-    - Same logic is then applied for the user email, but this only needs to be
-      changed in the user document.
-    - Checks if the user has entered something into the current password field.
-    - Checks if that password is correct.
-    - If it is the right password, it checks if the user has entered anything
-      into the new password field.
-    - If she has, checks if that is == to the new password confirmation field.
-    - If all 3 password fields have been entered correctly it pushes the new
-      password to the update_user dict using the Werkzeug password hash.
-    - Checks if there is anything in either of the new dicts. If they contain
-      data, the DB is updated with the new data.
-    16. If the user data has been changed it also sets the session["user"] to be the new username.
-    17. Then it returns the profile page, which will reflect any updates immediately. 
+    * GET renders the edit-profile template form if the username passed
+      to the request matches the user currently logged in. If it doesn't,
+      the user is shown a flash message explaining the issue. POST allows
+      a user to edit their profile and save the changes, with a link to an
+      option to completely delete their account.
+
+    \n Args:
+    1. username (str): The specific username registered to a user in
+       the db.
+    2. user inputs (str): Username, email, current password & new password
+       taken in via the edit-profile form.
+
+    \n Returns:
+    * GET renders the edit-profile template if the user is logged in & requesting
+      their own page. Otherwise it renders an error page with a flash message
+      outlining the issue.
+    * POST: If the form is submitted successfully and user details changed, this 
+      updates the db with the new user data and then renders the user's profile 
+      with the updated details. If unsuccessful, this
+
     '''
     if session:
         if session["user"] == username:
@@ -415,22 +409,29 @@ def edit_profile(username):
                 form_email = request.form.get("email").lower()
                 form_current_password = request.form.get("current_password")
                 form_new_password = request.form.get("new_password")
-                form_new_password_confirmation = request.form.get("new_password_confirmation")
+                form_new_password_confirmation = \
+                    request.form.get("new_password_confirmation")
 
-                url = edit_user_profile(user, username, form_username, form_email, form_current_password, form_new_password, form_new_password_confirmation, mongo)
+                url = edit_user_profile(
+                    user, username, form_username, form_email,
+                    form_current_password, form_new_password,
+                    form_new_password_confirmation, mongo)
 
                 return url
 
             source_url = request.referrer
 
-            return render_template('edit_profile.html', user=user, source_url=source_url)
+            return render_template(
+                'edit_profile.html', user=user, source_url=source_url)
 
         else:
             flash("You cannot edit someone else's account...obvz!")
             abort(403)
 
     else:
-        flash("You must be logged in to edit your account, and obviously, you are not allowed to edit someone else's account!")
+        flash("You must be logged in to edit your\
+             account, and obviously, you are not allowed \
+             to edit someone else's account!")
         abort(403)
 
 
