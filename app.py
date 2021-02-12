@@ -328,88 +328,40 @@ def login():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
+    '''
+    * Displays a user's profile page, with extra features if it belongs
+      to the user themself.
 
+    \n Args:
+    1. username (str): The specific username registered to a user in 
+       the db.
+    
+    \n Returns:
+    * The user's profile template, complete with all their competition entries,
+      all the photos that user has voted for and all that user's award-
+      winning photos, displayed in three different sections.
+    * If the user is logged in and viewing their own profile page, they
+      will see an 'edit profile' button, as well as information about the next
+      stage of the competition and links to bring them to the compete or
+      vote templates.
     '''
-    Returns a user's profile page, with extra access if it belongs
-    to the user herself.
-    - Finds the user based on the username passed to the url.
-    - Finds a list of photos created by that user.
-    - Finds a list of photo ids that this user has voted on.
-    - For each id it looks in the photo db and finds the image itself.
-    - If that image was NOT entered this week (i.e. the current competition):
-    - Then it puts that image in an array to return to the template.
-    - It creates an array of all the images created by this user that have
-      won awards.
-    - Function defined that takes a date and returns the next of a specific
-      weekday (mon, tues etc..).
-    - Three vars are declared that use this func:
-      1. The next Friday (when the competition ends).
-      2. The next Monday (when the next competition starts).
-      3. Then next Sunday at 22:00PM (when voting ends).
-    - Three more variables are then used to determine the timedeltas
-      between "now" and when those other vars occur.
-    - Another function is declared to take in these timedeltas as args
-      and it returns a final time string stating when these events will occur
-      in terms of how many days, hours etc.. are left.
-    - These strings are then saved into 3 more vars which are passed
-      to the template alongside the other important vars to display the profile.
-    '''
+    user_photos, photos_voted_for_objs, award_winners = \
+        get_profile_page_photos(username, mongo)
+
     user = mongo.db.users.find_one({"username": username})
-    user_photos = list(mongo.db.photos.find({"created_by": user["username"]}))
-
-    photos_voted_for_array = user["photos_voted_for"]
-    photos_voted_for_objs = []
-
-    if photos_voted_for_array != []:
-        for img in photos_voted_for_array:
-            photo_obj = list(mongo.db.photos.find({"_id": img}))
-            for photo in photo_obj:
-                if photo["week_and_year"] != datetime.now().strftime("%V%G"):
-                    photos_voted_for_objs.append(photo)
-    else:
-        # Maybe put a msg in the template to that effect?
-        print("This user has not voted for any images yet")
-    award_winners = []
-    for img in user_photos:
-        if img["awards"] is not None:
-            award_winners.append(img)
-
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
-    today = datetime.now().strftime('%Y-%m-%d')
 
-    # Code from Emmanuel's Stack Overflow answer (attributed in README.md)
-    def get_next_weekday(startdate, weekday):
-        """
-        @startdate: given date, in format '2013-05-25'
-        @weekday: week day as a integer, between 0 (Monday) to 6 (Sunday)
-        """
-        d = datetime.strptime(startdate, '%Y-%m-%d')
-        t = timedelta((7 + weekday - d.weekday()) % 7)
-        final_date = d + t
-        return final_date
+    today = datetime.now().strftime('%Y-%m-%d')
 
     competition_ends = get_next_weekday(today, 5)
     next_competition_starts = get_next_weekday(today, 1)
     voting_ends = get_next_weekday(today, 7) - timedelta(hours=2)
 
-    now = datetime.now()
-    time_til_comp_ends = competition_ends - now
-    time_til_voting_ends = voting_ends - now
-    time_til_next_comp_starts = next_competition_starts - now
- 
-    def get_time_remaining_string(timedelta):
-        days = timedelta.days
-        timedelta_string = str(timedelta)
-        time_array = timedelta_string.split(",").pop().split(":")
-        hours = time_array[0]
-        minutes = time_array[1]
-        final_time_string = f"{days} days,{hours} hours and {minutes} minutes"
-        return final_time_string
-
-    comp_closes = get_time_remaining_string(time_til_comp_ends)
-    voting_closes = get_time_remaining_string(time_til_voting_ends)
-    next_comp_starts = get_time_remaining_string(time_til_next_comp_starts)
+    comp_closes, voting_closes, next_comp_starts = \
+        time_strings_for_template(
+                competition_ends, next_competition_starts,
+                voting_ends, get_time_remaining_string)
 
     return render_template("profile.html",
                            username=username,
@@ -458,71 +410,16 @@ def edit_profile(username):
         if session["user"] == username:
             user = mongo.db.users.find_one({"username": username})
             if request.method == "POST":
+
                 form_username = request.form.get("username").lower()
                 form_email = request.form.get("email").lower()
                 form_current_password = request.form.get("current_password")
                 form_new_password = request.form.get("new_password")
                 form_new_password_confirmation = request.form.get("new_password_confirmation")
 
-                update_user = {}
-                update_photos = {}
+                url = edit_user_profile(user, username, form_username, form_email, form_current_password, form_new_password, form_new_password_confirmation, mongo)
 
-                # If the user has changed their username
-                if form_username != user["username"]:
-                    existing_username = mongo.db.users.find_one(
-                                        {"username": form_username})
-                    if existing_username:
-                        flash("Username is already in use, please choose a different one.")
-                        return redirect(url_for(
-                               'edit_profile', user=user, username=username))
-                    else:
-                        update_user["username"] = form_username
-                        update_photos["created_by"] = form_username
-
-                if form_email != user["email"]:
-                    existing_email = mongo.db.users.find_one(
-                                    {"email": form_email})
-                    if existing_email:
-                        flash("That email is already in use, please choose a different one.")
-                        return redirect(url_for(
-                               'edit_profile', user=user, username=username))
-                    else:
-                        update_user["email"] = form_email
-
-                if form_current_password:
-                    if check_password_hash(user["password"],
-                                           request.form.get(
-                                               "current_password")):
-                        if form_new_password != None:
-                            if form_new_password == form_new_password_confirmation:
-                                update_user["password"] = generate_password_hash(form_new_password)
-                            else:
-                                flash("Your new passwords do not match, please try again.")
-                                return redirect(url_for('edit_profile', username=username))
-                        else:
-                            flash("Your new password cannot be nothing. Please try again.")
-
-                    else: 
-                        flash("Sorry, but your current password was entered incorrectly. Please try again.")
-                        return redirect(url_for('edit_profile', user=user, username=username))
-                
-                if update_photos:
-                    mongo.db.photos.update_many({"created_by": username}, {"$set": update_photos})
-                if update_user:
-                    mongo.db.users.update_one({"username": username}, {'$set': update_user})
-                    session["user"] = form_username
-
-                user = mongo.db.users.find_one({"username": session["user"]})
-                user_photos = list(mongo.db.photos.find({"created_by": session["user"]}))
-                photos_voted_for_array = user["photos_voted_for"]
-                photos_voted_for_objs = []
-
-                if photos_voted_for_array != []:
-                    for img in photos_voted_for_array:
-                        photo_obj = list(mongo.db.photos.find({"_id": img}))
-                        photos_voted_for_objs.append(photo_obj[0])
-                flash("Profile updated successfully!")
-                return render_template('profile.html', user=user, user_photos=user_photos, photos_voted_for=photos_voted_for_objs)
+                return url
 
             source_url = request.referrer
 

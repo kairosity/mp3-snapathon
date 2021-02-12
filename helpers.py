@@ -462,7 +462,7 @@ def first_second_third_place_compcat_users(photo_array, database_var):
       it returns the category of the competition in question.
 
     \n Args:
-    1. photo_array (arr): An array of photo objects. 
+    1. photo_array (arr): An array of photo objects.
     2. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
 
@@ -498,13 +498,14 @@ def first_second_third_place_compcat_users(photo_array, database_var):
     return first_place, second_place, \
         third_place, list_of_users, competition_category
 
-# Pagination Helper
+
+# Pagination Helper.
 def paginated_and_pagination_args(
         photos_arr, PER_PAGE, page_param, per_page_param):
     '''
     * Uses the flask_paginate extension to return the specific
       pagination options for a particular template.
-    
+
     \n Args:
     1. photos_arr (arr): The array of photos for the template to
        be paginated.
@@ -610,3 +611,212 @@ def login_user(email, password, database_var):
         flash("Incorrect username and/or password!")
         url = redirect(url_for("login"))
         return url
+
+
+def get_profile_page_photos(username, database_var):
+    '''
+    * This gets the three categories of photos to show on
+      a user's profile page, based on the username passed in.
+
+    \n Args:
+    1. username (str): A user's username to find in the db.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * Three arrays of photo objects associated with the username passed
+      in:
+    * 1. All photos the user has entered into competition.
+    * 2. All photos the user has voted for in competition.
+    * 3. All the user's award-winning photos.
+    '''
+    user = database_var.db.users.find_one({"username": username})
+
+    user_photos = list(
+        database_var.db.photos.find({"created_by": user["username"]}))
+
+    photos_voted_for_array = user["photos_voted_for"]
+    photos_voted_for_objs = []
+
+    if photos_voted_for_array != []:
+        for img in photos_voted_for_array:
+            photo_obj = list(database_var.db.photos.find({"_id": img}))
+            for photo in photo_obj:
+                if photo["week_and_year"] != \
+                        datetime.now().strftime("%V%G"):
+                    photos_voted_for_objs.append(photo)
+    # else:
+    #     # Maybe put a msg in the template to that effect?
+        # print("This user has not voted for any images yet")
+    award_winners = []
+    for img in user_photos:
+        if img["awards"] is not None:
+            award_winners.append(img)
+
+    return user_photos, photos_voted_for_objs, award_winners
+
+
+# Code from Emmanuel's Stack Overflow answer (attributed in README.md)
+def get_next_weekday(startdate, weekday):
+    """
+    * This calculates the next occuring weekday of any passed in day
+    of the week.
+
+    \n Args:
+    1. startdate (str): given date, in format '2013-05-25'
+    2. weekday (int): week day between 0 (Monday) to 6 (Sunday)
+
+    \n Returns:
+    * A datetime object representing the date of the next day of the
+      week passed into the function. I.e. The date of next Monday.
+    """
+    date = datetime.strptime(startdate, '%Y-%m-%d')
+    time = timedelta((7 + weekday - date.weekday()) % 7)
+    final_date = date + time
+    return final_date
+
+
+def get_time_remaining_string(timedelta):
+    '''
+    * This returns a string describing an amount of time in days, 
+      hours and minutes.
+    
+    \n Args:
+    1. timedelta (datetime.timedelta): Describes an amount of time. 
+
+    \n Returns:
+    * A string in English made from the timedelta describing the 
+      time in the format: 'x' days, 'y' hours and 'z' minutes. 
+    '''
+    days = timedelta.days
+    timedelta_string = str(timedelta)
+    time_array = timedelta_string.split(",").pop().split(":")
+    hours = time_array[0]
+    minutes = time_array[1]
+    final_time_string = f"{days} days,{hours} hours and {minutes} minutes"
+    return final_time_string
+
+
+def time_strings_for_template(
+        comp_end_date, next_comp_start_date, vote_end_date, get_time_func):
+    '''
+    * This forms human readable strings referring to how much time
+      is left until certain events occur.
+
+    \n Args:
+    1. comp_end_date (datetime): When the current competition ends.
+    2. next_comp_start_date (datetime): When the next competition starts.
+    3. vote_end_date (datetime): When the next voting period begins.
+    4. get_time_func (function): A func to calculate the initial time
+       string that this function creates.
+
+    \n Returns:
+    * Three time strings that refer to when: 1. The competition closes,
+      2. Voting Closes, 3. The next competition starts. To pass to the
+      profile template.
+    '''
+    now = datetime.now()
+    time_til_comp_ends = comp_end_date - now
+    time_til_voting_ends = vote_end_date - now
+    time_til_next_comp_starts = next_comp_start_date - now
+
+    comp_closes = get_time_func(time_til_comp_ends)
+    voting_closes = get_time_func(time_til_voting_ends)
+    next_comp_starts = get_time_func(time_til_next_comp_starts)
+
+    return comp_closes, voting_closes, next_comp_starts
+
+
+def edit_user_profile(user, username, form_username, form_email, form_current_password, form_new_password, form_new_password_confirmation, database_var):
+
+    update_user = {}
+    update_photos = {}
+
+    # If the user has changed their username
+    if form_username != user["username"]:
+        existing_username = database_var.db.users.find_one(
+                            {"username": form_username})
+        if existing_username:
+            flash("Username is already in use, please choose a different one.")
+            url = redirect(url_for('edit_profile', user=user, username=form_username))
+            return url
+        else:
+            update_user["username"] = form_username
+            update_photos["created_by"] = form_username
+
+    if form_email != user["email"]:
+        existing_email = database_var.db.users.find_one(
+                        {"email": form_email})
+        if existing_email:
+            flash("That email is already in use, please choose a different one.")
+            url = redirect(url_for(
+                'edit_profile', user=user, username=form_username))
+            return url
+        else:
+            update_user["email"] = form_email
+
+    if form_current_password:
+        if check_password_hash(user["password"], form_current_password):
+            if form_new_password is not None:
+                if form_new_password == form_new_password_confirmation:
+                    update_user["password"] = generate_password_hash(form_new_password)
+                else:
+                    flash("Your new passwords do not match, please try again.")
+                    url = redirect(url_for('edit_profile', username=form_username))
+                    return url
+            else:
+                flash("Your new password cannot be nothing. Please try again.")
+
+        else:
+            flash("Sorry, but your current password was entered incorrectly. Please try again.")
+            url = redirect(url_for('edit_profile', user=user, username=form_username))
+            return url
+
+    if update_photos:
+        database_var.db.photos.update_many({"created_by": username}, {"$set": update_photos})
+
+    if update_user:
+        database_var.db.users.update_one({"username": username}, {'$set': update_user})
+        session["user"] = form_username
+        user = database_var.db.users.find_one({"username": session["user"]})
+        user_photos = list(database_var.db.photos.find({"created_by": session["user"]}))
+        photos_voted_for_array = user["photos_voted_for"]
+        photos_voted_for_objs = []
+
+    # if photos_voted_for_array is not None:
+    #     for img in photos_voted_for_array:
+    #         photo_obj = list(database_var.db.photos.find({"_id": img}))
+    #         photos_voted_for_objs.append(photo_obj[0])
+
+    user = database_var.db.users.find_one({"username": session["user"]})
+    username = session["user"]
+    can_enter = user["can_enter"]
+    votes_to_use = user["votes_to_use"]
+
+    user_photos, photos_voted_for_objs, award_winners = get_profile_page_photos(username, database_var)
+
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    competition_ends = get_next_weekday(today, 5)
+    next_competition_starts = get_next_weekday(today, 1)
+    voting_ends = get_next_weekday(today, 7) - timedelta(hours=2)
+
+    comp_closes, voting_closes, next_comp_starts = \
+        time_strings_for_template(
+                competition_ends, next_competition_starts,
+                voting_ends, get_time_remaining_string)
+
+    flash("Profile updated successfully!")
+
+    url = render_template('profile.html', 
+                           user=user, 
+                           username=username, 
+                           user_photos=user_photos, 
+                           photos_voted_for=photos_voted_for_objs,
+                           award_winners=award_winners,
+                           can_enter=can_enter,
+                           votes_to_use=votes_to_use,
+                           comp_closes=comp_closes,
+                           voting_closes=voting_closes,
+                           next_comp_starts=next_comp_starts)
+    return url
