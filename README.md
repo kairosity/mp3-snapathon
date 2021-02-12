@@ -382,16 +382,20 @@ awards.
 The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
 week it is. 
 
-The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Friday until 22:00PM. 
+The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Saturday morning at 0:00.
 
 The "Compete" Page allows users to upload one image per competition, it asks for various image detail information.
 
-At 22:00 every Friday, the compete html page is replaced by the Vote HTML page, and "Compete" becomes "Vote" in the navbar. 
+On Saturday the compete html page is replaced by the Vote HTML page, and "Compete" becomes "Vote" in the navbar. 
 
 Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. Both pages' functionality ceases and the "Vote" page shows a message linking to 
 the "Recent Winners" page where the winning images are displayed. It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
 
+### Vote
 
+To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images until after the week of that competition. Otherwise 
+you would know what photo was winning and vote for it to win points. The code is structured so that the voted for photos are only shown when their specific competition has
+ended. 
 
 ## Contact Form 
 

@@ -8,9 +8,43 @@ import os
 from datetime import datetime
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
 if os.path.exists("env.py"):
     import env
+
+
+# Constant Variables
+competitions = [
+    {
+        "category": "portraiture",
+        "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
+    },
+    {
+        "category": "landscape",
+        "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
+    },
+    {
+        "category": "architecture",
+        "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+    },
+    {
+        "category": "wildlife",
+        "instructions": "Enter your wildlife and nature photos now. Flora OR fauna are acceptable. Capture amazing images of the natural world at its most spectacular."
+    },
+    {
+        "category": "street",
+        "instructions": "Enter your street photography now. Encounters and imagery from urban jungles."
+    },
+    {
+        "category": "monochrome",
+        "instructions": "Enter your monochrome photography now. Any subject, any place, black and white imagery only. PLEASE no sepia tones!"
+    },
+    {
+        "category": "event",
+        "instructions": "Enter your event photography now. Weddings, baptisms, concerts, theatre etc.. If it has guests, it's an event!"
+    }
+]
 
 
 # Development Testing Functions
@@ -632,19 +666,28 @@ def get_profile_page_photos(username, database_var):
     '''
     user = database_var.db.users.find_one({"username": username})
 
+    print(user)
+
     user_photos = list(
         database_var.db.photos.find({"created_by": user["username"]}))
 
     photos_voted_for_array = user["photos_voted_for"]
     photos_voted_for_objs = []
 
+
+   
     if photos_voted_for_array != []:
         for img in photos_voted_for_array:
             photo_obj = list(database_var.db.photos.find({"_id": img}))
+            print(f"the object of the number photos: {photo_obj}")
             for photo in photo_obj:
                 if photo["week_and_year"] != \
                         datetime.now().strftime("%V%G"):
                     photos_voted_for_objs.append(photo)
+
+                    print(photos_voted_for_objs)
+                   
+    
     # else:
     #     # Maybe put a msg in the template to that effect?
         # print("This user has not voted for any images yet")
@@ -857,3 +900,213 @@ def edit_user_profile(user, username, form_username,
                           voting_closes=voting_closes,
                           next_comp_starts=next_comp_starts)
     return url
+
+# compete() Helpers
+
+
+def get_competition(week_number):
+    '''
+    * Uses the week number to rotate the competition themes.
+
+    \n Args:
+    1. week_number (int): datetime week number 0-52/53
+
+    \n Returns:
+    * A competition category from the competitions array.
+    '''
+    if week_number % 7 == 0:
+        return competitions[0]
+    elif week_number % 7 == 1:
+        return competitions[1]
+    elif week_number % 7 == 2:
+        return competitions[2]
+    elif week_number % 7 == 3:
+        return competitions[3]
+    elif week_number % 7 == 4:
+        return competitions[4]
+    elif week_number % 7 == 5:
+        return competitions[5]
+    elif week_number % 7 == 6:
+        return competitions[6]
+
+
+def upload_comp_entry(request_obj,
+                      database_var,
+                      app,
+                      this_weeks_comp_category,
+                      current_user):
+    '''
+    * This uploads a new entry into the competition and saves the necessary
+      photo and user data to the db. It also ensures the uploaded photo is
+      safe, that it has one of the approced file extensions and it renames
+      it so that its filename is unique.
+
+    \n Args:
+    1. request_obj (obj): The request object sent by the user when they POST
+       the compete form.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    3. this_weeks_comp_category (str): The competition theme for the current
+       competition. This gets attached to the photo object in the db.
+    4. current_user (obj): The logged in user who is trying to enter the
+       competition.
+
+    \n Returns:
+    * Saves the new photo object to the db and enters it into the currently
+      running competition. If successful reloads the compete template with
+      a flash message telling the user their entry was received.
+    '''
+    if 'photo' in request.files:
+        photo = request.files['photo']
+
+        file_extension = os.path.splitext(photo.filename)[1]
+
+        if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+            abort(415)
+
+        # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
+        #     abort(413)
+
+        photo.filename = secure_filename(photo.filename)
+
+        file_id = database_var.save_file(photo.filename, photo)
+
+        # This makes the filename unique
+        new_filename = str(file_id) + file_extension
+
+        # Update the gridFS "Filename" attribute to be equal to the file_id
+        database_var.db.fs.files.update_one(
+                                 {"_id": file_id},
+                                 {'$set': {"filename": new_filename}})
+
+        new_entry = {
+            "file_id": file_id,
+            "filename": new_filename,
+            "photo_title": request.form.get("title").lower(),
+            "photo_story": request.form.get("story").lower(),
+            "camera": request.form.get("camera").lower(),
+            "lens": request.form.get("lens").lower(),
+            "aperture": request.form.get("aperture").lower(),
+            "shutter": request.form.get("shutter").lower(),
+            "iso": request.form.get("iso").lower(),
+            "created_by": session["user"],
+            "date_entered": datetime.now(),
+            "competition_category": this_weeks_comp_category,
+            "week_and_year": datetime.now().strftime("%V%G"),
+            "photo_votes": 0,
+            "awards": None
+        }
+        database_var.db.photos.insert_one(new_entry)
+
+        photo_to_add_to_user = database_var.db.photos.find_one(
+                              {"file_id": file_id})
+        photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+
+        database_var.db.users.update_one({"_id": current_user["_id"]},
+                                         {'$push': {"photos":
+                                          photo_filename_to_add_to_user},
+                                          '$inc': {"votes_to_use": 1},
+                                          '$set': {"can_enter": False}})
+
+        flash("Entry Received!")
+
+
+def delete_this_photo(database_var, photo_to_del, filename):
+    '''
+    * This deletes a photo from the user object, the photo collection,
+      the GridFS files collection & the chunks collection in the
+      Mongo DB database. It also removes any points accrued because
+      of this photo by the user, from the user's user_points field.
+
+    \n Args:
+    1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    2. photo_to_del (obj): The specific photo obj to delete.
+    3. filename (str): The specific photo's filename.
+
+    \n Returns:
+    * Deletes all db records of the photo and adjusts the user's points
+      accordingly if they won points due to this image.
+    '''
+    if photo_to_del["awards"] == 1:
+        database_var.db.users.update_one(
+            {"username": session["user"]}, {'$inc': {"user_points": -7}})
+    elif photo_to_del["awards"] == 2:
+        database_var.db.users.update_one(
+            {"username": session["user"]}, {'$inc': {"user_points": -5}})
+    elif photo_to_del["awards"] == 3:
+        database_var.db.users.update_one(
+            {"username": session["user"]}, {'$inc': {"user_points": -3}})
+
+    file_to_delete = database_var.db.fs.files.find_one({"filename": filename})
+    chunks_to_delete = list(database_var.db.fs.chunks.find({
+                            "files_id": file_to_delete["_id"]}))
+
+    database_var.db.photos.delete_one({"filename": filename})
+
+    database_var.db.fs.files.delete_one(file_to_delete)
+
+    for chunk in chunks_to_delete:
+        database_var.db.fs.chunks.delete_one(chunk)
+
+    user = database_var.db.users.find_one({"username": session["user"]})
+    user_photos = user["photos"]
+
+    for photo in user_photos:
+        if photo == filename:
+            database_var.db.users.update_one(
+                {"username": session["user"]}, {'$pull': {"photos": photo}})
+
+
+def vote_for_photo(database_var, photo_to_vote_for):
+    '''
+    * This records a user's vote for a photo in the competition.
+
+    \n Args:
+    1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    2. photo_to_vote_for (obj): The photo object the user decides to vote
+       for.
+
+    \n Returns:
+    * If successful it alters both the user record, adding that photo
+      into their "photos_voted_for" array field, and that specific photo's
+      record, adding a vote to its "photo_votes" field. Which in turn is
+      used to calculate winners. It flashes a message to the user and 
+      reloads the compete template.
+    * If unsuccessful, it flashes a message to the user detailing the issue
+      and reloads the compete template.
+    '''
+
+    user_voting = database_var.db.users.find_one(
+                    {"username": session["user"]})
+
+    if user_voting["votes_to_use"] < 1:
+        flash("Sorry, but you don't have any votes to use. \
+                You've either already voted, or you did not enter \
+                    this week's competition.")
+
+        url = redirect(url_for("compete"))
+        return url
+
+    elif user_voting["username"] == photo_to_vote_for["created_by"]:
+        flash(" Sorry, but you cannot vote for your own photo... obviously.")
+        url = redirect(url_for("compete"))
+        return url
+
+    else:
+        database_var.db.users.update({"username": session["user"]},
+                                {'$inc':{"votes_to_use": -1}})
+
+        database_var.db.users.update(
+                            {"username": session["user"]},
+                            {"$push":
+                            {"photos_voted_for": photo_to_vote_for["_id"]}})
+
+        database_var.db.photos.update_one(
+                {"_id": photo_to_vote_for["_id"]},
+                {'$inc': {"photo_votes": 1}})
+
+        flash("Thank you for voting!")
+        url = redirect(url_for('compete', username=session['user']))
+        return url

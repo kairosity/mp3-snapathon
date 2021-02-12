@@ -395,39 +395,37 @@ def edit_profile(username):
     * GET renders the edit-profile template if the user is logged in & requesting
       their own page. Otherwise it renders an error page with a flash message
       outlining the issue.
-    * POST: If the form is submitted successfully and user details changed, this 
-      updates the db with the new user data and then renders the user's profile 
+    * POST: If the form is submitted successfully and user details changed, this
+      updates the db with the new user data and then renders the user's profile
       with the updated details. If unsuccessful, this
 
     '''
+    user = mongo.db.users.find_one({"username": username})
+    if request.method == "POST":
+
+        form_username = request.form.get("username").lower()
+        form_email = request.form.get("email").lower()
+        form_current_password = request.form.get("current_password")
+        form_new_password = request.form.get("new_password")
+        form_new_password_confirmation = \
+            request.form.get("new_password_confirmation")
+
+        url = edit_user_profile(
+            user, username, form_username, form_email,
+            form_current_password, form_new_password,
+            form_new_password_confirmation, mongo)
+
+        return url
+
     if session:
         if session["user"] == username:
-            user = mongo.db.users.find_one({"username": username})
-            if request.method == "POST":
-
-                form_username = request.form.get("username").lower()
-                form_email = request.form.get("email").lower()
-                form_current_password = request.form.get("current_password")
-                form_new_password = request.form.get("new_password")
-                form_new_password_confirmation = \
-                    request.form.get("new_password_confirmation")
-
-                url = edit_user_profile(
-                    user, username, form_username, form_email,
-                    form_current_password, form_new_password,
-                    form_new_password_confirmation, mongo)
-
-                return url
-
             source_url = request.referrer
 
             return render_template(
                 'edit_profile.html', user=user, source_url=source_url)
-
         else:
             flash("You cannot edit someone else's account...obvz!")
             abort(403)
-
     else:
         flash("You must be logged in to edit your\
              account, and obviously, you are not allowed \
@@ -439,7 +437,7 @@ def edit_profile(username):
 def delete_account(username):
 
     if request.method == "POST":
-       
+
         #This mucks up a bit because the session cookie lingers. Consider removing this and just leaving if session["user"] == username? 
         # Same issue above with edit_profile. 
         if session:
@@ -501,167 +499,99 @@ def delete_account(username):
 @app.route("/compete", methods=['GET', 'POST'])
 def compete():
     '''
-    If the method is POST
-    1. Grab the file that was uploaded & store it in a var called photo.
-    2. Make sure that the uploaded file is an acceptable file type. Reject it if it's not. 
-    3. Nullify any malicious filenames using werkzeug.
-    4. Save that image to mongodb using gridfs at the same time store the file id
-    into a var called file_id.
-    5. Create a new_filename using the new file's '_id' attribute making the filename unique - add the original extension to that.
-    6. Update the gridFS's filename attr to equal that new file id.
-    7. Select the current user and save it into a var called current_user
-    8. Create a new_entry dict with the data from the form and current_user & the file_id
-    9. Add that dict entry into the photos collection.
-    10. Get that photo object's id using the file_id. 
-    11. Save that photo object's id into the current user object's photo's array.
+    * If method is GET this renders the compete template which
+      outlines the competition rules, upload guidelines and entry form.
+      If the method is POST this uploads the new entry and its data
+      to the db and confirms the upload with a flash message. If the POST
+      is unsuccessful a flash message is displayed detailing the issue.
+
+    \n Args:
+    1. user input from form(str & file): title, story, camera, lens, aperture,
+       shutter, iso & photo file.
+
+    \n Return:
+    * Saves the data to the db & reloads the compete page whether successful
+      or not, uses flash messages to inform the user of which.
     '''
     date_time = datetime.now()
 
-    competitions = [
-        {
-            "category": "portraiture",
-            "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
-        },
-        {
-            "category": "landscape",
-            "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
-        },
-        {
-            "category": "architecture",
-            "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
-        },
-        {
-            "category": "wildlife",
-            "instructions": "Enter your wildlife and nature photos now. Flora OR fauna are acceptable. Capture amazing images of the natural world at its most spectacular."
-        },
-        {
-            "category": "street",
-            "instructions": "Enter your street photography now. Encounters and imagery from urban jungles."
-        },
-        {
-            "category": "monochrome",
-            "instructions": "Enter your monochrome photography now. Any subject, any place, black and white imagery only. PLEASE no sepia tones!"
-        },
-        {
-            "category": "event",
-            "instructions": "Enter your event photography now. Weddings, baptisms, concerts, theatre etc.. If it has guests, it's an event!"
-        }
-        ]      
-
-    def get_competition(week_number):
-        if week_number % 7 == 0:
-            return competitions[0]
-        elif week_number % 7 == 1:
-            return competitions[5]
-        elif week_number % 7 == 2:
-            return competitions[2]
-        elif week_number % 7 == 3:
-            return competitions[3]
-        elif week_number % 7 == 4:
-            return competitions[4]
-        elif week_number % 7 == 5:
-            return competitions[1]
-        elif week_number % 7 == 6:
-            return competitions[6]
-    
-    
-
     current_week_number = int(datetime.now().strftime("%V"))
-    this_weeks_comp_category = get_competition(current_week_number)["category"]
-    this_weeks_comp_instructions = get_competition(current_week_number)["instructions"]
+    this_weeks_comp_category = get_competition(
+                               current_week_number)["category"]
+    this_weeks_comp_instructions = get_competition(
+                                   current_week_number)["instructions"]
 
     if request.method == 'POST':
 
         current_user = mongo.db.users.find_one(
                 {"username": session["user"]})
-        
-        if current_user["can_enter"] == True:
 
-            if 'photo' in request.files:
-                photo = request.files['photo']
+        if current_user["can_enter"] is True:
 
-                # To make sure that the file type is one of the acceptable image file types
-                file_extension = os.path.splitext(photo.filename)[1]
-                if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-                    abort(415)
-
-                # A werkzeug util method for securing potentially malicious filenames - has to happen before the save.
-                photo.filename = secure_filename(photo.filename)
-
-                # Upload the photo to the gridfs mongo storage
-                file_id = mongo.save_file(photo.filename, photo)
-
-                # This makes the filename unique 
-                new_filename = str(file_id) + file_extension
-
-                # Update the gridFS "Filename" attribute to be equal to the file_id
-                mongo.db.fs.files.update_one({"_id": file_id},
-                                        { '$set': {"filename": new_filename}})
-
-                new_entry = {
-                    "file_id": file_id,
-                    "filename": new_filename,
-                    "photo_title": request.form.get("title").lower(),
-                    "photo_story": request.form.get("story").lower(),
-                    "camera": request.form.get("camera").lower(),
-                    "lens": request.form.get("lens").lower(),
-                    "aperture": request.form.get("aperture").lower(),
-                    "shutter": request.form.get("shutter").lower(),
-                    "iso": request.form.get("iso").lower(),
-                    "created_by": session["user"],
-                    "date_entered": datetime.now(),
-                    "competition_category": this_weeks_comp_category,
-                    "week_and_year": datetime.now().strftime("%V%G"),
-                    "photo_votes": 0,
-                    "awards": None
-                }
-                mongo.db.photos.insert_one(new_entry)
-
-                # Get the photo obj's id and put in a variable? 
-                photo_to_add_to_user = mongo.db.photos.find_one({"file_id": file_id})
-                photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
-                
-                # Add the photo obj id into the user's photos array and give the user a vote.
-                # Set can_enter to false
-                mongo.db.users.update_one({"_id": current_user["_id"]},
-                                            {'$push':{"photos": photo_filename_to_add_to_user},
-                                            '$inc':{"votes_to_use": 1 },
-                                            '$set':{"can_enter": False }})
-
-                flash("Entry Received!")
+            upload_comp_entry(request,
+                              mongo,
+                              app,
+                              this_weeks_comp_category,
+                              current_user)
+ 
         else:
-            flash("I'm sorry, but you've already entered an image in this week's competition!")
-    # Returns a list of all photos entered "this" week and this year based on the week_and_year attribute.
-    this_weeks_entries = list(mongo.db.photos.find({"week_and_year": date_time.strftime("%V%G")}))
+            flash("I'm sorry, but you've already entered \
+                   an image in this week's competition!")
 
-    pagination, photos_paginated = paginated_and_pagination_args(this_weeks_entries, 10, "page", "per_page")
+    this_weeks_entries = list(mongo.db.photos.find(
+                        {"week_and_year": date_time.strftime("%V%G")}))
 
+    pagination, photos_paginated = paginated_and_pagination_args(
+                                   this_weeks_entries, 10, "page", "per_page")
 
-
-    return render_template("compete.html", this_weeks_entries=photos_paginated, 
-                                           datetime=date_time, 
-                                           category=this_weeks_comp_category, 
-                                           instructions=this_weeks_comp_instructions,
-                                           pagination=pagination)
+    return render_template("compete.html",
+                           this_weeks_entries=photos_paginated,
+                           datetime=date_time,
+                           category=this_weeks_comp_category,
+                           instructions=this_weeks_comp_instructions,
+                           pagination=pagination)
 
 @app.route("/file/<filename>")
 def file(filename):
+    '''
+    * This is the GridFS file url response from MongoDB. It is
+      used as the source url for displaying the photos in the app.
+
+    \n Args:
+    1. filename (str): The unique photo filename.
+
+    \n Returns:
+    * The unique file url for a particular photo.
+    '''
     return mongo.send_file(filename)
+
 
 @app.route("/photos/<filename>", methods=["GET", "POST"])
 def get_photo(filename):
+    '''
+    * This displays a photo complete with all its attendant
+      details.
 
+    \n Args:
+    1. filename (str): The photo's filename which is unique.
+
+    \n Returns:
+    * The template for that photo's detailed view.
+    '''
     source_url = request.referrer
 
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"username": photo["created_by"]})
-     
+
     username = user["username"]
-    
-    return render_template("get_photo.html", photo=photo, username=username, source_url=source_url)
+
+    return render_template("get_photo.html",
+                           photo=photo,
+                           username=username,
+                           source_url=source_url)
 
 
-@app.route("/edit_photo/<filename>", methods=["GET", "POST"])
+@app.route("/edit-photo/<filename>", methods=["GET", "POST"])
 def edit_photo(filename):
 
     # Add a rule that you have to be logged in to reach this page.
@@ -682,58 +612,49 @@ def edit_photo(filename):
             "shutter": request.form.get("shutter").lower(),
             "iso": request.form.get("iso").lower()
             }
-        
+
         mongo.db.photos.update({"_id": photo["_id"]}, {"$set": edited_entry})
         flash("Photo details edited successfully!")
         return redirect(url_for("get_photo", filename=filename))
 
+    # When a session persists this throws a key error 
     if session:
-        return render_template("edit_photo.html", photo=photo)
+        if session["user"] == username:
+            return render_template("edit_photo.html", photo=photo)
+        else:
+            flash("You cannot edit another user's photo. Edit your own!")
+            return redirect(url_for("profile", username=session["user"]))
     else:
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
 
 
-@app.route("/delete_photo/<filename>")
+@app.route("/delete-photo/<filename>")
 def delete_photo(filename):
+    '''
+    * Deletes every record of a photo from the db and application.
 
+    \n Args:
+    1. filename (str): The unique filename of the image to be deleted.
+
+    \n Returns:
+    * If successful, deletes all records of the image from the db, and if
+      the user accrued points due to the image winning an award, those
+      points are removed. Redirects to the user's profile page.
+    * If unsuccessful shows the user a flash message detailing the issue
+      and redirects to home, or login.
+    '''
     if session:
         photo_to_del = mongo.db.photos.find_one({"filename": filename})
         if session["user"] == photo_to_del["created_by"]:
 
-            # If the photo to delete has won the user points, we need to remove those points when that image is deleted.
-            if photo_to_del["awards"] == 1:
-                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -7}})
-            elif photo_to_del["awards"] == 2:
-                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -5}})
-            elif photo_to_del["awards"] == 3:
-                mongo.db.users.update_one({"username": session["user"]}, {'$inc': {"user_points": -3}})
-            
-            file_to_delete = mongo.db.fs.files.find_one({"filename": filename})
-            chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
-            
-            # Remove the photo obj associated with this pic
-            mongo.db.photos.delete_one({"filename": filename})
-            # Remove the GridFS file associated with this filename
-            mongo.db.fs.files.delete_one(file_to_delete)
-            # Remove the GridFS chunk(s) associated with this filename
-            for chunk in chunks_to_delete:
-                mongo.db.fs.chunks.delete_one(chunk)
-            # Remove this filename from the user photos array
-            user = mongo.db.users.find_one({"username": session["user"]})
-            user_photos = user["photos"]
-
-            for photo in user_photos:
-                if photo == filename:
-                    mongo.db.users.update_one({"username": session["user"]}, {'$pull': {"photos": photo}})
-
+            delete_this_photo(mongo, photo_to_del, filename)
 
             flash("Photograph deleted successfully!")
             return redirect(url_for('profile', username=session["user"]))
         else:
             flash("You may not delete another user's photo.")
             return redirect(url_for('home'))
-    # Why is the below not working?
     else:
         flash("Sorry, you must be logged in to delete a photograph.")
         return redirect(url_for('login'))
@@ -749,42 +670,16 @@ def vote(filename):
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        
-        user_voting = mongo.db.users.find_one({"username": session["user"]})
-
-        if user_voting["votes_to_use"] < 1:
-            flash("Sorry, but you don't have any votes to use. You've either already voted, or you did not enter this week's competition.")
-            return redirect(url_for("compete"))
-
-         # Check that the photo does not belong to the user. If it does send the user a message that they cannot vote for their own photo.
-        elif user_voting["username"] == photo["created_by"]:
-            flash(" Sorry, but you cannot vote for your own photo... obviously.")
-            return redirect(url_for("compete"))
-
-        else:
-            # If it is not their photo:
-            #1. Remove the user's vote 
-            # #2. Place that image in the user's photos_voted_for array.
-            mongo.db.users.update({"username": session["user"]},
-                                    {'$inc':{"votes_to_use": -1}})
-
-            mongo.db.users.update({"username": session["user"]},
-                                    {'$push': {"photos_voted_for": photo["_id"]}})
-
-            #3. Add a point to that photo's votes field. 
-            mongo.db.photos.update_one({"_id": photo["_id"]},
-                                      {'$inc': {"photo_votes": 1} })
-
-            
-            flash("Thank you for voting!")
-            return redirect(url_for('compete', username=session['user']))
-        
+        url = vote_for_photo(mongo, photo)
+        return url
 
 @app.route("/logout")
 def logout():
     # remove user from session cookies
     flash("You've been logged out")
+    print(session.values())
     session.pop("user", None)
+    session.clear()
     
     return redirect(url_for("login"))
 
