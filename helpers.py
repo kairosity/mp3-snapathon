@@ -1141,6 +1141,43 @@ def upload_comp_entry(request_obj,
         flash("Entry Received!")
 
 
+def edit_this_photo(request, database_var, photo_filename, photo_obj):
+    '''
+    * This takes user input and updates the photo details in
+      the mongo db with that input.
+
+    \n Args:
+    1. request (obj): The request object from the POST of the
+       the edit photo form.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    3. photo_filename (str): The unique filename of the photo obj
+       to be edited.
+    4. photo_obj (obj): The photo object to delete.
+
+    \n Returns:
+    * Updates the db with the new photo details inputed by the user
+      and returns a flash confirmation message and renders the 
+      get_photo template for the photo that was edited.
+
+    '''
+    edited_entry = {
+        "photo_title": request.form.get("title").lower(),
+        "photo_story": request.form.get("story").lower(),
+        "camera": request.form.get("camera").lower(),
+        "lens": request.form.get("lens").lower(),
+        "aperture": request.form.get("aperture").lower(),
+        "shutter": request.form.get("shutter").lower(),
+        "iso": request.form.get("iso").lower()
+        }
+
+    database_var.db.photos.update(
+        {"_id": photo_obj["_id"]}, {"$set": edited_entry})
+    flash("Photo details edited successfully!")
+    url =redirect(url_for("get_photo", filename=photo_filename))
+    return url
+
+
 def delete_this_photo(database_var, photo_to_del, filename):
     '''
     * This deletes a photo from the user object, the photo collection,
@@ -1202,7 +1239,7 @@ def vote_for_photo(database_var, photo_to_vote_for):
     * If successful it alters both the user record, adding that photo
       into their "photos_voted_for" array field, and that specific photo's
       record, adding a vote to its "photo_votes" field. Which in turn is
-      used to calculate winners. It flashes a message to the user and 
+      used to calculate winners. It flashes a message to the user and
       reloads the compete template.
     * If unsuccessful, it flashes a message to the user detailing the issue
       and reloads the compete template.

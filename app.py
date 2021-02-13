@@ -498,8 +498,20 @@ def get_photo(filename):
 
 @app.route("/edit-photo/<filename>", methods=["GET", "POST"])
 def edit_photo(filename):
+    '''
+    * This edits a user's photo's details when successful,
+      updating them in the db.
 
-    # Add a rule that you have to be logged in to reach this page.
+    \n Args:
+    1. filename (str): The unique filename of the photo object
+       to be edited.
+    2. The form user inputs for any of: photo title, photo story,
+       camera, lens, aperture, shutter & iso.
+
+    \n Returns:
+    * If successful, updates the mongo db and renders the get_photo
+      template for the photo that was edited.
+    '''
 
     photo = mongo.db.photos.find_one({"filename": filename})
     user = mongo.db.users.find_one({"username": photo["created_by"]})
@@ -507,22 +519,9 @@ def edit_photo(filename):
     username = user["username"]
 
     if request.method == "POST":
+        url = edit_this_photo(request, mongo, filename, photo)
+        return url
 
-        edited_entry = {
-            "photo_title": request.form.get("title").lower(),
-            "photo_story": request.form.get("story").lower(),
-            "camera": request.form.get("camera").lower(),
-            "lens": request.form.get("lens").lower(),
-            "aperture": request.form.get("aperture").lower(),
-            "shutter": request.form.get("shutter").lower(),
-            "iso": request.form.get("iso").lower()
-            }
-
-        mongo.db.photos.update({"_id": photo["_id"]}, {"$set": edited_entry})
-        flash("Photo details edited successfully!")
-        return redirect(url_for("get_photo", filename=filename))
-
-    # When a session persists this throws a key error 
     if session:
         if session["user"] == username:
             return render_template("edit_photo.html", photo=photo)
@@ -585,7 +584,7 @@ def logout():
     print(session.values())
     session.pop("user", None)
     session.clear()
-    
+
     return redirect(url_for("login"))
 
 
