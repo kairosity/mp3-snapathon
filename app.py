@@ -66,20 +66,35 @@ def awards():
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
-    this_weeks_users = get_this_weeks_comp_users(this_weeks_entries, mongo)
+    this_weeks_users = get_this_weeks_comp_users(
+        this_weeks_entries, mongo)
 
-    valid_users = filter_users_and_exclude_non_voters(this_weeks_users, mongo, this_week_and_year_formatted)
+    valid_users = filter_users_and_exclude_non_voters(
+        this_weeks_users, mongo, this_week_and_year_formatted)
 
-    range_of_votes = get_range_of_scores(this_week_and_year_formatted, mongo)
+    range_of_votes = get_range_of_scores(
+        this_week_and_year_formatted, mongo)
  
-    first_place_vote_count, second_place_vote_count, third_place_vote_count = awards_score_requirements(range_of_votes)
+    first_place_vote_count,\
+    second_place_vote_count,\
+    third_place_vote_count = \
+        awards_score_requirements(range_of_votes)
 
-    first_place_users, second_place_users, third_place_users = determine_winners(first_place_vote_count, second_place_vote_count, third_place_vote_count, this_weeks_entries, mongo)
-    
-    add_points_to_winning_users(first_place_users, second_place_users, third_place_users, mongo)
-    
-    add_points_to_users_who_voted_well(valid_users, this_week_and_year_formatted, mongo)
-    
+    first_place_users,\
+    second_place_users,\
+    third_place_users = \
+        determine_winners(
+            first_place_vote_count,
+            second_place_vote_count,
+            third_place_vote_count,
+            this_weeks_entries, mongo)
+
+    add_points_to_winning_users(
+        first_place_users, second_place_users, third_place_users, mongo)
+
+    add_points_to_users_who_voted_well(
+        valid_users, this_week_and_year_formatted, mongo)
+
     print("Awards & points have been calculated and awarded.")
 
 # awards()
@@ -592,30 +607,36 @@ def logout():
 def page_not_found(e):
     print(e)
     error = 404
-    error_msg = "I'm sorry, we've searched everywhere, but the page you are looking for does not exist."
+    error_msg = "I'm sorry, we've searched everywhere, \
+    but the page you are looking for does not exist."
     return render_template('error.html', error=error, error_msg=error_msg), 404
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
     error = 500
-    error_msg = "We're so sorry! There's been an internal server error. It's not you, it's definitely us, but maybe try again later?"
+    error_msg = "We're so sorry! There's been an internal server error.\
+    It's not you, it's definitely us, but maybe try again later?"
     return render_template('error.html', error=error, error_msg=error_msg), 500
 
 
 @app.errorhandler(403)
 def forbidden_error(e):
     error = 403
-    error_msg = "I actually can't believe you tried to do that. Totally Forbidden, sorry."
+    error_msg = "I actually can't believe you tried to do that.\
+    Totally Forbidden, sorry."
     return render_template('error.html', error=error, error_msg=error_msg), 403
 
-#The print statement is working, but the template is not rendering? Not sure why. 
 
+# The print statement is working, but the template
+# is not rendering? Not sure why.
 @app.errorhandler(413)
 def payload_too_large(e):
     print(f"This specific error is: {e}")
     error = 413
-    error_msg = "Sorry, but the file you're trying to upload is too large. If you are entering the competition, please have a look at the file size guidelines in the rules section. Thanks!"
+    error_msg = "Sorry, but the file you're trying to upload is too large.\
+    If you are entering the competition, please have a look at the file size\
+    guidelines in the rules section. Thanks!"
     print(error_msg)
     return render_template('error.html', error=error, error_msg=error_msg), 413
 
@@ -624,7 +645,8 @@ def payload_too_large(e):
 def unsupported_media_type(e):
     print(f"Error:{e}")
     error = 415
-    error_msg = "Sorry, but the file you're trying to upload is an unsupported file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
+    error_msg = "Sorry, but the file you're trying to upload is an unsupported\
+    file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 415
 
 
@@ -632,7 +654,8 @@ def unsupported_media_type(e):
 def request_timeout(e):
     print(e)
     error = 408
-    error_msg = "Sorry, but the server timed out waiting for the request. You might try again."
+    error_msg = "Sorry, but the server timed out waiting for the request.\
+    You might try again."
     return render_template('error.html', error=error, error_msg=error_msg), 408
 
 

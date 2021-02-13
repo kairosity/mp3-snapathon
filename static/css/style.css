@@ -1020,15 +1020,45 @@ p.password-change-instructions{
     font-size: 1.1rem;
     font-weight: 400;
 }
-.delete-account-btn{
+.delete-account-btn,
+.delete-ac-btn{
     background-color: darkred;
     color: var(--main-text-colour);
 }
-.delete-account-btn:hover{
+.delete-account-btn:hover,
+.delete-ac-btn:hover{
     background-color: red;
     box-shadow: darkred 2px;
     color: var(--main-text-colour);
 }
+#confirm-account-deletion{
+    padding: 1.6rem;
+}
+#confirm-account-deletion,
+.account-deletion-form,
+.account-deletion-header, 
+.account-deletion-footer{
+    background-color: var(--dark-text-color);
+    color: var(--main-text-colour);
+}
+.delete-ac-question{
+    font-family: var(--subheading-font);
+    font-size: 1.4rem;
+}
+.delete-ac-info{
+    font-size: 1rem;
+}
+.modal div.account-deletion-footer{
+    background-color: var(--dark-text-color);
+}
+.delete-ac-btn{
+    margin-top: 1.7rem !important;
+}
+.cancel-delete-ac-btn{
+    margin-bottom: 2.7rem !important;
+}
+
+
 /* Competition Page */
 
 /* Text */
@@ -1238,6 +1268,11 @@ h5.user-points-badge{
     text-align: left;
     font-size: 2.6rem;
 }
+
+/* Edit Profile Page */
+#confirm-account-deletion{
+    padding: 3rem;
+}
 /* Compete */
 div.add-photo-collapsible-header,
 div.review-rules-collapsible-header{
@@ -1412,6 +1447,11 @@ h5.user-points-badge{
 }
 .profile-title-username{
     font-size: 2.4rem;
+}
+/* Edit Profile Page */
+.cancel-delete-ac-btn{
+    margin-top: 1.7rem !important;
+    
 }
 /* Footer */
 footer{
