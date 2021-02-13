@@ -209,7 +209,7 @@ def search():
     '''
     * Takes the user inputed search query and filters back images that
       match the criterion.
-    
+
     \n Args:
     1. query (str): User input from the search form.
 
@@ -231,10 +231,15 @@ def search():
     if not filtered_photos:
         flash("I'm sorry, but your search did not return any images.")
 
+    #Send the search queries back to the form to populate the inputs?
+
     return render_template("browse_images.html",
                            photos=photos_paginated,
                            pagination=pagination,
-                           source_url=source_url)
+                           source_url=source_url,
+                           category=category,
+                           query=query,
+                           awards=awards)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -259,44 +264,8 @@ def register():
     '''
 
     if request.method == "POST":
-        existing_email = mongo.db.users.find_one(
-                         {"email": request.form.get("email").lower()})
-        existing_username = mongo.db.users.find_one(
-                            {"username": request.form.get("username").lower()})
-
-        if existing_email:
-            flash("Email is already registered.")
-            return redirect(url_for('register'))
-
-        if existing_username:
-            flash("Username is already in use, please choose a different one.")
-            return redirect(url_for('register'))
-
-        password1 = request.form.get("password")
-        password2 = request.form.get("password-confirmation")
-
-        if password1 != password2:
-            flash("Passwords do not match, please try again.")
-            return redirect(url_for('register'))
-
-        register_user = {
-            "username": request.form.get("username").lower(),
-            "email": request.form.get("email").lower(),
-            "password": generate_password_hash(request.form.get("password")),
-            "user_points": 0,
-            "photos_entered": [],
-            "photos_voted_for": [],
-            "votes_to_use": 0,
-            "can_enter": True
-        }
-        mongo.db.users.insert_one(register_user)
-
-        session["user"] = request.form.get("username").lower()
-        flash("Registration successful!")
-        username = session["user"]
-
-        return redirect(url_for("profile", username=username))
-
+        url = register_new_user(mongo, request)
+        return url
     return render_template("register.html")
 
 
@@ -325,6 +294,7 @@ def login():
         return url
 
     return render_template("login.html")
+
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
@@ -392,45 +362,35 @@ def edit_profile(username):
        taken in via the edit-profile form.
 
     \n Returns:
-    * GET renders the edit-profile template if the user is logged in & requesting
-      their own page. Otherwise it renders an error page with a flash message
-      outlining the issue.
-    * POST: If the form is submitted successfully and user details changed, this
-      updates the db with the new user data and then renders the user's profile
-      with the updated details. If unsuccessful, this
+    * GET renders the edit-profile template if the user is logged in &
+      requesting their own page. Otherwise it renders an error page with
+      a flash message outlining the issue.
+    * POST: If the form is submitted successfully and user details changed,
+      this updates the db with the new user data and then renders the user's
+      profile with the updated details. If unsuccessful, this
 
     '''
     user = mongo.db.users.find_one({"username": username})
+    source_url = request.referrer
     if request.method == "POST":
 
-        form_username = request.form.get("username").lower()
-        form_email = request.form.get("email").lower()
-        form_current_password = request.form.get("current_password")
-        form_new_password = request.form.get("new_password")
-        form_new_password_confirmation = \
-            request.form.get("new_password_confirmation")
+        if session:
+            if session["user"] == username:
 
-        url = edit_user_profile(
-            user, username, form_username, form_email,
-            form_current_password, form_new_password,
-            form_new_password_confirmation, mongo)
-
-        return url
-
-    if session:
-        if session["user"] == username:
-            source_url = request.referrer
-
-            return render_template(
-                'edit_profile.html', user=user, source_url=source_url)
+                url = edit_user_profile(
+                            user, username, request, mongo)
+                return url
+            else:
+                flash("You cannot edit someone else's account...obvz!")
+                abort(403)
         else:
-            flash("You cannot edit someone else's account...obvz!")
+            flash("You must be logged in to edit your\
+            account, and obviously, you are not allowed \
+            to edit someone else's account!")
             abort(403)
-    else:
-        flash("You must be logged in to edit your\
-             account, and obviously, you are not allowed \
-             to edit someone else's account!")
-        abort(403)
+
+    return render_template(
+        'edit_profile.html', user=user, source_url=source_url)
 
 
 @app.route('/delete-account/<username>', methods=['GET', 'POST'])

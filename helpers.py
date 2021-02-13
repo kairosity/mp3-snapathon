@@ -607,6 +607,67 @@ def filter_user_search(
     return filtered_photos
 
 
+def register_new_user(database_var, request):
+    '''
+    * This registers a new user and saves their data to the db.
+
+    \n Args:
+    1. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    2. request (obj): The request object the user POSTs to the server
+       containing the data from the register form: username, email &
+       password.
+
+    \n Returns:
+    * If successful this will save the new user's data to the db and
+      render the new user's profile page.
+    * It also logs the user in and  starts a new session with that 
+      user's username as the session variable's value.
+    * If unsuccessful this will flash a message detailing the issue and
+      reload the register template.
+    '''
+    existing_email = database_var.db.users.find_one(
+                    {"email": request.form.get("email").lower()})
+    existing_username = database_var.db.users.find_one(
+                        {"username": request.form.get("username").lower()})
+
+    if existing_email:
+        flash("Email is already registered.")
+        url = redirect(url_for('register'))
+        return url
+
+    if existing_username:
+        flash("Username is already in use, please choose a different one.")
+        url = redirect(url_for('register'))
+        return url
+
+    password1 = request.form.get("password")
+    password2 = request.form.get("password-confirmation")
+
+    if password1 != password2:
+        flash("Passwords do not match, please try again.")
+        url = redirect(url_for('register'))
+        return url
+
+    register_user = {
+        "username": request.form.get("username").lower(),
+        "email": request.form.get("email").lower(),
+        "password": generate_password_hash(request.form.get("password")),
+        "user_points": 0,
+        "photos": [],
+        "photos_voted_for": [],
+        "votes_to_use": 0,
+        "can_enter": True
+    }
+    database_var.db.users.insert_one(register_user)
+
+    session["user"] = request.form.get("username").lower()
+    flash("Registration successful!")
+    username = session["user"]
+    url = redirect(url_for("profile", username=username))
+    return url
+
+
 def login_user(email, password, database_var):
     '''
     * This logs the user in, or tells them why their login
@@ -770,9 +831,7 @@ def time_strings_for_template(
     return comp_closes, voting_closes, next_comp_starts
 
 
-def edit_user_profile(user, username, form_username,
-                      form_email, form_current_password, form_new_password,
-                      form_new_password_confirmation, database_var):
+def edit_user_profile(user, username, request, database_var):
     '''
     * When successful this updates the user information. When not successful
       it flashes a message to the user explaining why and redirects them, either
@@ -781,15 +840,9 @@ def edit_user_profile(user, username, form_username,
     \n Args:
     1. user (obj): The user object from the db
     2. username (str): The username that the user means to edit.
-    3. form_username (str): The username inputed into the form.
-    4. form_email (str): The email inputed into the form.
-    5. form_current_password (str): The string inputed by the user
-       to reference their current password.
-    6. form_new_password (str): Inputed by the user - the string they
-       want to change their password to.
-    7. form_new_password_confirmation (str): The confirmation inputed
-       by the user to confirm their password change.
-    8. database_var (obj): A variable holding the PyMongo Object that
+    3. request (obj): The POST request object send via the form
+       by the user to the server.
+    4. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
 
     \n Returns:
@@ -800,6 +853,13 @@ def edit_user_profile(user, username, form_username,
     '''
     update_user = {}
     update_photos = {}
+
+    form_username = request.form.get("username").lower()
+    form_email = request.form.get("email").lower()
+    form_current_password = request.form.get("current_password")
+    form_new_password = request.form.get("new_password")
+    form_new_password_confirmation = \
+        request.form.get("new_password_confirmation")
 
     # If the user has changed their username
     if form_username != user["username"]:
@@ -825,14 +885,15 @@ def edit_user_profile(user, username, form_username,
             return url
         else:
             update_user["email"] = form_email
-    
+
     if form_current_password:
 
         if check_password_hash(user["password"], form_current_password):
             if form_new_password:
 
                 if form_new_password == form_new_password_confirmation:
-                    update_user["password"] = generate_password_hash(form_new_password)
+                    update_user["password"] = \
+                        generate_password_hash(form_new_password)
 
                 else:
                     flash("Your new passwords do not match, please try again.")
@@ -853,6 +914,13 @@ def edit_user_profile(user, username, form_username,
             url = redirect(url_for(
                            'edit_profile', user=user, username=form_username))
             return url
+
+    if form_new_password or form_new_password_confirmation and not form_current_password:
+        flash("You must enter your current password to change your password.\
+            Please try again.")
+        url = redirect(url_for(
+                        'edit_profile', user=user, username=form_username))
+        return url
 
     if update_photos:
         database_var.db.photos.update_many(
@@ -1110,3 +1178,5 @@ def vote_for_photo(database_var, photo_to_vote_for):
         flash("Thank you for voting!")
         url = redirect(url_for('compete', username=session['user']))
         return url
+
+

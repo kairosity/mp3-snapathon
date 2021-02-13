@@ -11,7 +11,7 @@
             <div class="row valign-wrapper center-align">
 
                 <div class="input-field col s12 m8 offset-m2">
-                     <input type="text" name="query" id="query" class="validate" minlength="3">
+                     <input type="text" name="query" id="query" class="validate" minlength="3" value="{{query}}">
                      <label for="query">Filter by keyword</label>
                 </div>
                 
@@ -20,6 +20,7 @@
                 <div class="input-field col s12 m8 offset-m2">
                       <div class="input-field col s12">
                         <select id="category" name="category">
+                            <!-- Need to use JS to populate this? s/t like if category then add selected class to the category that matches the category string -->
                         <option value="" disabled selected>Select category:</option>
                         <option value="portraiture">Portraiture</option>
                         <option value="landscape">Landscape</option>
@@ -35,6 +36,7 @@
             </div>
                 <div class="row award-status-row">
                 <div class="col s10 offset-s1 m8 offset-m2">
+                    <!-- Again JS here? -->
                     <p class="filter-award">Filter by award status</p>
                     <label class="award-search-label">
                         <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="1" />
