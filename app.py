@@ -397,63 +397,8 @@ def edit_profile(username):
 def delete_account(username):
 
     if request.method == "POST":
-
-        #This mucks up a bit because the session cookie lingers. Consider removing this and just leaving if session["user"] == username? 
-        # Same issue above with edit_profile. 
-        if session:
-            if session["user"] == username:
-                user = mongo.db.users.find_one({"username": username})
-                all_photos = list(mongo.db.photos.find())
-
-                #form vars
-                form_password = request.form.get("password")
-                form_password_confirmation = request.form.get("password_confirmation")
-
-                # Security check first - user must enter her password twice in order to delete account. (Modal window with two password fields and a confirm button)
-                if form_password:
-                    if check_password_hash(user["password"], form_password):
-                        if form_password == form_password_confirmation:
-                            #1.Delete all this user's photos (files & chunks) from the mongo DB
-
-                            if len(user["photos"]) > 0:
-                                for photo in user["photos"]:
-                                    # Remove the photo obj associated with this pic
-                                    mongo.db.photos.delete_one({"filename": photo})
-                                    # Target the GridFS file associated with this filename
-                                    file_to_delete = mongo.db.fs.files.find_one({"filename": photo})
-                                    # Target the Chunks associated with this files_id
-                                    chunks_to_delete = list(mongo.db.fs.chunks.find({"files_id": file_to_delete["_id"]}))
-                                    # Delete the file
-                                    mongo.db.fs.files.delete_one(file_to_delete)
-
-                                    if len(chunks_to_delete) > 0:
-                                        # Delete the GridFS chunk(s) associated with this filename
-                                        for chunk in chunks_to_delete:
-                                            mongo.db.fs.chunks.delete_one(chunk)
-
-                            
-                            #3. Delete the user from the DB.
-                            mongo.db.users.delete_one({"username": user["username"]})
-
-                            #2. Pop the session. (There is still a session - why?)
-                            session.pop("user", None)
-
-                            flash("Account & photos deleted successfully, we're sorry to see you go. Come back to us any time!")
-                            return redirect(url_for('home'))
-
-                        else:
-                            flash("Incorrect password. Please try again.")
-                            return redirect(url_for('edit_profile', username=username))
-                    else:
-                        flash("Incorrect password. Please try again.")
-                        return redirect(url_for('edit_profile', username=username))
-                else:
-                    flash("You must enter your password in order to delete your account. This is a security measure.")
-                    return redirect(url_for('edit_profile', username=username))
-    else:
-        flash("You must be logged in to delete your account, and obviously, you are not allowed to delete someone else's account!")
-        abort(403)
-
+        url = delete_user_account(username, mongo, request)
+        return url
 
 
 @app.route("/compete", methods=['GET', 'POST'])

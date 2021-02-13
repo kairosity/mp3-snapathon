@@ -19,5 +19,8 @@
       "**/core.mongo*": true,
       "**/core.python*": true
    },
-   "emmet.extensionsPath": ".theia"
+"emmet.extensionsPath": ".theia",
+"prettier.printWidth": 150,
+"yaml.format.printWidth": 150,
+"yaml.format.proseWrap": "never"
 }

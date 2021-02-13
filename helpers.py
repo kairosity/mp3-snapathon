@@ -969,6 +969,68 @@ def edit_user_profile(user, username, request, database_var):
                           next_comp_starts=next_comp_starts)
     return url
 
+def delete_user_account(username, database_var, request):
+
+    # This mucks up a bit because the session cookie lingers.
+    if session:
+        if session["user"] == username:
+            user = database_var.db.users.find_one({"username": username})
+            all_photos = list(database_var.db.photos.find())
+
+            form_password = request.form.get("password")
+            form_password_confirmation = request.form.get("password_confirmation")
+
+            if form_password:
+                if check_password_hash(user["password"], form_password):
+                    if form_password == form_password_confirmation:
+                        #1.Delete all this user's photos (files & chunks) from the mongo DB
+
+                        if len(user["photos"]) > 0:
+                            for photo in user["photos"]:
+
+                                # Remove the photo obj
+                                database_var.db.photos.delete_one(
+                                    {"filename": photo})
+
+                                # Target the GridFS file associated with this filename
+                                file_to_delete = database_var.db.fs.files.find_one(
+                                    {"filename": photo})
+                                # Target the Chunks for this files_id
+                                chunks_to_delete = list(database_var.db.fs.chunks.find(
+                                    {"files_id": file_to_delete["_id"]}))
+                                # Delete the file
+                                database_var.db.fs.files.delete_one(file_to_delete)
+
+                                if len(chunks_to_delete) > 0:
+                                    for chunk in chunks_to_delete:
+                                        database_var.db.fs.chunks.delete_one(chunk)
+
+                        database_var.db.users.delete_one({"username": user["username"]})
+
+                        # 2. Pop the session. (There is still a session - why?)
+                        session.pop("user", None)
+
+                        flash("Account & photos deleted successfully, we're sorry to see you go. Come back to us any time!")
+                        url = redirect(url_for('home'))
+                        return url
+
+                    else:
+                        flash("Incorrect password. Please try again.")
+                        url = redirect(url_for('edit_profile', username=username))
+                        return url
+                else:
+                    flash("Incorrect password. Please try again.")
+                    url = redirect(url_for('edit_profile', username=username))
+                    return url
+            else:
+                flash("You must enter your password in order to delete your account. This is a security measure.")
+                url = redirect(url_for('edit_profile', username=username))
+                return url
+    else:
+        flash("You must be logged in to delete your account, and obviously, you are not allowed to delete someone else's account!")
+        abort(403)
+
+
 # compete() Helpers
 
 
