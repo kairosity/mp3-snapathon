@@ -859,9 +859,9 @@ div.back-link-div{
 .del-photo-btn{
     background-color: var(--accent-colour);
 }
-
 .get-photo-img{
-    width: 100%;;
+    max-width: 100%;
+    max-height: 700px;
 }
 .edit-photo-btn{
     margin-bottom: 1rem;
@@ -884,7 +884,6 @@ div.back-link-div{
     color: #cd7f32;
     margin-bottom: 1.4rem;
 }
-
 
 /* Login & Register Pages */
 .login-btn,
@@ -1021,40 +1020,52 @@ p.password-change-instructions{
     font-weight: 400;
 }
 .delete-account-btn,
-.delete-ac-btn{
+.delete-ac-btn,
+.delete-photo-btn,
+.delete-photo-btn-modal{
     background-color: darkred;
     color: var(--main-text-colour);
 }
 .delete-account-btn:hover,
-.delete-ac-btn:hover{
+.delete-ac-btn:hover,
+.delete-photo-btn:hover,
+.delete-photo-btn-modal:hover{
     background-color: red;
     box-shadow: darkred 2px;
     color: var(--main-text-colour);
 }
-#confirm-account-deletion{
+#confirm-account-deletion,
+#confirm-photo-deletion{
     padding: 1.6rem;
 }
 #confirm-account-deletion,
 .account-deletion-form,
 .account-deletion-header, 
-.account-deletion-footer{
+.account-deletion-footer,
+#confirm-photo-deletion,
+.photo-deletion-header,
+#confirm-photo-deletion div.photo-deletion-footer{
     background-color: var(--dark-text-color);
     color: var(--main-text-colour);
 }
-.delete-ac-question{
+.delete-ac-question,
+.delete-photo-question{
     font-family: var(--subheading-font);
     font-size: 1.4rem;
 }
-.delete-ac-info{
+.delete-ac-info,
+.delete-photo-info{
     font-size: 1rem;
 }
 .modal div.account-deletion-footer{
     background-color: var(--dark-text-color);
 }
-.delete-ac-btn{
+.delete-ac-btn,
+.delete-photo-btn-modal{
     margin-top: 1.7rem !important;
 }
-.cancel-delete-ac-btn{
+.cancel-delete-ac-btn,
+.delete-photo-btn-cancel-modal{
     margin-bottom: 2.7rem !important;
 }
 
@@ -1127,6 +1138,9 @@ div.competition-rules{
     font-weight: 300;
     letter-spacing: 1px;
 }
+/* Vote Page */
+
+
 button.vote-button{
     width: 100%;
     background-color: var(--accent-colour);
@@ -1137,7 +1151,6 @@ button.vote-button{
 button.vote-button:hover{
     background-color: var(--dark-accent-colour);
     transform: scale(1.03);
-
 }
 .vote-icon{
     font-size: 3em;
@@ -1449,9 +1462,9 @@ h5.user-points-badge{
     font-size: 2.4rem;
 }
 /* Edit Profile Page */
-.cancel-delete-ac-btn{
+.cancel-delete-ac-btn,
+.delete-photo-btn-cancel-modal{
     margin-top: 1.7rem !important;
-    
 }
 /* Footer */
 footer{

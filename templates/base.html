@@ -20,48 +20,53 @@
 <body class="grey darken-4">
     <div id="page-container">
         <div id="content-wrap">
+            <div class="navbar-fixed">
             <nav class="grey darken-4">
                 <div class="nav-wrapper">
                     <a href="{{ url_for('home')}}" class="brand-logo"><i class="logo fas fa-spa"></i></a>
                     <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down navbar-nav">
                         <li><a href="{{url_for('home')}}">Home</a></li>
-                        <li><a href="{{url_for('recent_winners')}}">Recent Winners</a></li>
+                        <li><a href="{{url_for('winners')}}">Winners</a></li>
                         <li><a href="{{url_for('browse')}}">Browse</a></li>
                         {% if session['user'] %}
-                        <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
+                        <li><a href="{{url_for('profile', username=session['user'])}}">Profile</a></li>
                         {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
                         <li><a href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
                         {% else %}
                         <li><a href="{{url_for('compete', username=session['user'])}}">Vote</a></li>
                         {% endif %}
+                        <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                         <li><a href="{{url_for('logout')}}">Logout</a></li>
                         {% else %}
+                        <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                         <li><a href="{{url_for('login')}}">Login</a></li>
                         <li><a href="{{url_for('register')}}">Register</a></li>
                         {% endif %}
-                        <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                     </ul>
                 </div>
             </nav>
+            </div>
        
             <ul class="sidenav grey darken-4 mobile-nav-ul" id="mobile-nav">
                 <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('recent_winners')}}">Recent Winners</a></li>
+                <li><a href="{{url_for('winners')}}">Winners</a></li>
                 <li><a  href="{{url_for('browse')}}">Browse</a></li>
                 {% if session['user'] %}
                 <li><a href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
-                {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "14") ) %}
+                {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
                 <li><a href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
                 {% else %}
                 <li><a href="{{url_for('compete', username=session['user'])}}">Vote</a></li>
                 {% endif %}
+                <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
                 {% else %}
+                <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                 <li><a  href="{{url_for('login')}}">Login</a></li>
                 <li><a href="{{url_for('register')}}">Register</a></li>
                 {% endif %}
-                <li><a href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                
             </ul>
           
             <section>

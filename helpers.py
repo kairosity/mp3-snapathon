@@ -251,8 +251,6 @@ def get_range_of_scores(comp_week_and_year, database_var):
         if photo["photo_votes"] > 0:
             range_of_votes.append(photo["photo_votes"])
 
-    print(f"Range of Votes:{range_of_votes}")
-
     return range_of_votes
 
 
@@ -421,7 +419,7 @@ def add_points_to_users_who_voted_well(
                         {'$inc': {"user_points": 1}})
 
 
-# Recent Winners Helper Functions
+# Winners Helper Functions
 def get_images_by_week_and_year(w_a_y, database_var):
     '''
     * Returns a list of images entered into a competition in a
@@ -727,37 +725,31 @@ def get_profile_page_photos(username, database_var):
     '''
     user = database_var.db.users.find_one({"username": username})
 
-    print(user)
-
     user_photos = list(
         database_var.db.photos.find({"created_by": user["username"]}))
+    
+    user_entry_this_comp = database_var.db.photos.find_one(
+                            {"created_by": user["username"],
+                             "week_and_year": datetime.now().strftime("%V%G")})
 
     photos_voted_for_array = user["photos_voted_for"]
     photos_voted_for_objs = []
 
-
-   
     if photos_voted_for_array != []:
         for img in photos_voted_for_array:
             photo_obj = list(database_var.db.photos.find({"_id": img}))
-            print(f"the object of the number photos: {photo_obj}")
             for photo in photo_obj:
                 if photo["week_and_year"] != \
                         datetime.now().strftime("%V%G"):
                     photos_voted_for_objs.append(photo)
 
-                    print(photos_voted_for_objs)
-                   
-    
-    # else:
-    #     # Maybe put a msg in the template to that effect?
-        # print("This user has not voted for any images yet")
     award_winners = []
     for img in user_photos:
         if img["awards"] is not None:
             award_winners.append(img)
 
-    return user_photos, photos_voted_for_objs, award_winners
+    return user_photos, photos_voted_for_objs,\
+        award_winners, user_entry_this_comp
 
 
 # Code from Emmanuel's Stack Overflow answer (attributed in README.md)
@@ -978,12 +970,12 @@ def delete_user_account(username, database_var, request):
             all_photos = list(database_var.db.photos.find())
 
             form_password = request.form.get("password")
-            form_password_confirmation = request.form.get("password_confirmation")
+            form_password_confirmation = request.form.get(
+                "password_confirmation")
 
             if form_password:
                 if check_password_hash(user["password"], form_password):
                     if form_password == form_password_confirmation:
-                        #1.Delete all this user's photos (files & chunks) from the mongo DB
 
                         if len(user["photos"]) > 0:
                             for photo in user["photos"]:
@@ -992,42 +984,50 @@ def delete_user_account(username, database_var, request):
                                 database_var.db.photos.delete_one(
                                     {"filename": photo})
 
-                                # Target the GridFS file associated with this filename
-                                file_to_delete = database_var.db.fs.files.find_one(
-                                    {"filename": photo})
+                                file_to_delete = \
+                                    database_var.db.fs.files.find_one(
+                                        {"filename": photo})
                                 # Target the Chunks for this files_id
-                                chunks_to_delete = list(database_var.db.fs.chunks.find(
-                                    {"files_id": file_to_delete["_id"]}))
+                                chunks_to_delete = list(
+                                    database_var.db.fs.chunks.find(
+                                        {"files_id": file_to_delete["_id"]}))
                                 # Delete the file
-                                database_var.db.fs.files.delete_one(file_to_delete)
+                                database_var.db.fs.files.delete_one(
+                                        file_to_delete)
 
                                 if len(chunks_to_delete) > 0:
                                     for chunk in chunks_to_delete:
-                                        database_var.db.fs.chunks.delete_one(chunk)
+                                        database_var.db.fs.chunks.delete_one(
+                                            chunk)
 
-                        database_var.db.users.delete_one({"username": user["username"]})
+                        database_var.db.users.delete_one(
+                            {"username": user["username"]})
 
                         # 2. Pop the session. (There is still a session - why?)
                         session.pop("user", None)
 
-                        flash("Account & photos deleted successfully, we're sorry to see you go. Come back to us any time!")
+                        flash("Account & photos deleted successfully, we're \
+                            sorry to see you go. Come back to us any time!")
                         url = redirect(url_for('home'))
                         return url
 
                     else:
                         flash("Incorrect password. Please try again.")
-                        url = redirect(url_for('edit_profile', username=username))
+                        url = redirect(url_for(
+                            'edit_profile', username=username))
                         return url
                 else:
                     flash("Incorrect password. Please try again.")
                     url = redirect(url_for('edit_profile', username=username))
                     return url
             else:
-                flash("You must enter your password in order to delete your account. This is a security measure.")
+                flash("You must enter your password twice in order to delete your\
+                      account. This is a security measure.")
                 url = redirect(url_for('edit_profile', username=username))
                 return url
     else:
-        flash("You must be logged in to delete your account, and obviously, you are not allowed to delete someone else's account!")
+        flash("You must be logged in to delete your account, and obviously,\
+             you are not allowed to delete someone else's account!")
         abort(403)
 
 

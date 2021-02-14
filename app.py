@@ -160,8 +160,8 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/recent-winners")
-def recent_winners():
+@app.route("/winners")
+def winners():
     '''
     * This gets a list of the most recent competition award-winning images
       and passes them to the 'winners' template, alongside information about
@@ -188,7 +188,7 @@ def recent_winners():
         first_second_third_place_compcat_users(
             images_to_display, mongo)
 
-    return render_template("recent_winners.html",
+    return render_template("winners.html",
                            first_place=first_place,
                            second_place=second_place,
                            third_place=third_place,
@@ -330,7 +330,7 @@ def profile(username):
       stage of the competition and links to bring them to the compete or
       vote templates.
     '''
-    user_photos, photos_voted_for_objs, award_winners = \
+    user_photos, photos_voted_for_objs, award_winners, user_entry_this_comp = \
         get_profile_page_photos(username, mongo)
 
     user = mongo.db.users.find_one({"username": username})
@@ -354,6 +354,7 @@ def profile(username):
                            user_photos=user_photos,
                            photos_voted_for=photos_voted_for_objs,
                            award_winners=award_winners,
+                           user_entry_this_comp=user_entry_this_comp,
                            can_enter=can_enter,
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
@@ -596,7 +597,6 @@ def vote(filename):
 def logout():
     # remove user from session cookies
     flash("You've been logged out")
-    print(session.values())
     session.pop("user", None)
     session.clear()
 
