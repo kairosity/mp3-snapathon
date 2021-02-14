@@ -22,9 +22,9 @@
             <a class="back-link" href="{{url_for('compete', username=photo.created_by)}}"><i
                     class="fas fa-long-arrow-alt-left"></i> Back to the competition!</a>
         </div>
-        {% elif "recent_winners" in source_url %}
+        {% elif "winners" in source_url %}
         <div class="row">
-            <a class="back-link" href="{{url_for('recent_winners')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+            <a class="back-link" href="{{url_for('winners')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
                 recent winners!</a>
         </div>
         {% elif "browse" in source_url or "search" in source_url %}

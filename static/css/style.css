@@ -962,6 +962,8 @@ p.avatar-username{
     color: var(--main-text-colour);
     font-weight: 400;
     font-size: 1.3rem;
+    line-height: 1.6;
+    letter-spacing: 2px;
 }
 .profile-link{
     color: var(--accent-colour);
