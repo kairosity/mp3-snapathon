@@ -409,6 +409,15 @@ Users arrive at the Contact Form either by finding it organically by scrolling d
 
 The form fields are limited to an email: field and the message field as the kind of application this is, does not necessitate a long complicated email form. 
 
+
+# Future Functionality
+
+## Expanded upload functionality
+
+Uploaded images must be kept below 500KB, currently the onus is on the user to resize their images to fit that specification. For future versions of the app
+I would like to allow the users to upload any size image they want, and the application will resize the image before it is saved to the database. This will allow
+for greater flexibility and improved UX when it comes to using mobile to upload images, as resizing on mobile is still not straightforward.
+
 # Attribution
 
 - [Adding class to li after page is loaded](https://stackoverflow.com/questions/40506710/adding-class-to-li-after-page-is-loaded/40506822#40506822)

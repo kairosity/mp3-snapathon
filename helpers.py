@@ -205,7 +205,7 @@ def filter_users_and_exclude_non_voters(
     '''
     valid_users = []
     non_voters = []
-
+    
     for user in array_of_users:
         if user["votes_to_use"] > 0:
             non_voters.append(user)
@@ -509,6 +509,7 @@ def first_second_third_place_compcat_users(photo_array, database_var):
     third_place = []
 
     list_of_users = []
+    competition_category = None
 
     for img in photo_array:
         if img["awards"] == 1:
@@ -650,6 +651,7 @@ def register_new_user(database_var, request):
     register_user = {
         "username": request.form.get("username").lower(),
         "email": request.form.get("email").lower(),
+        "profile_photo": None,
         "password": generate_password_hash(request.form.get("password")),
         "user_points": 0,
         "photos": [],
@@ -719,15 +721,20 @@ def get_profile_page_photos(username, database_var):
     \n Returns:
     * Three arrays of photo objects associated with the username passed
       in:
-    * 1. All photos the user has entered into competition.
-    * 2. All photos the user has voted for in competition.
-    * 3. All the user's award-winning photos.
+    * 1. The user's profile photo if there is one.
+    * 2. All photos the user has entered into competition.
+    * 3. All photos the user has voted for in competition.
+    * 4. All the user's award-winning photos.
     '''
     user = database_var.db.users.find_one({"username": username})
 
+    user_profile_photo = None
+
+    user_profile_photo = database_var.db.photos.find_one({"user": username})
+
     user_photos = list(
         database_var.db.photos.find({"created_by": user["username"]}))
-    
+
     user_entry_this_comp = database_var.db.photos.find_one(
                             {"created_by": user["username"],
                              "week_and_year": datetime.now().strftime("%V%G")})
@@ -748,7 +755,8 @@ def get_profile_page_photos(username, database_var):
         if img["awards"] is not None:
             award_winners.append(img)
 
-    return user_photos, photos_voted_for_objs,\
+    return user_profile_photo, user_photos,\
+        photos_voted_for_objs,\
         award_winners, user_entry_this_comp
 
 
@@ -823,7 +831,44 @@ def time_strings_for_template(
     return comp_closes, voting_closes, next_comp_starts
 
 
-def edit_user_profile(user, username, request, database_var):
+def save_photo(request, database_var, name_of_image_from_form, app):
+    '''
+    * This saves an image from a form to the mongo DB.
+
+    \n Args:
+    1. request (obj): The POST request object send via the form
+       by the user to the server.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    3. name_of_image_from_form (str): The string assigned to form's file
+       upload "name" field.
+    4. app (obj): The WSGI application as an object of the Flask class.
+    '''
+    photo = request.files[name_of_image_from_form]
+
+    file_extension = os.path.splitext(photo.filename)[1]
+
+    if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+        abort(415)
+
+    # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
+    #     abort(413)
+
+    photo.filename = secure_filename(photo.filename)
+
+    file_id = database_var.save_file(photo.filename, photo)
+
+    # This makes the filename unique
+    new_filename = str(file_id) + file_extension
+
+    # Update the gridFS "Filename" attribute to be equal to the file_id
+    database_var.db.fs.files.update_one(
+                                {"_id": file_id},
+                                {'$set': {"filename": new_filename}})
+    return file_id, new_filename
+
+
+def edit_user_profile(user, username, request, database_var, app):
     '''
     * When successful this updates the user information. When not successful
       it flashes a message to the user explaining why and redirects them, either
@@ -836,6 +881,7 @@ def edit_user_profile(user, username, request, database_var):
        by the user to the server.
     4. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
+    5. app (obj): The WSGI application as an object of the Flask class.
 
     \n Returns:
     * If successful, this updates the user information in the db and returns
@@ -848,6 +894,7 @@ def edit_user_profile(user, username, request, database_var):
 
     form_username = request.form.get("username").lower()
     form_email = request.form.get("email").lower()
+    form_profile_pic = request.files["profile-pic"]
     form_current_password = request.form.get("current_password")
     form_new_password = request.form.get("new_password")
     form_new_password_confirmation = \
@@ -877,6 +924,45 @@ def edit_user_profile(user, username, request, database_var):
             return url
         else:
             update_user["email"] = form_email
+
+    if form_profile_pic:
+
+        existing_profile_pic = user["profile_photo"]
+        print(f"Existing profile pic:{existing_profile_pic}")
+        if existing_profile_pic is not None:
+
+            file_to_delete = database_var.db.fs.files.find_one(
+                {"filename": existing_profile_pic})
+            print(f"File to delete: {file_to_delete}")
+            chunks_to_delete = list(database_var.db.fs.chunks.find({
+                                    "files_id": file_to_delete["_id"]}))
+
+            database_var.db.photos.delete_one(
+                {"filename": existing_profile_pic})
+
+            database_var.db.fs.files.delete_one(file_to_delete)
+
+            for chunk in chunks_to_delete:
+                database_var.db.fs.chunks.delete_one(chunk)
+
+        file_id, new_filename = save_photo(
+            request, database_var, "profile-pic", app)
+
+        new_entry = {
+            "file_id": file_id,
+            "filename": new_filename,
+            "type": "profile-pic",
+            "user": session["user"]
+        }
+
+        database_var.db.photos.insert_one(new_entry)
+
+        photo_to_add_to_user = database_var.db.photos.find_one(
+                              {"file_id": file_id})
+
+        photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+
+        update_user["profile_photo"] = photo_filename_to_add_to_user
 
     if form_current_password:
 
@@ -932,7 +1018,8 @@ def edit_user_profile(user, username, request, database_var):
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
 
-    user_photos, photos_voted_for_objs, award_winners = \
+    user_profile_photo, user_photos, \
+        photos_voted_for_objs, award_winners, _ = \
         get_profile_page_photos(username, database_var)
 
     today = datetime.now().strftime('%Y-%m-%d')
@@ -951,6 +1038,7 @@ def edit_user_profile(user, username, request, database_var):
     url = render_template('profile.html',
                           user=user,
                           username=username,
+                          user_profile_photo=user_profile_photo,
                           user_photos=user_photos,
                           photos_voted_for=photos_voted_for_objs,
                           award_winners=award_winners,
@@ -1076,9 +1164,10 @@ def upload_comp_entry(request_obj,
        the compete form.
     2. database_var (obj): A variable holding the PyMongo Object that
        accesses the MongoDB Server.
-    3. this_weeks_comp_category (str): The competition theme for the current
+    3. app (obj): The WSGI application as an object of the Flask class.
+    4. this_weeks_comp_category (str): The competition theme for the current
        competition. This gets attached to the photo object in the db.
-    4. current_user (obj): The logged in user who is trying to enter the
+    5. current_user (obj): The logged in user who is trying to enter the
        competition.
 
     \n Returns:
@@ -1087,27 +1176,8 @@ def upload_comp_entry(request_obj,
       a flash message telling the user their entry was received.
     '''
     if 'photo' in request.files:
-        photo = request.files['photo']
 
-        file_extension = os.path.splitext(photo.filename)[1]
-
-        if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-            abort(415)
-
-        # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
-        #     abort(413)
-
-        photo.filename = secure_filename(photo.filename)
-
-        file_id = database_var.save_file(photo.filename, photo)
-
-        # This makes the filename unique
-        new_filename = str(file_id) + file_extension
-
-        # Update the gridFS "Filename" attribute to be equal to the file_id
-        database_var.db.fs.files.update_one(
-                                 {"_id": file_id},
-                                 {'$set': {"filename": new_filename}})
+        file_id, new_filename = save_photo(request, database_var, 'photo', app)
 
         new_entry = {
             "file_id": file_id,
@@ -1157,7 +1227,7 @@ def edit_this_photo(request, database_var, photo_filename, photo_obj):
 
     \n Returns:
     * Updates the db with the new photo details inputed by the user
-      and returns a flash confirmation message and renders the 
+      and returns a flash confirmation message and renders the
       get_photo template for the photo that was edited.
 
     '''

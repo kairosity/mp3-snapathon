@@ -44,6 +44,7 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
+
 def awards():
     '''
     * This function automatically calculates photo awards and user points from
@@ -62,7 +63,7 @@ def awards():
       came 1st, 2nd or 3rd.
     '''
     #This needs to change to # datetime.now().strftime("%V%G")
-    this_week_and_year_formatted = "052021"
+    this_week_and_year_formatted = "062021"
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
@@ -114,7 +115,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='sun',
                   hour=22, minute=00, second=0,
                   start_date='2021-01-24 00:00:00')
-scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='wed',
+scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
                   hour=00, minute=00, second=0,
                   start_date='2021-01-24 00:00:00')
 scheduler.start()
@@ -209,7 +210,7 @@ def browse():
     * Template displaying all the images to the user, paginated.
     '''
 
-    all_photos = list(mongo.db.photos.find())
+    all_photos = list(mongo.db.photos.find({"type": "entry"}))
 
     pagination, photos_paginated = paginated_and_pagination_args(
                                    all_photos, 10, "page", "per_page")
@@ -330,7 +331,9 @@ def profile(username):
       stage of the competition and links to bring them to the compete or
       vote templates.
     '''
-    user_photos, photos_voted_for_objs, award_winners, user_entry_this_comp = \
+    user_profile_photo, user_photos, \
+    photos_voted_for_objs, award_winners,\
+    user_entry_this_comp = \
         get_profile_page_photos(username, mongo)
 
     user = mongo.db.users.find_one({"username": username})
@@ -351,6 +354,7 @@ def profile(username):
     return render_template("profile.html",
                            username=username,
                            user=user,
+                           user_profile_photo=user_profile_photo,
                            user_photos=user_photos,
                            photos_voted_for=photos_voted_for_objs,
                            award_winners=award_winners,
@@ -394,7 +398,7 @@ def edit_profile(username):
             if session["user"] == username:
 
                 url = edit_user_profile(
-                            user, username, request, mongo)
+                            user, username, request, mongo, app)
                 return url
             else:
                 flash("You cannot edit someone else's account...obvz!")
@@ -663,6 +667,8 @@ def request_timeout(e):
 # @app.errorhandler(Exception)
 # def all_other_exceptions(e):
 #     return f"Something went wrong! Specifically: {e}"
+
+
 
 
 if __name__ == "__main__":

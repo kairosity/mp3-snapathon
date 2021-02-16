@@ -18,7 +18,7 @@
         
     <div class="col s12 m8 offset-m2 l6 offset-l3">
         
-        <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}">
+        <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}" enctype="multipart/form-data">
             <h1 class="center-align page-heading">Update Profile</h1>
             <div class="row">
                 <div class="input-field col s12">
