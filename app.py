@@ -401,11 +401,11 @@ def edit_profile(username):
                             user, username, request, mongo, app)
                 return url
             else:
-                flash("You cannot edit someone else's account...obvz!")
+                flash("You cannot edit someone else's account!")
                 abort(403)
         else:
             flash("You must be logged in to edit your\
-            account, and obviously, you are not allowed \
+            account, and you are not allowed \
             to edit someone else's account!")
             abort(403)
 
@@ -552,7 +552,7 @@ def edit_photo(filename):
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
 
-
+# SHOULD I MAKE THIS A POST REQUEST?
 @app.route("/delete-photo/<filename>")
 def delete_photo(filename):
     '''
@@ -600,10 +600,8 @@ def vote(filename):
 @app.route("/logout")
 def logout():
     # remove user from session cookies
-    flash("You've been logged out")
     session.pop("user", None)
-    session.clear()
-
+    flash("You've been logged out")
     return redirect(url_for("login"))
 
 
@@ -670,7 +668,7 @@ def request_timeout(e):
 
 
 
-
+# SET DEBUG TO FALSE BEFORE DEPLOYMENT
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

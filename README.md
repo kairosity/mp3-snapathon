@@ -2,7 +2,8 @@
 ## Shoot, Compete, Rate, Repeat!
 ## Code Institute Milestone Project 3
 
-Snapathon seeks to gamify photography. It is a photo-sharing application that enhances the user experience with competition. 
+Snapathon seeks to gamify photography. It is a community-led photo-sharing application that enhances the user experience with friendly competition.
+Users register accounts and then they enter one competition a week on a particular theme. Every user that enters also has one vote to cast for a photo (not theirs).
 
 # Table of Contents
 
@@ -10,8 +11,8 @@ Snapathon seeks to gamify photography. It is a photo-sharing application that en
 ## User Stories
 
 This application is targeted towards photography enthusiasts. Anyone who takes photographs for fun and loves to share them with others.
-Other photo sharing platforms have indicated a massive opportunity for an application that successfully gamifies photography and this application aims to achieve that.
-Snapathon aims to entice users to register and upload their images in weekly competitions pitting their best images against others'.
+Other photo sharing platforms have indicated an opportunity for an application that successfully gamifies photography and this aims to achieve that.
+Snapathon hopes to entice users to register and upload their images in weekly competitions pitting their best images against others'.
 
 ## First Time User Stories
 
@@ -70,7 +71,7 @@ Snapathon aims to entice users to register and upload their images in weekly com
 #### back to [contents](#table-of-contents) 
 
 --- 
- # Strategy
+# Strategy
 
 ## Project Goals
 As already touched upon, the aim with this project is to create a usable photography competition application that enhances the quality of photography users display on the internet. 
@@ -101,7 +102,6 @@ as meritocratic as possible. Especially since one of the more innovative aspects
 Ideally, there could also be a professional photographer offshoot to this application and such determinations would hold even more weight, the professional aspect could also be a sub-category worthy of future investigation. 
 
 
- 
 ## Value to the user 
 
 The main value is in providing an interesting photography application that does not exist in this form yet. It is an innovative platform that
@@ -189,62 +189,192 @@ they can be implemented in future updates. The "long wow".
 
 ## Content requirements
 
-As this application is heavily dependent on images, there are content-specific considerations to be addressed. The structure of the database is a top priority. MongoDB allows for scalability and because it is non-relational, there is considerable scope for 
-trying things out to see what works best. The GridFS componenent of MongoDB is perfect for the first model of an image based application because it is so self-contained and relatively easy to use. Other options would have been to incorporate a third-party solution like S3 
-or Cloudinary, and these remain viable options for future releases should the application grow, but I like the simplicity of having MongoDB take care of all the user data.
+As this application is heavily dependent on images, there are content-specific considerations to be addressed. The structure of the 
+database is a top priority. MongoDB allows for scalability and because it is non-relational, there is considerable scope for trying 
+things out to see what works best. The GridFS componenent of MongoDB is perfect for the first model of an image based application 
+because it is so self-contained and relatively easy to use. Other options would have been to incorporate a third-party solution like S3 
+or Cloudinary, and these remain viable options for future releases should the application grow, but I like the simplicity of having MongoDB 
+take care of all the user data.
 
 #### back to [contents](#table-of-contents) 
 ---
 
- # Structure
+# Structure
 
-The structure is somewhat non-linear as there are multiple views and the views a user can see are determined by whether or not they are registered and logged in. 
+The structure is somewhat non-linear as there are multiple views and the views are contingent on whether a user is registered and logged in.
+In designing my application I was cognisant of the fact that because of the increased complexity of a somewhat non-linear, multi-levelled site, 
+I would have to ensure that the interaction design and information architecture were both consistent, intuitive, accessible and include ample
+feedback at every level of user interaction. 
 
-## Consistency & Predictability
+## Interaction Design 
 
 ### Navigation
-The application has been designed with predictable and known interaction features. Navigation is simplified with a fixed navbar along the top of the view at all times when on desktop, and a hamburger icon on mobile and smaller screens. 
-The back button is never relied on. Design features, buttons, forms, switches, filters and search bars are all laid out and work in a consistent, predictable fashion. 
+The application has been designed with predictable and known interaction features. Navigation is simplified with a fixed navbar along the top of 
+the view at all times when on desktop, and a hamburger icon on mobile and smaller screens. 
 
-### Design
-All content, typography and method of interacting with the application has been designed to ensure consistency across the board, there are no surprises in store for the user. 
+The back button is never relied on. Design features, buttons, forms, switches, filters and search bars are all laid out and work in a consistent, 
+predictable fashion. 
 
-All important content is visible on the page and when the user might need to scroll down this is made obvious for them. 
+### Consistency, conventions & predictability
+To ensure predictability in the application, I have relied on tried and tested conventions. All content, typography and method of interacting with 
+the application has been designed to ensure consistency across the board, there are no surprises in store for the user. All buttons and links behave 
+consistently and the feedback given to the user follows the same design and language patterns across the application. 
+
+- All important content is visible on the page and when the user might need to scroll down this is made obvious for them. 
+
+- The colours and typography are consistent throughout the application. 
+
+- All messages to the user (detailed further below), are written in the same clear professional tone.
+
+- The homepage for example, is the longest page in terms of content and I have included a clear content hinting "learn more" for first time or 
+unregistered users, to ensure they do scroll down. 
+
+- The layout of the homepage, with a brief description, register & login buttons and a content hint for further information. This formula is very common 
+with applications such as this, and ensures that the user knows immediately that they are in safe hands. While they don't know the specifics yet, they do 
+feel secure in their ability to interact with the application successfully. 
+
+- Further down the homepage I have used font awesome icons to enhance metaphorical thinking and further relay the purpose and functioning of the app in a clear,
+bold manner. 
+
+- In my image layouts I've used a formulaic grid layout that is common to other photo-sharing apps. Users will be familiar with the layout and therefore 
+more confident in engaging. 
+
+- The same can be said for the user's profile page. I've designed it with features and a layout that the user will be expecting. The placement of the username, the 
+user's profile photo and the tabs separating the user's photo collections are all easily recognised.
+
+Where I diverged somewhat from convention was with the "Compete" page. Most photo sharing apps would have the "Add photo" link on the profile page, and while I 
+did include a link to "compete" from the profile, I wanted the user to engage with the competition on a separate page. This was important because there were other 
+elements the user might need to engage with such as having another look at the competition rules, and looking at the "upload guidelines". Structurally I also 
+wanted the compete page separate as it shares its real-estate space with the "Vote" page depending on the day and I felt I wanted there to be a specific and 
+separate space for the competition to take place. 
+
+### Learnability / Communication of Functionality
+
+The design of my landing page was particularly important, as it is the window to the rest of the application. Whether or not a user is bothered engaging 
+further rests on how well this page is presented. I've tried to balance content and simplicity here, while not wanting to overload my new users with information, 
+I did need to explain the application in a way that leaves no doubt as to what it does and how it does it.
+
+When the user first lands on the homepage, I've used language to provide a concise summary of what they can expect. The app's name "SNAPATHON" effectively 
+marries the idea of a photo 'snap' with the suffix '-athon' which brings up images of marathons, talkathons etc... Its meaning is: something 
+that is carried out over a long period of time on a large scale and it generally has a competitive or 'striving' bent to it. To ensure clarity I've also included 
+two other related phrases: "Love photography?" & "Shoot, Compete, Rate, Repeat" - the former is a direct call to action to our target audience, the latter concisely
+explains how the app will operate in the form of a catchy slogan. 
+
+I have dedicated all four main sections of the homepage to explaining what the application does and how it works in various levels of detail. As mentioned the 
+first view gives the user a very concise idea of what to expect. The second section uses icons and headlines to double-down on the first message and whet the 
+appetite. The third section goes into more detail and uses a timeline design to outline the competition's schedule and further expand on what happens and how 
+it happens. The fourth section explains briefly how a user can win points and tells the user to click on a link below for a further (and very detailed) 
+explanation of the rules. This detailed explanation is important, but I wanted to hide it for users taking a cursory glance at the homepage, to avoid overwhelming
+users who might shy away from complexity.
+
+As the competition rules and functioning are somewhat more advanced than a simple photo-sharing site, I have tried to repeatedly communicate the main functions and 
+rules in a consistent and clear manner. 
+
+The added element of a schedule for user engagement also posed a challenge to ensure users always know where they are in that time frame. I dealt with this by 
+adding specific and precise timing messages when a user logs into their profile. Those messages are as follows: 
+
+1. __Monday - Friday AND the user has not uploaded an entry into the competition:__
+*You still have to enter an image into this week's competition. You have x days, y hours and z minutes left to enter.*
+2. __Monday - Friday AND the user has already entered an image:__
+*Voting opens in x days, y hours and z minutes.*
+3. __Friday - Sunday (before 22:00) for users who have entered an image, but not yet voted:__ 
+*You still have to vote for your favourite image. You have x days, y hours and z minutes left to vote. If you don't vote, your entry's points will be reduced to 0.*
+4. __Friday - Sunday (before 22:00) for users who have entered an image and have already voted:__
+*You have already voted! Voting ends at 22:00 this Sunday in x days, y hours and z minutes, when awards, points & winners will be announced.*
+5. __Friday - Sunday (before 22:00) for users who failed to enter an image in the competition and therefore cannot vote:__
+*You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in x days, y hours and z minutes, when awards, points & winners will be announced.*
+
+In this way, when the user visits their profile, they know exactly where they stand in the competition timeline, and what is or isn't expected of them.
 
 ### Feedback
-The application ensures that users get feedback after most important interactions. 
+The application ensures that users get feedback after all important interactions.
 
 #### Flash Messages.
-The application makes good use of the Flash methods to deliver messages to the user. They are used to tell the users when they have done something wrong, or why something won't work, as well as delivering positive feedback when the user 
-correctly does what they were expected to do correctly.
-Here are all the flash message used in the application for great user feedback and assurance:
+The application makes good use of the Flash methods to deliver messages to the user. They are used to tell the users when they have done something wrong, 
+or why something won't work, as well as delivering positive feedback when the user successfully does what they were expected to do.
+Here are all the flash messages used in the application for great user feedback and assurance:
 
-- 
-- 
-- 
+#### Success Messages:
+- __*"Registration Successful"*__ - when a user first registers an account.
+- __*"Welcome <username>!"*__ - Wher a user logs in.
+- __*"Profile Updated Successfully"*__ - when a user edits any part of their profile. 
+- __*"Entry Received"*__ - when a user enters an image into the competition. 
+- __*"Thank you for voting"*__ - when a user casts their vote.
+- __*"Account & photos deleted successfully, we're sorry to see you go. Come back to us any time!"*__ - When a user deletes their account. 
+- __*"Email Sent!"*__ -  When a user successfully uses the contact form.
+- __*"You've been logged out"*__ - When a user logs out
+
+#### Failure Messages:
+- __*"Incorrect username and/or password!"*__ - When a log in attempt fails. 
+- __*"Email is already registered."*__ - When a user tries to register an existing email address. 
+- __*"Username is already in use, please choose a different one."*__ - When a user tries to register an existing username.
+- __*"Passwords do not match, please try again."*__ - When a user's registration passwords are not the same.
+- __*"Incorrect username and/or password!"*__ - When a user is trying to login and has entered either an incorrect username or password.
+- __*"Username is already in use, please choose a different one."*__ - When a user is editing their profile and tries to change their username to one already registered.
+- __*"That email is already in use, please choose a different one."*__ - Same as above for email.
+- __*"Your new passwords do not match, please try again."*__ - When a user is trying to change their password and the confirmation password has a typo, or was entered incorrectly.
+- __*"Your new password cannot be nothing. If you were not trying to change your password, there is no need to enter your current password."*__ - This message is for the 
+edge-case scenario whereby a user editing their profile declines to read the instructions on the form that state: ```If you'd like to change your password, 
+please enter your current password below and then your new password twice.``` Instead they just enter their current password and nothing in the new password form 
+fields.
+- __*"Sorry, but your current password was entered incorrectly. Please try again."*__ - When a user trying to edit their profile
+enters their current password incorrectly.
+- __*"You must enter your current password to change your password. Please try again."*__ - When a user trying to edit their profile fails to enter their current password.
+- __*"Incorrect password. Please try again."*__ - When a user trying to delete their account either: enters an incorrect password or their confirmation password is incorrect.
+- __*"You must enter your password twice in order to delete your account. This is a security measure."*__ - When a user trying to delete their account fails to enter their password.
+- __*"You must be logged in to delete your account, and obviously,you are not allowed to delete someone else's account!"*__ - When a user tries (using url) to delete someone else's account
+or their own account, but without being logged in.
+- __*"Sorry, but you don't have any votes to use. You've either already voted, or you did not enter this week's competition."*__ - When a user tries to vote without having
+entered the competition or having already voted.
+- __*"Sorry, but you cannot vote for your own photo... obviously."*__ - When a user tries to vote for their own image.
+- __*"I'm sorry, but your search did not return any images."*__ - When a user searches for a filtered selection of photos on the browse page, but there are no results.
+- __*"You cannot edit someone else's account!"*__ - When a user tries via url to edit another user's account.
+- __*"You must be logged in to edit your account, and you are not allowed to edit someone else's account!"*__ - When a user either tries to edit theirs or another
+user's account without being logged in (via url).
+- __*"I'm sorry, but you've already entered an image in this week's competition!"*__ - If a user tries to enter more than one image in the competition.
+- __*"You cannot edit another user's photo. Edit your own!"*__ - If a user is logged in and tries to edit another user's photo (via url).
+- __*"You need to be logged in to edit photos."*__ - If a user tries to edit a photo (via url) without being logged in.
+- __*"You may not delete another user's photo."*__ - If a user tries to delete another user's photo (via url).
+- __*"Sorry, you must be logged in to delete a photograph."*__ - If a user tries to delete a photo without being logged in.
+- __*"You must be logged in to vote."*__ - If a user tries to vote without being logged in.
+
+The flash messages cover all manner of user interaction with the application and are written in a clear and concise manner in a tone and using language that is consistent
+throughout. 
 
 #### Form validation messages
-Alongside the Flash messages, the Materialize library has some great in built form validation messages that are delivered to the user to tell them what is expected of them when filling out the various forms on the site. 
+Alongside the Flash messages, the Materialize library has some great in built form validation messages that are delivered to the user to tell them what is expected of them 
+when filling out the various forms on the site. This catches smaller formatting issues withou relying on flash message or page reloads. All validations are expanded on in greater
+depth in the testing.md doc. 
+
+#### State changes
+All buttons, links and interactions have visible state changes to ensure the user knows their actions are working.
 
 #### 404 error pages 
 
-Custom 404 pages .....
+There are also specific error pages covering all manner of errors the user might encounter. The pages all have a clear message as to why an error was thrown, and 
+a link to bring the user back to safety.
 
 
 ## Information Architecture
 
-This application combines both linear and non-linear narratives. For first time users there is an obvious progression, they are encouraged to register but before they do so they can explore the application to a limited degree. 
+This application combines both linear and non-linear narratives. For first time users there is an obvious progression, they are encouraged to register but 
+before they do so they can explore the application to a limited degree. 
 
-Once they've registered they can enter an image into a competition, or they can browse other images, or they can view their own profiles or the profiles and photographs of other users. 
-There is no set linearity to these options, but as the options are limited to a few main pathways, the application doesn't get overly confusing and it remains straightforward and intuitive. 
+Once they've registered they can enter an image into a competition, or they can browse other images, or they can view their own profiles or the profiles 
+and photographs of other users. There is no set linearity to these options, but as the options are limited to a few main pathways, the application doesn't 
+get overly confusing and it remains straightforward and intuitive. 
 
-When a user selects an image to view its details, a hub and spoke structure is employed insofar as a "back to ... " link is added in addition to the omnipresent navbar option for the user. 
+When a user selects an image to view its details, a hub and spoke structure is employed insofar as a "back to ... " link is added in addition to the 
+omnipresent navbar option for the user. 
 
-This "back to ..." is coded to be conditional and will refer to the user's source url page. So if the user arrived at the photo detail page from clicking on an image in "Recent Winners", it will read "Back to Recent Winners", likewise if they 
-came to the photo detail page from a user profile, it will read "Back to username's profile". This adds a level of intelligence to the application that will further assure the user. 
+This "back to ..." is coded to be conditional and will refer to the user's source url page. So if the user arrived at the photo detail page from clicking on 
+an image in "Recent Winners", it will read "Back to Recent Winners", likewise if they came to the photo detail page from a user profile, it will read "Back 
+to username's profile". This adds a level of intelligence to the application that will further assure the user and make navigation simple.
+
+I've also ensured that navigation remains somewhat shallow, whereby the user never needs more than 3 interactions to arrive at any of the site's destinations.
 
 
-## Users Not Logged In / Guest Users 
+## IA: Users Not Logged In / Guest Users 
 
 ### Landing Page: 
 
@@ -252,21 +382,27 @@ came to the photo detail page from a user profile, it will read "Back to usernam
 2. If they choose to scroll down the page to learn more, the application purpose and rules of competition are clearly outlined. 
 3. Further scrolling on that page brings them to the contact form.
 
-The first view is designed in this manner to encourage information-seeking behaviour and provide answers within the first interaction. If the user arrives at the page and is immediately enticed to sign up, perfect, 
-otherwise they can scroll down and understand a little more about what the application does. 
+The first view is designed in this manner to encourage information-seeking behaviour and provide answers within the first interaction. If the user arrives at 
+the page and is immediately enticed to sign up, perfect, otherwise they can scroll down and understand a little more about what the application does. 
 
 Ideally, users will choose to register at this juncture, however should they choose to continue browsing, the navigation options at this level are as follows:
 
-### Navigation (not logged in): 
+### Navigation Pages Accessible (for users not logged in): 
 
-1. Home - The landing page where the rules of the competition are outlined. 
-2. Recent Winners - This is where the top 3 images from the last competition are displayed.
-3. Browse - All current and past entries can be viewed and filtered using keywords or award status. 
-4. Login - Registered users can navigate here to login. 
-5. Register - Unregistered users can navigate here to register. 
-6. Contact Us - This directs the user back to the bottom of the landing page, where the contact form is located. 
+1. __*Home*__ - The landing page where the rules of the competition are outlined. For guest users this explains the application and contains two major 
+   links to the "register" page. 
+2. __*Winners*__ - This is a simple page where the photographs coming in 1st, 2nd & 3rd from the last competition will be displayed alongside their 
+creator's username and the number of votes they won. Clicking on any of the images will open the image view page where further details of the 
+photograph can be seen. Clicking on the username of one of the winning images will bring the user to that user's profile.
+3. __*Browse*__ - This is the full collection of images uploaded to the application. They are displayed as medium-sized thumbnails and users can click 
+on any of them to bring them to the image view page, where further details about the photograph can be viewed. Users can also choose to filter the 
+images displayed by using a search bar, where they can search by keywords, competition themes or awards. 
+4. __*Contact Us*__ - This directs the user back to the bottom of the landing page, where the contact form is located. 
+5. __*Login*__ - Registered users can navigate here to login. 
+6. __*Register*__ - Unregistered users can navigate here to register. 
 
-For our target users who have yet to register, I have divided their user flows into two categories: 1. The Direct Route 2. The Exploratory Route. These are illustrated below:
+For our target users who have yet to register, I have divided their user flows into two categories: 1. The Direct Route 2. The Exploratory Route. 
+These are illustrated below:
 
 <p align="center">
   <img src="static/images/user-flow/direct-registration-user-flow.png">
@@ -280,40 +416,30 @@ Whichever route the user takes, the end goal is registration. I have included gu
 feel the product before they commit. The online version of consumers picking things and turning them over in shops. For tactile, more suspicious consumers, these exploratory routes to the business 
 goal are important to assure them the product is sound. 
 
+
+### Other Accessible Pages (for users not logged in): 
+
+1. __*Photo detail pages:*__ Via "browse" or "winners", a guest user can access a photo details page, that displays the image in question alongisde relevant details
+ as well as the user who created it and a link to that user profile. 
+2. __*User profiles:*__ Via the above photo details page, a guest user can also view another user's profile page and see their entries, award-winning images, images
+they've voted for as well as user points.
+
 ### Navigation (logged in):
 
-1. Home - Landing page, available if the user wants to re-read the competition rules. 
-2. My Profile - When a user logs in they are redirected to this page where all their entries, votes and winning images are viewable.
-3. Compete / Vote - This link will read "Compete" between Monday & Friday and "Vote" between Saturday & Sunday. The compete page will show the current week's entries as well as a button to enter an image, and another link to review the rules. 
-4. Vote - This view will display all of the current week's entries all of which have "Vote" icons, clicking on any of the images will bring the user to the photo details view, where they can view a larger version of the image as well as all the photo details. 
-5. Recent Winners - This is where the top 3 placed images from the last competition are displayed, along with the votes they received.
-6. Browse - All current and past entries can be viewed and filtered using keywords or award status. 
-7. Logout - Users can logout by clicking this link. 
-8. Contact Us - This directs the user back to the bottom of the landing page, where the contact form is located. 
-
-### Recent Winners 
-
-This is a simple page where the photographs coming in 1st, 2nd & 3rd from the last competition will be displayed alongside their creator's username and the number of votes they won. 
-Clicking on any of the images will open the image view page where further details of the photograph can be seen. 
-
-### Browse
-
-This is the full collection of images uploaded to the application. They are displayed as medium-sized thumbnails and users can click on any of them to bring them to the image view page, where further details about the photograph can be viewed. 
-Users can also choose to filter the images displayed by using a search bar, where they can search by keywords. They can also choose to view only images that have won awards. 
-
-### Login 
-
-This is where users who have registered can login to the application. They can login using their email address.
-
-### Register
-
-This is where first time users can register to become members. They fill in a username, email address and password. They are asked to type in their password twice. 
-
-
-
-
-## Interaction Design 
-
+1. __*Home*__ - The major differences are: a welcome message referencing the user's username, no login & register buttons on the main view and no repeat cta "register"
+link below the "review the competition rules" link.
+2. __*Winners*__ - The winners page is identical for guest or logged in users.
+3. __*Browse*__ - The browse page is identical for guest or logged in users.
+4. __*Profile*__ - This link is not present in the navbar for guest users. For logged in users, when they click on this link they are brought to their profile
+page where they will see the option to edit their profile, via which they can also choose to completely delete their account. The user profile will also display
+specific timing and action-oriented messages customised by the day of the week and the degree of engagement the user has taken in the current competition. The
+messages themselves have already been outlined above in the communication section.
+5. __*Compete*__ - This link will be present between Monday & Friday. The page will show the current week's entries as well as a dropdown form button to enter 
+an image, another to review the upload guidelines and a third to review the competition rules. Guest users do not have access to this page.
+5. __*Vote*__ - This view will display the current week's competition entries all of which have "Vote" icons and clicking on any of the images will bring the 
+user to the photo details view, where they can view a larger version of the image as well as all the photo details. Guest users do not have access to this page.
+6. __*Contact Us*__ - This directs the user back to the bottom of the landing page, where the contact form is located. It is identical for users and guest users.
+7. __*Logout*__ - Users can logout by clicking this link. Guest users don't see this.
 
 
 #### back to [contents](#table-of-contents) 

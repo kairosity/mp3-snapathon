@@ -47,7 +47,7 @@
     <div class="col s12 m6 offset-m3 center-align">
 
         <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title|capitalize }}</h1>
-        <h2 class="artist-name col s10 offset-s1 center-align">by {{ username|capitalize }}</h2>
+        <h2 class="artist-name col s10 offset-s1 center-align">by <a href="{{url_for('profile', username=username)}}">{{ username|capitalize }}</a></h2>
 
         <!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
         {% if datetime.strftime("%V%G") != photo.week_and_year %}

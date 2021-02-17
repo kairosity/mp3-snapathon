@@ -15,6 +15,13 @@
         <h2 class="page-sub-subheading-text center-align tie-announcement-first">IT'S A TIE!</h2>
         {% endif %}
         {% for img in first_place %}
+            {% for user in users %}
+            {% if img.created_by == user.username %}
+                <div class="col s12 center-align">
+                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                </div>
+            {% endif %}
+            {% endfor %}
         <div class="award-messages col s12">
             <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
                 <p class="award-text center-align">Congrats to {{img.created_by|capitalize}}!</p>
@@ -51,6 +58,13 @@
         <h2 class="page-sub-subheading-text center-align tie-announcement-second">IT'S A TIE!</h2>
         {% endif %}
         {% for img in second_place %}
+        {% for user in users %}
+            {% if img.created_by == user.username %}
+                <div class="col s12 center-align">
+                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                </div>
+            {% endif %}
+            {% endfor %}
         <div class="award-messages col s12">
             <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
                 <p class="center-align award-text">Congrats to {{img.created_by|capitalize}}!</p>
@@ -84,6 +98,13 @@
         <h2 class="page-sub-subheading-text center-align tie-announcement-third">IT'S A TIE!</h2>
         {% endif %}
         {% for img in third_place %}
+        {% for user in users %}
+            {% if img.created_by == user.username %}
+                <div class="col s12 center-align">
+                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                </div>
+            {% endif %}
+            {% endfor %}
         <div class="award-messages col s12">
             <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
                 <p class="center-align award-text">Congrats to {{img.created_by|capitalize}}!</p>

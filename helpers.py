@@ -928,7 +928,7 @@ def edit_user_profile(user, username, request, database_var, app):
     if form_profile_pic:
 
         existing_profile_pic = user["profile_photo"]
-        print(f"Existing profile pic:{existing_profile_pic}")
+       
         if existing_profile_pic is not None:
 
             file_to_delete = database_var.db.fs.files.find_one(
@@ -1182,6 +1182,7 @@ def upload_comp_entry(request_obj,
         new_entry = {
             "file_id": file_id,
             "filename": new_filename,
+            "type": "entry",
             "photo_title": request.form.get("title").lower(),
             "photo_story": request.form.get("story").lower(),
             "camera": request.form.get("camera").lower(),
@@ -1327,7 +1328,7 @@ def vote_for_photo(database_var, photo_to_vote_for):
         return url
 
     elif user_voting["username"] == photo_to_vote_for["created_by"]:
-        flash(" Sorry, but you cannot vote for your own photo... obviously.")
+        flash("Sorry, but you cannot vote for your own photo... obviously.")
         url = redirect(url_for("compete"))
         return url
 
