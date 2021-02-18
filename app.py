@@ -44,7 +44,6 @@ mail = Mail(app)
 mongo = PyMongo(app)
 
 
-
 def awards():
     '''
     * This function automatically calculates photo awards and user points from

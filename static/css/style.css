@@ -5,14 +5,14 @@
 /* Variables */
 
 :root {
-    /* --main-heading-font: "Fraunces", serif; */
     --main-heading-font: "Anton", sans-serif;
     --subheading-font: "Raleway", sans-serif;
-    --subheading-serif-font: "Open Sans", sans-serif;
+    --subheading-2-font: "Open Sans", sans-serif;
+    --main-text-font: "Open Sans", sans-serif;
     --main-text-colour: #e0e0e0;
     --accent-colour: #ffd54f ;
     --dark-text-color: #212121;
-    --dark-accent-colour: #ffc107;
+    --dark-accent-colour: #E0AC00;
 }
 /* Universal Styles */
 
@@ -168,19 +168,19 @@ nav i.logo {
     padding: 0 2rem;
 }
 .homepage-subheading1{
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     font-size: 1rem;
     color: var(--main-text-colour);
     letter-spacing: 3px;
     margin-top: 5rem;
 }
 .homepage-subheading2{
-    font-family: var(--subheading-serif-font);
+    font-family: var(--subheading-2-font);
     font-size: 1.3rem;
     color: var(--main-text-colour);
 }
 .homepage-subheading3{
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     color: var(--main-text-colour);
     letter-spacing: 2px;
     font-weight: 200;
@@ -196,7 +196,7 @@ nav i.logo {
     color: var(--accent-colour);
 }
 .homepage-subheading4{
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     font-size: 2rem;
     letter-spacing: 5px;
     padding: 0.7em 0.5em;
@@ -268,7 +268,7 @@ div.row div.img-col{
 }
 ul.home-list {
     font-size: 1.4em;
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     margin-bottom: 4em;
     padding-top: 1.7rem;
 }
@@ -297,7 +297,7 @@ section div.schedule-row{
 }
 .points,
 .schedule {
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
    
 }
 .points{
@@ -350,7 +350,7 @@ div.rules-arrow-down{
     display: block;
 }
 .review-rules-text-homepage{
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     font-weight: bold;
     font-size: 1.2rem;
     letter-spacing: 2px;
@@ -362,7 +362,7 @@ div.review-rules-homepage-row{
     background-color: var(--accent-colour);
 }
 .cta{
-    font-family: var(--subheading-1-font);
+    font-family: var(--main-text-font);
     font-weight: bold;
     font-size: 1.2rem;
     letter-spacing: 2px;
@@ -838,7 +838,7 @@ div.back-link-div{
     font-weight: 400;
 }
 .photo-story{
-    font-family: var(--subheading-serif-font);
+    font-family: var(--subheading-2-font);
     font-size: 1.2rem;
     color: var(--main-text-colour);
     font-weight: 300;
@@ -847,7 +847,7 @@ div.back-link-div{
     padding-top: 2rem;
 }
 .tech-specs{
-    font-family: var(--subheading-serif-font);
+    font-family: var(--subheading-2-font);
     font-size: 1.4rem;
     color: var(--main-text-colour);  
     font-weight: 300;
@@ -960,7 +960,7 @@ p.avatar-username{
     margin: 0 0 5px;
 }
 .time-msg{
-    font-family: var(--subheading-serif-font);
+    font-family: var(--subheading-2-font);
     color: var(--main-text-colour);
     font-weight: 400;
     font-size: 1.3rem;
@@ -1165,7 +1165,7 @@ button.vote-button:hover{
 }
 /* Error Pages */
 .error-link{
-    font-family: var(--subheading-serif-font);
+    font-family: var(--subheading-2-font);
     font-size: 1.3rem;
     color: var(--accent-colour);
     padding: 1.1rem;

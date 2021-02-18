@@ -7,6 +7,60 @@ Users register accounts and then they enter one competition a week on a particul
 
 # Table of Contents
 
+- [1. UX](#ux)
+  * [User Stories](#user-stories)
+      - [*First Time User Stories*](#first-time-user-stories)
+      - [*Returning User Stories*](#returning-user-stories)
+      - [*Accessibility User Stories*](#accessibility-user-stories)
+  * [Strategy](#strategy)
+      - [*Project Goals*](#project-goals)
+      - [*Target Users*](#target-users)
+      - [*Research*](#research)
+      - [*Value To The User*](#value-to-the-user)
+  * [Scope](#scope)
+    - [*Core Theme*](#core-theme)
+    - [*Feature Ideas Table*](#feature-ideas-table)
+    - [*List of Final Features*](#list-of-final-features)
+    - [*Content Requirements*](#content-requirements)
+  * [Structure](#structure)
+      - [*Interaction Design*](#interaction-design)
+        - [*Navigation*](#navigation)
+        - [*Consistency, conventions and predictability*](#consistency-conventions-and-predictability)
+        - [*Learnability and Communication of Functionality*](#learnability-and-communication-of-functionality)
+        - [*Feedback*](#feedback)
+        - [*Flash Messages*](#flash-messages)
+        - [*Form Validation Messages*](#form-validation-messages)
+        - [*State Changes*](#state-changes)
+        - [*404 Error Pages*](#404-error-pages)
+      - [*Information Architecture*](#information-architecture)
+      - [*Application Sections*](#application-sections)
+        - [Guest Users (not logged in)](#guest-users-not-logged-in)
+        - [Guest User Flow](#guest-user-flow)
+        - [Logged in Users](#logged-in-users)
+  * [Skeleton](#skeleton)
+      - [*Progressive Disclosure*](#progressive-disclosure)
+      - [*Metaphorical Thinking*](#metaphorical-thinking)
+      - [*Establishing Value Through Design*](#establishing-value-through-design)
+      - [*Reassuring Conventions*](#reassuring-conventions)
+      - [*Contextually Organised Content*](#contextually-organised-content)
+      - [*Wireframes*](#wireframes)
+  * [Surface](#surface)
+      - [*Design Considerations*](#design-considerations)
+      - [*Colour Palette*](#colour-palette)
+      - [*Typography*](#typography)
+      - [*Design Mockups*](#design-mockups)
+- [2. Features](#features)
+    - [Landing Page](#1-landing-page)
+        - [*Landing Page Design*](#landing-page-design)
+    - [Information Modal](#2-information-modal)
+    - [Adding a task to the list](#3-adding-a-task-to-the-list)
+         - [*Task Addition Special Features*](#task-addition-special-features)
+    - [Editing a task](#4-editing-a-task)
+         - [*Task Edit Special Features*](#task-edit-special-features)
+     - [Deleting a task](#5-deleting-a-task)
+         - [*Task Deletion Special Features*](#task-deletion-special-features)
+    - [Checking a task as Complete](#6-checking-a-task-as-complete)
+
 # UX
 ## User Stories
 
@@ -94,7 +148,7 @@ My application goals summarized:
 The target users for this application are anyone who enjoys photography as a pasttime or professionally. There are no restrictions on tools or technology used to take photographs, a mobile phone camera is just as valid as a high-end dSLR or mirrorless. 
 The importance is placed on the image itself, and how much that image speaks to its audience. The target market is also not limited by age or any other demographic, other than they will obviously be somewhat computer & technically literate.
 
-## Research / Background to the application
+## Research
 I am a professional photographer, working in many different photographic fields for over a decade and I have a love/hate relationship with online photography competitions. Competitions based on the determination of a "panel of judges" 
 can be overly subjective and these panels are usually comprised of the site owner who may or may not have any authority on the matter. I wanted to create a democratic competition where the competitors are also the judges and therefore the final awards are 
 as meritocratic as possible. Especially since one of the more innovative aspects of this application is that users will be awarded points not only when their images win, but also if they vote for any of the top 3 placed images. In this way, users will be encouraged to actively vote for what they think are the best images, and not selectively based on strategizing. 
@@ -162,7 +216,8 @@ Some of the features developed with this aim in mind are listed below:
 3.| Browsed images can be filtered by keyword or by awards. |7|7|14
 4.| If an image is clicked on, a larger version of that image is shown including all its uploaded details and technical specs. |5|5|10
 
- ## List of Final Features for 1st Iteration of the Application
+ ## List of Final Features 
+ *(for 1st Iteration of the Application)*
 
 In order to create a working online competition the minimal viability feature list does not allow for too much compromise. There are certain features that must 
 be implemented if the application is to work at a fundamental level. Those are the features I decided to run with, the MVP features:
@@ -248,7 +303,7 @@ elements the user might need to engage with such as having another look at the c
 wanted the compete page separate as it shares its real-estate space with the "Vote" page depending on the day and I felt I wanted there to be a specific and 
 separate space for the competition to take place. 
 
-### Learnability / Communication of Functionality
+### Learnability and Communication of Functionality
 
 The design of my landing page was particularly important, as it is the window to the rest of the application. Whether or not a user is bothered engaging 
 further rests on how well this page is presented. I've tried to balance content and simplicity here, while not wanting to overload my new users with information, 
@@ -289,7 +344,7 @@ In this way, when the user visits their profile, they know exactly where they st
 ### Feedback
 The application ensures that users get feedback after all important interactions.
 
-#### Flash Messages.
+#### Flash Messages
 The application makes good use of the Flash methods to deliver messages to the user. They are used to tell the users when they have done something wrong, 
 or why something won't work, as well as delivering positive feedback when the user successfully does what they were expected to do.
 Here are all the flash messages used in the application for great user feedback and assurance:
@@ -373,10 +428,10 @@ to username's profile". This adds a level of intelligence to the application tha
 
 I've also ensured that navigation remains somewhat shallow, whereby the user never needs more than 3 interactions to arrive at any of the site's destinations.
 
+## Application Sections
+### Guest Users (not logged in)
 
-## IA: Users Not Logged In / Guest Users 
-
-### Landing Page: 
+#### Landing Page: 
 
 1. Application landing page. - the first thing a user sees are two options: login / register. 
 2. If they choose to scroll down the page to learn more, the application purpose and rules of competition are clearly outlined. 
@@ -387,7 +442,7 @@ the page and is immediately enticed to sign up, perfect, otherwise they can scro
 
 Ideally, users will choose to register at this juncture, however should they choose to continue browsing, the navigation options at this level are as follows:
 
-### Navigation Pages Accessible (for users not logged in): 
+#### Navigation Pages Accessible for guest users: 
 
 1. __*Home*__ - The landing page where the rules of the competition are outlined. For guest users this explains the application and contains two major 
    links to the "register" page. 
@@ -401,6 +456,8 @@ images displayed by using a search bar, where they can search by keywords, compe
 5. __*Login*__ - Registered users can navigate here to login. 
 6. __*Register*__ - Unregistered users can navigate here to register. 
 
+
+### Guest User Flow
 For our target users who have yet to register, I have divided their user flows into two categories: 1. The Direct Route 2. The Exploratory Route. 
 These are illustrated below:
 
@@ -412,19 +469,13 @@ These are illustrated below:
     <img src="static/images/user-flow/exploratory-user-flow.png">
 </p>
 
-Whichever route the user takes, the end goal is registration. I have included guest (non-registered) access to "Recent Winners" and "Browse" specifically to cater for users who want to 
+Whichever route the user takes, the end goal is registration. I have included guest (non-registered) access to "Winners" and "Browse" specifically to cater for users who want to 
 feel the product before they commit. The online version of consumers picking things and turning them over in shops. For tactile, more suspicious consumers, these exploratory routes to the business 
 goal are important to assure them the product is sound. 
 
+### Logged in Users
 
-### Other Accessible Pages (for users not logged in): 
-
-1. __*Photo detail pages:*__ Via "browse" or "winners", a guest user can access a photo details page, that displays the image in question alongisde relevant details
- as well as the user who created it and a link to that user profile. 
-2. __*User profiles:*__ Via the above photo details page, a guest user can also view another user's profile page and see their entries, award-winning images, images
-they've voted for as well as user points.
-
-### Navigation (logged in):
+#### Navigation pages accessible for users who are logged in:
 
 1. __*Home*__ - The major differences are: a welcome message referencing the user's username, no login & register buttons on the main view and no repeat cta "register"
 link below the "review the competition rules" link.
@@ -442,18 +493,94 @@ user to the photo details view, where they can view a larger version of the imag
 7. __*Logout*__ - Users can logout by clicking this link. Guest users don't see this.
 
 
+#### Other Accessible Pages (for logged in and guest users): 
+
+1. __*Photo detail pages:*__ Via "browse" or "winners", users can access a photo details page, that displays the image in question alongisde relevant details
+ as well as the user who created it and a link to that user profile. The one difference between user types is that logged in users can choose to edit or delete 
+ their entries here, when it is their own photo they are viewing.
+2. __*User profiles:*__ Via the above photo details page, users can also view another user's profile page and see their entries, award-winning images, images
+they've voted for as well as user points.
+
 #### back to [contents](#table-of-contents) 
 ---
 
 # Skeleton
 
+## Progressive Disclosure 
+
+As mentioned in the previous UX planning sections, I chose to carefully introduce the key information to the users on the homepage in a linear fashion. As a new 
+user scrolls down the page, they are delivered more detailed content and explanations.
+
+## Metaphorical Thinking
+
+At this stage I also chose to include icons in the second section of the homepage to further entrench the messages and meanings of "Register", "Compete", "Rate
+Others", "Win Points". My landing page combines progressive disclosure and metaphorical thinking in a fast and concise manner to deliver a clear message.
+
+The timeline I used on the landing page, also takes advantage of metaphorical and linear thinking to clearly communicate when various aspects of the 
+competitions take place. The timing details are also repeated on the user's profile page, but as aforementioned are specific to where the user is at in
+the process and what day and time of the week it is.
+
+## Establishing Value Through Design
+
+Value is established on the landing page and indeed throughout the application by consistent repetition of the key points and features. In this way, a relatively
+complex functioning becomes understandable, engaging and normalised. 
+
+## Reassuring Conventions
+
+I've included many conventional design choices to further assuage a user's mistrust of complexity. I've used pagination on all pages that display images, I've kept
+the structure and design as simple as possible as regards information to avoid cognitive overload and I've ensured that the navigation bar is always accessible 
+whether on mobile or desktop. 
+
+## Contextually Organised Content
+
+On the profile and photo details pages, I have been careful to organise the information in contextually appropriate ways so that the user expects what they see.
+On the photo details page for example, the photo title is followed by the creator's name, which is followed by the photo's points, then the image itself and then
+the photo story and remaining image details. The flow of information is logical and organically progressive.
+
+
+## Wireframes 
+
+[My full Figma workspace for this project including wireframes, user flows, mockups, colour palette & typography, can be viewed here.](https://www.figma.com/file/NYPifJrvaiC8OK2aAxNup6/Snapathon?node-id=0%3A1)
+
+__*Alternatively here are the individual wireframes:*__
+
+1. [Mobile Wireframes](static/images/wireframes/mobile-wireframes.pdf)
+2. [Tablet Wireframes](static/images/wireframes/tablet-wireframes.pdf)
+3. [Desktop Wireframes](static/images/wireframes/desktop-wireframes.pdf)
+
+
+If you choose to view them this way, please click download as the GitHub viewer can expand the smaller files to an uncomfortably large zoom ratio.
 
 #### back to [contents](#table-of-contents) 
 ---
 
 # Surface
 
+## Design Considerations
 
+With this application's design I wanted to merge the feeling of a fun gamified application with the idea of 
+a dimly lit museum. Essentially I wanted it to be both extroverted and introverted, not too much colour as that would 
+detract from the photography, but it needed enough punch to be noticeable, so I went with a dark tone for the backgrounds,
+a light grey for most of the text and a dark yellow accent colour. Yellow is a creative colour, so I think it meshes well 
+with a photography application.  
+
+## Colour Palette
+ 
+![colour-palette](static/images/mockups/snapathon.png)
+
+## Typography
+
+For the typography I veered a little outside my usual Roboto/Lato comfort zone and used a 
+Google Font called "Anton" for the main page headings. This is a thick and bold and very immediately noticeable font. 
+For the sub-headings I deferred to the old faithfuls of "Roboto" and "Open Sans" for a feeling of clarity and consistency.
+
+![typography](static/images/typography/typography.png)
+
+## Design Mockups
+
+1. [Mobile Mockups](static/images/wireframes/mobile-mockups.pdf)
+2. [Tablet Mockups](static/images/wireframes/tablet-mockups.pdf)
+3. [Desktop Mockups](static/images/wireframes/desktop-mockups.pdf)
 
 #### back to [contents](#table-of-contents) 
 ---
