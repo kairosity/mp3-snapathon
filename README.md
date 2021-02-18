@@ -540,14 +540,14 @@ the photo story and remaining image details. The flow of information is logical 
 
 ## Wireframes 
 
-[My full Figma workspace for this project including wireframes, user flows, mockups, colour palette & typography, can be viewed here.](https://www.figma.com/file/NYPifJrvaiC8OK2aAxNup6/Snapathon?node-id=0%3A1)
+The best way to view all the wireframes, user flows, mockups, colour palette & typography for this application
+is by [visiting my public Figma workspace here.](https://www.figma.com/file/NYPifJrvaiC8OK2aAxNup6/Snapathon?node-id=0%3A1)
 
 __*Alternatively here are the individual wireframes:*__
 
 1. [Mobile Wireframes](static/images/wireframes/mobile-wireframes.pdf)
 2. [Tablet Wireframes](static/images/wireframes/tablet-wireframes.pdf)
 3. [Desktop Wireframes](static/images/wireframes/desktop-wireframes.pdf)
-
 
 If you choose to view them this way, please click download as the GitHub viewer can expand the smaller files to an uncomfortably large zoom ratio.
 
@@ -578,9 +578,16 @@ For the sub-headings I deferred to the old faithfuls of "Roboto" and "Open Sans"
 
 ## Design Mockups
 
+Again, the best way to view these is 
+by [visiting my public Figma workspace here.](https://www.figma.com/file/NYPifJrvaiC8OK2aAxNup6/Snapathon?node-id=0%3A1)
+
+__*Alternatively here are the individual mockups:*__
+
 1. [Mobile Mockups](static/images/wireframes/mobile-mockups.pdf)
 2. [Tablet Mockups](static/images/wireframes/tablet-mockups.pdf)
 3. [Desktop Mockups](static/images/wireframes/desktop-mockups.pdf)
+
+Again, please remember to click download as the GitHub viewer can expand the smaller files to an uncomfortably large zoom ratio.
 
 #### back to [contents](#table-of-contents) 
 ---
