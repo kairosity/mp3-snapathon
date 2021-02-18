@@ -30,6 +30,8 @@ Users register accounts and then they enter one competition a week on a particul
         - [*Feedback*](#feedback)
         - [*Flash Messages*](#flash-messages)
         - [*Form Validation Messages*](#form-validation-messages)
+        - [*Deletion Confirmation Modals*](#deletion-confirmation-modals)
+        - [*Small Specific Messages*](#small-specific-messages)
         - [*State Changes*](#state-changes)
         - [*404 Error Pages*](#404-error-pages)
       - [*Information Architecture*](#information-architecture)
@@ -50,8 +52,11 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
 - [2. Features](#features)
-    - [Landing Page](#1-landing-page)
-        - [*Landing Page Design*](#landing-page-design)
+    - [1. Home/Landing Page](#1-home-landing-page)
+        - [*Page Purpose*](#page-purpose-1)
+        - [*Features*](#features)
+            - [*Guest User*](#guest-user-1)
+            - [*Logged In User*](#logged-in-user-1)
     - [Information Modal](#2-information-modal)
     - [Adding a task to the list](#3-adding-a-task-to-the-list)
          - [*Task Addition Special Features*](#task-addition-special-features)
@@ -396,16 +401,24 @@ user's account without being logged in (via url).
 The flash messages cover all manner of user interaction with the application and are written in a clear and concise manner in a tone and using language that is consistent
 throughout. 
 
-#### Form validation messages
+#### Form Validation Messages
 Alongside the Flash messages, the Materialize library has some great in built form validation messages that are delivered to the user to tell them what is expected of them 
 when filling out the various forms on the site. This catches smaller formatting issues withou relying on flash message or page reloads. All validations are expanded on in greater
 depth in the testing.md doc. 
+
+#### Deletion Confirmation Modals 
+If a user chooses to delete their account, or an image they have entered into competition, they are prompted to first confirm
+this action in a delete confirmation modal that appears. This is expected conventional behaviour and is important to ensure a user doesn't accidentally delete elements.
+
+#### Small Specific Messages 
+On the "Browse" page, when a user hovers over one of the images, they will see an overlay that displays some of the photo details, and a message
+telling the user that if they would like to see more, to click on the overlay. This might have seemed obvious as the whole overlay is a link, and has a cursor
+state change denoting that, but I feel it's important to guarantee that the user is aware that they can click in to each image for more details. 
 
 #### State changes
 All buttons, links and interactions have visible state changes to ensure the user knows their actions are working.
 
 #### 404 error pages 
-
 There are also specific error pages covering all manner of errors the user might encounter. The pages all have a clear message as to why an error was thrown, and 
 a link to bring the user back to safety.
 
@@ -594,11 +607,79 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 
 # Features
 
-## Browse Images
+## 1. Home / Landing Page
+### Page Purpose
+I have already expanded on the importance of the landing page as a first impression of the application and a window to what it does. Suffice it to say
+its purpose is to pique a user's interest, to concisely explain the application and to direct the user as to what they should do next to engage.
+### Features
+#### Guest user 
+- Displays the application title and taglines to introduce the concept.
+- Includes login & register buttons in the first section. The former for the ease of use of returning users, the latter as a swift call to action for 
+motivated and enthusiastic guest users.
+- Displays a content hinting link to encourage users to scroll down to learn more. 
+- Second section is a blunt introduction to the application using icons, four words and a colourful image.
+- Third section features a timeline that details the temporal nature of the application and what happens when.
+- Fourth section expands on the competitive aspect and details how a user might gain points.
+- That is followed by a collapsible containing all the competition rules.
+- Which is followed by another call to action for guest users to "Register to get started today!"
+- A contact form which is detailed further below.
 
+#### Logged in user
+- The login & register buttons are not present for logged in users, instead they see a tiny leaf icon and a 
+personal message saying ```"welcome username"```
+- The rest of the page is the same except that the "Register to get started today!" link cta is also not present.
+
+## 2. Winners
+### Page Purpose
+### Features
+
+## 3. Browse
+
+### Page Purpose
+To enable all users to search through all images entered into all past and present competitions. To further allow users to filter their
+search. 
+
+### Features
+- On page load all competition images are displayed and they are paginated for faster loading times.
+- A user can filter the search by:
+    - Keyword search
+    - Competition theme search
+    - Awards search 
+- These filters can be used in isolation or in combination with each other, to further refine the selection of images.
 - When a user searches for a particular sub-section of images, the returning page scrolls down automatically to feature the images rather than the search box. 
+- The keywords / selections / checkboxes the user has searched for remain visible once the results have loaded for 
+increased UX.
+- The search fields can be cleared easily using the reset button.
+- When a user hovers over any of the images displayed a link overlay appears with the title of the photograph, 
+and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
+- The overlay also displays an instruction to the user to click if they want to view the image detail page.
 
-## Register as a new user. 
+## 4. Contact
+
+### Page Purpose
+To allow users to contact the application owners via email. The form is located at the bottom of the homepage.
+Direct lines of communication are important with an application such as this where creative work is displayed. 
+If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch.
+
+### Features
+ 
+- The contact form was built as a regular HTML form and the emails are sent to a Snapathon gmail account using flask-mail. 
+- The flask-wtf-csrf extension is integrated into the form to protect against csrf attacks, by using a hidden input field holding the csrf token. 
+- The form fields are limited to an email field and the message field as the application does not necessitate a long complicated email form. 
+- The user receives a confirmation flash message as detailed above confirming that the email was sent successfully.
+- The Materialize form validations handle any errors in email or message format and both fields are required.
+
+
+## 5. Login Page
+
+When users login, I chose to ask for their email address rather than their username, because although both are unique, I think that users more easily forget their 
+usernames, as they usually differ from application to application. 
+
+Users enter their login email address and their password and are immediately brought to their profile page, where a welcome message is displayed referencing their username.
+
+User passwords are hashed and then read by the Werkzeug 
+
+## 6. Register Page
 
 When users sign up they must enter a username that must be unique, an email that must also be unique and a password. 
 
@@ -611,16 +692,8 @@ Other validations/features present on the registration form are:
 - Both password fields must be identical and the passwords are case sensitive. 
 - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed as to the reason. 
 
-## Login Functionality & Features 
 
-When users login, I chose to ask for their email address rather than their username, because although both are unique, I think that users more easily forget their 
-usernames, as they usually differ from application to application. 
-
-Users enter their login email address and their password and are immediately brought to their profile page, where a welcome message is displayed referencing their username.
-
-User passwords are hashed and then read by the Werkzeug 
-
-### Profile Pages
+## 7. Profile Pages
 
 A user's profile page is their calling card on the application.
 Anyone whether logged in or not, can visit a user's profile page, either by entering the url: /profile/username 
@@ -635,9 +708,7 @@ awards.
 
 
 
-
-
-## Compete/Vote Page
+## 8. Compete
 
 The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
 week it is. 
@@ -651,24 +722,18 @@ On Saturday the compete html page is replaced by the Vote HTML page, and "Compet
 Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. Both pages' functionality ceases and the "Vote" page shows a message linking to 
 the "Recent Winners" page where the winning images are displayed. It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
 
-### Vote
+## 9. Vote
 
 To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images until after the week of that competition. Otherwise 
 you would know what photo was winning and vote for it to win points. The code is structured so that the voted for photos are only shown when their specific competition has
-ended. 
+ended.  
 
-## Contact Form 
 
-At the very bottom of the homepage is a contact form for getting in touch with the application creator. Direct lines of communication are important with an application such as this where
-creative work is displayed. If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch. 
 
-The contact form was built as a regular HTML form and the emails are sent to a Snapathon gmail account using flask-mail. I've also integrated the flask-wtf-csrf extension to protect against csrf attacks, by using a hidden
-input field holding the csrf token. 
 
-Users arrive at the Contact Form either by finding it organically by scrolling down the homepage, or by clicking on the link that is always in the navbar. 
+## Invisible / Functional Features 
 
-The form fields are limited to an email: field and the message field as the kind of application this is, does not necessitate a long complicated email form. 
-
+### 1. Calculations of weekly competition winners
 
 # Future Functionality
 
