@@ -6,6 +6,7 @@ Flask==1.1.2
 Flask-Mail==0.9.1
 flask-paginate==0.8.1
 Flask-PyMongo==2.3.0
+flask-talisman==0.7.0
 Flask-Testing==0.8.1
 Flask-WTF==0.14.3
 itsdangerous==1.1.0

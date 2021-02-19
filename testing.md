@@ -422,3 +422,19 @@ dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can 
 
 ### WTF-forms & CSRF Protection
 
+### Flask-Talisman 
+
+#### Issue 1
+
+I installed flask-talisman to protect against a variety of common security threats and when I reloaded my application, it had changed it somewhat:
+
+<p align="left">
+  <img src="static/images/issues/talisman1.png">
+</p>
+<p align="left">
+  <img src="static/images/issues/talisman2.png">
+</p>
+
+#### Fix 1
+
+I gleaned that Talisman was not allowing the Materialize framework to do its job. 

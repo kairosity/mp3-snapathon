@@ -53,7 +53,7 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Colour Palette*](#colour-palette)
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
-- [2. Features](#features)
+- [2. Front-End Features](#frontend-features)
     - [1. Home](#1-home)
     - [2. Winners](#2-winners)
     - [3. Browse](#3-browse)
@@ -62,14 +62,20 @@ Users register accounts and then they enter one competition a week on a particul
     - [6. Register](#6-register)
     - [7. Profile](#7-profile)
     - [8. Compete](#8-compete)
-    - [Information Modal](#2-information-modal)
-    - [Adding a task to the list](#3-adding-a-task-to-the-list)
-         - [*Task Addition Special Features*](#task-addition-special-features)
-    - [Editing a task](#4-editing-a-task)
-         - [*Task Edit Special Features*](#task-edit-special-features)
-     - [Deleting a task](#5-deleting-a-task)
-         - [*Task Deletion Special Features*](#task-deletion-special-features)
-    - [Checking a task as Complete](#6-checking-a-task-as-complete)
+    - [9. Vote](#9-vote)
+    - [10. Photo Details](#10-photo-details)
+    - [11. Logout](#11-logout)
+- [3. Back-End Features](#backend-features)
+    - [12. Awards Calculations](#12-awards-calculations)
+    - [13. New Competition](#13-new-competition)
+    - [14. Edit Profile](#14-edit-profile)
+    - [15. Edit Photo](#15-edit-photo)
+    - [16. Delete Account](#16-delete-account)
+    - [17. Delete Photo](#17-delete-photo)
+- [4. Security Features](#security-features)
+    - [18. Awards Calculations](#11-awards-calculations)
+    - [19. New Competition](#12-new-competition)
+   
 
 # UX
 ## User Stories
@@ -612,7 +618,7 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 #### back to [contents](#table-of-contents) 
 ---
 
-# Features
+# Front-End Features
 
 ## 1. Home
 The landing page is the first impression of the application and a window to what it does. Suffice it to say
@@ -861,16 +867,134 @@ If they came from "browse" it will read "back to browse!"
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
 </details>
 
-## 11. Awards Calculations
+## 11. Logout
+
+This allows a user to logout of the application.
 <details>
 <summary><b>click for features</b></summary>
 
-The awards function that populates the winners page is run on a Sunday evening automatically using AP Scheduler. It does a number of things not 
-evidenced on the page. 
-- From the pool of votes acquired from all the images, it calculates what points are needed to win a 1st, 2nd & 3rd prize. 
-- The votes gained must be greater than 0 to win an award. 
-- If a user has 
+### Features 
+
+- The logout function is run from a link on the navbar.
+- It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
 </details>
+
+# Back-End Features
+
+## 12. Awards Calculations
+
+The awards are calculated automatically on Sunday evening at 22:00 UTC, the results of these calculations are then displayed on the "Winners" page.
+
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- The awards calculation is automatically run at 22:00PM on Sunday evening using a python library called AP Scheduler.
+- From the pool of votes acquired from all the images, the awards function calculates the range of votes and from that range it determines
+ what number of votes a photo needs to win a 1st, 2nd & 3rd prize. 
+- The votes gained must be greater than 0 to win an award.
+- If two or more images receive the same number of votes, then those photos all win that level of award.
+- If a user has entered a photo into competition but then between Saturday & Sunday at 22:00PM fails to vote for a photo, that user's entry is 
+made null and void, and this functionality is built into the awards calculations. Their photo's votes (points) are reduced to 0 and thus the entry 
+is invalidated.
+- 
+</details>
+
+## 13. New Competition
+
+Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- This is run automatically using APScheduler at 0:00 Monday morning.
+- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+</details>
+
+## 14. Edit Profile
+
+When logged in and viewing their own profiles, users can click the "edit profile" button to alter their
+details. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- When they click the button, users are brought to the update profile page and they can alter their:
+    - Username
+    - Email address
+    - Profile Pic
+    - Password
+- Their current username, profile pic & email values are pre-populated in the form. 
+- The form has the following Materialize validations present and will not POST if these are not met:
+    - usernames must be between 5 and 25 characters long.
+    - email addresses must adhere to the regex formula of: ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$```
+    - passwords must be between 6 and 25 characters long.
+- Other validations include:
+    - If a user wishes to change their password, they must enter their current password once and their new password twice. Missing any of those 
+    fields will result in an unsuccessful update and a flash message to the user detailing why. 
+    - 
+application will check to see if 
+</details>
+
+## 15. Edit Photo
+
+Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- This is run automatically using APScheduler at 0:00 Monday morning.
+- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+</details>
+
+## 16. Delete Account
+
+Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- This is run automatically using APScheduler at 0:00 Monday morning.
+- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+</details>
+
+## 17. Delete Photo
+
+Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- This is run automatically using APScheduler at 0:00 Monday morning.
+- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+</details>
+
+
+# Security
+Intro to security features and their importance because of db etc... 
+
+## 1. CSRF Protection from flask-wtf
+
+## 2. secure_filename from werkzeug.utils 
+
+## 3. Approved File Extensions
+
+## 4. 
+GET renders the edit-profile template form if the username passed
+      to the request matches the user currently logged in.
+
+
+#### back to [contents](#table-of-contents) 
+
+
+
+# Application Logic
 
 # Future Functionality
 
@@ -895,6 +1019,8 @@ for greater flexibility and improved UX when it comes to using mobile to upload 
     I used Emmanuel's answer to this question to write user specific messages on my user's profile pages, when they login. 
 
 ## Unsplash Images Used in the Application
+
+<details><summary><b>click to expand</b></summary>
 
 - <span>Photo by <a href="https://unsplash.com/@cdx2?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">C D-X</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@ronaldcuyan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ronald Cuyan</a> on <a href="https://unsplash.com/s/photos/yellow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
@@ -978,6 +1104,7 @@ for greater flexibility and improved UX when it comes to using mobile to upload 
 - <span>Photo by <a href="https://unsplash.com/@sadswim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">ian dooley</a> on <a href="https://unsplash.com/images/travel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@hectorfalcon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hector Falcon</a> on <a href="https://unsplash.com/t/experimental?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@portuguesegravity?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Portuguese Gravity</a> on <a href="https://unsplash.com/s/photos/pool-sun?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+</details>
 
 # Deployment
 
@@ -1162,6 +1289,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 - ## [Simple Flask Pagination](https://medium.com/better-programming/simple-flask-pagination-example-4190b12c2e2e)
 
+- ## [Flask Security Considerations - from the docs](https://flask.palletsprojects.com/en/1.1.x/security/)
+    
+    Very useful summary of all the security considerations to take into account when deploying a flask app.
+
 ## Flask Paginate
 
 - ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
@@ -1193,6 +1324,12 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Python Flask e-mail form example](https://stackoverflow.com/questions/43728500/python-flask-e-mail-form-example)
 
     Another useful Stack Overflow question re: Flask-Mail.
+
+## Flask-Talisman
+
+- ## [Flask-Talisman Extension](https://github.com/GoogleCloudPlatform/flask-talisman)
+
+    Brilliant extension to quickly protect against some common security threats.
 
 ## MongoDB 
 

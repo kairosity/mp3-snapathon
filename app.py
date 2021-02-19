@@ -16,12 +16,40 @@ from datetime import datetime, date, time
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from flask_talisman import Talisman
 if os.path.exists("env.py"):
     import env
 
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
+
+csp = {
+    'default-src': [
+        '\'self\'',
+        'cdnjs.cloudflare.com',
+        'fonts.googleapis.com'
+    ],
+    'style-src': [
+        "\'self\'",
+        'cdnjs.cloudflare.com',
+        'https://fonts.googleapis.com'
+    ],
+    'font-src':[
+        "\'self\'",
+        "https://fonts.gstatic.com"
+    ],
+    'img-src': '*',
+    'script-src': [
+        'cdnjs.cloudflare.com',
+        'code.jquery.com',
+        '\'self\'',
+    ]
+}
+
+talisman = Talisman(app, content_security_policy=csp)
+
+
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
