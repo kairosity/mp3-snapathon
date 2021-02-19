@@ -5,7 +5,9 @@
 Snapathon seeks to gamify photography. It is a community-led photo-sharing application that enhances the user experience with friendly competition.
 Users register accounts and then they enter one competition a week on a particular theme. Every user that enters also has one vote to cast for a photo (not theirs).
 
+
 # Table of Contents
+
 
 - [1. UX](#ux)
   * [User Stories](#user-stories)
@@ -354,6 +356,8 @@ rules in a consistent and clear manner.
 The added element of a schedule for user engagement also posed a challenge to ensure users always know where they are in that time frame. I dealt with this by 
 adding specific and precise timing messages when a user logs into their profile. Those messages are as follows: 
 
+#### Timing Messages
+
 1. __Monday - Friday AND the user has not uploaded an entry into the competition:__
 *You still have to enter an image into this week's competition. You have x days, y hours and z minutes left to enter.*
 2. __Monday - Friday AND the user has already entered an image:__
@@ -628,7 +632,8 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 
 # Features
 
-## 1. Home
+<details><summary><b>1. Home</b></summary>
+
 ### Page Purpose
 I have already expanded on the importance of the landing page as a first impression of the application and a window to what it does. Suffice it to say
 its purpose is to pique a user's interest, to concisely explain the application and to direct the user as to what they should do next to engage.
@@ -649,12 +654,26 @@ motivated and enthusiastic guest users.
 - The login & register buttons are not present for logged in users, instead they see a tiny leaf icon and a 
 personal message saying ```"welcome username"```
 - The rest of the page is the same except that the "Register to get started today!" link cta is also not present.
+</details>
 
-## 2. Winners
+
+<details><summary><b>2. Winners</b></summary>
+
 ### Page Purpose
-### Features
+To display the results of each weekly competition. The winners page is updated on a Sunday evening at 22:00 UTC.
 
-## 3. Browse
+### Features
+- Tells the viewer what competition results they are viewing, the start date and theme.
+- Displays the photos that have won 1st, 2nd & 3rd place awards. 
+- If multiple photos receive the same number of points, ties are also possible.
+- Displays the usernames of award-winners which are linked to their profile page.
+- Displays the title of the award-winning photos which are linked to that specific photo detail page.
+- Displays the number of votes received by a particular photo.
+- Displays an award badge on winning images. 
+- If there were no photos entered or no photos got any points, then a message to that effect is displayed. 
+</details>
+
+<details><summary><b>3. Browse</b></summary>
 
 ### Page Purpose
 To enable all users to search through all images entered into all past and present competitions. To further allow users to filter their
@@ -674,11 +693,11 @@ increased UX.
 - When a user hovers over any of the images displayed a link overlay appears with the title of the photograph, 
 and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
 - The overlay also displays an instruction to the user to click if they want to view the image detail page.
-
-## 4. Contact
+</details>
+<details><summary><b>4. Contact</b></summary>
 
 ### Page Purpose
-To allow users to contact the application owners via email. The form is located at the bottom of the homepage.
+To allow users to contact the application owners via email. The form is located at the bottom of the homepage and is fully functional.
 Direct lines of communication are important with an application such as this where creative work is displayed. 
 If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch.
 
@@ -689,9 +708,10 @@ If users have any questions about functionality or copyright issues or questions
 - The form fields are limited to an email field and the message field as the application does not necessitate a long complicated email form. 
 - The user receives a confirmation flash message as detailed above confirming that the email was sent successfully.
 - The Materialize form validations handle any errors in email or message format and both fields are required.
+</details>
 
+<details><summary><b>5. Login</b></summary>
 
-## 5. Login
 ### Page Purpose
 To log a registered user into their account.
 
@@ -701,67 +721,166 @@ I think that users more easily forget their usernames, as they usually differ fr
 - When users enter their details correctly, they are immediately brought to their profile page, where a welcome message is displayed referencing their username.
 - If they enter their details incorrectly they see a flash message detailing the issue.
 - User passwords are hashed and then read by Werkzeug. 
+</details>
 
-## 6. Register
-When users sign up they must enter a username that must be unique, an email that must also be unique and a password. 
+<details><summary><b>6. Register</b></summary>
 
-They are asked to confirm their password, which is an important feature to prevent a user from accidentally misspelling a password and then not being able to sign in.
-
-Other validations/features present on the registration form are:
-- The username must be at least 5 characters long. 
-- The email address must be of valid email format. (Regex based so not foolproof)
-- The password must be at least 6 characters long.
-- Both password fields must be identical and the passwords are case sensitive. 
-- If the username or email address has already been registered, the registration will not go ahead and the user will be instructed as to the reason. 
-
-
-## 7. Profile
 ### Page Purpose
-This page is a user's calling card for the application, it displays their photos and the photos they've voted for, as well as their points total.
+To register a new user, allowing them to engage with the application. 
+
+### Features
+- A form prompting the user to enter a username that must be unique, an email that must also be unique and a password.
+- They are asked to enter their password twice, which is an important feature to prevent a user from accidentally misspelling a password and then not being able to sign in.
+
+- The registration form has the following Materialize validations:
+    - The username must be at least 5 characters long. 
+    - The email address must be of valid email format. (Regex based so not foolproof)
+    - The password must be at least 6 characters long.
+- And the following backend validations: 
+    - Both password fields must be identical and the passwords are case sensitive. 
+    - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed via a 
+    flash message as to the reason. 
+
+- When the user registers successfully, a session is created and they are redirected to their new profile page.
+</details>
+
+<details><summary><b>7. Profile</b></summary>
+### Page Purpose
+This page is a user's calling card and base in the application, it displays their photos and the photos they've voted for, as well as their points total.
+Their profile is open for all to view.
 
 
 ### Features
 #### Guest user
 - Can visit user profile pages and browse the various categories of photos.
-- Guest users would access user profiles by clicking on links on the winners page or on the browse page. 
-- Or, if savvy 
+- Guest users can access user profiles by clicking on links on the winners page or on the browse page. 
+- Or, if savvy they can type a username into the url in the format /profile/\<username>
+- Guest users can also see the user's profile pic and how many points they have.
 #### Logged in user
 
-1. When a user is logged in, they see "My Profile" in the navigation.
+1. When a user is logged in, they see "Profile" in the navigation.
 2. Their profile page displays their username, their total competition points, their entries into competition, other user's photos that they've voted for and any of their images that have won
 awards. 
-3. When logged in and on their own profile page, a user will see an "edit profile" button which they can use to change any of their profile details including their password.
+3. When logged in and on their *own* profile page, a user will see an "edit profile" button which they can use to change any of their profile details including their password.
+4. In "edit profile" they also have access to a "Delete account" option.
+5. To the right of their profile header the user sees a message specific to their current time and action status in the competition. These have already been detailed 
+above in [timing messages](#timing-messages). 
+</details>
+<details><summary><b>8. Compete</b></summary>
 
-
-
-## 8. Compete
-
-The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
-week it is. 
-
-The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Saturday morning at 0:00.
-
-The "Compete" Page allows users to upload one image per competition, it asks for various image detail information.
-
-On Saturday the compete html page is replaced by the Vote HTML page, and "Compete" becomes "Vote" in the navbar. 
-
-Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. Both pages' functionality ceases and the "Vote" page shows a message linking to 
-the "Recent Winners" page where the winning images are displayed. It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
-
-## 9. Vote
-
-To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images until after the week of that competition. Otherwise 
-you would know what photo was winning and vote for it to win points. The code is structured so that the voted for photos are only shown when their specific competition has
-ended.  
-
-
-## 10. Photo Details
 ### Page Purpose
+This is where users upload their images to compete in the competition each week. This page is only accessible to registered users 
+who are logged in.
+
+### Features
+
+- The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
+week it is.
+- The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Saturday morning at 0:00.
+- The intro to this page specifies the current competition theme and then gives the user some guidelines as to the types of images
+that are expected for this theme.
+- The page features a Materialize collapsible block that includes:
+- Information about the competition rules.
+- Upload guidelines for users.
+- The form to enter an image. 
+- The entry form asks for a number of details regarding the photo to be entered into competition:
+    - Photo title (required)
+    - Photo Story - a background story to the image. (required)
+    - The image file itself. (required)
+    - The camera used. (required)
+    - The lens used.
+    - The aperture.
+    - The shutter speed.
+    - The ISO
+- Users must also check that they've read the legal disclaimer outlining the various important copyright regulations and 
+other rules to abide by.
+- When successfully posted, the photo is saved to the database and entered into the competition.
+- On Friday/Saturday at midnight the compete page disappears and "Vote" takes its place.
+
+### Security Features 
+- When the form is submitted if the file extension is not one of the approved image extensions (.svg, .jpg, .jpeg, .gif, .png)
+a 415 error will be thrown. 
+- If the image is larger than 549KB a 413 error will be thrown. 
+- The image filename is secured using werkzeug.utils. 
+- The form itself contains a hidden csrf token from flask_wtf to protect against cross site request forgery attacks.
+</details>
+
+<details><summary><b>9. Vote</b></summary>
+
+### Page Purpose
+This is where users who have entered the competition can vote for their favourite image.
+
+### Features
+- This page is only visible to logged in users.
+- This page comes online automatically on Saturday morning at 0:00 and replaces the compete page.
+- It displays all the images entered into the week's competition.
+- Every image has a large "Vote" button allowing users to vote for their favourite photo.
+- "Vote" also replaces "Compete" in the navbar. 
+- Users may only vote if they have entered the competition.
+- Users who have not entered will not see the vote buttons.
+- Users may only vote once, if they attempt to vote more than once a message will be flashed telling them
+that they cannot. 
+- If a user tries to vote for their own image, a message will flash telling them they cannot.
+- Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. The vote page ceases it shows a message 
+linking to the "Winners" page where the winning images are displayed. 
+- It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
+- When a user votes successfully within the rules of the competition, a "vote" is added to that particular photograph and then used to 
+determine winners.
+
+### Adjunct Features
+- To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images 
+until after the week of that competition. Otherwise you would know what photo was winning and vote for it to win points. 
+The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
+ended.  
+</details>
+
+
+<details>
+<summary><b>10. Photo Details</b></summary><br>
+
+### Page Purpose
+To allow users to view a larger version of the photo entries and to display all attendant details such as the photo title, 
+the user who created it, the photo story and all the technical details. This page is accessed by clicking on any of the photo
+thumbnails displayed on the site: in browse, on a user's profile page, in vote or winners.
+
 ### Features
 #### Guest user
-#### Logged in user
+- All the details relating to a particular image are displayed here including:
+    - Title 
+    - Photo's creator 
+    - Photo's points 
+    - The photograph itself
+    - The story or background connected to the image.
+    - Any awards the image has won in competition.
+    - The camera used. 
+    - The lens used.
+    - The aperture used.
+    - The shutter speed.
+    - The ISO.
+- If the non-required details were not entered by the user, those fields will not be visible.
+- Clicking on the username connected with the photo will bring a user to that user's profile page.
+- The photo's points are only displayed when the photo is no longer being considered for competition, so as to not 
+skew the competition results.
+- This page is accessible to all users.
+- To improve UX this page delivers specific "back" messages which are conditional on how the user arrived
+at the page. For instance if the user arrived from the "winners" page, the back link will read "back to winners!"
+If they came from "browse" it will read "back to browse!"
 
-### 1. Calculations of weekly competition winners
+#### Logged in user
+- If the user viewing the image is also the creator of that image then they will see two buttons underneath the photo. 
+- "Edit Photo Details" allows the user to edit any of the photo details other than the image itself. 
+- "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
+</details>
+
+<details>
+<summary><b>11. Calculations of weekly competition winners</b></summary>
+
+The awards function that populates the winners page is run on a Sunday evening automatically using AP Scheduler. It does a number of things not 
+evidenced on the page. 
+- From the pool of votes acquired from all the images, it calculates what points are needed to win a 1st, 2nd & 3rd prize. 
+- The votes gained must be greater than 0 to win an award. 
+- If a user has 
+</details>
 
 # Future Functionality
 

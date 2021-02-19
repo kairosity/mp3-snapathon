@@ -1156,7 +1156,7 @@ def upload_comp_entry(request_obj,
     '''
     * This uploads a new entry into the competition and saves the necessary
       photo and user data to the db. It also ensures the uploaded photo is
-      safe, that it has one of the approced file extensions and it renames
+      safe, that it has one of the approved file extensions and it renames
       it so that its filename is unique.
 
     \n Args:

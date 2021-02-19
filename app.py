@@ -175,8 +175,8 @@ def winners():
     '''
 
     competition_category = \
-        "There was no competition last week, \
-            and therefore there are no recent winners."
+        "There are currently no winners to display.\
+            Check back here soon!"
 
     images_to_display, last_mon = \
         get_last_monday_and_images(mongo, get_images_by_week_and_year)
