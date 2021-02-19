@@ -52,11 +52,32 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
 - [2. Features](#features)
-    - [1. Home/Landing Page](#1-home-landing-page)
+    - [1. Home](#1-home)
         - [*Page Purpose*](#page-purpose-1)
-        - [*Features*](#features)
+        - [*Features*](#features-1)
             - [*Guest User*](#guest-user-1)
             - [*Logged In User*](#logged-in-user-1)
+    - [2. Winners](#2-winners)
+        - [*Page Purpose*](#page-purpose-2)
+        - [*Features*](#features-2)
+    - [3. Browse](#3-browse)
+        - [*Page Purpose*](#page-purpose-3)
+        - [*Features*](#features-3)
+    - [4. Contact](#4-contact)
+        - [*Page Purpose*](#page-purpose-4)
+        - [*Features*](#features-4)
+    - [5. Login](#5-login)
+        - [*Page Purpose*](#page-purpose-5)
+        - [*Features*](#features-5)
+    - [6. Register](#6-register)
+        - [*Page Purpose*](#page-purpose-6)
+        - [*Features*](#features-6)
+    - [7. Profile](#7-profile)
+        - [*Page Purpose*](#page-purpose-7)
+        - [*Features*](#features-7)
+    - [8. Compete](#8-compete)
+        - [*Page Purpose*](#page-purpose-8)
+        - [*Features*](#features-8)
     - [Information Modal](#2-information-modal)
     - [Adding a task to the list](#3-adding-a-task-to-the-list)
          - [*Task Addition Special Features*](#task-addition-special-features)
@@ -607,7 +628,7 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 
 # Features
 
-## 1. Home / Landing Page
+## 1. Home
 ### Page Purpose
 I have already expanded on the importance of the landing page as a first impression of the application and a window to what it does. Suffice it to say
 its purpose is to pique a user's interest, to concisely explain the application and to direct the user as to what they should do next to engage.
@@ -670,17 +691,18 @@ If users have any questions about functionality or copyright issues or questions
 - The Materialize form validations handle any errors in email or message format and both fields are required.
 
 
-## 5. Login Page
+## 5. Login
+### Page Purpose
+To log a registered user into their account.
 
-When users login, I chose to ask for their email address rather than their username, because although both are unique, I think that users more easily forget their 
-usernames, as they usually differ from application to application. 
+### Features
+- When users login, they are prompted for their email and password. I chose to ask for their email over their username, because although both are unique, 
+I think that users more easily forget their usernames, as they usually differ from application to application. 
+- When users enter their details correctly, they are immediately brought to their profile page, where a welcome message is displayed referencing their username.
+- If they enter their details incorrectly they see a flash message detailing the issue.
+- User passwords are hashed and then read by Werkzeug. 
 
-Users enter their login email address and their password and are immediately brought to their profile page, where a welcome message is displayed referencing their username.
-
-User passwords are hashed and then read by the Werkzeug 
-
-## 6. Register Page
-
+## 6. Register
 When users sign up they must enter a username that must be unique, an email that must also be unique and a password. 
 
 They are asked to confirm their password, which is an important feature to prevent a user from accidentally misspelling a password and then not being able to sign in.
@@ -693,13 +715,17 @@ Other validations/features present on the registration form are:
 - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed as to the reason. 
 
 
-## 7. Profile Pages
+## 7. Profile
+### Page Purpose
+This page is a user's calling card for the application, it displays their photos and the photos they've voted for, as well as their points total.
 
-A user's profile page is their calling card on the application.
-Anyone whether logged in or not, can visit a user's profile page, either by entering the url: /profile/username 
-Or by clicking in via an image on the site.
 
-Features:
+### Features
+#### Guest user
+- Can visit user profile pages and browse the various categories of photos.
+- Guest users would access user profiles by clicking on links on the winners page or on the browse page. 
+- Or, if savvy 
+#### Logged in user
 
 1. When a user is logged in, they see "My Profile" in the navigation.
 2. Their profile page displays their username, their total competition points, their entries into competition, other user's photos that they've voted for and any of their images that have won
@@ -729,9 +755,11 @@ you would know what photo was winning and vote for it to win points. The code is
 ended.  
 
 
-
-
-## Invisible / Functional Features 
+## 10. Photo Details
+### Page Purpose
+### Features
+#### Guest user
+#### Logged in user
 
 ### 1. Calculations of weekly competition winners
 
