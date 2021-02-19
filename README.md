@@ -55,31 +55,13 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Design Mockups*](#design-mockups)
 - [2. Features](#features)
     - [1. Home](#1-home)
-        - [*Page Purpose*](#page-purpose-1)
-        - [*Features*](#features-1)
-            - [*Guest User*](#guest-user-1)
-            - [*Logged In User*](#logged-in-user-1)
     - [2. Winners](#2-winners)
-        - [*Page Purpose*](#page-purpose-2)
-        - [*Features*](#features-2)
     - [3. Browse](#3-browse)
-        - [*Page Purpose*](#page-purpose-3)
-        - [*Features*](#features-3)
     - [4. Contact](#4-contact)
-        - [*Page Purpose*](#page-purpose-4)
-        - [*Features*](#features-4)
     - [5. Login](#5-login)
-        - [*Page Purpose*](#page-purpose-5)
-        - [*Features*](#features-5)
     - [6. Register](#6-register)
-        - [*Page Purpose*](#page-purpose-6)
-        - [*Features*](#features-6)
     - [7. Profile](#7-profile)
-        - [*Page Purpose*](#page-purpose-7)
-        - [*Features*](#features-7)
     - [8. Compete](#8-compete)
-        - [*Page Purpose*](#page-purpose-8)
-        - [*Features*](#features-8)
     - [Information Modal](#2-information-modal)
     - [Adding a task to the list](#3-adding-a-task-to-the-list)
          - [*Task Addition Special Features*](#task-addition-special-features)
@@ -632,11 +614,12 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 
 # Features
 
-<details><summary><b>1. Home</b></summary>
-
-### Page Purpose
-I have already expanded on the importance of the landing page as a first impression of the application and a window to what it does. Suffice it to say
+## 1. Home
+The landing page is the first impression of the application and a window to what it does. Suffice it to say
 its purpose is to pique a user's interest, to concisely explain the application and to direct the user as to what they should do next to engage.
+<details><summary><b>click for features</b></summary>
+
+
 ### Features
 #### Guest user 
 - Displays the application title and taglines to introduce the concept.
@@ -657,10 +640,10 @@ personal message saying ```"welcome username"```
 </details>
 
 
-<details><summary><b>2. Winners</b></summary>
+## 2. Winners
+The winners page displays the results of each weekly competition. It is updated on a Sunday evening at 22:00 UTC.
 
-### Page Purpose
-To display the results of each weekly competition. The winners page is updated on a Sunday evening at 22:00 UTC.
+<details><summary><b>click for features</b></summary>
 
 ### Features
 - Tells the viewer what competition results they are viewing, the start date and theme.
@@ -673,11 +656,13 @@ To display the results of each weekly competition. The winners page is updated o
 - If there were no photos entered or no photos got any points, then a message to that effect is displayed. 
 </details>
 
-<details><summary><b>3. Browse</b></summary>
+## 3. Browse
 
-### Page Purpose
-To enable all users to search through all images entered into all past and present competitions. To further allow users to filter their
-search. 
+The Browse page enables all users to search through all images entered into all past and present competitions. 
+It also allows users to filter their search. 
+
+<details><summary><b>click for features</b></summary>
+
 
 ### Features
 - On page load all competition images are displayed and they are paginated for faster loading times.
@@ -694,12 +679,13 @@ increased UX.
 and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
 - The overlay also displays an instruction to the user to click if they want to view the image detail page.
 </details>
-<details><summary><b>4. Contact</b></summary>
 
-### Page Purpose
-To allow users to contact the application owners via email. The form is located at the bottom of the homepage and is fully functional.
+## 4. Contact
+The contact section allows users to contact the application owners via email. The form is located at the bottom of the homepage and is fully functional.
 Direct lines of communication are important with an application such as this where creative work is displayed. 
 If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch.
+
+<details><summary><b>click for features</b></summary>
 
 ### Features
  
@@ -710,10 +696,11 @@ If users have any questions about functionality or copyright issues or questions
 - The Materialize form validations handle any errors in email or message format and both fields are required.
 </details>
 
-<details><summary><b>5. Login</b></summary>
+## 5. Login
+The login page allows registered users to access their account and engage with the application.
+<details><summary><b>click for features</b></summary>
 
-### Page Purpose
-To log a registered user into their account.
+
 
 ### Features
 - When users login, they are prompted for their email and password. I chose to ask for their email over their username, because although both are unique, 
@@ -723,10 +710,9 @@ I think that users more easily forget their usernames, as they usually differ fr
 - User passwords are hashed and then read by Werkzeug. 
 </details>
 
-<details><summary><b>6. Register</b></summary>
-
-### Page Purpose
-To register a new user, allowing them to engage with the application. 
+## 6. Register 
+The register page allows new users to register with SNAPATHON, allowing them to engage with the application. 
+<details><summary><b>click for features</b></summary>
 
 ### Features
 - A form prompting the user to enter a username that must be unique, an email that must also be unique and a password.
@@ -744,11 +730,11 @@ To register a new user, allowing them to engage with the application.
 - When the user registers successfully, a session is created and they are redirected to their new profile page.
 </details>
 
-<details><summary><b>7. Profile</b></summary>
-### Page Purpose
-This page is a user's calling card and base in the application, it displays their photos and the photos they've voted for, as well as their points total.
+## 7. Profile
+The profile page is a user's calling card and homebase in the application, it displays their photos and the photos they've voted for, as well as their points total.
 Their profile is open for all to view.
-
+<details>
+<summary><b>click for features</b></summary>
 
 ### Features
 #### Guest user
@@ -766,11 +752,12 @@ awards.
 5. To the right of their profile header the user sees a message specific to their current time and action status in the competition. These have already been detailed 
 above in [timing messages](#timing-messages). 
 </details>
-<details><summary><b>8. Compete</b></summary>
 
-### Page Purpose
-This is where users upload their images to compete in the competition each week. This page is only accessible to registered users 
+## 8. Compete
+The compete page is where users upload their images to compete in the competition each week. This page is only accessible to registered users 
 who are logged in.
+<details>
+<summary><b>click for features</b></summary>
 
 ### Features
 
@@ -805,10 +792,12 @@ a 415 error will be thrown.
 - The form itself contains a hidden csrf token from flask_wtf to protect against cross site request forgery attacks.
 </details>
 
-<details><summary><b>9. Vote</b></summary>
+## 9. Vote
 
-### Page Purpose
-This is where users who have entered the competition can vote for their favourite image.
+The vote page is where users who have entered the competition can vote for their favourite image.
+
+<details>
+<summary><b>click for features</b></summary>
 
 ### Features
 - This page is only visible to logged in users.
@@ -835,13 +824,13 @@ ended.
 </details>
 
 
-<details>
-<summary><b>10. Photo Details</b></summary><br>
-
-### Page Purpose
-To allow users to view a larger version of the photo entries and to display all attendant details such as the photo title, 
+## 10. Photo Details
+This page allows users to view a larger version of the photo entries and to display all attendant details such as the photo title, 
 the user who created it, the photo story and all the technical details. This page is accessed by clicking on any of the photo
 thumbnails displayed on the site: in browse, on a user's profile page, in vote or winners.
+
+<details>
+<summary><b>click for features</b></summary>
 
 ### Features
 #### Guest user
@@ -872,8 +861,9 @@ If they came from "browse" it will read "back to browse!"
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
 </details>
 
+## 11. Awards Calculations
 <details>
-<summary><b>11. Calculations of weekly competition winners</b></summary>
+<summary><b>click for features</b></summary>
 
 The awards function that populates the winners page is run on a Sunday evening automatically using AP Scheduler. It does a number of things not 
 evidenced on the page. 
