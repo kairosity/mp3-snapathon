@@ -35,7 +35,7 @@ csp = {
         'cdnjs.cloudflare.com',
         'https://fonts.googleapis.com'
     ],
-    'font-src':[
+    'font-src': [
         "\'self\'",
         "https://fonts.gstatic.com"
     ],
@@ -48,7 +48,6 @@ csp = {
 }
 
 talisman = Talisman(app, content_security_policy=csp)
-
 
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -90,7 +89,7 @@ def awards():
       came 1st, 2nd or 3rd.
     '''
     #This needs to change to # datetime.now().strftime("%V%G")
-    this_week_and_year_formatted = "062021"
+    this_week_and_year_formatted = datetime.now().strftime("%V%G")
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
@@ -467,6 +466,23 @@ def compete():
     '''
     date_time = datetime.now()
 
+    current_user = mongo.db.users.find_one(
+                {"username": session["user"]})
+
+    this_weeks_entries = list(mongo.db.photos.find(
+                        {"week_and_year": date_time.strftime("%V%G")}))
+
+    # If the user has voted
+    if current_user["votes_to_use"] is 0:
+        for img in current_user["photos_voted_for"]:
+            for entry in this_weeks_entries:
+                if img == entry["_id"]:
+                    photo_user_voted_for = img
+    else:
+        photo_user_voted_for = None
+     
+
+
     current_week_number = int(datetime.now().strftime("%V"))
     this_weeks_comp_category = get_competition(
                                current_week_number)["category"]
@@ -475,8 +491,6 @@ def compete():
 
     if request.method == 'POST':
 
-        current_user = mongo.db.users.find_one(
-                {"username": session["user"]})
 
         if current_user["can_enter"] is True:
 
@@ -501,7 +515,9 @@ def compete():
                            datetime=date_time,
                            category=this_weeks_comp_category,
                            instructions=this_weeks_comp_instructions,
-                           pagination=pagination)
+                           pagination=pagination,
+                           user=current_user,
+                           photo_user_voted_for=photo_user_voted_for)
 
 @app.route("/file/<filename>")
 def file(filename):

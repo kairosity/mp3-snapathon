@@ -1104,6 +1104,14 @@ for greater flexibility and improved UX when it comes to using mobile to upload 
 - <span>Photo by <a href="https://unsplash.com/@sadswim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">ian dooley</a> on <a href="https://unsplash.com/images/travel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@hectorfalcon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hector Falcon</a> on <a href="https://unsplash.com/t/experimental?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@portuguesegravity?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Portuguese Gravity</a> on <a href="https://unsplash.com/s/photos/pool-sun?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@greystorm?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ian</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@henrihere?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Henri Pham</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@rahabikhan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Rahabi Khan</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@ms88?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">m</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@karsten116?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Karsten Winegeart</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
+
+
 </details>
 
 # Deployment
@@ -1330,6 +1338,14 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Flask-Talisman Extension](https://github.com/GoogleCloudPlatform/flask-talisman)
 
     Brilliant extension to quickly protect against some common security threats.
+
+- ## [Stack Overflow Question that helped solve...](https://stackoverflow.com/questions/33984908/google-fonts-violates-content-security-policy)
+
+    ... an issue I was having integrating Talisman correctly. 
+
+- ## [Flask-Talisman breaks Flask-Bootstrap](https://stackoverflow.com/questions/54730178/flask-talisman-breaks-flask-bootstrap)
+
+    Helped me integrate Talisman correctly. 
 
 ## MongoDB 
 

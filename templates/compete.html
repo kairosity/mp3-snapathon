@@ -148,11 +148,16 @@
                     <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
 
                     <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is Portraiture</h2>
-
-                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Vote for your favourite entries now! Obviously you cannot vote for your own image. 
+                    {% if user.votes_to_use > 0 %}
+                     <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Vote for your favourite entries now! Obviously you cannot vote for your own image. 
                         If you do not vote by 22:00PM on Sunday evening UTC, your entry's points will be nullified. Winning images & users will be announced Sunday night when voting 
                         closes. 
                     </h5>
+                    {% else %}
+                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Thank you for voting! Winning images & users will be announced Sunday night when voting 
+                        closes. 
+                    </h5>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -162,13 +167,27 @@
        
         {% for photo in this_weeks_entries %}
 
-        <div class="col s12 m4 l3 profile-photos-col">
-            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/>
-        </a>
+        <div class="col s12 m4 l3 profile-photos-col browse-images-container">
+
+        {% if user.votes_to_use > 0 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
+        {% else %}
+
+        <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
+        
+            {% if photo_user_voted_for == photo._id %}
+                    <div class="overlay">
+                        <h4 class="overlay-text overlay-text-title">You voted for this image.</h4>
+                    </div>
+            {% endif %}
+
+        {% endif %}
         <div class="vote-container">
         <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
+            {% if user.votes_to_use > 0 %}
+                <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
+            {% endif %}
         </form>
         </div>
         </div>

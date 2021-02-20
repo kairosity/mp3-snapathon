@@ -437,4 +437,36 @@ I installed flask-talisman to protect against a variety of common security threa
 
 #### Fix 1
 
-I gleaned that Talisman was not allowing the Materialize framework to do its job. 
+I gleaned that Talisman was not allowing the Materialize framework to do its job and it 
+transpired that it was blocking a number of domains from sending data to the site, which of course
+is what it does. To allow in the sources of: Google Fonts, Materialize and jQuery, as well as my own 
+JavaScript files, I had to explicity tell Talisman that those sources were ok. I did so as below with a 
+little help from Stack Overflow (attributed in README.md)
+
+        csp = {
+            'default-src': [
+                '\'self\'',
+                'cdnjs.cloudflare.com',
+                'fonts.googleapis.com'
+            ],
+            'style-src': [
+                "\'self\'",
+                'cdnjs.cloudflare.com',
+                'https://fonts.googleapis.com'
+            ],
+            'font-src': [
+                "\'self\'",
+                "https://fonts.gstatic.com"
+            ],
+            'img-src': '*',
+            'script-src': [
+                'cdnjs.cloudflare.com',
+                'code.jquery.com',
+                '\'self\'',
+            ]
+        }
+
+        talisman = Talisman(app, content_security_policy=csp)
+
+This code adds an extra layer of security as it allows in images from all sources, within the parameters of the 
+security measures I have already set up for images, but it does not allow any other media files. 
