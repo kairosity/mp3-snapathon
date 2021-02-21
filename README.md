@@ -819,9 +819,12 @@ The vote page is where users who have entered the competition can vote for their
 - "Vote" also replaces "Compete" in the navbar. 
 - Users may only vote if they have entered the competition.
 - Users who have not entered will not see the vote buttons.
-- Users may only vote once, if they attempt to vote more than once a message will be flashed telling them
+- Users may only vote once, if they attempt to vote more than once (using url) a message will be flashed telling them
 that they cannot. 
 - If a user tries to vote for their own image, a message will flash telling them they cannot.
+- When a user votes, the vote buttons will disappear and a "You voted for this image" message is displayed over the image they voted for.
+- The images are displayed 50 per page and on each page the order of the images is randomised to try and ensure no image is given an unfair 
+advantage.
 - Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. The vote page ceases it shows a message 
 linking to the "Winners" page where the winning images are displayed. 
 - It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
@@ -833,6 +836,8 @@ determine winners.
 until after the week of that competition. Otherwise you would know what photo was winning and vote for it to win points. 
 The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
 ended.  
+- For the same reason, the photo view page of images currently being voted on, will not display the image's points / votes tally until
+after the awards are distributed. 
 </details>
 
 

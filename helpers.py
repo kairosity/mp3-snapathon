@@ -1051,6 +1051,28 @@ def edit_user_profile(user, username, request, database_var, app):
     return url
 
 def delete_user_account(username, database_var, request):
+    '''
+    * This deletes all traces of a user's account including the user details and all their
+    images, both entries & profile photo.
+
+    \n Args:
+    1. username (str): The username of the account to be deleted.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    3. request (obj): The POST request object send via the form
+       by the user to the server.
+
+    \n Returns:
+    * If successful: first deletes all photos associated with that user
+      from the db.
+    * Then deletes the user from the db.
+    * Then ends the user's session and redirects to the homepage with a flash
+      messaging confirming that the account was deleted.
+    * If unsuccessful, it redirects to the edit profile page with a flash
+      message detailing the reason.
+    * Unless the user is not logged in and trying to delete another user's
+      account, in this case it will throw a 403 error with a message.
+    '''
 
     # This mucks up a bit because the session cookie lingers.
     if session:
@@ -1066,28 +1088,35 @@ def delete_user_account(username, database_var, request):
                 if check_password_hash(user["password"], form_password):
                     if form_password == form_password_confirmation:
 
+                        photos_to_delete = []
+
+                        if user["profile_photo"]:
+                            photos_to_delete.append(user["profile_photo"])
+
                         if len(user["photos"]) > 0:
                             for photo in user["photos"]:
+                                photos_to_delete.append(photo)
 
-                                # Remove the photo obj
-                                database_var.db.photos.delete_one(
+                        for photo in photos_to_delete:
+                            # Remove the photo obj
+                            database_var.db.photos.delete_one(
+                                {"filename": photo})
+
+                            file_to_delete = \
+                                database_var.db.fs.files.find_one(
                                     {"filename": photo})
+                            # Target the Chunks for this files_id
+                            chunks_to_delete = list(
+                                database_var.db.fs.chunks.find(
+                                    {"files_id": file_to_delete["_id"]}))
+                            # Delete the file
+                            database_var.db.fs.files.delete_one(
+                                    file_to_delete)
 
-                                file_to_delete = \
-                                    database_var.db.fs.files.find_one(
-                                        {"filename": photo})
-                                # Target the Chunks for this files_id
-                                chunks_to_delete = list(
-                                    database_var.db.fs.chunks.find(
-                                        {"files_id": file_to_delete["_id"]}))
-                                # Delete the file
-                                database_var.db.fs.files.delete_one(
-                                        file_to_delete)
-
-                                if len(chunks_to_delete) > 0:
-                                    for chunk in chunks_to_delete:
-                                        database_var.db.fs.chunks.delete_one(
-                                            chunk)
+                            if len(chunks_to_delete) > 0:
+                                for chunk in chunks_to_delete:
+                                    database_var.db.fs.chunks.delete_one(
+                                        chunk)
 
                         database_var.db.users.delete_one(
                             {"username": user["username"]})
@@ -1353,6 +1382,5 @@ def vote_for_photo(database_var, photo_to_vote_for):
 
 def shuffle_array(arr):
     random.shuffle(arr)
-    print(arr)
     return arr
 
