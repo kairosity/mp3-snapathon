@@ -431,6 +431,12 @@ state change denoting that, but I feel it's important to guarantee that the user
 #### State changes
 All buttons, links and interactions have visible state changes to ensure the user knows their actions are working.
 
+When a user has voted in the competition, a number of changes occur to cement that action:
+1. The title changes from "VOTE" to "VOTED!" 
+2. The text changes to "Thank you for voting! Winning images & users will be announced Sunday night when voting closes." 
+3. The vote buttons disappear.
+4. There is an overlay on the image voted for - that says "You voted for this image." 
+
 #### 404 error pages 
 There are also specific error pages covering all manner of errors the user might encounter. The pages all have a clear message as to why an error was thrown, and 
 a link to bring the user back to safety.

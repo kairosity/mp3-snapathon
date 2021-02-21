@@ -118,7 +118,41 @@ this to create a filename for each image that is completely unique and identical
 
 - used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
 
+### Issue 3
+I wanted to implement a shuffle function for the vote page so that no one's images are given undue physical priority. For example if one image is always the first 
+listed, and there are 50 images in the competition, which are paginated 10 per page, all images one page 1 are more than likely going to get more votes. 
 
+### Fix 3
+This proved harder than imagined to fix, first I created a shuffle function that took an array and return a random shuffle of that array, which I then passed to the paginate
+function. The problem with this is that it shuffled each time a new page was loaded, so a photo might appear on page 1, but appear again on page 4. So this implementation
+was useless. 
+
+My next thought was to shuffle the images at source, so as they emerge from Mongo DB, that way, they would not be shuffled each time the page is loaded. But that resulted in 
+the exact same issue, just with the shuffle happening at an earlier stage.
+
+I realised that there is a logical inconsistency with merging a random shuffle with pagination that is difficult to overcome. If the shuffle is truly random then we are left with
+the initial problem that once a page is "turned" a photo can be on two pages at once, and some images may not display at all. 
+
+As a compromise, I decided to increase the number of images per page to 50 for the vote and compete pages, and although this might increase the page loading time, at lease the shuffle
+will be consistent and all images will display, I also changed the location of when the shuffle function is called. 
+
+                this_weeks_entries = list(mongo.db.photos.find(
+                        {"week_and_year": date_time.strftime("%V%G")}))
+
+                pagination, photos_paginated = paginated_and_pagination_args(
+                                            this_weeks_entries, 50, "page", "per_page")
+
+                photos_paginated_copy = photos_paginated.copy()
+
+                photos_paginated_shuffled = shuffle_array(photos_paginated_copy)
+
+                return render_template("compete.html",
+                                    this_weeks_entries=photos_paginated_shuffled,
+
+As you can see from the above code, first I paginated the image array and then I shuffled them, this way even if there are more than 50 images and some are unlucky enough to
+be pushed to page 2 or further, at least within those pages the order is randomised on each page load. 
+
+This functionality will do for the first iteration of the application, but there is definitely room for improvement. 
 
 ## base.html template
 

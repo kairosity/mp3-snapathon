@@ -736,7 +736,8 @@ header h1{
 }
 
 /* Browse Images */
-.browse-images-container {
+.browse-images-container,
+.vote-images-container {
   position: relative;
 }
 div.search-card form.search-form{
@@ -1163,6 +1164,16 @@ button.vote-button:hover{
 .vote-container{
     background-color: RGBA(255,255,255,0.3)
 }
+
+.vote-images-container div.vote-overlay {
+  bottom: 0;
+  height: 25%;
+}
+.vote-overlay-text{
+    text-align: center;
+    font-size: 1.3rem;
+}
+
 /* Error Pages */
 .error-link{
     font-family: var(--subheading-2-font);

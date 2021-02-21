@@ -167,7 +167,7 @@
        
         {% for photo in this_weeks_entries %}
 
-        <div class="col s12 m4 l3 profile-photos-col browse-images-container">
+        <div class="col s12 m4 l3 profile-photos-col vote-images-container">
 
         {% if user.votes_to_use > 0 %}
             <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
@@ -176,8 +176,8 @@
         <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
         
             {% if photo_user_voted_for == photo._id %}
-                    <div class="overlay">
-                        <h4 class="overlay-text overlay-text-title">You voted for this image.</h4>
+                    <div class="overlay vote-overlay">
+                        <h4 class="vote-overlay-text overlay-text-username"><i class="fas fa-vote-yea vote-icon-sm"></i> You voted for this image.</h4>
                     </div>
             {% endif %}
 

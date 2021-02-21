@@ -7,6 +7,7 @@ from flask_paginate import Pagination, get_page_args
 import os
 from datetime import datetime
 from datetime import timedelta
+import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
@@ -1349,4 +1350,9 @@ def vote_for_photo(database_var, photo_to_vote_for):
         url = redirect(url_for('compete', username=session['user']))
         return url
 
+
+def shuffle_array(arr):
+    random.shuffle(arr)
+    print(arr)
+    return arr
 

@@ -473,7 +473,7 @@ def compete():
                         {"week_and_year": date_time.strftime("%V%G")}))
 
     # If the user has voted
-    if current_user["votes_to_use"] is 0:
+    if current_user["votes_to_use"] == 0:
         for img in current_user["photos_voted_for"]:
             for entry in this_weeks_entries:
                 if img == entry["_id"]:
@@ -507,11 +507,16 @@ def compete():
     this_weeks_entries = list(mongo.db.photos.find(
                         {"week_and_year": date_time.strftime("%V%G")}))
 
+
     pagination, photos_paginated = paginated_and_pagination_args(
-                                   this_weeks_entries, 10, "page", "per_page")
+                                   this_weeks_entries, 50, "page", "per_page")
+
+    photos_paginated_copy = photos_paginated.copy()
+
+    photos_paginated_shuffled = shuffle_array(photos_paginated_copy)
 
     return render_template("compete.html",
-                           this_weeks_entries=photos_paginated,
+                           this_weeks_entries=photos_paginated_shuffled,
                            datetime=date_time,
                            category=this_weeks_comp_category,
                            instructions=this_weeks_comp_instructions,
