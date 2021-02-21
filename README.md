@@ -53,7 +53,7 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Colour Palette*](#colour-palette)
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
-- [2. Front-End Features](#frontend-features)
+- [2. Front-End Features](#2-frontend-features)
     - [1. Home](#1-home)
     - [2. Winners](#2-winners)
     - [3. Browse](#3-browse)
@@ -65,14 +65,14 @@ Users register accounts and then they enter one competition a week on a particul
     - [9. Vote](#9-vote)
     - [10. Photo Details](#10-photo-details)
     - [11. Logout](#11-logout)
-- [3. Back-End Features](#backend-features)
+- [3. Back-End Features](#3-backend-features)
     - [12. Awards Calculations](#12-awards-calculations)
     - [13. New Competition](#13-new-competition)
     - [14. Edit Profile](#14-edit-profile)
-    - [15. Edit Photo](#15-edit-photo)
+    - [15. Edit Photo Details](#15-edit-photo-details)
     - [16. Delete Account](#16-delete-account)
     - [17. Delete Photo](#17-delete-photo)
-- [4. Security Features](#security-features)
+- [4. Security Features](#4-security-features)
     - [18. Awards Calculations](#11-awards-calculations)
     - [19. New Competition](#12-new-competition)
    
@@ -432,7 +432,7 @@ state change denoting that, but I feel it's important to guarantee that the user
 All buttons, links and interactions have visible state changes to ensure the user knows their actions are working.
 
 When a user has voted in the competition, a number of changes occur to cement that action:
-1. The title changes from "VOTE" to "VOTED!" 
+1. The title changes from "VOTE" to "YOU HAVE VOTED!" 
 2. The text changes to "Thank you for voting! Winning images & users will be announced Sunday night when voting closes." 
 3. The vote buttons disappear.
 4. There is an overlay on the image voted for - that says "You voted for this image." 
@@ -713,7 +713,6 @@ The login page allows registered users to access their account and engage with t
 <details><summary><b>click for features</b></summary>
 
 
-
 ### Features
 - When users login, they are prompted for their email and password. I chose to ask for their email over their username, because although both are unique, 
 I think that users more easily forget their usernames, as they usually differ from application to application. 
@@ -836,15 +835,15 @@ determine winners.
 until after the week of that competition. Otherwise you would know what photo was winning and vote for it to win points. 
 The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
 ended.  
-- For the same reason, the photo view page of images currently being voted on, will not display the image's points / votes tally until
+- For the same reason, the photo details page of photos currently being voted on, will not display the image's points/votes tally until
 after the awards are distributed. 
 </details>
 
 
 ## 10. Photo Details
-This page allows users to view a larger version of the photo entries and to display all attendant details such as the photo title, 
+This page allows users to view a larger version of the photos and to display all attendant details such as the photo title, 
 the user who created it, the photo story and all the technical details. This page is accessed by clicking on any of the photo
-thumbnails displayed on the site: in browse, on a user's profile page, in vote or winners.
+thumbnails displayed on the site: in browse, on a user's profile page, in vote, or winners.
 
 <details>
 <summary><b>click for features</b></summary>
@@ -909,7 +908,7 @@ The awards are calculated automatically on Sunday evening at 22:00 UTC, the resu
 - If a user has entered a photo into competition but then between Saturday & Sunday at 22:00PM fails to vote for a photo, that user's entry is 
 made null and void, and this functionality is built into the awards calculations. Their photo's votes (points) are reduced to 0 and thus the entry 
 is invalidated.
-- 
+
 </details>
 
 ## 13. New Competition
@@ -944,46 +943,69 @@ details.
     - email addresses must adhere to the regex formula of: ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$```
     - passwords must be between 6 and 25 characters long.
 - Other validations include:
+    - If a user tries to update their username or email to a username or email already saved in the database, they will
+      be redirected with a message detailing the issue.
     - If a user wishes to change their password, they must enter their current password once and their new password twice. Missing any of those 
     fields will result in an unsuccessful update and a flash message to the user detailing why. 
-    - 
-application will check to see if 
+
 </details>
 
-## 15. Edit Photo
+## 15. Edit Photo Details
 
-Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+A logged in user viewing the photo details page of one of their own images, will see an "edit photo details" button. 
+This will allow them to edit any of the details associated with the image, it will not allow them to change the image itself.
 <details>
 <summary><b>click for features</b></summary>
 
 ### Features 
 
-- This is run automatically using APScheduler at 0:00 Monday morning.
-- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+- The user can edit:
+    - Photo title
+    - Photo Story
+    - The camera used.
+    - The lens used.
+    - The aperture.
+    - The shutter speed.
+    - The ISO
+- They will also have to agree to the terms and conditions again before posting the edit form.
+- They can choose to click a "back" button that will cancel any edits made and bring them back to 
+  the photo details page.
 </details>
 
 ## 16. Delete Account
 
-Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+If a user is logged in and they click on the "Edit Profile" button on their profile page, they have the option
+user the "update profile" form, to completely delete their account. 
 <details>
 <summary><b>click for features</b></summary>
 
 ### Features 
 
-- This is run automatically using APScheduler at 0:00 Monday morning.
-- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+- When the user clicks the "delete account" button a deletion confirmation modal appears.
+- This asks them if they definitely want to delete their account, their points and all
+uploaded photos permanently.
+- To confirm deletion they must enter their password correctly twice and then click delete again.
+- They also have the option of clicking the "cancel" button, which will bring them back to the "update profile" page.
 </details>
 
 ## 17. Delete Photo
 
-Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+This allows a user to delete any image they have entered into the competition. When a user clicks on the photo details page 
+for one of their own images. Below the details, they will see a "delete photograph" button. 
 <details>
 <summary><b>click for features</b></summary>
 
 ### Features 
 
-- This is run automatically using APScheduler at 0:00 Monday morning.
-- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+- Click the "delete photograph" button deletes the photograph from the database and all traces of it from the application front-end. 
+- When the user clicks the button, they are prompted by a deletion confirmation modal and asked to confirm deletion. 
+- If the image has won an award and the user deletes the image, the points that user gained from that image are also deducted from the 
+user's points total. 
+- The delete confirmation modal informs the user of the above and specifies the award won by the image as well as the number of points that will 
+be deducted. 
+- The user can choose to click "No, cancel" to cancel the deletion request, or "Yes, Delete it", to confirm. 
+
+
 </details>
 
 
@@ -1014,6 +1036,11 @@ GET renders the edit-profile template form if the username passed
 Uploaded images must be kept below 500KB, currently the onus is on the user to resize their images to fit that specification. For future versions of the app
 I would like to allow the users to upload any size image they want, and the application will resize the image before it is saved to the database. This will allow
 for greater flexibility and improved UX when it comes to using mobile to upload images, as resizing on mobile is still not straightforward.
+
+## Offensive Images Filter 
+
+If this application grows, it will be necessary to implement some automatic system whereby offensive images are screened using image recognition software, and
+rejected before being saved to the database. 
 
 # Attribution
 

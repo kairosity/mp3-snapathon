@@ -145,7 +145,12 @@
             <section class="comp-intro center-align">
             <div class="row">
                 <div class="col s8 offset-s2">
-                    <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
+                    {% if user.votes_to_use > 0 %}
+                        <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
+                    {% else %}
+                         <h1 class="grey-text text-lighten-4 page-heading">YOU HAVE VOTED!</h1>
+                    {% endif %}
+
 
                     <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is Portraiture</h2>
                     {% if user.votes_to_use > 0 %}

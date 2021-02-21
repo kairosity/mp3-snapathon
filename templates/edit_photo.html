@@ -11,15 +11,15 @@
     <h1 class="page-heading col s10 offset-s1 center-align">Edit Photo</h1>
 
     <form class="col s10 offset-s1 m8 offset-m2 l6 offset-l3" method="post" action="{{ url_for('edit_photo', filename=photo.filename) }}">
+                <div class="row center-align">
+                    <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
+                </div>
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                     <div class="input-field col s12">
                     <input id="title" name="title" type="text" value="{{photo.photo_title}}" class="validate" required>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <label for="title">Title</label>
                     </div> 
-                    <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
-                </div>
-                <div class="row">
                     <div class="input-field col s12">
                     <textarea id="story" name="story" class="materialize-textarea">{{ photo.photo_story }}</textarea>
                     <label for="story">Story</label>
@@ -52,9 +52,13 @@
                 
                 <div class="row">
                     <div class="col s12">
-                    <p class="grey-text">I guarantee that this photograph is my own work and I have the right to share it. I further guarantee that it 
-                        contains no explicit imagery, or violence, or anything offensive. (worded better) I further promise that this 
-                        photograph has not been heavily edited other than simple tweaks to contrast and exposure. <br>
+                    <p class="grey-text">I confirm that this photograph is my own original creation and I have the right to
+                                share and distribute it. I certify that this photograph does not violate the rights of any third party or
+                                any copyright. I understand that I am prohibited from entering sexual imagery, violent imagery or
+                                any images that might be deemed offensive. I also confirm that this photo has not been heavily edited with the
+                                only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree 
+                                to grant SNAPATHON the free of charge right to use and distribute this photograph in any manner and using any media, including
+                                and without limitation, the right to distribute, publish, adapt, display and copy the image.<br>
                         <label> <input type="checkbox" class="filled-in checkbox-yellow" required />
                     <span>I have read and agree to these terms and conditions</span>
                 </label></p>
