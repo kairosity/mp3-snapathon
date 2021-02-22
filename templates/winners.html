@@ -16,7 +16,7 @@
         {% endif %}
         {% for img in first_place %}
             {% for user in users %}
-            {% if img.created_by == user.username %}
+            {% if img.created_by == user.username and user.profile_photo %}
                 <div class="col s12 center-align">
                     <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
                 </div>
@@ -37,7 +37,7 @@
 
 <div class="row">
     <a href="{{ url_for('get_photo', filename=img.filename) }}">
-        <div class="award-overlay-container  col s12 m8 offset-m2 l6 offset-l3">
+        <div class="award-overlay-container  col s12 m8 offset-m2 l6 offset-l3 center-align">
 
             <img class="award-photo " src="{{ url_for('file', filename=img.filename) }}" alt="{{img.photo_title}}">
 

@@ -1,6 +1,5 @@
 $(document).ready(function(){
     
-    
     $('.sidenav').sidenav();
     $('.tabs').tabs();
     $('.collapsible').collapsible();
@@ -37,5 +36,36 @@ $(document).ready(function(){
     //    })
     // });
 
+     $(function(){
+       $("a").each(function(){
+               if ($(this).attr("href") == window.location.pathname){
+                       $(this).parent().addClass("active");
+               }
+       });
+    });
 
+ 
 });
+
+document.addEventListener('DOMContentLoaded', function(event) {
+ 
+    /**
+     * This function checks to see if an image on the winners page is horizontal or vertical
+     * and if horizontal it adds some styles to format it correctly.
+     */
+    
+    function verticalOrHorizontalAwardImage(){
+        let photos = document.querySelectorAll('.award-photo')
+        photos.forEach(photo => {
+            if (photo.width > photo.height){
+                photo.classList.add('award-photo-horizontal')
+                let awardBadge = photo.nextElementSibling.children[0]
+                awardBadge.classList.add('award-horizontal')
+            }
+        })
+    }
+
+    verticalOrHorizontalAwardImage()
+
+
+})

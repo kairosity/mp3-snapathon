@@ -448,10 +448,14 @@ section.first_place{
 }
 img.award-photo {
   display: block;
-  width: 100% !important;
-  height: 250px;
+  max-width: 100% !important;
+  max-height: 500px;
   object-fit: cover;
+  margin: 0 auto;
   margin-bottom: 2rem;
+}
+img.award-photo-horizontal{
+    width: 100% !important;
 }
 .award-overlay{
   position: absolute;
@@ -466,11 +470,14 @@ i.award{
     font-size: 3rem;
     position: absolute;
     top: 0;
-    left: 6%;
+    left: 34%;
     text-align: center;
     padding: 2rem 0.5rem;
     background-color: white;
-
+}
+i.award-horizontal,
+i.thumbnail-award{
+    left: 6%;
 }
 i.award-1{
     color:#FFD700;
@@ -1268,7 +1275,8 @@ i.content-hinting{
 }
 /* Recent Winners */
 img.award-photo {
-  height: 300px;
+  max-height: 600px;
+  max-width: 100%;
 }
 /* Profile Page */
 .profile-page-header{
@@ -1459,7 +1467,8 @@ section.third_place{
     width: 80%;
 }
 img.award-photo {
-  height: 340px;
+  max-height: 600px;
+  max-width: 100%;
 }
 /* Profile Page */
 ul.profile-tabs li.profile-tab > a{
@@ -1514,7 +1523,9 @@ section.third_place{
     width: 70%;
 }
 img.award-photo {
-  height: 400px;
+  max-height: 600px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 /* Profile Page */
 ul.profile-tabs li.profile-tab > a{
@@ -1530,5 +1541,16 @@ h5.user-points-badge{
     position: absolute;
     top: -17%;
     right: 22%;
+}
+}
+
+@media screen and (min-width: 1400px) {
+
+i.award{
+    left: 34%;
+}
+i.award-horizontal,
+i.thumbnail-award{
+    left: 7%;
 }
 }

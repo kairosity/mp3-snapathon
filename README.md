@@ -641,10 +641,24 @@ its purpose is to pique a user's interest, to concisely explain the application 
 - Includes login & register buttons in the first section. The former for the ease of use of returning users, the latter as a swift call to action for 
 motivated and enthusiastic guest users.
 - Displays a content hinting link to encourage users to scroll down to learn more. 
+
+<p align="center">
+    <img src="static/images/features/homepage.png">
+</p>
+
 - Second section is a blunt introduction to the application using icons, four words and a colourful image.
+
+<p align="center">
+    <img src="static/images/features/homepage2.png">
+</p>
+
 - Third section features a timeline that details the temporal nature of the application and what happens when.
+<p align="center">
+    <img src="static/images/features/homepage3.png">
+</p>
+
 - Fourth section expands on the competitive aspect and details how a user might gain points.
-- That is followed by a collapsible containing all the competition rules.
+- Which is followed by a collapsible containing all the competition rules.
 - Which is followed by another call to action for guest users to "Register to get started today!"
 - A contact form which is detailed further below.
 

@@ -37,7 +37,8 @@ csp = {
     ],
     'font-src': [
         "\'self\'",
-        "https://fonts.gstatic.com"
+        "https://fonts.gstatic.com",
+        'cdnjs.cloudflare.com'
     ],
     'img-src': '*',
     'script-src': [

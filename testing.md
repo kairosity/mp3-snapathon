@@ -27,7 +27,7 @@ worked correctly, but then page 2 would just return all the images again, unfilt
 This took a lot of re-shuffling and with help from [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute. 
 
 
-## recent_winners()
+## winners()
 
 ### Issue 1
 When testing this function and page over the course of a week, all was working well until suddenly I was getting a 504 Gateway Time-out error message. 
@@ -47,6 +47,32 @@ I used a number of print statements in the function and discovered that the issu
 
 I had mistakenly used range(0,5) thinking that would *include* 5 (or weekday() == saturday), but range is not inclusive of the outer number, so it was ignoring
 Saturday, and thankfully I was testing it on a Saturday, otherwise it probably would have gone unnoticed. Changing range to ```range(0,6)``` solved the issue. 
+
+### Issue 2
+As some photos are vertical and some are horizontal, the placement of the awards badge on the overlay was too far away and missing the image completely on vertical
+images. I needed a way to set the left: position of the award depending on whether the image was vertical or horizontal. Another related issue was the width 
+attribute of the winning images. For landscape images I needed the width to be the full 100%, but for vertical images I needed it to be maximum 100%, as the 
+max-height was set at 600px and by forcing the image to take up 100% of the space, much of the image would be hidden. 
+
+### Fix 2
+I used the following function to conditionally set extra classes for the horizontal images, this was vertical images were the default and I could change the max-width: 100%
+to width:100%, and I set the particular left: position for the horizontal awards as well. 
+
+                function verticalOrHorizontalAwardImage(){
+                    let photos = document.querySelectorAll('.award-photo')
+                    photos.forEach(photo => {
+                        if (photo.width > photo.height){
+                            photo.classList.add('award-photo-horizontal')
+                            let awardBadge = photo.nextElementSibling.children[0]
+                            awardBadge.classList.add('award-horizontal')
+                        }
+                    })
+                }
+
+### Issue 3
+The above worked, except sometimes the styles didn't seem to apply, and only on multiple page reloads would they work.
+
+### Fix 3
 
 ## get_photo() 
 

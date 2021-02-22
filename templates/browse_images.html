@@ -82,11 +82,11 @@
                         <h4 class="overlay-text overlay-text-title">{{photo.photo_title|capitalize}}</h4>
                         <h5 class="overlay-text overlay-text-username">by {{photo.created_by|capitalize}}</h5>
                         {% if photo.awards == 1 %}
-                            <i class="fas fa-award award award-1"></i>
+                            <i class="fas fa-award award award-1 thumbnail-award"></i>
                         {% elif photo.awards == 2 %}
-                          <i class="fas fa-award award award-2"></i>
+                          <i class="fas fa-award award award-2 thumbnail-award"></i>
                         {% elif photo.awards == 3 %}
-                          <i class="fas fa-award award award-3"></i>
+                          <i class="fas fa-award award award-3 thumbnail-award"></i>
                         {% endif %}
                         <p class="overlay-text overlay-text-instruc">Click to see image details</p>
                         </a>
