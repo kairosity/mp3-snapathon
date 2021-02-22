@@ -307,7 +307,7 @@ def register():
     '''
 
     if request.method == "POST":
-        url = register_new_user(mongo, request)
+        url = register_new_user(mongo, request, app)
         return url
     return render_template("register.html")
 
@@ -467,6 +467,8 @@ def compete():
     '''
     date_time = datetime.now()
 
+    photo_user_voted_for = None
+
     current_user = mongo.db.users.find_one(
                 {"username": session["user"]})
 
@@ -482,8 +484,6 @@ def compete():
     else:
         photo_user_voted_for = None
      
-
-
     current_week_number = int(datetime.now().strftime("%V"))
     this_weeks_comp_category = get_competition(
                                current_week_number)["category"]

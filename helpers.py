@@ -607,7 +607,44 @@ def filter_user_search(
     return filtered_photos
 
 
-def register_new_user(database_var, request):
+def save_photo(request, database_var, name_of_image_from_form, app):
+    '''
+    * This saves an image from a form to the mongo DB.
+
+    \n Args:
+    1. request (obj): The POST request object send via the form
+       by the user to the server.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+    3. name_of_image_from_form (str): The string assigned to form's file
+       upload "name" field.
+    4. app (obj): The WSGI application as an object of the Flask class.
+    '''
+    photo = request.files[name_of_image_from_form]
+
+    file_extension = os.path.splitext(photo.filename)[1]
+
+    if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+        abort(415)
+
+    # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
+    #     abort(413)
+
+    photo.filename = secure_filename(photo.filename)
+
+    file_id = database_var.save_file(photo.filename, photo)
+
+    # This makes the filename unique
+    new_filename = str(file_id) + file_extension
+
+    # Update the gridFS "Filename" attribute to be equal to the file_id
+    database_var.db.fs.files.update_one(
+                                {"_id": file_id},
+                                {'$set': {"filename": new_filename}})
+    return file_id, new_filename
+
+
+def register_new_user(database_var, request, app):
     '''
     * This registers a new user and saves their data to the db.
 
@@ -649,10 +686,27 @@ def register_new_user(database_var, request):
         url = redirect(url_for('register'))
         return url
 
+    file_id, new_filename = save_photo(
+            request, database_var, "profile-pic", app)
+
+    new_entry = {
+        "file_id": file_id,
+        "filename": new_filename,
+        "type": "profile-pic",
+        "user": request.form.get("username").lower()
+    }
+
+    database_var.db.photos.insert_one(new_entry)
+
+    photo_to_add_to_user = database_var.db.photos.find_one(
+                            {"file_id": file_id})
+
+    photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+
     register_user = {
         "username": request.form.get("username").lower(),
         "email": request.form.get("email").lower(),
-        "profile_photo": None,
+        "profile_photo": photo_filename_to_add_to_user,
         "password": generate_password_hash(request.form.get("password")),
         "user_points": 0,
         "photos": [],
@@ -830,43 +884,6 @@ def time_strings_for_template(
     next_comp_starts = get_time_func(time_til_next_comp_starts)
 
     return comp_closes, voting_closes, next_comp_starts
-
-
-def save_photo(request, database_var, name_of_image_from_form, app):
-    '''
-    * This saves an image from a form to the mongo DB.
-
-    \n Args:
-    1. request (obj): The POST request object send via the form
-       by the user to the server.
-    2. database_var (obj): A variable holding the PyMongo Object that
-       accesses the MongoDB Server.
-    3. name_of_image_from_form (str): The string assigned to form's file
-       upload "name" field.
-    4. app (obj): The WSGI application as an object of the Flask class.
-    '''
-    photo = request.files[name_of_image_from_form]
-
-    file_extension = os.path.splitext(photo.filename)[1]
-
-    if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-        abort(415)
-
-    # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
-    #     abort(413)
-
-    photo.filename = secure_filename(photo.filename)
-
-    file_id = database_var.save_file(photo.filename, photo)
-
-    # This makes the filename unique
-    new_filename = str(file_id) + file_extension
-
-    # Update the gridFS "Filename" attribute to be equal to the file_id
-    database_var.db.fs.files.update_one(
-                                {"_id": file_id},
-                                {'$set': {"filename": new_filename}})
-    return file_id, new_filename
 
 
 def edit_user_profile(user, username, request, database_var, app):
