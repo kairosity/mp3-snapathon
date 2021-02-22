@@ -139,7 +139,7 @@ These are the scheduled functions:
 '''
 scheduler = BackgroundScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='mon',
-                  hour=14, minute=09, second=0,
+                  hour=14, minute=9, second=0,
                   start_date='2021-01-24 00:00:00')
 scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
                   hour=00, minute=00, second=0,
