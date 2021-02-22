@@ -483,7 +483,7 @@ def compete():
                     photo_user_voted_for = img
     else:
         photo_user_voted_for = None
-     
+
     current_week_number = int(datetime.now().strftime("%V"))
     this_weeks_comp_category = get_competition(
                                current_week_number)["category"]
@@ -495,11 +495,15 @@ def compete():
 
         if current_user["can_enter"] is True:
 
-            upload_comp_entry(request,
+            url = upload_comp_entry(request,
                               mongo,
                               app,
                               this_weeks_comp_category,
                               current_user)
+
+            flash("Entry Received!")
+            return redirect(url_for('compete'))
+
  
         else:
             flash("I'm sorry, but you've already entered \

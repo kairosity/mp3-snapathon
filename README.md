@@ -742,17 +742,19 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 <details><summary><b>click for features</b></summary>
 
 ### Features
-- A form prompting the user to enter a username that must be unique, an email that must also be unique and a password.
+- A form prompting the user to enter a username that must be unique, an email that must also be unique, a profile photo (not required) and a password.
 - They are asked to enter their password twice, which is an important feature to prevent a user from accidentally misspelling a password and then not being able to sign in.
 
 - The registration form has the following Materialize validations:
     - The username must be at least 5 characters long. 
     - The email address must be of valid email format. (Regex based so not foolproof)
+    - The profile photo is not required.
     - The password must be at least 6 characters long.
 - And the following backend validations: 
     - Both password fields must be identical and the passwords are case sensitive. 
     - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed via a 
     flash message as to the reason. 
+    - The profile photo must conform to all the competition entry [photo validation requirements](#security-features). 
 
 - When the user registers successfully, a session is created and they are redirected to their new profile page.
 </details>
@@ -1004,6 +1006,7 @@ user the "update profile" form, to completely delete their account.
 - This asks them if they definitely want to delete their account, their points and all
 uploaded photos permanently.
 - To confirm deletion they must enter their password correctly twice and then click delete again.
+- When confirmed, this will delete their user data, their profile photo and all their uploaded competition entries.
 - They also have the option of clicking the "cancel" button, which will bring them back to the "update profile" page.
 </details>
 

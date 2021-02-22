@@ -1262,8 +1262,6 @@ def upload_comp_entry(request_obj,
                                           '$inc': {"votes_to_use": 1},
                                           '$set': {"can_enter": False}})
 
-        flash("Entry Received!")
-
 
 def edit_this_photo(request, database_var, photo_filename, photo_obj):
     '''

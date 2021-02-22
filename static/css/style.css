@@ -1150,6 +1150,9 @@ div.competition-rules{
     font-weight: 300;
     letter-spacing: 1px;
 }
+.entered-image{
+    max-width: 500px;
+}
 /* Vote Page */
 
 
