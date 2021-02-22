@@ -72,10 +72,13 @@ Users register accounts and then they enter one competition a week on a particul
     - [15. Edit Photo Details](#15-edit-photo-details)
     - [16. Delete Account](#16-delete-account)
     - [17. Delete Photo](#17-delete-photo)
-- [4. Security Features](#4-security-features)
-    - [18. Awards Calculations](#11-awards-calculations)
-    - [19. New Competition](#12-new-competition)
-   
+- [4. Security](#4-security)
+    - [1. CSRF Protection](#1-csrf-protection)
+    - [2. Securing the upload filename](#2-securing-the-upload-filenames)
+    - [3. Approved File Extensions](#3-approved-file-extensions)
+    - [4. Uploaded file size](#4-uploaded-file-size)
+    - [5. Validating file contents](#5-validating-file-contents)
+    - [6. Securing the upload filename](#6-securing-the-upload-filenames)
 
 # UX
 ## User Stories
@@ -675,7 +678,6 @@ It also allows users to filter their search.
 
 <details><summary><b>click for features</b></summary>
 
-
 ### Features
 - On page load all competition images are displayed and they are paginated for faster loading times.
 - A user can filter the search by:
@@ -889,6 +891,9 @@ This allows a user to logout of the application.
 - It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
 </details>
 
+#### back to [contents](#table-of-contents) 
+---
+
 # Back-End Features
 
 ## 12. Awards Calculations
@@ -997,7 +1002,7 @@ for one of their own images. Below the details, they will see a "delete photogra
 
 ### Features 
 
-- Click the "delete photograph" button deletes the photograph from the database and all traces of it from the application front-end. 
+- Clicking the "delete photograph" button deletes the photograph from the database and all traces of it from the application front-end. 
 - When the user clicks the button, they are prompted by a deletion confirmation modal and asked to confirm deletion. 
 - If the image has won an award and the user deletes the image, the points that user gained from that image are also deducted from the 
 user's points total. 
@@ -1005,22 +1010,47 @@ user's points total.
 be deducted. 
 - The user can choose to click "No, cancel" to cancel the deletion request, or "Yes, Delete it", to confirm. 
 
-
 </details>
 
+#### back to [contents](#table-of-contents) 
+---
 
 # Security
-Intro to security features and their importance because of db etc... 
+The following security features were integrated into this application:
 
-## 1. CSRF Protection from flask-wtf
+## 1. CSRF Protection
+To protect against cross site request forgery I used the Flask-WTF module's CSRF protection
+by adding it globally and by adding a hidden input containing the crsf token in all forms.
 
-## 2. secure_filename from werkzeug.utils 
+This protection is particularly important for this application, as it does rely on cookie sessions and many of the 
+CRUD requests do not require passwords.
+
+
+## 2. Securing the upload filenames  
+
+To stop attackers using the upload function to insert system requests into the server, and /or mess with 
+configuration files, I've integrated ```secure_filename``` from werkzeug.utils *before* the uploaded files are 
+saved to the database. This function reduces any dodgy filenames to flat safe ones.
 
 ## 3. Approved File Extensions
 
-## 4. 
+I added an array of approved filename extensions as an added layer of security, and one that also ensures the 
+files uploaded can be displayed as images. I added ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']```
+to my configuration variables and if any other extension is attempted to be uploaded, the application throws a 415 error.
+
+## 4. Uploaded file size 
+
+The application only allows files under 540KBs to be uploaded, this has the dual purpose of ensuring faster page load times, and ensuring that 
+users with malicious intent cannot upload large malicious programmes. 
+
+## 5. Validating file contents
+
+As a final and very important check on the file uploaded, 
+
 GET renders the edit-profile template form if the username passed
       to the request matches the user currently logged in.
+
+## 6. 
 
 
 #### back to [contents](#table-of-contents) 
