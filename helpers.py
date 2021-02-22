@@ -686,27 +686,33 @@ def register_new_user(database_var, request, app):
         url = redirect(url_for('register'))
         return url
 
-    file_id, new_filename = save_photo(
-            request, database_var, "profile-pic", app)
+    print(request.files['profile-pic'])
 
-    new_entry = {
-        "file_id": file_id,
-        "filename": new_filename,
-        "type": "profile-pic",
-        "user": request.form.get("username").lower()
-    }
+    photo_filename_to_add_to_user = None
 
-    database_var.db.photos.insert_one(new_entry)
+    if request.files['profile-pic']:
+        file_id, new_filename = save_photo(
+                request, database_var, "profile-pic", app)
 
-    photo_to_add_to_user = database_var.db.photos.find_one(
-                            {"file_id": file_id})
+        new_entry = {
+            "file_id": file_id,
+            "filename": new_filename,
+            "type": "profile-pic",
+            "user": request.form.get("username").lower()
+        }
 
-    photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+        database_var.db.photos.insert_one(new_entry)
+
+        photo_to_add_to_user = database_var.db.photos.find_one(
+                                {"file_id": file_id})
+
+        photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
 
     register_user = {
         "username": request.form.get("username").lower(),
         "email": request.form.get("email").lower(),
-        "profile_photo": photo_filename_to_add_to_user,
+        "profile_photo": photo_filename_to_add_to_user
+        if photo_filename_to_add_to_user else None,
         "password": generate_password_hash(request.form.get("password")),
         "user_points": 0,
         "photos": [],
