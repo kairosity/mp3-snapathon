@@ -1111,6 +1111,19 @@ for greater flexibility and improved UX when it comes to using mobile to upload 
 If this application grows, it will be necessary to implement some automatic system whereby offensive images are screened using image recognition software, and
 rejected before being saved to the database. 
 
+# Improvements / Bugs Remaining
+
+- The pagination links work perfectly, except that the 'active' class stays highlighted on page 1 even when the user has navigated to other pages. I have attempted to 
+solve this issue using JavaScript, but any code that I write is immediately over-written by the flask-paginate extension. Given that the bug doesn't break anything, and 
+that the pagination works perfectly, I have decided to leave it as it is for the time-being, until the next iteration of the application.
+
+<details><summary><b>click to see a screen recording of the issue</b></summary>
+    <p align="center">
+    <video src="static/images/issues/pagination-links-issue.mov" controls>
+    </p>
+</details>
+
+
 # Attribution
 
 - [Adding class to li after page is loaded](https://stackoverflow.com/questions/40506710/adding-class-to-li-after-page-is-loaded/40506822#40506822)

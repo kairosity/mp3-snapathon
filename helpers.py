@@ -565,7 +565,8 @@ def paginated_and_pagination_args(
                                  per_page=PER_PAGE,
                                  total=total,
                                  page_parameter=page_param,
-                                 per_page_parameter=per_page_param)
+                                 per_page_parameter=per_page_param,
+                                 css_framework='materialize')
 
     photos_to_display = photos_arr[offset: offset + PER_PAGE]
 
@@ -858,7 +859,13 @@ def get_time_remaining_string(timedelta):
     time_array = timedelta_string.split(",").pop().split(":")
     hours = time_array[0]
     minutes = time_array[1]
-    final_time_string = f"{days} days,{hours} hours and {minutes} minutes"
+    days_plural = "days,"
+    days_singular = "day,"
+    hours_singular = 'hour'
+    hours_plural = 'hours'
+    minutes_singular = 'minute'
+    minutes_plural = 'minutes'
+    final_time_string = f"{days} {days_singular if int(days)==1 else days_plural} {hours} {hours_singular if int(hours)==1 else hours_plural} and {minutes} {minutes_singular if int(minutes)==1 else minutes_plural}"
     return final_time_string
 
 

@@ -37,12 +37,32 @@ $(document).ready(function(){
     // });
 
      $(function(){
-       $("a").each(function(){
+       $(".nav-link").each(function(){
                if ($(this).attr("href") == window.location.pathname){
                        $(this).parent().addClass("active");
                }
        });
     });
+
+
+    // $(function(){
+        
+        
+    //    $(".pagination a").each(function(){
+    //     //    console.log(this)
+    //     $(this).click(function(){
+    //         let children = $(this).parent().parent().children('li')
+    //         children.removeClass('active')
+    //         // console.log(children)
+    //         let parent = $(this).parent()
+    //         // console.log(parent)
+    //         parent.addClass('active')
+    //     })
+               
+
+    //     // $(this).parent().addClass("active");
+    //    })
+    // });
 
  
 });
@@ -66,6 +86,33 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     verticalOrHorizontalAwardImage()
+
+    //  function paginationLinksHighlight(){
+    //     let pagination = document.querySelectorAll('.pagination li')
+        
+    //     pagination.forEach(el =>{
+
+            
+    //         console.log(el)
+
+    //         let link = el.firstChild
+    //         if (link.href == '/browse' ){
+    //             link.classList.remove('active')
+    //         }
+    //         // if (!link.href){
+    //         //     let classActive = document.createAttribute('class');
+    //         //     classActive.value = 'active'
+    //         //     el.setAttributeNode(classActive)
+    //         // }
+
+    //         // if the link has the same number 
+    //         console.log(link)
+
+    //     })
+        
+    //     }
+    // paginationLinksHighlight()
+
 
 })
 
