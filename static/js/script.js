@@ -114,11 +114,19 @@ if (document.URL.includes('edit-profile')){
 }
 /**
      * This function checks to see if the search page is loaded and if so, it waits until it's fully loaded.
+     * Then it checks if there are any photo results & if there are it makes sure to scroll the window to them, so the 
+     * user is able to immediately view the images.
      * Then it uses the hidden elements on the search results page to pass the variables from the Flask view to 
      * this JS file and then checks which variables are passed and alters the select options and checkboxes to match them.
      */
 if (document.URL.includes('search')){
     document.addEventListener('DOMContentLoaded', function(event) {
+
+        let photos = document.getElementsByTagName('img')
+
+        if (photos.length > 0){
+            window.location.hash="entries";
+        }
 
         let selectOptions = document.getElementsByTagName('option')
         let awardCheckBoxes = document.querySelectorAll('.checkbox-yellow')

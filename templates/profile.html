@@ -69,7 +69,6 @@
         </div>
        
         {% if user.username == session.user %}
-       
 
          <div class="col s6 offset-s1 m6 offset-m1 left-align hide-on-small-only">
             <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a> 
