@@ -24,8 +24,19 @@ worked correctly, but then page 2 would just return all the images again, unfilt
 
 ### Fix 2
 
-This took a lot of re-shuffling and with help from [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute. 
+I eventually changed and refactored the flask-paginate functionality into my function paginated_and_pagination_args() which worked for all pages. 
+Thanks to [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute for some initial pointers on how to go about doing this.
 
+### Issue 2 
+In order to set the values of the search form to the values searched for by the user, I needed to pass the template variables from the pages to the javascript file.
+```category``` & ```awards``` held the values of the user's search and because they represent one of multiple choices, I could not refer directly to the value in the form
+field as with ```query```. 
+
+An easy option would be to write inline JavaScript that used the template variables, however my CSP would not allow for that, without voiding the protection afforded by it.
+
+### Fix 2
+I created two hidden elements that printed the values of ```category``` and ```awards``` to the template, and then I was able to target those elements with JavaScript in my 
+external script file, without altering my CSP.
 
 ## winners()
 
