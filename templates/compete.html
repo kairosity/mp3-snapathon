@@ -32,7 +32,7 @@
                     <div class="row">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="input-field col s12 m6">
-                            <input id="title" name="title" type="text" class="validate" required>
+                            <input class="validate tooltipped" data-position="bottom" data-tooltip="Enter a creative and descriptive title for your image" id="title" name="title" type="text" required>
                             <label for="title">Title</label>
                         </div>
                         <div class="file-field input-field col s12 m6">
@@ -47,13 +47,13 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="story" name="story" class="materialize-textarea"></textarea>
+                            <textarea id="story" name="story" class="materialize-textarea tooltipped" data-position="bottom" data-tooltip="Write about the background to this photo, how did it come about?"></textarea>
                             <label for="story">Story</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6">
-                            <input id="camera" name="camera" type="text" class="validate" required>
+                            <input id="camera" name="camera" type="text" class="validate tooltipped" data-position="bottom" data-tooltip="Please include brand and model" required>
                             <label for="camera">Camera</label>
                         </div>
                         <div class="input-field col s12 m6">

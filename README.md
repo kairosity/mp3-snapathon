@@ -371,6 +371,9 @@ or why something won't work, as well as delivering positive feedback when the us
 Here are all the flash messages used in the application for great user feedback and assurance:
 
 #### Success Messages:
+
+<details><summary><b>click to view all messages</b></summary>
+
 - __*"Registration Successful"*__ - when a user first registers an account.
 - __*"Welcome <username>!"*__ - Wher a user logs in.
 - __*"Profile Updated Successfully"*__ - when a user edits any part of their profile. 
@@ -380,7 +383,12 @@ Here are all the flash messages used in the application for great user feedback 
 - __*"Email Sent!"*__ -  When a user successfully uses the contact form.
 - __*"You've been logged out"*__ - When a user logs out
 
+</details>
+
 #### Failure Messages:
+
+<details><summary><b>click to view all messages</b></summary>
+
 - __*"Incorrect username and/or password!"*__ - When a log in attempt fails. 
 - __*"Email is already registered."*__ - When a user tries to register an existing email address. 
 - __*"Username is already in use, please choose a different one."*__ - When a user tries to register an existing username.
@@ -414,6 +422,8 @@ user's account without being logged in (via url).
 - __*"Sorry, you must be logged in to delete a photograph."*__ - If a user tries to delete a photo without being logged in.
 - __*"You must be logged in to vote."*__ - If a user tries to vote without being logged in.
 
+</details>
+
 The flash messages cover all manner of user interaction with the application and are written in a clear and concise manner in a tone and using language that is consistent
 throughout. 
 
@@ -427,9 +437,16 @@ If a user chooses to delete their account, or an image they have entered into co
 this action in a delete confirmation modal that appears. This is expected conventional behaviour and is important to ensure a user doesn't accidentally delete elements.
 
 #### Small Specific Messages 
-On the "Browse" page, when a user hovers over one of the images, they will see an overlay that displays some of the photo details, and a message
+
+- On the "Browse" page, when a user hovers over one of the images, they will see an overlay that displays some of the photo details, and a message
 telling the user that if they would like to see more, to click on the overlay. This might have seemed obvious as the whole overlay is a link, and has a cursor
 state change denoting that, but I feel it's important to guarantee that the user is aware that they can click in to each image for more details. 
+
+- On the form to upload a photo into the competition, I've included tooltips on the more ambiguous fields:
+    - Over the "Title" input it reads: "Enter a creative and descriptive title for your image"
+    - Over the "Story" input it reads: "Write about the background to this photo, how did it come about?"
+    - Over the "Camera" input it reads: "Please include brand and model"
+
 
 #### State changes
 All buttons, links and interactions have visible state changes to ensure the user knows their actions are working.
