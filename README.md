@@ -1084,7 +1084,10 @@ As a final and very important check on the file uploaded,
 GET renders the edit-profile template form if the username passed
       to the request matches the user currently logged in.
 
-## 6. 
+## 6. Content Security policy
+
+I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. 
+
 
 
 #### back to [contents](#table-of-contents) 

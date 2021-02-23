@@ -335,6 +335,7 @@ ul.homepage-collapsible-rules{
 .review-rules-collapsible-header-homepage{
     background-color: var(--accent-colour);
     justify-content: center;
+    transition: all 1s;
 }
 .review-rules-collapsible-header-homepage:hover{
     background-color: var(--dark-accent-colour);
@@ -368,10 +369,15 @@ div.review-rules-homepage-row{
     letter-spacing: 2px;
     margin: 0;
     padding: 1.8rem 1.2rem;
-}
-div.row a.cta-link:hover{
     text-decoration: underline;
+    text-decoration-style: dashed;
+}
+
+div.row a.cta-link:hover{
     background-color: var(--dark-accent-colour);
+}
+.cta:hover{
+   text-decoration-style: double; 
 }
 div.row a.cta-link{
     background-color: var(--accent-colour);
@@ -381,6 +387,7 @@ div.row a.cta-link{
     font-size: 1.6rem;
     justify-content: center;
     margin-right: 1rem;
+    transition: all 1s;
 }
 div.contact-form-box{
     margin-top: 2em;
