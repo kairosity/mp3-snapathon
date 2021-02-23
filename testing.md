@@ -102,6 +102,26 @@ Some investigation led me to the fact that "POST" methods do not have a "source_
 to the template, first checking IF there is a source_url, and if there is not, then it's most likely coming from the edit_photo view and does not require a "back to.." link as the user can just click on the "Edit photo
 details" button again.
 
+## edit_profile()
+
+### Issue 1 
+As part of the edit profile functionality I wanted to give users the option to delete any custom profile picture they had uploaded that they no longer wanted, but without
+having to upload a replacement image. I wanted to include an X button on the update profile form which would allow them to just delete their current profile pic and
+to revert to the default. 
+
+This functionality proved a lot harder than imagined because unlike other input fields the "file" field could not automatically and easily link to the file object stored in the 
+database, and there was no obvious way of determining how to display the delete button. 
+
+### Fix 1
+To solve this, I did a number of things: 
+
+1. First in the edit_profile template, I checked whether the user had a custom profile photo uploaded and for users that did, I pre-filled the value field of the file input
+with the unique filename of that image. 
+2. Then I added a delete profile pic icon with a tooltip on hover to further explain its' purpose.
+3. Then I devised a JavaScript function that listened for clicks on that icon and when clicked would create a hidden input field with a value to POST to my flask view.
+This allowed me to write logic based on the specific situation whereby a user has a profile image and wants to just delete that image. 
+
+I found that without this hidden field there were no attributes present and readable in the "file" input field that I could use to write conditional logic. 
 
 ## compete() function
 

@@ -82,7 +82,6 @@ if (document.URL.includes('edit-profile')){
         let profilePicInput = document.querySelector('.profile-pic-input');
         if (profilePicInput.value !== ''){
             profilePicInput.value = ''; 
-            // add an input to send with POST with the class hidden 
             elementToAppendTo = document.getElementById('mainProfilePhotoInputField')
 
             let delProfilePicInput = document.createElement("input")
@@ -104,7 +103,6 @@ if (document.URL.includes('edit-profile')){
             delProfilePicInput.setAttributeNode(delProfilePicInputValue)
 
             elementToAppendTo.appendChild(delProfilePicInput)
-            console.log(delProfilePicInput)
         }   
     }
     delProfilePicIcon = document.querySelector('.del-profile-pic')

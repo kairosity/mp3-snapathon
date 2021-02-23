@@ -975,14 +975,17 @@ details.
     - Email address
     - Profile Pic
     - Password
-- Their current username, profile pic & email values are pre-populated in the form. 
+- Their current username, profile pic filename & email values are pre-populated in the form. 
+- If a user has a custom profile pic already uploaded they will see a small icon they can use to delete their current profile image 
+    without having to upload a new one.
+- They can also change their profile pic for a new one.
 - The form has the following Materialize validations present and will not POST if these are not met:
     - usernames must be between 5 and 25 characters long.
     - email addresses must adhere to the regex formula of: ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$```
     - passwords must be between 6 and 25 characters long.
 - Other validations include:
     - If a user tries to update their username or email to a username or email already saved in the database, they will
-      be redirected with a message detailing the issue.
+      be redirected with a message detailing the issue. 
     - If a user wishes to change their password, they must enter their current password once and their new password twice. Missing any of those 
     fields will result in an unsuccessful update and a flash message to the user detailing why. 
 
