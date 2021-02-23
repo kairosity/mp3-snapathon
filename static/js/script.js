@@ -67,5 +67,50 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     verticalOrHorizontalAwardImage()
 
-
 })
+
+/**
+     * This function checks to see if the edit profile page is loaded and if so, it waits until it's fully loaded
+     * Then it checks to see if the profile image field has a custom profile photo and if it does, 
+     * it adds an event listener to the delete profile image so the user can choose to delete their custom image 
+     * and revert to the default. 
+     */
+
+if (document.URL.includes('edit-profile')){
+    document.addEventListener('DOMContentLoaded', function(event) {
+        function deleteCustomProfilePic(){
+        let profilePicInput = document.querySelector('.profile-pic-input');
+        if (profilePicInput.value !== ''){
+            profilePicInput.value = ''; 
+            // add an input to send with POST with the class hidden 
+            elementToAppendTo = document.getElementById('mainProfilePhotoInputField')
+
+            let delProfilePicInput = document.createElement("input")
+
+            let delProfilePicInputType = document.createAttribute('type')
+            delProfilePicInputType.value = 'text'
+            delProfilePicInput.setAttributeNode(delProfilePicInputType)
+
+            let delProfilePicInputName = document.createAttribute('name')
+            delProfilePicInputName.value = 'del-profile-pic'
+            delProfilePicInput.setAttributeNode(delProfilePicInputName)
+
+            let delProfilePicInputClass = document.createAttribute('class')
+            delProfilePicInputClass.value = 'del-profile-pic-hidden'
+            delProfilePicInput.setAttributeNode(delProfilePicInputClass)
+
+            let delProfilePicInputValue = document.createAttribute('value')
+            delProfilePicInputValue.value = "del-uploaded-profile-pic"
+            delProfilePicInput.setAttributeNode(delProfilePicInputValue)
+
+            elementToAppendTo.appendChild(delProfilePicInput)
+            console.log(delProfilePicInput)
+        }   
+    }
+    delProfilePicIcon = document.querySelector('.del-profile-pic')
+    if (delProfilePicIcon){
+        delProfilePicIcon.addEventListener('click', deleteCustomProfilePic)
+    }
+})
+}
+

@@ -1160,6 +1160,19 @@ div.competition-rules{
 .entered-image{
     max-width: 500px;
 }
+
+.del-profile-pic{
+    font-size: 1.4rem;
+    color: var(--main-text-colour);
+    margin-top: 11px;
+    cursor: pointer;
+}
+
+.del-profile-pic-hidden {
+    display: none;
+    height: 0;
+    width: 0;
+}
 /* Vote Page */
 
 

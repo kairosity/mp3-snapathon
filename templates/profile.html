@@ -13,7 +13,7 @@
             {% if user_profile_photo %}
                 <img class="avatar" src="{{url_for('file', filename=user_profile_photo.filename)}}"/>
             {% else %}
-                <img class="avatar" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/>
+                <img class="avatar" src="{{url_for('static', filename='profile-pic/profile-pic-default.svg')}}"/>
             {% endif %}
             <h5 class="badge user-points-badge">{{ user.user_points }}</h5>
              <p class="avatar-username">{{ user.username|capitalize }}</p>
@@ -22,7 +22,7 @@
             {% if user_profile_photo %}
                 <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('file', filename=user_profile_photo.filename)}}"/>
             {% else %}
-            <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='images/in-app/user-secret-solid.svg')}}"/><br>
+            <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='profile-pic/profile-pic-default.svg')}}"/><br>
             {% endif %}
              <p class="center-align avatar-username hide-on-med-and-up">{{ user.username|capitalize }}</p>
              <h5 class="center-align badge user-points-badge hide-on-med-and-up">{{ user.user_points }}</h5>

@@ -919,6 +919,7 @@ def edit_user_profile(user, username, request, database_var, app):
     form_username = request.form.get("username").lower()
     form_email = request.form.get("email").lower()
     form_profile_pic = request.files["profile-pic"]
+    form_del_profile_pic = request.form.get("del-profile-pic")
     form_current_password = request.form.get("current_password")
     form_new_password = request.form.get("new_password")
     form_new_password_confirmation = \
@@ -949,15 +950,43 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             update_user["email"] = form_email
 
-    if form_profile_pic:
+    print(form_profile_pic.filename)
 
+    if form_del_profile_pic == "del-uploaded-profile-pic" and form_profile_pic.filename == "":
+
+        print("Only now do we delete profile pic without uploading a new one")
+        # delete user's profile pic.
         existing_profile_pic = user["profile_photo"]
-       
+
         if existing_profile_pic is not None:
 
             file_to_delete = database_var.db.fs.files.find_one(
                 {"filename": existing_profile_pic})
             print(f"File to delete: {file_to_delete}")
+            chunks_to_delete = list(database_var.db.fs.chunks.find({
+                                    "files_id": file_to_delete["_id"]}))
+
+            database_var.db.photos.delete_one(
+                {"filename": existing_profile_pic})
+
+            database_var.db.fs.files.delete_one(file_to_delete)
+
+            for chunk in chunks_to_delete:
+                database_var.db.fs.chunks.delete_one(chunk)
+
+            database_var.db.users.update_one(
+                                            {"username": username},
+                                            {'$set': {"profile_photo": None}})
+
+    if form_profile_pic.filename != "":
+
+        existing_profile_pic = user["profile_photo"]
+
+        if existing_profile_pic is not None:
+
+            file_to_delete = database_var.db.fs.files.find_one(
+                {"filename": existing_profile_pic})
+
             chunks_to_delete = list(database_var.db.fs.chunks.find({
                                     "files_id": file_to_delete["_id"]}))
 

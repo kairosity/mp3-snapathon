@@ -1406,6 +1406,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
     
     Very useful summary of all the security considerations to take into account when deploying a flask app.
 
+- ## [Adding a Favicon in Flask](https://flask.palletsprojects.com/en/1.1.x/patterns/favicon/)
+
+    Flask documentation about how to add a favicon. 
+
 ## Flask Paginate
 
 - ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
@@ -1497,6 +1501,12 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Passing Parameters to APScheduler](https://stackoverflow.com/questions/12412708/passing-parameters-to-apscheduler-handler-function)
 
     Used to work out how pass in db as a parameter, as the format is not intuitive.
+
+## JavaScript
+
+- ## [How to wait for the DOM ready event in plain JavaScript](https://flaviocopes.com/dom-ready/)
+
+    Used for formatting the images on the winner's page. 
 
 ## General/Misc
 

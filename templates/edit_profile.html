@@ -20,7 +20,7 @@
         
         <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}" enctype="multipart/form-data">
             <h1 class="center-align page-heading">Update Profile</h1>
-            <div class="row">
+            <div class="row " id="mainProfilePhotoInputField">
                 <div class="input-field col s12">
                     <input id="username" name="username" type="text" class="validate" minlength="5" maxlength="25" value="{{user.username}}" required>
                     <label for="username">username</label>
@@ -30,17 +30,34 @@
                     <label for="email">email</label>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 </div>
-                 <div class="file-field input-field col s12">
+                {% if user.profile_photo %}
+                 <div class="file-field input-field col s11">
                     
                      <div class="btn">
                          <span>Change Profile Pic</span>
                         <input id="profile-pic" name="profile-pic" type="file">
                     </div>
-                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" value="{{user.username|capitalize}}'s profile pic">
-                    </div>
                     
+                     <div class="file-path-wrapper">
+                        <input  class="file-path validate profile-pic-input" type="text" value="{{user.profile_photo}}">
+                    </div>
                 </div>
+                <div class="s1">
+                        <i class="fas fa-user-times del-profile-pic col s1 center-align tooltipped" data-position="bottom" data-tooltip="Click to delete custom profile pic and revert to default"></i>
+                    </div>
+                    {% else %}
+                    <div class="file-field input-field col s12">
+                    
+                     <div class="btn">
+                         <span>Change Profile Pic</span>
+                        <input id="profile-pic" name="profile-pic" type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input  class="file-path validate profile-pic-input" type="text" value="">
+                    </div>
+                    </div>
+                    {% endif %}
+                
                 <p class=" col s12 password-change-instructions">If you'd like to change your password, please enter your current password below and then your new password twice.</p>
                 <div class="input-field col s12">
                     <input id="current_password" name="current_password" type="password" class="validate" minlength="6" maxlength="25">
