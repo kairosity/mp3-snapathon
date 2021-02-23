@@ -1512,6 +1512,13 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Information on using request.referrer.
 
+- ## [SVG, Favicons, and All the Fun Things We Can Do With Them](https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/)
+
+    Article about the best way to use favicons and ensure their readability across platforms & browsers. 
+
+- ## [Convertio - File Converter](https://convertio.co/)
+
+    Awesome online tool for converting files to different types. Used in this application to convert favicon from .svg to .ico
 # Libraries
 
 ## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 
