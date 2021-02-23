@@ -829,6 +829,10 @@ div.col a.reset-btn {
   left: 50%;
   font-size: 1rem;
 }
+.hidden-category,
+.hidden-awards{
+    display: none;
+}
 /* Photo Details Page */
 
 a.back-link{

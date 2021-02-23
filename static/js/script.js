@@ -70,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 /**
-     * This function checks to see if the edit profile page is loaded and if so, it waits until it's fully loaded
+     * This function checks to see if the edit profile page is loaded and if so, it waits until it's fully loaded.
      * Then it checks to see if the profile image field has a custom profile photo and if it does, 
-     * it adds an event listener to the delete profile image so the user can choose to delete their custom image 
+     * it adds an event listener to the delete profile icon so the user can choose to delete their custom image 
      * and revert to the default. 
+     * To do this it creates a new hidden input to POST with the form to the Flask view.
      */
 
 if (document.URL.includes('edit-profile')){
@@ -111,4 +112,41 @@ if (document.URL.includes('edit-profile')){
     }
 })
 }
+/**
+     * This function checks to see if the search page is loaded and if so, it waits until it's fully loaded.
+     * Then it uses the hidden elements on the search results page to pass the variables from the Flask view to 
+     * this JS file and then checks which variables are passed and alters the select options and checkboxes to match them.
+     */
+if (document.URL.includes('search')){
+    document.addEventListener('DOMContentLoaded', function(event) {
 
+        let selectOptions = document.getElementsByTagName('option')
+        let awardCheckBoxes = document.querySelectorAll('.checkbox-yellow')
+        let category = document.querySelector('.hidden-category')
+        let awards = document.querySelector('.hidden-awards').innerHTML
+
+        let check1 = document.createAttribute('checked')
+        let check2 = document.createAttribute('checked')
+        let check3 = document.createAttribute('checked')
+
+        for (let i=0; i<awardCheckBoxes.length; i++){
+            
+            if (awards.includes("1") && awardCheckBoxes[i].value == 1){
+                awardCheckBoxes[i].setAttributeNode(check1)
+            } 
+            if (awards.includes("2") && awardCheckBoxes[i].value == 2){
+                awardCheckBoxes[i].setAttributeNode(check2)
+            } 
+            if (awards.includes("3") && awardCheckBoxes[i].value == 3){
+                awardCheckBoxes[i].setAttributeNode(check3)
+            }
+        }
+
+        for (let i = 0; i < selectOptions.length; i++) {
+            if (category.innerHTML == selectOptions[i].value ){
+                let sel = document.createAttribute('selected')
+                selectOptions[i].setAttributeNode(sel)
+            }
+        }
+    })
+}

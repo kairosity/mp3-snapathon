@@ -717,8 +717,7 @@ It also allows users to filter their search.
     - Awards search 
 - These filters can be used in isolation or in combination with each other, to further refine the selection of images.
 - When a user searches for a particular sub-section of images, the returning page scrolls down automatically to feature the images rather than the search box. 
-- The keywords / selections / checkboxes the user has searched for remain visible once the results have loaded for 
-increased UX.
+- The keywords / selections / checkboxes the user has searched for remain visible once the results have loaded for increased UX.
 - The search fields can be cleared easily using the reset button.
 - When a user hovers over any of the images displayed a link overlay appears with the title of the photograph, 
 and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
