@@ -419,27 +419,32 @@ def edit_profile(username):
       profile with the updated details. If unsuccessful, this
 
     '''
-    user = mongo.db.users.find_one({"username": username})
-    source_url = request.referrer
-    if request.method == "POST":
+    if 'user' in session:
 
-        if session:
-            if session["user"] == username:
+        user = mongo.db.users.find_one({"username": username})
+        source_url = request.referrer
+        if request.method == "POST":
 
-                url = edit_user_profile(
-                            user, username, request, mongo, app)
-                return url
+            if 'user' in session:
+                if session["user"] == username:
+
+                    url = edit_user_profile(
+                                user, username, request, mongo, app)
+                    return url
+                else:
+                    flash("You cannot edit someone else's account!")
+                    abort(403)
             else:
-                flash("You cannot edit someone else's account!")
+                flash("You must be logged in to edit your\
+                account, and you are not allowed \
+                to edit someone else's account!")
                 abort(403)
-        else:
-            flash("You must be logged in to edit your\
-            account, and you are not allowed \
-            to edit someone else's account!")
-            abort(403)
 
-    return render_template(
-        'edit_profile.html', user=user, source_url=source_url)
+        return render_template(
+            'edit_profile.html', user=user, source_url=source_url)
+    else:
+        flash("You must be logged in to edit your profile!")
+        return redirect(url_for('login'))
 
 
 @app.route('/delete-account/<username>', methods=['GET', 'POST'])
@@ -471,65 +476,74 @@ def compete():
 
     photo_user_voted_for = None
 
-    current_user = mongo.db.users.find_one(
-                {"username": session["user"]})
+    if session:
+        if 'user' in session:
 
-    this_weeks_entries = list(mongo.db.photos.find(
-                        {"week_and_year": date_time.strftime("%V%G")}))
+            current_user = mongo.db.users.find_one(
+                        {"username": session["user"]})
 
-    # If the user has voted
-    if current_user["votes_to_use"] == 0:
-        for img in current_user["photos_voted_for"]:
-            for entry in this_weeks_entries:
-                if img == entry["_id"]:
-                    photo_user_voted_for = img
-    else:
-        photo_user_voted_for = None
+            this_weeks_entries = list(mongo.db.photos.find(
+                                {"week_and_year": date_time.strftime("%V%G")}))
 
-    current_week_number = int(datetime.now().strftime("%V"))
-    this_weeks_comp_category = get_competition(
-                               current_week_number)["category"]
-    this_weeks_comp_instructions = get_competition(
-                                   current_week_number)["instructions"]
+            # If the user has voted
+            if current_user["votes_to_use"] == 0:
+                for img in current_user["photos_voted_for"]:
+                    for entry in this_weeks_entries:
+                        if img == entry["_id"]:
+                            photo_user_voted_for = img
+            else:
+                photo_user_voted_for = None
 
-    if request.method == 'POST':
+            current_week_number = int(datetime.now().strftime("%V"))
+            this_weeks_comp_category = get_competition(
+                                    current_week_number)["category"]
+            this_weeks_comp_instructions = get_competition(
+                                        current_week_number)["instructions"]
+
+            if request.method == 'POST':
+
+                if current_user["can_enter"] is True:
+
+                    url = upload_comp_entry(request,
+                                    mongo,
+                                    app,
+                                    this_weeks_comp_category,
+                                    current_user)
+
+                    flash("Entry Received!")
+                    return redirect(url_for('compete'))
+
+                else:
+                    flash("I'm sorry, but you've already entered \
+                        an image in this week's competition!")
+
+            this_weeks_entries = list(mongo.db.photos.find(
+                                {"week_and_year": date_time.strftime("%V%G")}))
 
 
-        if current_user["can_enter"] is True:
+            pagination, photos_paginated = paginated_and_pagination_args(
+                                        this_weeks_entries, 50, "page", "per_page")
 
-            url = upload_comp_entry(request,
-                              mongo,
-                              app,
-                              this_weeks_comp_category,
-                              current_user)
+            photos_paginated_copy = photos_paginated.copy()
 
-            flash("Entry Received!")
-            return redirect(url_for('compete'))
+            photos_paginated_shuffled = shuffle_array(photos_paginated_copy)
 
- 
+            return render_template("compete.html",
+                                this_weeks_entries=photos_paginated_shuffled,
+                                datetime=date_time,
+                                category=this_weeks_comp_category,
+                                instructions=this_weeks_comp_instructions,
+                                pagination=pagination,
+                                user=current_user,
+                                photo_user_voted_for=photo_user_voted_for)
+
         else:
-            flash("I'm sorry, but you've already entered \
-                   an image in this week's competition!")
+            flash("You must be logged in to vote.")
+            return redirect(url_for("login"))
+    else:
+        flash("You must be logged in to vote.")
+        return redirect(url_for("login"))
 
-    this_weeks_entries = list(mongo.db.photos.find(
-                        {"week_and_year": date_time.strftime("%V%G")}))
-
-
-    pagination, photos_paginated = paginated_and_pagination_args(
-                                   this_weeks_entries, 50, "page", "per_page")
-
-    photos_paginated_copy = photos_paginated.copy()
-
-    photos_paginated_shuffled = shuffle_array(photos_paginated_copy)
-
-    return render_template("compete.html",
-                           this_weeks_entries=photos_paginated_shuffled,
-                           datetime=date_time,
-                           category=this_weeks_comp_category,
-                           instructions=this_weeks_comp_instructions,
-                           pagination=pagination,
-                           user=current_user,
-                           photo_user_voted_for=photo_user_voted_for)
 
 @app.route("/file/<filename>")
 def file(filename):
@@ -597,7 +611,7 @@ def edit_photo(filename):
         url = edit_this_photo(request, mongo, filename, photo)
         return url
 
-    if session:
+    if 'user' in session:
         if session["user"] == username:
             return render_template("edit_photo.html", photo=photo)
         else:
@@ -623,7 +637,7 @@ def delete_photo(filename):
     * If unsuccessful shows the user a flash message detailing the issue
       and redirects to home, or login.
     '''
-    if session:
+    if 'user' in session:
         photo_to_del = mongo.db.photos.find_one({"filename": filename})
         if session["user"] == photo_to_del["created_by"]:
 

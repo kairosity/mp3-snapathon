@@ -1116,17 +1116,6 @@ rejected before being saved to the database.
 
 For future releases I would consider adding pagination to the profile pages, but for now they don't require it.
 
-# Bugs Remaining
-
-1. The pagination links work perfectly, except that the 'active' class stays highlighted on page 1 even when the user has navigated to other pages. I have attempted to 
-solve this issue using JavaScript, but any code that I write is immediately over-written by the flask-paginate extension. Given that the bug doesn't break anything, and 
-that the pagination works perfectly when the search is filtered, I have decided to leave it as it is for the time-being, until the next iteration of the application.
-
-<details><summary><b>click to see a screen recording of the issue</b></summary>
-    <p align="center">
-    <video src="static/images/issues/pagination-links-issue.mov" controls>
-    </p>
-</details>
 
 
 # Attribution
