@@ -1418,6 +1418,18 @@ def delete_this_photo(database_var, photo_to_del, filename):
             database_var.db.users.update_one(
                 {"username": session["user"]}, {'$pull': {"photos": photo}})
 
+    print(photo_to_del["week_and_year"])
+    print(datetime.now().strftime("%V%G"))
+    date_now = (datetime.now().strftime("%w"))
+    print(int(date_now))
+
+    if (photo_to_del["week_and_year"] == datetime.now().strftime("%V%G")) and (int(date_now) in range(1,6)):
+        print("Yes this image was deleted before voting took place.")
+        database_var.db.users.update_one({"username": session["user"]}, {'$set':{'can_enter': True }})
+
+        if user["votes_to_use"] > 1:
+            database_var.db.users.update_one({"username": session["user"]}, {'$set':{'votes_to_use': 0 }})
+
 
 def vote_for_photo(database_var, photo_to_vote_for):
     '''
