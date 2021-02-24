@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- If the day of the week is Mon - Friday until 22:00 show the competition entry form. -->
-{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or ((datetime.strftime("%w") == "5") and (datetime.strftime("%H") <= "22") ) %}
+<!-- If the day of the week is Mon - Friday show the competition entry form. -->
+{% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5") %}
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s10 offset-s1">
@@ -156,7 +156,7 @@
             <h4 class="page-sub-subheading-text center-align">Voting opens Saturday until Sunday at 22:00PM. Please come back then to vote for your favourite entry.<br> Remember if you don't vote, your entry is invalidated.</h4>
             <h4 class="page-sub-subheading-text center-align">Your entry: "{{entry.photo_title|capitalize}}"</h4>
             <div class="center-align">
-                <a href="{{ url_for('get_photo', filename=entry.filename )}}"><img class="entered-image" src="{{ url_for('file', filename=entry.filename) }}" alt="f"/></a>
+                <a href="{{ url_for('get_photo', filename=entry.filename )}}"><img class="entered-image" src="{{ url_for('file', filename=entry.filename) }}" alt="entry.photo_title"/></a>
             </div>
             </div>
         </div>
@@ -164,7 +164,8 @@
     {% endfor %}
     
     {% endif %}
-    {% else %}
+
+    {% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") <= "22") ) %}
             <section class="comp-intro center-align">
             <div class="row">
                 <div class="col s8 offset-s2">
@@ -231,6 +232,16 @@
         </div>
         
     </div>
+    {% else %}
+         <section class="comp-intro center-align">
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <h1 class="grey-text text-lighten-4 page-heading">THE VOTES HAVE BEEN TALLIED!</h1>
+                    <h2 class="grey-text text-lighten-4 page-subheading">Please head over to <a href="{{url_for('winners')}}">WINNERS</a> to view the results! </h2>
+                    <img class="entered-image" src="{{url_for('static', filename='images/in-app/ballons.jpg')}}" alt="balloons"/>
+                </div>
+            </div>
+        </section>
     {% endif %}
 
 
