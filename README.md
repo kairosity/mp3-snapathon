@@ -1046,6 +1046,10 @@ user's points total.
 - The delete confirmation modal informs the user of the above and specifies the award won by the image as well as the number of points that will 
 be deducted. 
 - The user can choose to click "No, cancel" to cancel the deletion request, or "Yes, Delete it", to confirm. 
+- If the photo was entered into the current week's competition and it is before Saturday when the user deletes it, the user is able to upload a 
+replacement photo into the competition should they choose to.
+- If it's Saturday or Sunday before 22:00PM and the user has already voted for an image and then decides to delete a photo, their vote stands, but they
+are not able to enter another image into that week's competition.
 
 </details>
 
