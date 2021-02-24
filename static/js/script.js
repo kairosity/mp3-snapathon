@@ -12,13 +12,13 @@ $(document).ready(function(){
     For each a link on the page - if the href is the current location, 
     it adds an .active class. 
     */
-    $(function(){
-       $("a").each(function(){
-               if ($(this).attr("href") == window.location.pathname){
-                       $(this).parent().addClass("active");
-               }
-       });
-    });
+    // $(function(){
+    //    $("a").each(function(){
+    //            if ($(this).attr("href") == window.location.pathname){
+    //                    $(this).parent().addClass("active");
+    //            }
+    //    });
+    // });
 
     // $(function(){
 

@@ -687,7 +687,6 @@ def register_new_user(database_var, request, app):
         url = redirect(url_for('register'))
         return url
 
-    print(request.files['profile-pic'])
 
     photo_filename_to_add_to_user = None
 
@@ -922,6 +921,7 @@ def edit_user_profile(user, username, request, database_var, app):
     '''
     update_user = {}
     update_photos = {}
+    update_profile_photo_ref = {}
 
     form_username = request.form.get("username").lower()
     form_email = request.form.get("email").lower()
@@ -944,6 +944,7 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             update_user["username"] = form_username
             update_photos["created_by"] = form_username
+            update_profile_photo_ref["user"] = form_username
 
     if form_email != user["email"]:
         existing_email = database_var.db.users.find_one(
@@ -957,13 +958,14 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             update_user["email"] = form_email
 
-    print(form_profile_pic.filename)
+    
+    existing_profile_pic = user["profile_photo"]
 
+    # 1. If the delete hidden field is activated && no new file is uploaded. 
     if form_del_profile_pic == "del-uploaded-profile-pic" and form_profile_pic.filename == "":
 
-        print("Only now do we delete profile pic without uploading a new one")
+        print("1: Only now do we delete profile pic without uploading a new one")
         # delete user's profile pic.
-        existing_profile_pic = user["profile_photo"]
 
         if existing_profile_pic is not None:
 
@@ -985,25 +987,52 @@ def edit_user_profile(user, username, request, database_var, app):
                                             {"username": username},
                                             {'$set': {"profile_photo": None}})
 
-    if form_profile_pic.filename != "":
 
-        existing_profile_pic = user["profile_photo"]
+    # if there is a file to upload and a current profile pic.
+    elif form_profile_pic.filename != "" and existing_profile_pic is not None:
 
-        if existing_profile_pic is not None:
+        print("2. Here we delete the current profile pic and upload a new one ")
 
-            file_to_delete = database_var.db.fs.files.find_one(
-                {"filename": existing_profile_pic})
+        #first delete the existing pp then upload the new one.
 
-            chunks_to_delete = list(database_var.db.fs.chunks.find({
-                                    "files_id": file_to_delete["_id"]}))
+        file_to_delete = database_var.db.fs.files.find_one(
+            {"filename": existing_profile_pic})
 
-            database_var.db.photos.delete_one(
-                {"filename": existing_profile_pic})
+        chunks_to_delete = list(database_var.db.fs.chunks.find({
+                                "files_id": file_to_delete["_id"]}))
 
-            database_var.db.fs.files.delete_one(file_to_delete)
+        database_var.db.photos.delete_one(
+            {"filename": existing_profile_pic})
 
-            for chunk in chunks_to_delete:
-                database_var.db.fs.chunks.delete_one(chunk)
+        database_var.db.fs.files.delete_one(file_to_delete)
+
+        for chunk in chunks_to_delete:
+            database_var.db.fs.chunks.delete_one(chunk)
+
+        # upload new pic 
+        file_id, new_filename = save_photo(
+            request, database_var, "profile-pic", app)
+
+        new_entry = {
+            "file_id": file_id,
+            "filename": new_filename,
+            "type": "profile-pic",
+            "user": session["user"]
+        }
+
+        database_var.db.photos.insert_one(new_entry)
+
+        photo_to_add_to_user = database_var.db.photos.find_one(
+                            {"file_id": file_id})
+
+        photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
+
+        update_user["profile_photo"] = photo_filename_to_add_to_user
+
+    #elif the existing profile is none but there is a new file there to be uploaded.
+    elif existing_profile_pic is None and form_profile_pic.filename != "":
+
+        print("3. Here there is no profile pic -so we just upload a new one. ")
 
         file_id, new_filename = save_photo(
             request, database_var, "profile-pic", app)
@@ -1018,14 +1047,14 @@ def edit_user_profile(user, username, request, database_var, app):
         database_var.db.photos.insert_one(new_entry)
 
         photo_to_add_to_user = database_var.db.photos.find_one(
-                              {"file_id": file_id})
+                            {"file_id": file_id})
 
         photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
 
         update_user["profile_photo"] = photo_filename_to_add_to_user
 
     if form_current_password:
-
+        print(form_current_password)
         if check_password_hash(user["password"], form_current_password):
             if form_new_password:
 
@@ -1053,7 +1082,7 @@ def edit_user_profile(user, username, request, database_var, app):
                            'edit_profile', user=user, username=form_username))
             return url
 
-    if form_new_password or form_new_password_confirmation and not form_current_password:
+    if (form_new_password and not form_current_password) or (form_new_password_confirmation and not form_current_password):
         flash("You must enter your current password to change your password.\
             Please try again.")
         url = redirect(url_for(
@@ -1064,6 +1093,10 @@ def edit_user_profile(user, username, request, database_var, app):
         database_var.db.photos.update_many(
             {"created_by": username}, {"$set": update_photos})
 
+    if update_profile_photo_ref:
+        database_var.db.photos.update_many(
+            {"user": username}, {"$set": update_profile_photo_ref})
+
     if update_user:
         database_var.db.users.update_one(
                               {"username": username}, {'$set': update_user})
@@ -1072,6 +1105,9 @@ def edit_user_profile(user, username, request, database_var, app):
                                      {"username": session["user"]})
         user_photos = list(database_var.db.photos.find(
                             {"created_by": session["user"]}))
+
+        user_photos = list(database_var.db.photos.find(
+                            {"user": session["user"]}))
 
     user = database_var.db.users.find_one({"username": session["user"]})
     username = session["user"]
