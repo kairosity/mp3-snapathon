@@ -67,13 +67,12 @@
    
 
 <div id="entries" class="row s12">
-        <!-- <div class="row profile-photos-row"></div> -->
             {% for photo in photos %}
             
                 <div class="col s12 m4 l3 profile-photos-col browse-images-container">
                     <img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
                     <div class="overlay">
-                        <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                        <a class="overlay-link" href="{{ url_for('get_photo', filename=photo.filename )}}">
                         <h4 class="overlay-text overlay-text-title">{{photo.photo_title|capitalize}}</h4>
                         <h5 class="overlay-text overlay-text-username">by {{photo.created_by|capitalize}}</h5>
                         {% if photo.awards == 1 %}

@@ -775,6 +775,11 @@ div.col a.reset-btn {
     margin-bottom: 1rem;
     margin-right: 0.5rem;
 }
+a.overlay-link{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
 /* The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
 .browse-photo {
