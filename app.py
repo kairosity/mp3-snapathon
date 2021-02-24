@@ -420,28 +420,33 @@ def edit_profile(username):
 
     '''
     if 'user' in session:
+        if session["user"] == username:
 
-        user = mongo.db.users.find_one({"username": username})
-        source_url = request.referrer
-        if request.method == "POST":
+            user = mongo.db.users.find_one({"username": username})
+            source_url = request.referrer
 
-            if 'user' in session:
-                if session["user"] == username:
+            if request.method == "POST":
 
-                    url = edit_user_profile(
-                                user, username, request, mongo, app)
-                    return url
+                if 'user' in session:
+                    if session["user"] == username:
+
+                        url = edit_user_profile(
+                                    user, username, request, mongo, app)
+                        return url
+                    else:
+                        flash("You cannot edit someone else's account!")
+                        abort(403)
                 else:
-                    flash("You cannot edit someone else's account!")
+                    flash("You must be logged in to edit your\
+                    account, and you are not allowed \
+                    to edit someone else's account!")
                     abort(403)
-            else:
-                flash("You must be logged in to edit your\
-                account, and you are not allowed \
-                to edit someone else's account!")
-                abort(403)
 
-        return render_template(
-            'edit_profile.html', user=user, source_url=source_url)
+            return render_template(
+                'edit_profile.html', user=user, source_url=source_url)
+        else:
+            flash("You cannot edit another user's profile!")
+            return redirect(url_for('login'))
     else:
         flash("You must be logged in to edit your profile!")
         return redirect(url_for('login'))
@@ -450,9 +455,22 @@ def edit_profile(username):
 @app.route('/delete-account/<username>', methods=['GET', 'POST'])
 def delete_account(username):
 
-    if request.method == "POST":
-        url = delete_user_account(username, mongo, request)
-        return url
+    if 'user' in session:
+        if session["user"] == username:
+            if request.method == "POST":
+                url = delete_user_account(username, mongo, request)
+                return url
+
+            if request.method == "GET":
+                flash("To delete your account, please click the \
+                    'edit profile button' & then select 'delete account'.")
+                return redirect(url_for('profile', username=session["user"]))
+        else:
+            flash("You cannot delete another user's account!")
+            abort(403)
+    else:
+        flash("You must be logged in to delete your account.")
+        return redirect(url_for('login'))
 
 
 @app.route("/compete", methods=['GET', 'POST'])
@@ -538,10 +556,10 @@ def compete():
                                 photo_user_voted_for=photo_user_voted_for)
 
         else:
-            flash("You must be logged in to vote.")
+            flash("You must be logged in to view the competition page.")
             return redirect(url_for("login"))
     else:
-        flash("You must be logged in to vote.")
+        flash("You must be logged in to view the competition page.")
         return redirect(url_for("login"))
 
 
@@ -621,8 +639,8 @@ def edit_photo(filename):
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
 
-# SHOULD I MAKE THIS A POST REQUEST?
-@app.route("/delete-photo/<filename>")
+
+@app.route("/delete-photo/<filename>",  methods=["POST"])
 def delete_photo(filename):
     '''
     * Deletes every record of a photo from the db and application.
@@ -637,20 +655,21 @@ def delete_photo(filename):
     * If unsuccessful shows the user a flash message detailing the issue
       and redirects to home, or login.
     '''
-    if 'user' in session:
-        photo_to_del = mongo.db.photos.find_one({"filename": filename})
-        if session["user"] == photo_to_del["created_by"]:
+    if request.method == 'POST':
+        if 'user' in session:
+            photo_to_del = mongo.db.photos.find_one({"filename": filename})
+            if session["user"] == photo_to_del["created_by"]:
 
-            delete_this_photo(mongo, photo_to_del, filename)
+                delete_this_photo(mongo, photo_to_del, filename)
 
-            flash("Photograph deleted successfully!")
-            return redirect(url_for('profile', username=session["user"]))
+                flash("Photograph deleted successfully!")
+                return redirect(url_for('profile', username=session["user"]))
+            else:
+                flash("You may not delete another user's photo.")
+                return redirect(url_for('home'))
         else:
-            flash("You may not delete another user's photo.")
-            return redirect(url_for('home'))
-    else:
-        flash("Sorry, you must be logged in to delete a photograph.")
-        return redirect(url_for('login'))
+            flash("Sorry, you must be logged in to delete a photograph.")
+            return redirect(url_for('login'))
 
 
 @app.route("/vote/<filename>", methods=["POST"])
