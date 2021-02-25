@@ -757,7 +757,10 @@ def login_user(email, password, database_var):
             username = existing_user["username"]
             session["user"] = username
             flash(f"Welcome, {username}!")
-            url = redirect(url_for("profile", username=username))
+            if existing_user["username"] == "admin":
+                url = redirect(url_for("admin"))
+            else:
+                url = redirect(url_for("profile", username=username))
             return url
         else:
             flash("Incorrect username and/or password!")
@@ -1144,6 +1147,92 @@ def edit_user_profile(user, username, request, database_var, app):
                           next_comp_starts=next_comp_starts)
     return url
 
+
+def del_user_account2(password, password_confirmation, user_deleting, user_to_delete, database_var):
+
+    if password:
+        if check_password_hash(user_deleting["password"], password):
+            if password == password_confirmation:
+
+                photos_to_delete = []
+
+                if user_to_delete["profile_photo"]:
+                    photos_to_delete.append(user_to_delete["profile_photo"])
+
+                if len(user_to_delete["photos"]) > 0:
+                    for photo in user_to_delete["photos"]:
+                        photos_to_delete.append(photo)
+
+                for photo in photos_to_delete:
+                    # Remove the photo obj
+                    database_var.db.photos.delete_one(
+                        {"filename": photo})
+
+                    file_to_delete = \
+                        database_var.db.fs.files.find_one(
+                            {"filename": photo})
+                    # Target the Chunks for this files_id
+                    chunks_to_delete = list(
+                        database_var.db.fs.chunks.find(
+                            {"files_id": file_to_delete["_id"]}))
+                    # Delete the file
+                    database_var.db.fs.files.delete_one(
+                            file_to_delete)
+
+                    if len(chunks_to_delete) > 0:
+                        for chunk in chunks_to_delete:
+                            database_var.db.fs.chunks.delete_one(
+                                chunk)
+
+                database_var.db.users.delete_one(
+                    {"username": user_to_delete["username"]})
+
+                if user_deleting["username"] == 'admin':
+                    user_deleted_username = user_to_delete["username"]
+                    message = f"{user_deleted_username}'s account & photos have been deleted successfully!"
+                    url = redirect(url_for('admin'))
+                else:
+                    # 2. Pop the session.
+                    session.pop("user", None)
+                    message = "Your account & photos have been deleted successfully!"
+                    url = redirect(url_for('home'))
+
+                return message, url
+
+            elif user_deleting["username"] == 'admin':
+                message = "You must enter your admin password correctly twice in \
+                    order to delete an account. This is a security measure."
+                url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+
+            else:
+                message = "You must enter your password correctly twice in order to delete your\
+                      account. This is a security measure."
+                url = redirect(url_for('edit_profile', username=user_deleting["username"]))
+
+            return message, url
+
+        elif user_deleting["username"] == 'admin':
+                message = "Incorrect admin password, please try again. This is a security measure."
+                url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+
+        else:
+            message = "Incorrect password. Please try again."
+            url = redirect(url_for(
+                'edit_profile', username=user_deleting["username"]))
+
+        return message, url
+
+    elif user_deleting["username"] == 'admin':
+        message = "You must enter your admin password to delete an account."
+        url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+    else:
+        message = "You must enter your password to delete your account."
+        url = redirect(url_for(
+                'edit_profile', username=user_deleting["username"]))
+    
+    return message, url
+
+
 def delete_user_account(username, database_var, request):
     '''
     * This deletes all traces of a user's account including the user details and all their
@@ -1168,83 +1257,33 @@ def delete_user_account(username, database_var, request):
       account, in this case it will throw a 403 error with a message.
     '''
 
-    # This mucks up a bit because the session cookie lingers. - READ!!! --> changed in app.py - is this session check redundant now???
     if session:
+
+        form_password = request.form.get("password")
+        form_password_confirmation = request.form.get(
+            "password_confirmation")
+        user = database_var.db.users.find_one({"username": username})
+
         if session["user"] == username:
-            user = database_var.db.users.find_one({"username": username})
-            all_photos = list(database_var.db.photos.find())
 
-            form_password = request.form.get("password")
-            form_password_confirmation = request.form.get(
-                "password_confirmation")
+            # all_photos = list(database_var.db.photos.find())
 
-            del_user_account(password, password_confirmation, user_deleting, user_to_delete)
+            message, url = del_user_account2(form_password, form_password_confirmation, user, user, database_var)
+            print("deleted own account")
 
-            
 
-            if form_password:
-                if check_password_hash(user["password"], form_password):
-                    if form_password == form_password_confirmation:
+            flash(message)
+            return url
 
-                        photos_to_delete = []
+        elif session["user"] == 'admin':
 
-                        if user["profile_photo"]:
-                            photos_to_delete.append(user["profile_photo"])
+            admin_user = database_var.db.users.find_one({"username": "admin"})
+            message, url = del_user_account2(form_password, form_password_confirmation, admin_user, user, database_var)
 
-                        if len(user["photos"]) > 0:
-                            for photo in user["photos"]:
-                                photos_to_delete.append(photo)
+            print("deleted another user's account")
 
-                        for photo in photos_to_delete:
-                            # Remove the photo obj
-                            database_var.db.photos.delete_one(
-                                {"filename": photo})
-
-                            file_to_delete = \
-                                database_var.db.fs.files.find_one(
-                                    {"filename": photo})
-                            # Target the Chunks for this files_id
-                            chunks_to_delete = list(
-                                database_var.db.fs.chunks.find(
-                                    {"files_id": file_to_delete["_id"]}))
-                            # Delete the file
-                            database_var.db.fs.files.delete_one(
-                                    file_to_delete)
-
-                            if len(chunks_to_delete) > 0:
-                                for chunk in chunks_to_delete:
-                                    database_var.db.fs.chunks.delete_one(
-                                        chunk)
-
-                        database_var.db.users.delete_one(
-                            {"username": user["username"]})
-
-                        # 2. Pop the session. (There is still a session - why?)
-                        session.pop("user", None)
-
-                        flash("Account & photos deleted successfully, we're \
-                            sorry to see you go. Come back to us any time!")
-                        url = redirect(url_for('home'))
-                        return url
-
-                    else:
-                        flash("Incorrect password. Please try again.")
-                        url = redirect(url_for(
-                            'edit_profile', username=username))
-                        return url
-                else:
-                    flash("Incorrect password. Please try again.")
-                    url = redirect(url_for('edit_profile', username=username))
-                    return url
-            else:
-                flash("You must enter your password twice in order to delete your\
-                      account. This is a security measure.")
-                url = redirect(url_for('edit_profile', username=username))
-                return url
-    else:
-        flash("You must be logged in to delete your account, and obviously,\
-             you are not allowed to delete someone else's account!")
-        abort(403)
+            flash(message)
+            return url
 
 
 # compete() Helpers
