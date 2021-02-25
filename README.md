@@ -53,7 +53,14 @@ Users register accounts and then they enter one competition a week on a particul
       - [*Colour Palette*](#colour-palette)
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
-- [2. Front-End Features](#2-frontend-features)
+- [2. Database Architecture](#2-database-architecture)
+    - [Schema](#schema)
+        - [Users Collection](#users-collection)
+        - [Photos Collection](#photos-collection)
+        - [Files Collection](#files-collection)
+        - [Chunks Collection](#chunks-collection)
+    - [Non-Relational Design](#non-relational-design)
+- [3. Front-End Features](#3-frontend-features)
     - [1. Home](#1-home)
     - [2. Winners](#2-winners)
     - [3. Browse](#3-browse)
@@ -65,14 +72,14 @@ Users register accounts and then they enter one competition a week on a particul
     - [9. Vote](#9-vote)
     - [10. Photo Details](#10-photo-details)
     - [11. Logout](#11-logout)
-- [3. Back-End Features](#3-backend-features)
+- [4. Back-End Features](#4-backend-features)
     - [12. Awards Calculations](#12-awards-calculations)
     - [13. New Competition](#13-new-competition)
     - [14. Edit Profile](#14-edit-profile)
     - [15. Edit Photo Details](#15-edit-photo-details)
     - [16. Delete Account](#16-delete-account)
     - [17. Delete Photo](#17-delete-photo)
-- [4. Security](#4-security)
+- [5. Security](#5-security)
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
     - [3. Approved File Extensions](#3-approved-file-extensions)
@@ -590,7 +597,6 @@ On the profile and photo details pages, I have been careful to organise the info
 On the photo details page for example, the photo title is followed by the creator's name, which is followed by the photo's points, then the image itself and then
 the photo story and remaining image details. The flow of information is logical and organically progressive.
 
-
 ## Wireframes 
 
 The best way to view all the wireframes, user flows, mockups, colour palette & typography for this application
@@ -731,7 +737,7 @@ The Photos collection houses both entries and user profile-pics and is easily ab
 I have created relationships between the collections, but these could be easily changed or removed without breaking the system completely, which is of great benefit to an application
 such as this one, that might change substantially in its first months of existence, and thus holds scalability high on its' list of priorities. 
 
-
+#### back to [contents](#table-of-contents) 
 
 # Front-End Features
 
@@ -1012,6 +1018,11 @@ This allows a user to logout of the application.
 - It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
 </details>
 
+## 12. Admin Dashboard 
+
+- Admin users can navigate to this page to see a list of the application's users, some details about them and they have the options to delete 
+their account should they break the rules. 
+
 #### back to [contents](#table-of-contents) 
 ---
 
@@ -1149,28 +1160,27 @@ The following security features were integrated into this application:
 
 ## 1. CSRF Protection
 To protect against cross site request forgery I used the Flask-WTF module's CSRF protection
-by adding it globally and by adding a hidden input containing the crsf token in all forms.
+by adding it globally and by adding a hidden input containing the crsf token in all forms used in the application.
 
-This protection is particularly important for this application, as it does rely on cookie sessions and many of the 
+This protection is particularly important for this application, as it relies on cookie sessions and many of the common
 CRUD requests do not require passwords.
-
 
 ## 2. Securing the upload filenames  
 
 To stop attackers using the upload function to insert system requests into the server, and /or mess with 
 configuration files, I've integrated ```secure_filename``` from werkzeug.utils *before* the uploaded files are 
-saved to the database. This function reduces any dodgy filenames to flat safe ones.
+saved to the database. This function transforms any dodgy filenames into flat safe ones.
 
 ## 3. Approved File Extensions
 
 I added an array of approved filename extensions as an added layer of security, and one that also ensures the 
 files uploaded can be displayed as images. I added ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']```
-to my configuration variables and if any other extension is attempted to be uploaded, the application throws a 415 error.
+to my configuration variables and if a user attempte to upload any other extension type, the application throws a 415 error.
 
 ## 4. Uploaded file size 
 
-The application only allows files under 540KBs to be uploaded, this has the dual purpose of ensuring faster page load times, and ensuring that 
-users with malicious intent cannot upload large malicious programmes. 
+The application only allows files under 540KBs to be uploaded, this has the dual purpose of ensuring faster page loading times, and ensuring that 
+users with malicious intent cannot upload large programs. 
 
 ## 5. Validating file contents
 

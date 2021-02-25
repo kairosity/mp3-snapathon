@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="page-heading center-align">Admin Dashboard</h1>
+
+  <div class="row">
+       <div class="col s12">
+
+         <form action="{{ url_for('search') }}" method="get" class="col s12 m10 offset-m1 search-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="row valign-wrapper center-align">
+
+                <div class="input-field col s12 m8 offset-m2">
+                     <input type="text" name="query" id="query" class="validate" minlength="3" value="{{query}}">
+                     <label for="query">Filter by username or email</label>
+                </div>
+                
+            </div>
+            <div class="row">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
+                    <a href="{{ url_for('admin') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn"><i class="fas fa-undo-alt"></i> Reset</a>
+                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>  
+                </div>
+            </div>
+          </form>
+    {% for user in all_users %}
+    
+      <div class="card col m3">
+          <form>
+          <div class="row">
+        <div class="card-image col s6 offset-s3 ">
+          
+            {% if user.profile_photo %}
+                <img class="avatar" src="{{url_for('file', filename=user.profile_photo)}}"/>
+            {% else %}
+                <img class="avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}"/>
+            {% endif %}
+        </div>
+        </div>
+      <div class="row">
+        <div class="card-content col ">
+          <ul>
+            <li>1. Username: {{user.username}} </li>
+            <li>2. Email: {{user.email}} </li>
+            <li>3. User Points: {{user.user_points}}  </li>
+            <li>4. Photos Entered: {{user.photos|length}}</li>
+            <li>5. Photos Voted For: {{user.photos_voted_for|length}}</li>
+          </ul>
+        </div>
+        </div>
+        <div class="row">
+            <a href="{{url_for('admin_user_details', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col blue s6"><i class="material-icons">edit</i></a>
+            <a href="{{url_for('admin_user_details', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col red s6"><i class="material-icons">delete</i></a>
+         </div>
+         </form>
+      </div>
+
+   
+    {% endfor %}
+     </div>
+     </div>
+
+    
+{% endblock %}

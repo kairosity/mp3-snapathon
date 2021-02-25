@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="row">
+     <div class="col s12 m8 offset-m2 l6 offset-l3">
+<form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}" enctype="multipart/form-data">
+           <h1 class="page-subheading">Change {{user.username}}'s Details or Delete the account</h1>
+            <div class="row " id="mainProfilePhotoInputField">
+                <div class="input-field col s12">
+                    <input id="username" name="username" type="text" class="validate" minlength="5" maxlength="25" value="{{user.username}}" required>
+                    <label for="username">username</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="email" name="email" type="text" class="validate" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"  value="{{user.email}}" required>
+                    <label for="email">email</label>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                </div>
+                {% if user.profile_photo %}
+                 <div class="file-field input-field col s11">
+                    
+                     <div class="btn">
+                         <span>Change Profile Pic</span>
+                        <input id="profile-pic" name="profile-pic" type="file">
+                    </div>
+                    
+                     <div class="file-path-wrapper">
+                        <input  class="file-path validate profile-pic-input" type="text" value="{{user.profile_photo}}">
+                    </div>
+                </div>
+                <div class="s1">
+                        <i class="fas fa-user-times del-profile-pic col s1 center-align tooltipped" data-position="bottom" data-tooltip="Click to delete custom profile pic and revert to default"></i>
+                    </div>
+                    {% else %}
+                    <div class="file-field input-field col s12">
+                    
+                     <div class="btn">
+                         <span>Change Profile Pic</span>
+                        <input id="profile-pic" name="profile-pic" type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input  class="file-path validate profile-pic-input" type="text" value="">
+                    </div>
+                    </div>
+                    {% endif %}
+                <button class="register-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">Save Changes
+                </button>
+                 <a href="#confirm-account-deletion" id="delete-account-btn" class=" modal-trigger register-btn delete-account-btn btn-large btn waves-effect waves-light center-align">Delete Account
+                 </a>
+            </div>
+        </form>
+        </div>
+</div>
+  <!-- Confirm Account Deletion Modal -->
+  <div id="confirm-account-deletion" class="modal">
+    <div class="modal-content account-deletion-header">
+      <h4 class="delete-ac-question">Are you sure you want to delete {{user.username|capitalize}}'s account?</h4>
+      <p class="delete-ac-info">This will delete the account, associated points and all uploaded photos permanently.</p>
+        <p class="delete-ac-info">If you're sure you want to delete the account, please enter your admin account password twice and then click "delete"</p>
+    </div>
+    <div class="modal-footer account-deletion-footer center-align">
+        <form class="account-deletion-form" method="POST" action="{{ url_for('delete_account', username=user.username) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="input-field col s12 m6 center-align">
+                    <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="password">password</label>
+                </div>
+                <div class="input-field col s12 m6 ">
+                    <input id="password_confirmation" name="password_confirmation" type="password" class="validate" minlength="6" maxlength="25">
+                    <label for="password_confirmation">password confirmation</label>
+                </div>
+                <div class="col s12 center-align">
+                <button class="btn col s12 l6 delete-ac-btn" type="submit">Delete</button>
+                <a class="modal-close btn col s12 l6 cancel-delete-ac-btn" href="#!">Cancel</a>
+            </div>
+        </form>
+      
+    </div>
+  </div>
+        
+{% endblock %}

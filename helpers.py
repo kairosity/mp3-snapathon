@@ -1178,6 +1178,10 @@ def delete_user_account(username, database_var, request):
             form_password_confirmation = request.form.get(
                 "password_confirmation")
 
+            del_user_account(password, password_confirmation, user_deleting, user_to_delete)
+
+            
+
             if form_password:
                 if check_password_hash(user["password"], form_password):
                     if form_password == form_password_confirmation:

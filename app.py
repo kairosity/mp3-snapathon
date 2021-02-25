@@ -456,7 +456,7 @@ def edit_profile(username):
 def delete_account(username):
 
     if 'user' in session:
-        if session["user"] == username:
+        if session["user"] == username or session["user"] == 'admin':
             if request.method == "POST":
                 url = delete_user_account(username, mongo, request)
                 return url
@@ -684,6 +684,49 @@ def vote(filename):
     if request.method == "POST":
         url = vote_for_photo(mongo, photo)
         return url
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+
+    all_users = mongo.db.users.find()
+
+    if session:
+        if 'user' in session:
+            if session["user"] == "admin":
+                return render_template('admin.html', all_users=all_users)
+
+            else:
+                flash("You do not have permission to access this page!")
+                abort(403)
+        else:
+            flash("You do not have permission to access this page!")
+            abort(403)
+    else:
+        flash("You must be logged in to access this page!")
+        abort(403)
+
+
+@app.route("/admin-user-details/<username>")
+def admin_user_details(username):
+
+    user = mongo.db.users.find_one({"username": username})
+
+    if session:
+        if 'user' in session:
+            if session["user"] == "admin":
+                return render_template('admin-user-details.html', user=user)
+
+            else:
+                flash("You do not have permission to access this page!")
+                abort(403)
+        else:
+            flash("You do not have permission to access this page!")
+            abort(403)
+    else:
+        flash("You must be logged in to access this page!")
+        abort(403)
+
 
 @app.route("/logout")
 def logout():
