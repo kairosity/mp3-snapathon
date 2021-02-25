@@ -958,7 +958,6 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             update_user["email"] = form_email
 
-    
     existing_profile_pic = user["profile_photo"]
 
     # 1. If the delete hidden field is activated && no new file is uploaded. 
@@ -1009,7 +1008,7 @@ def edit_user_profile(user, username, request, database_var, app):
         for chunk in chunks_to_delete:
             database_var.db.fs.chunks.delete_one(chunk)
 
-        # upload new pic 
+        # upload new pic
         file_id, new_filename = save_photo(
             request, database_var, "profile-pic", app)
 
@@ -1169,7 +1168,7 @@ def delete_user_account(username, database_var, request):
       account, in this case it will throw a 403 error with a message.
     '''
 
-    # This mucks up a bit because the session cookie lingers.
+    # This mucks up a bit because the session cookie lingers. - READ!!! --> changed in app.py - is this session check redundant now???
     if session:
         if session["user"] == username:
             user = database_var.db.users.find_one({"username": username})

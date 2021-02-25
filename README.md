@@ -645,6 +645,94 @@ Again, please remember to click download as the GitHub viewer can expand the sma
 #### back to [contents](#table-of-contents) 
 ---
 
+# Database Architecture
+
+## Schema 
+
+The schema for this project is based on 2 main collections that feed into each other (users & photos) and 2 functional collections that are generated 
+by the MongoDB GridFS system which I am using to store the image data.
+
+The database design for this project, while non-relational, does use primary keys and relational connections in order to achieve the application's goals.
+It primarily takes advantage of the non-relational structure by using logic in such a way that the relationships are joined by references to each other, but 
+remain independent for many of their read and write functions. 
+
+For example, while the Photo collection documents of type "entry" have a reference to the user who created them, they do not need to call on the User collection 
+when displaying all their details on the "Photo Details" pages of the application. 
+
+[Click here to view my ERD on Figma.](https://www.figma.com/file/NYPifJrvaiC8OK2aAxNup6/Snapathon?node-id=115%3A293) I have also added it below, but the Figma link is zoomable.
+
+<p align="center">
+  <img src="static/images/erd/erd.png">
+</p>
+
+### Users Collection
+
+#### *Primary Key*
+- As you can see from the chart below my user collection's 'username' field has been given the primary key role for that collection. 
+The user's _id field could also fulfil this role, however as all usernames are unique, setting the username as the primary key felt more intuitive and readable. 
+
+#### *Relationships*
+- The 'username' field of the documents within the 'User' collection has a one-to-many relationship with the 'Photos' collection's documents, specifically it is connected 
+to the "created_by" field for documents with the 'type' of 'entry' and the 'user' field for documents with the 'type' of 'profile-pic'. 
+- A user can, over time, upload many photos and if the application is expanded, this relationship design allows for immense flexibility when implementing new photography types or features. A fact that I 
+believe overcomes the inbuilt redundancy of having multiple documents of the same 'type' (i.e. entry or profile-pic). Were this a relational database, it would probably be
+better to normalise the redundancy by extracting 'type' into its own collection.
+
+### Photos Collection
+
+#### *Primary Key*
+- My 'photos' collection uses two primary keys: filename & _id, but really it's as if it used one, as the 'filename' key is a string copy of the '_id' field, but with the 
+correct image file extension attached. 
+
+#### *Relationships*
+- The '_id' field from the photos' documents populates the 'photos_voted_for' array of the User documents. 
+    - This is a many-to-many relationship. Many users could vote for the same photo, and photos can have multiple users voting for them. 
+- The 'filename' field from the photo collection populates "photos" array field of the User collection documents. 
+    - This is a many-to-one relationship, as a user can, over time upload multiple photo entries into the competition.  
+- The 'filename' field from the photo collection populates the "profile-photo" string field of the User collection documents. 
+    - Although a user may have multiple photo *documents* associated with them, this specific connection is a one-to-one relationship, 
+as a user can only ever have a single profile-pic at any one time.
+
+### Files Collection
+The GridFS Files Collection is automatically generated when the save_file method is used. 
+
+#### *Primary Key*
+- As with all mongoDB collections, the '_id' field is automatically generated as the file's primary key.
+- I wanted a more human-readable key, so I copied this '_id' on file creation and saved the resultant filename (with image extension)
+as a second primary key. 
+- I also used this second key to populate my Photo's collection "filename" field - this way both Photos & Files collections do have unique identifiers (their '_ids')
+but they are also easily connected by their 'filename' fields, allowing me to overcome some of the complexity inherent to using the GridFS system. 
+- So anytime I need to call up the actual image data for a Photo document, I can just refer to the Photo document's filename as if they were one document. 
+- In doing this I have emulated the idea of storing the file reference as a field on the Photos collection's documents. 
+
+#### *Relationships*
+- The '_id' primary key has a one-to-one relationship with the 'file_id' field on the photo document.
+- The above relationship is mirrored in the string one-to-one relationship between the 'filename' fields of both collections. 
+- The '_id' primary key also plays an important role connecting a 'file' document to the 'chunks' documents. 
+    - It has a one-to-one *or* one-to-many relationship with chunks, depending on the file size. 
+    - A single file can be broken into many chunks to store large files easily. 
+    - For the time-being in this application I have limited the size of the files users are allowed upload to the database, 
+    and for this reason, most of the Files --> Chunks relationships are one-to-one, however they are one-to-many by design. 
+
+### Chunks Collection
+The GridFS Chunks Collection is automatically generated when the save_file method is used. Saved files are broken into x chunks depending on how large they are. 
+
+#### *Primary Key*
+- The '_id' field is the generated primary key for Chunks.
+
+ #### *Relationships*
+ - Chunks are only connected to Files in the manner described above.
+
+## Non-Relational Design
+The non-relational design works very well for this project, particularly with an eye to future versions, whereby I might incorporate an increased number of photo types, 
+or other media types such as video. The schema is fluid and would allow for new additions to be effortlessly assimilated.
+
+The Photos collection houses both entries and user profile-pics and is easily able to accommodate both types of documents, while reading and writing from the Grid File System.
+I have created relationships between the collections, but these could be easily changed or removed without breaking the system completely, which is of great benefit to an application
+such as this one, that might change substantially in its first months of existence, and thus holds scalability high on its' list of priorities. 
+
+
+
 # Front-End Features
 
 ## 1. Home
@@ -1120,6 +1208,11 @@ rejected before being saved to the database.
 
 For future releases I would consider adding pagination to the profile pages, but for now they don't require it.
 
+## Profile Pages
+
+The upper right side of the profile pages currently look somewhat emptier than they should on large desktop devices. I have left that area with only the timing messages
+to occupy its space, however there is a future design plan. When I integrate achievement badges into the User Experience, that is where the badges will be displayed. 
+The messages will either sit under the badges or will be placed along the top of the profile as a ticker than can be closed with an X button, probably the latter.
 
 
 # Attribution
@@ -1227,6 +1320,21 @@ For future releases I would consider adding pagination to the profile pages, but
 - <span>Photo by <a href="https://unsplash.com/@rahabikhan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Rahabi Khan</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@ms88?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">m</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@karsten116?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Karsten Winegeart</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@peter_mc_greats?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Pietro De Grandi</a> on <a href="https://unsplash.com/s/photos/landscape?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@lucabravo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Luca Bravo</a> on <a href="https://unsplash.com/s/photos/landscape?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@jasperboer?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jasper Boer</a> on <a href="https://unsplash.com/s/photos/landscape?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@luckybeanz?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mark Harpur</a> on <a href="https://unsplash.com/s/photos/landscape?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@n764483?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Nik Ramzi Nik Hassan</a> on <a href="https://unsplash.com/s/photos/landscape?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@von_co?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ivana Cajina</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@heftiba?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Toa Heftiba</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@steve3p_0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Steve Halama</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@dnevozhai?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Denys Nevozhai</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@eutahm?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Eutah Mizushima</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@brookecagle?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Brooke Cagle</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@hyingchou?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yingchou Han</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@thatsmrbio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Matthew Hamilton</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@charlesetoroma?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Charles Etoroma</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
 
 
 

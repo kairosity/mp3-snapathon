@@ -1065,6 +1065,7 @@ p.password-change-instructions{
 #confirm-account-deletion,
 #confirm-photo-deletion{
     padding: 1.6rem;
+    min-height: 350px;
 }
 #confirm-account-deletion,
 .account-deletion-form,
@@ -1340,6 +1341,10 @@ h5.user-points-badge{
 #confirm-account-deletion{
     padding: 3rem;
 }
+#confirm-account-deletion,
+#confirm-photo-deletion{
+    min-height: 300px;
+}
 /* Compete */
 div.add-photo-collapsible-header,
 div.review-rules-collapsible-header{
@@ -1520,6 +1525,10 @@ h5.user-points-badge{
 .cancel-delete-ac-btn,
 .delete-photo-btn-cancel-modal{
     margin-top: 1.7rem !important;
+}
+#confirm-account-deletion,
+#confirm-photo-deletion{
+    min-height: 100px;
 }
 /* Footer */
 footer{

@@ -32,7 +32,7 @@
                         <li><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
                         <li><a class="nav-link" href="{{url_for('browse')}}">Browse</a></li>
                         {% if session['user'] %}
-                            <li><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">Profile</a></li>
+                            <li><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                             {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5")  %}
                                 <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
                             {% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") <= "22") ) %}
