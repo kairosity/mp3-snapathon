@@ -9,6 +9,11 @@
                     <a class="back-link" href="{{url_for('profile', username=user.username)}}">
                         <i class="fas fa-long-arrow-alt-left"></i> Cancel and back to profile.</a>
                 </div>
+        {% elif "admin" in source_url %}
+                <div class="row back-link-div">
+                    <a class="back-link" href="{{url_for('admin_user_details', username=user.username)}}">
+                        <i class="fas fa-long-arrow-alt-left"></i> Cancel and back to admin user control for {{user.username|capitalize}} </a>
+                </div>
             
         {% endif %}
 {% endif %}

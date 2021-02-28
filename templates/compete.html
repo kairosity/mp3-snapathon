@@ -171,8 +171,11 @@
                 <div class="col s8 offset-s2">
                     {% if user.votes_to_use > 0 %}
                         <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
-                    {% else %}
+                    {% elif photo_user_voted_for != None %}
                          <h1 class="grey-text text-lighten-4 page-heading">YOU HAVE VOTED!</h1>
+                    {% elif photo_user_voted_for == None %}
+                        <h1 class="grey-text text-lighten-4 page-heading">VOTING CLOSES SUNDAY at 22:00PM</h1>
+                        <h2 class="page-subheading">You can enter a new competition on Monday.</h2>
                     {% endif %}
 
 
@@ -182,9 +185,13 @@
                         If you do not vote by 22:00PM on Sunday evening UTC, your entry's points will be nullified. Winning images & users will be announced Sunday night when voting 
                         closes. 
                     </h5>
-                    {% else %}
+                    {% elif photo_user_voted_for != None %}
                     <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Thank you for voting! Winning images & users will be announced Sunday night when voting 
                         closes. 
+                    </h5>
+                    {% elif photo_user_voted_for == None %}
+                        <h5 class="grey-text text-lighten-4 page-sub-subheading-text">You cannot vote this week. Winning images & users will be announced Sunday night when voting 
+                        closes and you may enter a new competition on Monday. 
                     </h5>
                     {% endif %}
                 </div>

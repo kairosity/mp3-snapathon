@@ -709,13 +709,15 @@ def admin():
 
 @app.route("/admin-user-details/<username>")
 def admin_user_details(username):
+    
+    source_url = request.referrer
 
     user = mongo.db.users.find_one({"username": username})
 
     if session:
         if 'user' in session:
             if session["user"] == "admin":
-                return render_template('admin-user-details.html', user=user)
+                return render_template('admin-user-details.html', user=user, source_url=source_url)
 
             else:
                 flash("You do not have permission to access this page!")
