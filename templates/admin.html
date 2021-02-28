@@ -52,8 +52,8 @@
         </div>
         </div>
         <div class="row">
-            <a href="{{url_for('admin_user_details', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col blue s6"><i class="material-icons">edit</i></a>
-            <a href="{{url_for('admin_user_details', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col red s6"><i class="material-icons">delete</i></a>
+            <a href="{{url_for('edit_profile', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col blue s6"><i class="material-icons">edit</i></a>
+            <a href="{{url_for('admin_delete_user_account', username=user.username)}}" class="btn-large btn waves-effect waves-light center-align col red s6"><i class="material-icons">delete</i></a>
          </div>
          </form>
       </div>

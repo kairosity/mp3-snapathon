@@ -707,8 +707,8 @@ def admin():
         abort(403)
 
 
-@app.route("/admin-user-details/<username>")
-def admin_user_details(username):
+@app.route("/admin-delete-user-account/<username>")
+def admin_delete_user_account(username):
     
     source_url = request.referrer
 
@@ -717,7 +717,7 @@ def admin_user_details(username):
     if session:
         if 'user' in session:
             if session["user"] == "admin":
-                return render_template('admin-user-details.html', user=user, source_url=source_url)
+                return render_template('admin-delete-user-account.html', user=user, source_url=source_url)
 
             else:
                 flash("You do not have permission to access this page!")
