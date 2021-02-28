@@ -31,7 +31,7 @@
                         <li><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
                         <li><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
                         <li><a class="nav-link" href="{{url_for('browse')}}">Browse</a></li>
-                        {% if session['user'] %}
+                        {% if session['user'] and session['user'] != 'admin' %}
                             <li><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                             {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5")  %}
                                 <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
@@ -40,6 +40,10 @@
                             {% else %}
                                 <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Awards</a></li>
                             {% endif %}
+                            <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                            <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                        {% elif session['user'] == 'admin' %}
+                            <li><a class="nav-link" href="{{url_for('admin')}}">Admin User Control</a></li>
                             <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                             <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
                         {% else %}
@@ -56,7 +60,7 @@
                 <li><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
                 <li><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
                 <li><a class="nav-link"  href="{{url_for('browse')}}">Browse</a></li>
-                {% if session['user'] %}
+                {% if session['user'] and session['user'] != 'admin' %}
                     <li><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                     {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5")  %}
                         <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
@@ -65,6 +69,10 @@
                     {% else %}
                         <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Awards</a></li>
                     {% endif %}
+                    <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                    <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                {% elif session['user'] == 'admin' %}
+                    <li><a class="nav-link" href="{{url_for('admin')}}">Admin User Control</a></li>
                     <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
                     <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
                 {% else %}

@@ -6,7 +6,7 @@
 <div class="row">
      <div class="col s12 m8 offset-m2 l6 offset-l3">
 <form class="card-panel grey darken-4 register-form" method="POST" action="{{ url_for('edit_profile', username=user.username) }}" enctype="multipart/form-data">
-           <h1 class="page-subheading">Change {{user.username}}'s Details or Delete the account</h1>
+           <h1 class="page-subheading">Edit {{user.username}}'s Details or Delete {{user.username}}'s account</h1>
             <div class="row " id="mainProfilePhotoInputField">
                 <div class="input-field col s12">
                     <input id="username" name="username" type="text" class="validate" minlength="5" maxlength="25" value="{{user.username}}" required>
