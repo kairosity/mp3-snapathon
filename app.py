@@ -420,7 +420,7 @@ def edit_profile(username):
 
     '''
     if 'user' in session:
-        if session["user"] == username:
+        if session["user"] == username or session["user"] == 'admin':
 
             user = mongo.db.users.find_one({"username": username})
             source_url = request.referrer
@@ -428,7 +428,7 @@ def edit_profile(username):
             if request.method == "POST":
 
                 if 'user' in session:
-                    if session["user"] == username:
+                    if session["user"] == username or session["user"] == 'admin':
 
                         url = edit_user_profile(
                                     user, username, request, mongo, app)

@@ -935,12 +935,13 @@ def edit_user_profile(user, username, request, database_var, app):
     form_new_password_confirmation = \
         request.form.get("new_password_confirmation")
 
+
     # If the user has changed their username
     if form_username != user["username"]:
         existing_username = database_var.db.users.find_one(
                             {"username": form_username})
         if existing_username:
-            flash("Username is already in use, please choose a different one.")
+            flash("That username is already taken, please choose a different one.")
             url = redirect(url_for('edit_profile',
                            user=user, username=form_username))
             return url
@@ -949,7 +950,7 @@ def edit_user_profile(user, username, request, database_var, app):
             update_photos["created_by"] = form_username
             update_profile_photo_ref["user"] = form_username
 
-    if form_email != user["email"]:
+    if form_email != user["email"]: #user_to_edit
         existing_email = database_var.db.users.find_one(
                         {"email": form_email})
         if existing_email:
@@ -962,6 +963,7 @@ def edit_user_profile(user, username, request, database_var, app):
             update_user["email"] = form_email
 
     existing_profile_pic = user["profile_photo"]
+    print(existing_profile_pic)
 
     # 1. If the delete hidden field is activated && no new file is uploaded. 
     if form_del_profile_pic == "del-uploaded-profile-pic" and form_profile_pic.filename == "":
@@ -986,8 +988,8 @@ def edit_user_profile(user, username, request, database_var, app):
                 database_var.db.fs.chunks.delete_one(chunk)
 
             database_var.db.users.update_one(
-                                            {"username": username},
-                                            {'$set': {"profile_photo": None}})
+                                    {"username": username},
+                                    {'$set': {"profile_photo": None}})
 
 
     # if there is a file to upload and a current profile pic.
@@ -1015,11 +1017,12 @@ def edit_user_profile(user, username, request, database_var, app):
         file_id, new_filename = save_photo(
             request, database_var, "profile-pic", app)
 
+
         new_entry = {
             "file_id": file_id,
             "filename": new_filename,
             "type": "profile-pic",
-            "user": session["user"]
+            "user": user["username"]
         }
 
         database_var.db.photos.insert_one(new_entry)
@@ -1043,7 +1046,7 @@ def edit_user_profile(user, username, request, database_var, app):
             "file_id": file_id,
             "filename": new_filename,
             "type": "profile-pic",
-            "user": session["user"]
+            "user": user["username"]
         }
 
         database_var.db.photos.insert_one(new_entry)
@@ -1056,7 +1059,7 @@ def edit_user_profile(user, username, request, database_var, app):
         update_user["profile_photo"] = photo_filename_to_add_to_user
 
     if form_current_password:
-        print(form_current_password)
+
         if check_password_hash(user["password"], form_current_password):
             if form_new_password:
 
@@ -1091,10 +1094,12 @@ def edit_user_profile(user, username, request, database_var, app):
                         'edit_profile', user=user, username=form_username))
         return url
 
+    # updating all the images to being created by new username
     if update_photos:
         database_var.db.photos.update_many(
             {"created_by": username}, {"$set": update_photos})
 
+    #updating profile pic to being created by new username 
     if update_profile_photo_ref:
         database_var.db.photos.update_many(
             {"user": username}, {"$set": update_profile_photo_ref})
@@ -1102,23 +1107,40 @@ def edit_user_profile(user, username, request, database_var, app):
     if update_user:
         database_var.db.users.update_one(
                               {"username": username}, {'$set': update_user})
-        session["user"] = form_username
+
+        if session["user"] != 'admin':
+            session["user"] = form_username
+
+        if "username" in update_user:
+            username_to_query = update_user["username"]
+        else:
+            username_to_query = user["username"]
+
+        print(username_to_query)
+
+        # problematic - need a way to reference the user here?? Does the original user still work? No, still has the old username but with updated deets? 
         user = database_var.db.users.find_one(
-                                     {"username": session["user"]})
+                                     {"username": username_to_query})
         user_photos = list(database_var.db.photos.find(
-                            {"created_by": session["user"]}))
+                            {"created_by": username_to_query}))
 
         user_photos = list(database_var.db.photos.find(
-                            {"user": session["user"]}))
+                            {"user": username_to_query}))
 
-    user = database_var.db.users.find_one({"username": session["user"]})
-    username = session["user"]
+        user = database_var.db.users.find_one({"username": username_to_query})
+    
+    print(user)
+
+    username = user["username"]
+    print(username)
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
 
     user_profile_photo, user_photos, \
         photos_voted_for_objs, award_winners, _ = \
         get_profile_page_photos(username, database_var)
+
+    print(user_profile_photo)
 
     today = datetime.now().strftime('%Y-%m-%d')
 
