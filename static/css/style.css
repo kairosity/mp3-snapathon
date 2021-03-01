@@ -942,7 +942,8 @@ div.back-link-div{
 .avatar-wrapper{
     position: relative;
 }
-.avatar {
+.avatar,
+div.avatar-wrapper img.avatar {
     width: 100px;
     height: 100px;
     border: 2px solid var(--main-text-colour);
@@ -1230,6 +1231,28 @@ button.vote-button:hover{
     color: darkred;
     font-size: 2rem;
 }
+/* Admin User Control Page */
+.admin-control-card,
+.admin-control-form{
+    background-color: var(--dark-text-color);
+    color: var(--main-text-colour);
+}
+img.admin-control-avatar{
+    margin: 0 auto;
+}
+a.admin-page-edit-btn{
+    background-color: var(--accent-colour);
+}
+a.admin-page-edit-btn:hover{
+    background-color: var(--dark-accent-colour);
+}
+a.admin-page-delete-btn{
+    background-color: red;
+}
+a.admin-page-delete-btn:hover{
+    background-color: darkred;
+}
+
 /* Footer */
 #footer {
   height: 50px;

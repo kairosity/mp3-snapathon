@@ -286,6 +286,39 @@ def search():
                            query=query,
                            awards=awards)
 
+@app.route('/admin-search')
+def admin_search():
+    '''
+    * Takes the admin's inputed search query and filters back users that
+      match the keyword criterion.
+
+    \n Args:
+    1. query (str): Admin input from the admin search form.
+
+    \n Returns:
+    * Renders an array of paginated and filtered photo objects that match
+      the search criterion on the browse template.
+    '''
+    source_url = request.referrer
+
+    query = request.args.get("query")
+
+    filtered_users = filter_admin_search(query, mongo)
+
+    pagination, users_paginated = paginated_and_pagination_args(
+                                   filtered_users, 10, "page", "per_page")
+                                
+    print(users_paginated)
+
+    if not filtered_users:
+        flash("I'm sorry, but your search did not return any images.")
+
+    return render_template("admin.html",
+                           all_users=users_paginated,
+                           pagination=pagination,
+                           source_url=source_url,
+                           query=query)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -689,12 +722,15 @@ def vote(filename):
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
 
-    all_users = mongo.db.users.find()
+    all_users = list(mongo.db.users.find())
 
     if session:
         if 'user' in session:
             if session["user"] == "admin":
-                return render_template('admin.html', all_users=all_users)
+
+                pagination, users_paginated = paginated_and_pagination_args(
+                                   all_users, 30, "page", "per_page")
+                return render_template('admin.html', all_users=users_paginated, pagination=pagination)
 
             else:
                 flash("You do not have permission to access this page!")

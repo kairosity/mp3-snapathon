@@ -535,13 +535,13 @@ def first_second_third_place_compcat_users(photo_array, database_var):
 
 # Pagination Helper.
 def paginated_and_pagination_args(
-        photos_arr, PER_PAGE, page_param, per_page_param):
+        objs_arr, PER_PAGE, page_param, per_page_param):
     '''
     * Uses the flask_paginate extension to return the specific
       pagination options for a particular template.
 
     \n Args:
-    1. photos_arr (arr): The array of photos for the template to
+    1. objs_arr (arr): The array of photos for the template to
        be paginated.
     2. PER_PAGE (int): The number of images to display per
        paginated page.
@@ -552,14 +552,14 @@ def paginated_and_pagination_args(
     \n Returns:
     * pagination_args (obj): An instance of the Pagination object with
       all the inputed specs.
-    * photos_to_display (arr): The array of photos that were passed in to
+    * objs_to_display (arr): The array of objects that were passed in to
       the function split using the offset & PER_PAGE variables.
     '''
     page, _, _, = get_page_args(
             page_parameter=page_param, per_page_parameter=per_page_param)
 
     offset = page * PER_PAGE - PER_PAGE
-    total = len(photos_arr)
+    total = len(objs_arr)
 
     pagination_args = Pagination(page=page,
                                  per_page=PER_PAGE,
@@ -568,9 +568,9 @@ def paginated_and_pagination_args(
                                  per_page_parameter=per_page_param,
                                  css_framework='materialize')
 
-    photos_to_display = photos_arr[offset: offset + PER_PAGE]
+    objs_to_display = objs_arr[offset: offset + PER_PAGE]
 
-    return pagination_args, photos_to_display
+    return pagination_args, objs_to_display
 
 
 def filter_user_search(
@@ -607,6 +607,31 @@ def filter_user_search(
 
     return filtered_photos
 
+
+def filter_admin_search(
+        keyword_search, database_var):
+    '''
+    * Filters an admin's search for a user by their keyword search.
+
+    \n Args:
+    1. keyword_search (str): An admin's text input search.
+    2. database_var (obj): A variable holding the PyMongo Object that
+       accesses the MongoDB Server.
+
+    \n Returns:
+    * An array of user objects from the db filtered to match the search
+      inputs.
+    '''
+    full_search = keyword_search
+    full_query = {}
+
+    if keyword_search:
+        full_query["$text"] = {"$search": full_search}
+
+
+    filtered_users = list(database_var.db.users.find(full_query))
+
+    return filtered_users
 
 def save_photo(request, database_var, name_of_image_from_form, app):
     '''
