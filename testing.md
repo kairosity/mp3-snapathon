@@ -598,23 +598,24 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 
 ### Guest Users 
 
-- Home :heavy_check_mark:
-- Winners &#9745;
-- Browse 
-- Contact Us 
-- Login 
-- Register 
+:white_check_mark: /home - __PASS__ 
+:white_check_mark: /winners - __PASS__  
+:white_check_mark: /browse - __PASS__  
+:white_check_mark: /home#contact-form - __PASS__  
+:white_check_mark: /login - __PASS__   
+:white_check_mark: /register - __PASS__  
 
 ### Logged In Users
 
-- Home 
-- Winners 
-- Browse 
-- My Profile
+:white_check_mark: /home - __PASS__ 
+:white_check_mark: /winners - __PASS__  
+:white_check_mark: /browse - __PASS__   
+:white_check_mark: /profile/username - __PASS__   
 - Competition Pages
-    - Compete (Mon-Fri)
-    - Vote (Sat-Sun until 22:00)
-    - Awards (Sun 22:00-00:00)
+    - :white_check_mark: /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
+    - :white_check_mark: /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
+    - :white_check_mark: /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__ 
+:white_check_mark: /home#contact-form - __PASS__ 
 
 ### Admin Users 
 - User Control Page 
