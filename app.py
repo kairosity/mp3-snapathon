@@ -654,21 +654,28 @@ def edit_photo(filename):
       template for the photo that was edited.
     '''
 
-    photo = mongo.db.photos.find_one({"filename": filename})
-    user = mongo.db.users.find_one({"username": photo["created_by"]})
-
-    username = user["username"]
-
     if request.method == "POST":
+        photo = mongo.db.photos.find_one({"filename": filename})
         url = edit_this_photo(request, mongo, filename, photo)
         return url
 
-    if 'user' in session:
-        if session["user"] == username:
-            return render_template("edit_photo.html", photo=photo)
+    if session:
+        if 'user' in session:
+            photo = mongo.db.photos.find_one({"filename": filename})
+            try:
+                user = mongo.db.users.find_one({"username": photo["created_by"]})
+            except TypeError:
+                flash("Sorry, but that photo cannot be found.")
+                abort(404)
+            username = user["username"]
+            if session["user"] == username:
+                return render_template("edit_photo.html", photo=photo)
+            else:
+                flash("You cannot edit another user's photo.")
+                return redirect(url_for("profile", username=session["user"]))
         else:
-            flash("You cannot edit another user's photo. Edit your own!")
-            return redirect(url_for("profile", username=session["user"]))
+            flash("You need to be logged in to edit photos.")
+            return redirect(url_for("login"))
     else:
         flash("You need to be logged in to edit photos.")
         return redirect(url_for("login"))
@@ -769,10 +776,18 @@ def admin_delete_user_account(username):
 
 @app.route("/logout")
 def logout():
-    # remove user from session cookies
-    session.pop("user", None)
-    flash("You've been logged out")
-    return redirect(url_for("login"))
+
+    if session:
+        if 'user' in session:
+            session.pop("user", None)
+            flash("You've been logged out")
+            return redirect(url_for("login"))
+        else:
+            flash("You're not logged in.")
+            return redirect(url_for("login"))
+    else:
+        flash("You're not logged in.")
+        return redirect(url_for("login"))
 
 
 @app.errorhandler(404)

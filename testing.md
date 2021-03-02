@@ -603,37 +603,84 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 - /winners - __PASS__  
 - /browse - __PASS__
 - /profile/username - __PASS__
+- /photos/photo_filename.jpg = __PASS__
 - /home#contact-form - __PASS__  
 - /login - __PASS__   
 - /register - __PASS__  
+
+<p align="left">
+  <img src="static/images/testing/200-guest-user.png">
+</p>
 
 ### Logged In Users
 
 - /home - __PASS__ 
 - /winners - __PASS__  
 - /browse - __PASS__   
-- /profile/username - __PASS__   
+- /profile/username - __PASS__
+- /edit-profile/username - __PASS__
+- /photos/photo_filename.jpg - __PASS__
+- /edit-photo/photo_filename.jpg - __PASS__  
 - Competition Pages
     - /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
     - /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
     - /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__ 
 - /home#contact-form - __PASS__ 
 
-### Admin Users 
+<p align="left">
+  <img src="static/images/testing/200-user-logged-in.png">
+</p>
+
+### Admin Users
+- /admin - __PASS__
 - /home - __PASS__ 
 - /winners - __PASS__  
 - /browse - __PASS__
-- /edit-profile/username - __PASS__ 
+- /profile/username - __PASS__
+- /edit-profile/username - __PASS__
+- /admin-delete-user-account/username - __PASS__
+- /photos/photo_filename.jpg - __PASS__ 
+- Competition Pages
+    - /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
+    - /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
+    - /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__  
 - /home#contact-form - __PASS__ 
+
+<p align="left">
+  <img src="static/images/testing/200-admin-user.png">
+</p>
 
 </details>
 
 ## 302 Status Code Testing
 <details><summary><b>click for tests</b></summary>
+
+The following url requests by the following categories of users should return a 302 redirect status code:
+
+### Guest Users 
+
+- /edit-profile/username -  __PASS__ 
+- /delete-account/username -  __PASS__
+- /edit-photo/photo_filename.jpg - __PASS__
+- /logout -  __PASS__
+  
+
+<p align="left">
+  <img src="static/images/testing/200-guest-users.png">
+</p>
+
+
 </details>
 
 ## 403 Status Code Testing
 <details><summary><b>click for tests</b></summary>
+
+### Guest Users 
+
+- /admin -  __PASS__ 
+
+
+
 </details>
 
 ## 404 Status Code Testing
