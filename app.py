@@ -746,7 +746,7 @@ def admin():
 
 @app.route("/admin-delete-user-account/<username>")
 def admin_delete_user_account(username):
-    
+
     source_url = request.referrer
 
     user = mongo.db.users.find_one({"username": username})

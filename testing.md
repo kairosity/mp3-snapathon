@@ -7,7 +7,7 @@
   * [2. Returning User Goals Testing](#returning-user-goals-testing)
   * [3. Accessibility User Goals Testing](#accessibility-user-goals-testing)
   * [4. Application Creator User Goals Testing](#application-creator-user-goals-testing)
-* [**Function and View Issues That Arose During Testing**](#function-and-view-issues-that-arose-during-testing)
+* [**Issues and bugs caught during testing**](#issues-and-bugs-caught-during-testing)
     * [1. browse()](#browse)
     * [2. winners()](#winners)
     * [3. get_photo()](#get-photo)
@@ -18,7 +18,10 @@
     * [1. 200 Status Code Testing](#200-status-code-testing)
     * [2. 302 Status Code Testing](#302-status-code-testing)
     * [3. 403 Status Code Testing](#403-status-code-testing)
-    * [4. 403 Status Code Testing](#403-status-code-testing)
+    * [4. 404 Status Code Testing](#404-status-code-testing)
+    * [5. 413 Status Code Testing](#413-status-code-testing)
+    * [6. 415 Status Code Testing](#415-status-code-testing)
+    * [7. 500 Status Code Testing](#500-status-code-testing)
 * [**Functionality Testing**](#functionality-testing)
   * [**Base Functionality**](#base-functionality)
     * [1. Navigation](#navigation)
@@ -26,9 +29,10 @@
     * [3. Links](#links)
     * [4. Buttons](#buttons)
     * [5. Forms](#forms)
-    * [6. Pagination](#pagination)
-    * [7. Email](#email)
-    * [8. Logout](#logout)
+    * [6. Input Validation](#input-validation)
+    * [7. Pagination](#pagination)
+    * [8. Email](#email)
+    * [9. Logout](#logout)
   * [**CRUD Functionality**](#crud-functionality)
     * [Create](#create)
         * [1. New User Registration](#new-user-registration)
@@ -51,6 +55,25 @@
     * [1. Awards Function - Test 1](#awards-function-test-1)
     * [2. Awards Function - Test 2](#awards-function-test-2)
     * [3. Vote Function - Test 1](#vote-function-test-1)
+* [**Browser Testing**](#browser-testing)
+    * [Desktop Browser Testing](#desktop-browser-testing)
+    * [Mobile Browser Testing](#mobile-browser-testing)
+* [**Responsivity Testing**](#responsivity-testing)
+* [**Code Validators**](#code-validators)
+    * [HTML Validators](#html-validators)
+        * [W3C HTML Validator](#w3c-html-validator)
+        * [W3C Link Checker](#w3c-link-checker)
+    * [CSS Validators](#css-validators)
+        * [W3C CSS Validator](#w3c-css-validator)
+    * [JavaScript Validators](#javascript-validators)
+        * [JSHint](#jshint)
+    * [Python Validators](#python-validators)
+        * [PEP8 Online](#pep8-online)
+* [**Performance and Web Development Tools Testing**](#performance-and-web-development-tools-testing)
+    * [Lighthouse](#lighthouse)
+    * [Web Dev Measure](#web-dev-measure)
+    
+
         
 
 # User Story Testing 
@@ -205,20 +228,30 @@
     - All functionality is fully keyboard accessible.
 
 - __As a user using screen reader technology, I want my screen reader to describe the page elements correctly. - PASS__
+    - Aria-labels have been added to all important elements.
+    - Elements have been written with an eye to the correct semantical format to ensure the best possible experience for screen-reader dependent users.
+
 </details>
 
-## Application Creator User Goals Testing
+## Application Creator User Goals Testing
 
 <details><summary><b>click for tests</b></summary>
 
 - __Create and maintain a user-friendly platform allowing photography enthusiasts to compete with each other and to inspire each other with excellent images. - PASS__ 
+    - This application achieves the above. 
+
 - __Ensure that the application is as accessible as possible to include as wide a variety of users as possible. - PASS__
+    - As above I have developed this application with an eye to strong accessibility best practices.
+
 - __Create a competition application that is re-usable for other fields, if this one proves popular. - PASS__
-- __Eventually introduce a profit-earning aspect to the application, perhaps by monetizing awards for professional photographers. - PASS__
+    - The format of this application would be easy to expand on, or re-produce for other arenas/industries. 
+
+- __Eventually introduce a profit-earning aspect to the application, perhaps by monetizing awards for professional photographers .- IN DEVELOPMENT__
+    - This has not yet been done, but remains a distinct possibility. 
 
 </details>
 
-# Function and View Issues That Arose During Testing
+# Issues and bugs caught during testing
 
 ## browse()
 
@@ -499,7 +532,7 @@ During testing for edge-cases, I found 3 different but related scenarios that we
 3. If one photo got say 6 votes, one photo got 4 photos and no other photos got votes, the application was awarding 1st & 2nd place logically, but then awarding 3rd 
 place to every other entry.
 
-### Fix 2
+### Fix 2
 
 When refactoring the code to account for these edge-cases, I firstly included ternary operators in my definition of all the vote_count variables. Checking to see if 
 the arrays that they rely on had any data in them, i.e. were not 0. If they were 0, I made the count equal null. Then in defining each subsequent array, I first checked 
@@ -534,11 +567,11 @@ to receive an award were greater than 0, and only if they were does the code ass
 
 ## Error Messages
 
-### Issue 1
+### Issue 1
 413 Errors (request entity too large / Payload too large) were not passing to the error.html template to render correctly. In development I was getting a message 
 saying the port was unresponsive. 
 
-### Fix 1 
+### Fix 1 
 Using print() I was able to see that the error view was working correctly right up until the rendering of the template. If I switched from rendering a template to just 
 returning the error message like this:
 
@@ -559,9 +592,50 @@ After some research I found the following note in the Flask documentation:
 
 I checked it on the deployed version and it still wasn't working. (FINISH)
 
+# Status Code Testing 
+
+## 200 Status Code testing
+
+### Guest Users 
+
+- Home - [x]
+- Winners 
+- Browse 
+- Contact Us 
+- Login 
+- Register 
+
+### Logged In Users
+
+- Home 
+- Winners 
+- Browse 
+- My Profile
+- Competition Pages
+    - Compete (Mon-Fri)
+    - Vote (Sat-Sun until 22:00)
+    - Awards (Sun 22:00-00:00)
+
+### Admin Users 
+- User Control Page 
+- User Delete Page 
+- Update User Page 
+
+## 302 Status Code Testing
+
+## 403 Status Code Testing
+
+## 404 Status Code Testing
+
+## 413 Status Code Testing
+
+## 415 Status Code Testing
+
+## 500 Status Code Testing
+
 # Testing the Automated Processes
 
-## Testing the awards() function
+## Testing the awards() function
 The awards() function runs automatically on a Sunday evening at 22:00 - and for the first tests I decided to change those settings and run it manually. 
 
 Firstly I created a selection of dummy users and for each of them I entered 1 image into a dummy weekly competition. I then made each user vote for various images and recorded
