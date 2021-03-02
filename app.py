@@ -92,7 +92,7 @@ def awards():
       came 1st, 2nd or 3rd.
     '''
     #This needs to change to # datetime.now().strftime("%V%G")
-    this_week_and_year_formatted = "072021"
+    this_week_and_year_formatted = "082021"
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
@@ -128,6 +128,7 @@ def awards():
     print("Awards & points have been calculated and awarded.")
 
 # awards()
+# new_comp(mongo)
 
 # Development Testing Functions
 # clear_user_points(mongo)

@@ -1,3 +1,224 @@
+# **Snapathon Application: Testing**
+
+# Testing Table Of Contents
+
+* [**User Story Testing**](#user-story-testing)
+  * [1. First Time User Goals Testing](#first-time-user-goals-testing)
+  * [2. Returning User Goals Testing](#returning-user-goals-testing)
+  * [3. Accessibility User Goals Testing](#accessibility-user-goals-testing)
+  * [4. Application Creator User Goals Testing](#application-creator-user-goals-testing)
+* [**Function and View Issues That Arose During Testing**](#function-and-view-issues-that-arose-during-testing)
+    * [1. browse()](#browse)
+    * [2. winners()](#winners)
+    * [3. get_photo()](#get-photo)
+    * [4. edit_profile()](#edit-profile)
+    * [5. compete()](#compete)
+    * [6. base.html](#base-html)
+* [**Status Code Testing**](#status-code-testing)
+    * [1. 200 Status Code Testing](#200-status-code-testing)
+    * [2. 302 Status Code Testing](#302-status-code-testing)
+    * [3. 403 Status Code Testing](#403-status-code-testing)
+    * [4. 403 Status Code Testing](#403-status-code-testing)
+* [**Functionality Testing**](#functionality-testing)
+  * [**Base Functionality**](#base-functionality)
+    * [1. Navigation](#navigation)
+    * [2. Login](#login)
+    * [3. Links](#links)
+    * [4. Buttons](#buttons)
+    * [5. Forms](#forms)
+    * [6. Pagination](#pagination)
+    * [7. Email](#email)
+    * [8. Logout](#logout)
+  * [**CRUD Functionality**](#crud-functionality)
+    * [Create](#create)
+        * [1. New User Registration](#new-user-registration)
+        * [2. Entering the Competition](#entering-the-competition)
+    * [Read](#read)
+        * [1. Viewing a specific profile](#viewing-a-profile)
+        * [2. Browsing and filtering images](#browsing-and-filtering-images)
+        * [3. Viewing a specific photo entry](#viewing-a-specific-photo-entry)
+        * [4. Viewing award-winners](#viewing-award-winners)
+        * [5. Viewing user control panel (admin only)](#viewing-user-control)
+    * [Update](#update)
+        * [1. Update photo details](#update-photo-details)
+        * [2. Update user details](#update-user-details)
+        * [3. Update user details (admin)](#update-user-details-admin)
+    * [Delete](#delete)
+        * [1. Delete Photo Entry](#delete-photo-entry)
+        * [2. Delete User Account](#delete-user-account)
+        * [3. Delete User Account (admin)](#delete-user-account-admin)
+  * [**Automated Processes**](#automated-processes)
+    * [1. Awards Function - Test 1](#awards-function-test-1)
+    * [2. Awards Function - Test 2](#awards-function-test-2)
+    * [3. Vote Function - Test 1](#vote-function-test-1)
+        
+
+# User Story Testing 
+
+## First Time User Goals Testing
+
+<details><summary><b>click for tests</b></summary>
+
+- __Easily understand the purpose of this web application. - PASS__
+    - The landing page is almost wholly dedicated to elucidating the purpose and functionality
+    of the application.
+    - The application's name encapsulates meaning, giving the first clue towards purpose.
+    - Then the landing page summarises the idea with a pithy tagline.
+    - Then it expands that a tad more with icons and more specific language.
+    - The timeline further explains purpose with the temporal component outlined.
+    - The next section is aptly titled "How does this work"? and it further expands on the competitive aspect.
+    - Finally, there is a collapsible that clarifies any and all questions a user might still have at this stage.
+
+- __Quickly and easily understand how to navigate and use the application. - PASS__
+    - As abovementioned the purpose and rules are evident.
+    - As for 'using' the application, alongside the above, there are also clear links to "register" which is the first action taken by a future user.
+    - When registered, a user is brought directly to their new profile page, where a message will indicate what stage of the competition is currently 
+    running and what action the user can/should take.
+
+- __Read the competition rules and how to enter and have these be clearly explained. - PASS__
+    - The competition rules are available for viewing on the landing page for unregistered users. 
+    - They are also available on the compete page for viewing alongside the entry upload form.
+ 
+- __View an application that is visually and creatively appealing and physically easy to look at. - PASS__
+    - The colours and layout have all been designed so as to enhance the visual / aesthetic appeal of the application, with a 
+    specific eye to contrast and accessibility concerns as will be detailed below.
+
+- __Browse images entered by other people to get a sense of what the application does and how it runs. - PASS__
+    - The browse page is fully functional and allows both logged in an guest users to browse images. 
+
+- __Filter my browsing by keyword, or by selecting only images that have won awards. - PASS__
+    - The browse page allows logged in and guest users to search for and filter photos by keywords, competition categories & awards status.
+
+- __View the most recent winning images and see how many points they got and who they were created by. - PASS__
+    - The "winners" page lays out the most recent award-winning images & creators and allows users to click on an image to see more details.
+
+- __Register an account using my email and password. - PASS__
+    - Registration works perfectly and to this original user goal, I added a username requirement to the registration.
+
+- __Confirm my password when registering, to ensure that I don't enter a typo. - PASS__
+    - This functionality has been implemented into the registration form. 
+
+- __Contact the application owner if I have any questions. - PASS__
+    - The contact form functions to allow users to email the Snapathon admin directly.
+
+</details>
+
+
+## Returning User Goals Testing
+
+<details><summary><b>click for tests</b></summary>
+
+#### Login & Profile - ALL PASSED
+- __Login to the application. - PASS__
+    - Login functionality works perfectly.
+
+- __View my profile. - PASS__
+    - Users can view their own and others' profiles.
+
+- __Upload an avatar. - PASS__
+    - Users can upload, change and delete their profile-pics.
+
+- __Edit my account information - change my password, username or avatar. - PASS__
+    - Users can update their account details including their passwords, emails, usernames and profile-pics.
+
+#### Competition - ALL PASSED
+- __Enter an image for competition. - PASS__ 
+    - Users can upload photos to the competition as long as they remain within the entry parameters.
+
+- __Edit the details of the image I entered for competition. - PASS__ 
+    - Users can update their photo's details using the "edit photo details" button when in the photo details view page.
+
+- __Delete the image I entered for competition. - PASS__
+    - Users can delete any of their images using the "delete photograph" button when in the photo details view page.
+
+- __View all the images that have been entered into this week's competition. - PASS__
+    - Users can view all the images collated together once the entry process has ended, so when voting opens. This was specifically structured this 
+    way so as not to give anyone an unfair advantage. 
+    - However users can also view the images in the browse section before the voting opens, but they will be mixed together with all other entries, 
+    although they can be filtered by competition theme. 
+
+- __Use my vote to vote for the image I think is the best. - PASS__
+    - Users can vote for a single image, once voting opens.
+
+#### Profile View & Functionality - ALL PASSED
+- __See how many points I have won. - PASS__
+    - A user's total points is displayed next to their profile photo on the profile view page.
+
+- __See all the images I've entered into competition. - PASS__
+    - A user can view all images they've entered into competition on their profile page under the "entries" tab.
+
+- __View my award-winning images separately from the main collection. - PASS__ 
+    - A user can view all award-winning images on their profile page under the "awards" tab.
+
+- __View all the images I've voted for. - PASS__
+    - A user can view all the images they have voted for on their profile page under the "votes" tab.
+
+#### Other - ALL PASSED 
+- __View other user profiles to see their images, who they've voted for and how many points they've won. - PASS__
+    - A user can view other user profiles by clicking on the usernames on the winners page, by clicking on any of the thumbnails on the browse page 
+    and then clicking on the username on that photo's details page, or (should they want to) by typing "profile/\<username>" in the url.
+    - User profiles are open to public view.
+
+- __Browse all the images entered from all competitions. - PASS__
+    - The browse page allows logged in and guest users to browse all entries entered into all competitions.
+
+- __Filter my browsing by keyword, or by selecting only images that have won awards. - PASS__
+    - The browse page allows logged in and guest users to search for and filter photos by keywords, competition categories & awards status.
+
+- __View the most recent award-winning images and see how many points they got and who they were created by. - PASS__
+    - The "winners" page lays out the most recent award-winning images & creators and allows users to click on an image to see more details.
+
+</details>
+
+## Accessibility User Goals Testing 
+
+<details><summary><b>click for tests</b></summary>
+
+- __As a user who is colourblind, I want the colours and design elements used to employ sufficient contrast so that any visual cues are easily apparent. - PASS__
+    - The colours and contrast was taken into account during the wireframing and initial planning stages of the application. 
+    - They were checked and rechecked with Chrome's Web Disability Simulator after every design alteration.
+    - The choice of yellow and dark grey was with an eye to its excellent contrast and how easily viewable it is by the greatest range of users.
+    - None of the application's functionality is dependent on a user being able to correctly discern between colours. Colours are used to enhance the experience for 
+    normally sighted users, such as "Delete" buttons being red, however they also have "delete" written on them, or they employ the use of icons that clearly illustrate 
+    their purpose.
+    - Here are some of the screenshot examples of how the application is viewed by colourblind users:
+
+*__Total Colourblindness__*
+
+<p align="center">
+  <img src="static/images/testing/total-cb-1.png">
+</p>
+
+*__Yellow-Blue Colourblindness__*
+
+<p align="center">
+  <img src="static/images/testing/yellow-blue-cb.png">
+</p>
+
+*__Red-Green Colourblindness__*
+
+<p align="center">
+  <img src="static/images/testing/red-green-cb.png">
+</p>
+
+- __As a keyboard user, I want to be able to navigate the application using the keyboard. - PASS__
+    - All functionality is fully keyboard accessible.
+
+- __As a user using screen reader technology, I want my screen reader to describe the page elements correctly. - PASS__
+</details>
+
+## Application Creator User Goals Testing
+
+<details><summary><b>click for tests</b></summary>
+
+- __Create and maintain a user-friendly platform allowing photography enthusiasts to compete with each other and to inspire each other with excellent images. - PASS__ 
+- __Ensure that the application is as accessible as possible to include as wide a variety of users as possible. - PASS__
+- __Create a competition application that is re-usable for other fields, if this one proves popular. - PASS__
+- __Eventually introduce a profit-earning aspect to the application, perhaps by monetizing awards for professional photographers. - PASS__
+
+</details>
+
+# Function and View Issues That Arose During Testing
 
 ## browse()
 
@@ -8,7 +229,7 @@ The default mongo db index $search method for $text indexes is an 'or' search, i
 the category dropdown menu, the search would return all photos entered into landscape competitions AND all images with mountain as a keyword. 
 What I wanted is an "and" search, so that the search would return all images entered into landscape competitions with "mountain" as a keyword.
 
-### Fix 1
+### Fix
 
 Unfortunately the mongoDB documentation was of no use here. It doesn't cover "and" searches, thankfully stack overflow had the answer. Separating 
 the search terms with "" works as below: 
@@ -22,19 +243,19 @@ When integrating pagination with my search function, it worked fine for the regu
 were correctly divided up and pagination laid out, however when the search was filtered, the pagination stopped working once a user clicked to go to page 2. The initial pagination
 worked correctly, but then page 2 would just return all the images again, unfiltered. 
 
-### Fix 2
+### Fix
 
 I eventually changed and refactored the flask-paginate functionality into my function paginated_and_pagination_args() which worked for all pages. 
 Thanks to [Ed Bradley](https://github.com/Edb83) & Kevin from Code Institute for some initial pointers on how to go about doing this.
 
-### Issue 2 
+### Issue 3 
 In order to set the values of the search form to the values searched for by the user, I needed to pass the template variables from the pages to the javascript file.
 ```category``` & ```awards``` held the values of the user's search and because they represent one of multiple choices, I could not refer directly to the value in the form
 field as with ```query```. 
 
 An easy option would be to write inline JavaScript that used the template variables, however my CSP would not allow for that, without voiding the protection afforded by it.
 
-### Fix 2
+### Fix
 I created two hidden elements that printed the values of ```category``` and ```awards``` to the template, and then I was able to target those elements with JavaScript in my 
 external script file, without altering my CSP.
 
@@ -46,7 +267,7 @@ When testing this function and page over the course of a week, all was working w
   <img src="static/images/issues/recent_winners_timeout.png">
 </p>
 
-### Fix 1 
+### Fix
 I used a number of print statements in the function and discovered that the issue was here:
 
        
@@ -65,7 +286,7 @@ images. I needed a way to set the left: position of the award depending on wheth
 attribute of the winning images. For landscape images I needed the width to be the full 100%, but for vertical images I needed it to be maximum 100%, as the 
 max-height was set at 600px and by forcing the image to take up 100% of the space, much of the image would be hidden. 
 
-### Fix 2
+### Fix
 I used the following function to conditionally set extra classes for the horizontal images, this was vertical images were the default and I could change the max-width: 100%
 to width:100%, and I set the particular left: position for the horizontal awards as well. 
 
@@ -80,10 +301,10 @@ to width:100%, and I set the particular left: position for the horizontal awards
                     })
                 }
 
-### Issue 3
+### Issue 3
 The above worked, except sometimes the styles didn't seem to apply, and only on multiple page reloads would they work.
 
-### Fix 3
+### Fix
 
 ## get_photo() 
 
@@ -113,7 +334,7 @@ Some investigation led me to the fact that "POST" methods do not have a "source_
 to the template, first checking IF there is a source_url, and if there is not, then it's most likely coming from the edit_photo view and does not require a "back to.." link as the user can just click on the "Edit photo
 details" button again.
 
-## edit_profile()
+## edit_profile()
 
 ### Issue 1 
 As part of the edit profile functionality I wanted to give users the option to delete any custom profile picture they had uploaded that they no longer wanted, but without
@@ -160,7 +381,7 @@ The method of retrieving and displaying files that gridfs uses made this functio
 to send the file. This was frustrating because it is quite possible that there be more than one photo with the same filename. 'photo.jpg' or the like. So as I had to rely on the filenames, 
 instead of on the objectIds as I'd hoped, I needed a way to make every filename completely unique. 
 
-### Fix 2:
+### Fix:
 
 I achieved this by creating a new filename, using the suffix (.png, .svg, .jpg) and then once the save_file() method had returned the file_id into my variable of the same name, I used a str() of 
 this to create a filename for each image that is completely unique and identical to their file_id. I then updated the file in mongo to have this new filename. 
@@ -175,11 +396,11 @@ this to create a filename for each image that is completely unique and identical
 
 - used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
 
-### Issue 3
+### Issue 3:
 I wanted to implement a shuffle function for the vote page so that no one's images are given undue physical priority. For example if one image is always the first 
 listed, and there are 50 images in the competition, which are paginated 10 per page, all images one page 1 are more than likely going to get more votes. 
 
-### Fix 3
+### Fix:
 This proved harder than imagined to fix, first I created a shuffle function that took an array and return a random shuffle of that array, which I then passed to the paginate
 function. The problem with this is that it shuffled each time a new page was loaded, so a photo might appear on page 1, but appear again on page 4. So this implementation
 was useless. 
@@ -213,17 +434,17 @@ This functionality will do for the first iteration of the application, but there
 
 ## base.html template
 
-### Issue 1 
+### Issue 1:
 I needed a way to reference datetime in my navigation html and because the navigation html code was written in the base.html template, there was no route leading to it that I could use to include the datetime 
 variables. 
 
-### Fix 1 
+### Fix:
 
 I discovered @app.context_processor functions which run before the templates are rendered and allow you to inject things into the entire application. I used a context_processor for datetime. 
 
-## Integrating Email functionality
+## Integrating Email functionality
 
-### Issue 1
+### Issue 1:
 I got the email working after collating many online tutorials, but the "sender" information that I was extracting from the form was not translating over to gmail where the emails could be read. So it looked like all 
 the emails were being sent from the Snapathon gmail account, as below:
 
@@ -232,7 +453,7 @@ the emails were being sent from the Snapathon gmail account, as below:
 </p>
 
 
-### Fix 1
+### Fix:
 I realised that this is expected behaviour, because it is the connected gmail account sending emails to itself. To pass on the sender information, I added the form sender into the message that gets delivered to the app's gmail, as below: 
 
             if request.method == "POST":
@@ -246,14 +467,14 @@ I realised that this is expected behaviour, because it is the connected gmail ac
                     flash("Email Sent!")
                     return redirect(url_for('home'))
 
-### Issue 2 
+### Issue 2:
 The email functionality was working fine in the local port, but when deployed to Heroku I was getting the following error: 
 
 <p align="center">
   <img src="static/images/issues/email-error.png">
 </p>
 
-### Fix 2
+### Fix:
 I had not inputed my new mail configuration variables in the Heroku config vars input area. Once I did it connected perfectly.
 
 ## awards()
@@ -340,7 +561,8 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 
 # Testing the Automated Processes
 
-The awards() function runs automatically on a Sunday evening at 22:00 - obviously to test this, I had to change those settings and run it manually. 
+## Testing the awards() function
+The awards() function runs automatically on a Sunday evening at 22:00 - and for the first tests I decided to change those settings and run it manually. 
 
 Firstly I created a selection of dummy users and for each of them I entered 1 image into a dummy weekly competition. I then made each user vote for various images and recorded
 who voted for which image. I created two spreadsheets: one recording what the user actions were and expected results, the other recording the photograph votes received and expected
@@ -426,6 +648,25 @@ As you can see the ```awards()``` function correctly reduced Franny's ```votes_t
 as well as reducing her photo "leaves"'s ```photo_votes``` from 100 to 0.
 Leaves received more votes than any other photo in that competition, but did not win any awards, 
 evidenced by its ```awards``` field remaining ```null```
+
+## Testing the awards() function 2
+
+To ensure that everything including the AP Scheduler automaton worked well, I ran another test, but for this one I did not interfere with the timing 
+of the logic.
+
+### Process:
+
+1. Again, I created (and re-used) 31 dummy users and images and had them all enter a weekly competition with the theme of "Architecture". 
+
+2. I ensured that all the awards() logic was as it would in the final deployment. 
+
+3. On Saturday I had 29 of the dummy users vote for their favourite images. 
+
+4. 2 dummy users "forgot" to vote and they are for testing the "user must vote" rule. Their photo's points should be reduced to 0. 
+
+5. 
+
+
 
 ## Testing the Vote logic
 

@@ -72,13 +72,14 @@ Users register accounts and then they enter one competition a week on a particul
     - [9. Vote](#9-vote)
     - [10. Photo Details](#10-photo-details)
     - [11. Logout](#11-logout)
+    - [12. Admin User Control](#admin-user-control)
 - [4. Back-End Features](#4-backend-features)
-    - [12. Awards Calculations](#12-awards-calculations)
-    - [13. New Competition](#13-new-competition)
-    - [14. Edit Profile](#14-edit-profile)
-    - [15. Edit Photo Details](#15-edit-photo-details)
-    - [16. Delete Account](#16-delete-account)
-    - [17. Delete Photo](#17-delete-photo)
+    - [13. Awards Calculations](#12-awards-calculations)
+    - [14. New Competition](#13-new-competition)
+    - [15. Edit Profile](#14-edit-profile)
+    - [16. Edit Photo Details](#15-edit-photo-details)
+    - [17. Delete Account](#16-delete-account)
+    - [18. Delete Photo](#17-delete-photo)
 - [5. Security](#5-security)
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
@@ -1018,17 +1019,40 @@ This allows a user to logout of the application.
 - It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
 </details>
 
-## 12. Admin Dashboard 
+## 12. Admin User Control
 
-- Admin users can navigate to this page to see a list of the application's users, some details about them and they have the options to delete 
-their account should they break the rules. 
+When an admin logs in, they are redirected to this page. It is essentially a dashboard for admin to oversee and edit or delete user profiles, should they need
+to.
+
+<details>
+<summary><b>click for features</b></summary>
+
+- The admin dashboard lists all users registered with the application. It is paginated and displays 30 users per page. 
+- Each user listing displays a number of details about the user for a quick overview. It displays a user's:
+    - username
+    - email
+    - user points
+    - number of photos entered
+    - number of photos voted for
+- The idea here is to give the administrator a decent overview of the user's overall interaction with the application, so that if they do break the rules, 
+an admin can make an informed decision as to whether it was oversight or whether they are a spammy user, or bot. 
+- If an admin decides that a user has broken the rules in a manner that means their account must be deleted, they can click the delete button under the user listing. 
+- The delete button will bring the admin to an interim screen that asks again "Delete \<username>\'s account?"
+    - If they are sure, they click a big red delete button and a modal opens prompting them to enter their admin password to confirm the deletion one more time. 
+    - I felt that this level of confirmation was important for something as final as account deletion. 
+- If an admin decides that a user's username, profile photo or email, is inappropriate they can choose instead to change it by clicking the "edit" button.
+    - The edit button opens up the Update Profile template, but without the password change section of the form, and with a different page heading. 
+- An admin can also use the search form to look for a user by keyword search. 
+    - The searched for keyword remains displayed in the search field when the results are displayed for a better admin UX.
+</details>
+### Features 
 
 #### back to [contents](#table-of-contents) 
 ---
 
 # Back-End Features
 
-## 12. Awards Calculations
+## 13. Awards Calculations
 
 The awards are calculated automatically on Sunday evening at 22:00 UTC, the results of these calculations are then displayed on the "Winners" page.
 
@@ -1048,7 +1072,7 @@ is invalidated.
 
 </details>
 
-## 13. New Competition
+## 14. New Competition
 
 Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
 <details>
@@ -1060,7 +1084,7 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 - It switches every user's "can_enter" field to True to allow all users enter the new competition.
 </details>
 
-## 14. Edit Profile
+## 15. Edit Profile
 
 When logged in and viewing their own profiles, users can click the "edit profile" button to alter their
 details. 
@@ -1090,7 +1114,7 @@ details.
 
 </details>
 
-## 15. Edit Photo Details
+## 16. Edit Photo Details
 
 A logged in user viewing the photo details page of one of their own images, will see an "edit photo details" button. 
 This will allow them to edit any of the details associated with the image, it will not allow them to change the image itself.
@@ -1112,7 +1136,7 @@ This will allow them to edit any of the details associated with the image, it wi
   the photo details page.
 </details>
 
-## 16. Delete Account
+## 17. Delete Account
 
 If a user is logged in and they click on the "Edit Profile" button on their profile page, they have the option
 user the "update profile" form, to completely delete their account. 
@@ -1129,7 +1153,7 @@ uploaded photos permanently.
 - They also have the option of clicking the "cancel" button, which will bring them back to the "update profile" page.
 </details>
 
-## 17. Delete Photo
+## 18. Delete Photo
 
 This allows a user to delete any image they have entered into the competition. When a user clicks on the photo details page 
 for one of their own images. Below the details, they will see a "delete photograph" button. 
@@ -1224,6 +1248,11 @@ The upper right side of the profile pages currently look somewhat emptier than t
 to occupy its space, however there is a future design plan. When I integrate achievement badges into the User Experience, that is where the badges will be displayed. 
 The messages will either sit under the badges or will be placed along the top of the profile as a ticker than can be closed with an X button, probably the latter.
 
+## Expand Admin Section Functionality
+
+For future releases I would consider adding extra admin features such as:
+- Allowing admins to leave a note attached to user profiles, this way warnings for bad conduct could be introduced. 
+- Allowing admins to manually select different competition themes. 
 
 # Attribution
 
@@ -1344,6 +1373,29 @@ The messages will either sit under the badges or will be placed along the top of
 - <span>Photo by <a href="https://unsplash.com/@hyingchou?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yingchou Han</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@thatsmrbio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Matthew Hamilton</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@charlesetoroma?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Charles Etoroma</a> on <a href="https://unsplash.com/s/photos/people?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@adityachinchure?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Aditya Chinchure</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@adityachinchure?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Aditya Chinchure</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@sashayudaev?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sasha Yudaev</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@barmsampaio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Bárbara Sampaio</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@ibutsubo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">ibuki Tsubo</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@agualuis?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Água Luís</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@randomlies?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ashim D’Silva</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@joelfilip?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Joel Filipe</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@ventiviews?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Cameron Venti</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@heysupersimi?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Simone Hutsch</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@scottwebb?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Scott Webb</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@piratedea?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Andreea Piratedea</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@chuttersnap?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">CHUTTERSNAP</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@erfanro?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Erfan Ro</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@possessedphotography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Possessed Photography</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@2renkov?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">alexey turenkov</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@frankielopez?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Frankie Lopez</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@matsefcik?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Matej Sefcik</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@_imd?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Zoë</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@grandsnapsfactory?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Grand Snaps</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@mkunsplash84?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Marian Kroell</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- <span>Photo by <a href="https://unsplash.com/@mak_jp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mak</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
 
 
 
