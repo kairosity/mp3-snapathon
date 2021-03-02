@@ -598,8 +598,8 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 
 ### Guest Users 
 
-- Home - [x]
-- Winners 
+- Home :heavy_check_mark:
+- Winners &#9745;
 - Browse 
 - Contact Us 
 - Login 
