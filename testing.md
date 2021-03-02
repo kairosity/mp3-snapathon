@@ -427,8 +427,6 @@ this to create a filename for each image that is completely unique and identical
 
 
 
-- used a @context_processor to inject datetime into all templates - so I don't need to keep passing it around.
-
 ### Issue 3:
 I wanted to implement a shuffle function for the vote page so that no one's images are given undue physical priority. For example if one image is always the first 
 listed, and there are 50 images in the competition, which are paginated 10 per page, all images one page 1 are more than likely going to get more votes. 
@@ -638,6 +636,7 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 - /browse - __PASS__
 - /profile/username - __PASS__
 - /edit-profile/username - __PASS__
+- /admin-search - __PASS__
 - /admin-delete-user-account/username - __PASS__
 - /photos/photo_filename.jpg - __PASS__ 
 - Competition Pages
@@ -647,7 +646,7 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 - /home#contact-form - __PASS__ 
 
 <p align="left">
-  <img src="static/images/testing/200-admin-user.png">
+  <img src="static/images/testing/200-admin-users.png">
 </p>
 
 </details>
@@ -662,13 +661,32 @@ The following url requests by the following categories of users should return a 
 - /edit-profile/username -  __PASS__ 
 - /delete-account/username -  __PASS__
 - /edit-photo/photo_filename.jpg - __PASS__
+- Competition Pages
+    - /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
+    - /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
+    - /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__  
 - /logout -  __PASS__
   
-
 <p align="left">
-  <img src="static/images/testing/200-guest-users.png">
+  <img src="static/images/testing/302-guest-users.png">
 </p>
 
+### Logged In Users 
+
+- /edit-profile/username (When the username to edit is not that of the logged in user) - __PASS__
+- /edit-photo/photo_filename.jpg (When the photo's creator is not that of the logged in user) - __PASS__
+
+<p align="left">
+  <img src="static/images/testing/302-logged-in-users.png">
+</p>
+
+### Admin Users 
+
+- /edit-photo/photo_filename.jpg - __PASS__
+
+<p align="left">
+  <img src="static/images/testing/302-admin-users.png">
+</p>
 
 </details>
 
@@ -677,14 +695,34 @@ The following url requests by the following categories of users should return a 
 
 ### Guest Users 
 
-- /admin -  __PASS__ 
+- /admin -  __PASS__
+- /admin-search - __PASS__
+- /admin-delete-user-account/username - __PASS__ 
 
+<p align="left">
+  <img src="static/images/testing/403-guest-users.png">
+</p>
 
+### Logged In Users 
+
+- /delete-account/username (When the username to delete is not that of the logged in user) -  __PASS__
+- /admin -  __PASS__
+- /admin-search - __PASS__
+- /admin-delete-user-account/username - __PASS__ 
+
+<p align="left">
+  <img src="static/images/testing/403-logged-in-users.png">
+</p>
 
 </details>
 
 ## 404 Status Code Testing
 <details><summary><b>click for tests</b></summary>
+
+### All Users 
+
+Any time any user types in an incorrect URL - they should receive a 404 status code.
+
 </details>
 
 ## 413 Status Code Testing

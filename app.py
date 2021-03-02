@@ -300,25 +300,35 @@ def admin_search():
     * Renders an array of paginated and filtered photo objects that match
       the search criterion on the browse template.
     '''
-    source_url = request.referrer
+    if session:
+        if 'user' in session:
+            if session["user"] == 'admin':
+                source_url = request.referrer
 
-    query = request.args.get("query")
+                query = request.args.get("query")
 
-    filtered_users = filter_admin_search(query, mongo)
+                filtered_users = filter_admin_search(query, mongo)
 
-    pagination, users_paginated = paginated_and_pagination_args(
-                                   filtered_users, 10, "page", "per_page")
-                                
-    print(users_paginated)
+                pagination, users_paginated = paginated_and_pagination_args(
+                                            filtered_users, 10, "page", "per_page")
 
-    if not filtered_users:
-        flash("I'm sorry, but your search did not return any images.")
+                if not filtered_users:
+                    flash("I'm sorry, but your search did not return any images.")
 
-    return render_template("admin.html",
-                           all_users=users_paginated,
-                           pagination=pagination,
-                           source_url=source_url,
-                           query=query)
+                return render_template("admin.html",
+                                    all_users=users_paginated,
+                                    pagination=pagination,
+                                    source_url=source_url,
+                                    query=query)
+            else:
+                flash("You do not have permission to access this page!")
+                abort(403)
+        else:
+            flash("You do not have permission to access this page!")
+            abort(403)
+    else:
+        flash("You must be logged in to access this page!")
+        abort(403)
 
 
 @app.route("/register", methods=["GET", "POST"])
