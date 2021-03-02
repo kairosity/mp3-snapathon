@@ -595,44 +595,62 @@ I checked it on the deployed version and it still wasn't working. (FINISH)
 # Status Code Testing 
 
 ## 200 Status Code testing
+<details><summary><b>click for tests</b></summary>
 
 ### Guest Users 
 
-:heavy_check_mark:  /home - __PASS__ 
-:heavy_check_mark:  /winners - __PASS__  
-:heavy_check_mark:  /browse - __PASS__  
-:heavy_check_mark:  /home#contact-form - __PASS__  
-:heavy_check_mark:  /login - __PASS__   
-:heavy_check_mark:  /register - __PASS__  
+- /home - __PASS__ 
+- /winners - __PASS__  
+- /browse - __PASS__
+- /profile/username - __PASS__
+- /home#contact-form - __PASS__  
+- /login - __PASS__   
+- /register - __PASS__  
 
 ### Logged In Users
 
-:heavy_check_mark: /home - __PASS__ 
-:heavy_check_mark: /winners - __PASS__  
-:heavy_check_mark: /browse - __PASS__   
-:heavy_check_mark: /profile/username - __PASS__   
+- /home - __PASS__ 
+- /winners - __PASS__  
+- /browse - __PASS__   
+- /profile/username - __PASS__   
 - Competition Pages
-    - :heavy_check_mark: /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
-    - :heavy_check_mark: /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
-    - :heavy_check_mark: /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__ 
-:heavy_check_mark: /home#contact-form - __PASS__ 
+    - /compete?username=username ('Compete' in navbar Mon-Fri) - __PASS__ 
+    - /compete?username=username ('Vote' in navbar Sat-Sun until 22:00) - __PASS__ 
+    - /compete?username=username ('Awards' in navbar Sun from 22:00-00:00) - __PASS__ 
+- /home#contact-form - __PASS__ 
 
 ### Admin Users 
-- User Control Page 
-- User Delete Page 
-- Update User Page 
+- /home - __PASS__ 
+- /winners - __PASS__  
+- /browse - __PASS__
+- /edit-profile/username - __PASS__ 
+- /home#contact-form - __PASS__ 
+
+</details>
 
 ## 302 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 ## 403 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 ## 404 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 ## 413 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 ## 415 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 ## 500 Status Code Testing
+<details><summary><b>click for tests</b></summary>
+</details>
 
 # Testing the Automated Processes
 
