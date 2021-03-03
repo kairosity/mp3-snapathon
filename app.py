@@ -18,6 +18,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge, ServiceUnavailable, HTTPException
 from flask_talisman import Talisman
+import time
 if os.path.exists("env.py"):
     import env
 
@@ -354,6 +355,7 @@ def register():
     '''
     try:
         if request.method == "POST":
+            time.sleep(5)
             url = register_new_user(mongo, request, app)
             return url
     except HTTPException:

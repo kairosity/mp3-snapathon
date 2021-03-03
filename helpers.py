@@ -207,7 +207,7 @@ def filter_users_and_exclude_non_voters(
     '''
     valid_users = []
     non_voters = []
-    
+
     for user in array_of_users:
         if user["votes_to_use"] > 0:
             non_voters.append(user)
