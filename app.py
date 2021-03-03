@@ -637,7 +637,12 @@ def get_photo(filename):
     source_url = request.referrer
 
     photo = mongo.db.photos.find_one({"filename": filename})
-    user = mongo.db.users.find_one({"username": photo["created_by"]})
+
+    try:
+        user = mongo.db.users.find_one({"username": photo["created_by"]})
+    except TypeError:
+        flash("I'm sorry but that photo could not be found.")
+        abort(404)
 
     username = user["username"]
 
@@ -764,14 +769,16 @@ def admin():
 @app.route("/admin-delete-user-account/<username>")
 def admin_delete_user_account(username):
 
-    source_url = request.referrer
-
-    user = mongo.db.users.find_one({"username": username})
-
     if session:
         if 'user' in session:
             if session["user"] == "admin":
-                return render_template('admin-delete-user-account.html', user=user, source_url=source_url)
+                source_url = request.referrer
+                user = mongo.db.users.find_one({"username": username})
+                if user != None:
+                    return render_template('admin-delete-user-account.html', user=user, username=username, source_url=source_url)
+                else:
+                    flash("Sorry, but that user was not found on the system.")
+                    abort(404)
 
             else:
                 flash("You do not have permission to access this page!")

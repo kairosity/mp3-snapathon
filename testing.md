@@ -693,6 +693,8 @@ The following url requests by the following categories of users should return a 
 ## 403 Status Code Testing
 <details><summary><b>click for tests</b></summary>
 
+The following url requests by the following categories of users should return a 403 Forbidden status code:
+
 ### Guest Users 
 
 - /admin -  __PASS__
@@ -700,7 +702,7 @@ The following url requests by the following categories of users should return a 
 - /admin-delete-user-account/username - __PASS__ 
 
 <p align="left">
-  <img src="static/images/testing/403-guest-users.png">
+  <img src="static/images/testing/403-guest-user.png">
 </p>
 
 ### Logged In Users 
@@ -711,7 +713,7 @@ The following url requests by the following categories of users should return a 
 - /admin-delete-user-account/username - __PASS__ 
 
 <p align="left">
-  <img src="static/images/testing/403-logged-in-users.png">
+  <img src="static/images/testing/403-logged-in-user.png">
 </p>
 
 </details>
@@ -722,6 +724,15 @@ The following url requests by the following categories of users should return a 
 ### All Users 
 
 Any time any user types in an incorrect URL - they should receive a 404 status code.
+
+Specifically important is that urls that are *almost* correct, as in they have the correct prefix, but lead to a non-existent profile or photo,
+also return 404 status codes. 
+
+The following were tested:
+
+/profile/incorrectusername 
+/photos/incorrectphotofilename.jpg
+/
 
 </details>
 

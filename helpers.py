@@ -821,8 +821,12 @@ def get_profile_page_photos(username, database_var):
 
     user_profile_photo = database_var.db.photos.find_one({"user": username})
 
-    user_photos = list(
-        database_var.db.photos.find({"created_by": user["username"]}))
+    try:
+        user_photos = list(
+            database_var.db.photos.find({"created_by": user["username"]}))
+    except TypeError:
+        flash("I'm sorry but that user could not be found.")
+        abort(404)
 
     user_entry_this_comp = database_var.db.photos.find_one(
                             {"created_by": user["username"],
