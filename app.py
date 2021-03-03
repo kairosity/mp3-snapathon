@@ -16,6 +16,7 @@ from datetime import datetime, date, time
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 from flask_talisman import Talisman
 if os.path.exists("env.py"):
     import env
@@ -353,8 +354,11 @@ def register():
     '''
 
     if request.method == "POST":
-        url = register_new_user(mongo, request, app)
-        return url
+        try:
+            url = register_new_user(mongo, request, app)
+            return url
+        except RequestEntityTooLarge:
+            abort(413)
     return render_template("register.html")
 
 
@@ -836,18 +840,16 @@ def forbidden_error(e):
 # is not rendering? Not sure why.
 @app.errorhandler(413)
 def payload_too_large(e):
-    print(f"This specific error is: {e}")
     error = 413
     error_msg = "Sorry, but the file you're trying to upload is too large.\
     If you are entering the competition, please have a look at the file size\
-    guidelines in the rules section. Thanks!"
-    print(error_msg)
+    guidelines in the rules section. If you are uploading a profile pic,\
+    please choose one that is under 450KB. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 413
 
 
 @app.errorhandler(415)
 def unsupported_media_type(e):
-    print(f"Error:{e}")
     error = 415
     error_msg = "Sorry, but the file you're trying to upload is an unsupported\
     file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
@@ -856,7 +858,6 @@ def unsupported_media_type(e):
 
 @app.errorhandler(408)
 def request_timeout(e):
-    print(e)
     error = 408
     error_msg = "Sorry, but the server timed out waiting for the request.\
     You might try again."

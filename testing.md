@@ -721,18 +721,42 @@ The following url requests by the following categories of users should return a 
 ## 404 Status Code Testing
 <details><summary><b>click for tests</b></summary>
 
-### All Users 
-
 Any time any user types in an incorrect URL - they should receive a 404 status code.
 
 Specifically important is that urls that are *almost* correct, as in they have the correct prefix, but lead to a non-existent profile or photo,
 also return 404 status codes. 
 
-The following were tested:
+### Guest Users 
 
-/profile/incorrectusername 
-/photos/incorrectphotofilename.jpg
-/
+- /totally-incorrect-url - __PASS__ 
+- /profile/incorrectusername - __PASS__  
+- /photos/incorrectphotofilename.jpg - __PASS__ 
+
+<p align="left">
+  <img src="static/images/testing/404-guest-user.png">
+</p>
+
+### Logged In Users 
+
+- /totally-incorrect-url - __PASS__ 
+- /profile/incorrectusername - __PASS__  
+- /photos/incorrectphotofilename.jpg - __PASS__ 
+
+<p align="left">
+  <img src="static/images/testing/404-logged-in-user.png">
+</p>
+
+### Admin Users 
+
+- /totally-incorrect-url - __PASS__ 
+- /profile/incorrectusername - __PASS__  
+- /photos/incorrectphotofilename.jpg - __PASS__ 
+- /admin-delete-user-account/incorrect-username - __PASS__ 
+
+<p align="left">
+  <img src="static/images/testing/404-admin-user.png">
+</p>
+
 
 </details>
 

@@ -1,5 +1,5 @@
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     redirect, request, session, url_for,
     abort)
 from flask_pymongo import PyMongo, pymongo
@@ -10,6 +10,7 @@ from datetime import timedelta
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 
 if os.path.exists("env.py"):
     import env
@@ -646,6 +647,7 @@ def save_photo(request, database_var, name_of_image_from_form, app):
        upload "name" field.
     4. app (obj): The WSGI application as an object of the Flask class.
     '''
+    print("Got here!")
     photo = request.files[name_of_image_from_form]
 
     file_extension = os.path.splitext(photo.filename)[1]
@@ -658,7 +660,11 @@ def save_photo(request, database_var, name_of_image_from_form, app):
 
     photo.filename = secure_filename(photo.filename)
 
-    file_id = database_var.save_file(photo.filename, photo)
+    
+    try:
+        file_id = database_var.save_file(photo.filename, photo)
+    except RequestEntityTooLarge:
+        abort(413)
 
     # This makes the filename unique
     new_filename = str(file_id) + file_extension
@@ -714,6 +720,8 @@ def register_new_user(database_var, request, app):
 
 
     photo_filename_to_add_to_user = None
+
+    print("Got here in register_new_user func in helpers")
 
     if request.files['profile-pic']:
         file_id, new_filename = save_photo(

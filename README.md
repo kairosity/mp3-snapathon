@@ -1593,6 +1593,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Flask documentation about how to add a favicon. 
 
+- ## [Example of how catch RequestEntityTooLarge exception](https://gist.github.com/bacher09/7231395)
+
+    Used to catch large photo errors gracefully.
+
 ## Flask Paginate
 
 - ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
