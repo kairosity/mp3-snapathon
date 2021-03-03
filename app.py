@@ -16,7 +16,7 @@ from datetime import datetime, date, time
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge
+from werkzeug.exceptions import RequestEntityTooLarge, ServiceUnavailable, HTTPException
 from flask_talisman import Talisman
 if os.path.exists("env.py"):
     import env
@@ -352,13 +352,13 @@ def register():
     * If registration is unsuccessfuly the register template is
       reloaded with flash messages detailing why.
     '''
-
-    if request.method == "POST":
-        try:
+    try:
+        if request.method == "POST":
             url = register_new_user(mongo, request, app)
             return url
-        except RequestEntityTooLarge:
-            abort(413)
+    except HTTPException:
+        abort(413)
+
     return render_template("register.html")
 
 
