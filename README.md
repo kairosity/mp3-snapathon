@@ -1395,7 +1395,7 @@ For future releases I would consider adding extra admin features such as:
 - <span>Photo by <a href="https://unsplash.com/@grandsnapsfactory?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Grand Snaps</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@mkunsplash84?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Marian Kroell</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@mak_jp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mak</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
-
+- <span>Photo by <a href="https://unsplash.com/@laurachouette?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Laura Chouette</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 
 
 
@@ -1716,6 +1716,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Convertio - File Converter](https://convertio.co/)
 
     Awesome online tool for converting files to different types. Used in this application to convert favicon from .svg to .ico
+
+- ## [Video to gif Converter](https://ezgif.com/video-to-gif)
+    
+    Used to create the short testing gifs included in the testing.md doc
+
 # Libraries
 
 ## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 

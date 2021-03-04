@@ -772,6 +772,93 @@ also return 404 status codes.
 <details><summary><b>click for tests</b></summary>
 </details>
 
+# Functionality Testing
+
+## Base Functionality
+### 1. Navigation
+
+### 2. Login
+
+### 3. Links 
+
+### 4. Buttons
+
+### 5. Forms
+
+### 6. Input Validation
+
+### 7. Pagination
+
+### 8. Email
+
+### 9. Logout
+
+## CRUD Functionality
+
+All the various CRUD actions were thoroughly manually tested by the creation, viewing, editing and destruction of 
+multiple dummy users and competition entries.
+
+### __Create__
+
+### 1. New User Registration
+
+Testing process:
+- Click on one of the various "Register" links, and verify that the register page loads.
+- Fill out username, email address, profile pic & both password fields correctly. 
+- Click the "Register" button.
+- Confirm successful redirection to the new user's profile page, with the username & profile 
+photo displaying correctly. 
+- Further confirmed by manually checking the Mongo database to confirm user creation.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/registration.gif" width="600">
+</div>
+ 
+### 2. Entering the Competition
+
+Testing process:
+- Click on a link to the Compete page.
+- Fill out the entry form including: title, uploading the entry, story, camera, lens, aperture, 
+shutter speed, iso and checking the disclaimer.
+- Click on the "Compete" button. 
+- Verify that a successful submission screem appears displaying the uploaded entry.
+- Verify that the uploaded image is visible on the user's profile page.
+- Further confirmed by checking that a new entry was created in the Mongo database.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/compete.gif" width="600">
+</div>
+
+### __Read__
+
+### 1. Viewing a specific profile
+
+### 2. Browsing and filtering images
+
+### 3. Viewing a specific photo entry
+
+### 4. Viewing award-winners 
+
+### 5. Viewing user control panel (admin only)
+
+### __Update__
+
+### 1. Update photo details
+
+### 2. Update user details
+
+### 3. Update user details (admin)
+
+### __Delete__
+
+### 1. Delete Photo Entry
+
+### 2. Delete User Account 
+### 3. Delete User Account (admin)
+
+
+
+
 # Testing the Automated Processes
 
 ## Testing the awards() function

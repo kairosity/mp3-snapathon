@@ -28,17 +28,17 @@ csrf = CSRFProtect(app)
 
 csp = {
     'default-src': [
-        '\'self\'',
+        '\'unsafe-inline\' \'self\'',
         'cdnjs.cloudflare.com',
         'fonts.googleapis.com'
     ],
     'style-src': [
-        "\'self\'",
+        '\'unsafe-inline\' \'self\'',
         'cdnjs.cloudflare.com',
         'https://fonts.googleapis.com'
     ],
     'font-src': [
-        "\'self\'",
+        '\'unsafe-inline\' \'self\'',
         "https://fonts.gstatic.com",
         'cdnjs.cloudflare.com'
     ],
@@ -353,13 +353,15 @@ def register():
     * If registration is unsuccessfuly the register template is
       reloaded with flash messages detailing why.
     '''
-    try:
-        if request.method == "POST":
-            time.sleep(5)
+    
+    if request.method == "POST":
+        print("Does it even get here? ")
+        try:
+            time.sleep(3)
             url = register_new_user(mongo, request, app)
             return url
-    except HTTPException:
-        abort(413)
+        except:
+            abort(413)
 
     return render_template("register.html")
 
