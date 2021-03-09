@@ -552,10 +552,8 @@ def compete():
             current_user = mongo.db.users.find_one(
                         {"username": session["user"]})
 
-            #date_time.strftime("%V%G")
-
             this_weeks_entries = list(mongo.db.photos.find(
-                                {"week_and_year": "090221"}))
+                                {"week_and_year": date_time.strftime("%V%G")}))
 
             # If the user has voted
             if current_user["votes_to_use"] == 0:
@@ -566,7 +564,7 @@ def compete():
             else:
                 photo_user_voted_for = None
 
-            current_week_number = int(datetime.now().strftime("%V"))-1
+            current_week_number = int(datetime.now().strftime("%V"))
             this_weeks_comp_category = get_competition(
                                     current_week_number)["category"]
             this_weeks_comp_instructions = get_competition(
@@ -588,11 +586,10 @@ def compete():
                 else:
                     flash("I'm sorry, but you've already entered \
                         an image in this week's competition!")
-#date_time.strftime("%V%G")
-            this_weeks_entries = list(mongo.db.photos.find(
-                                {"week_and_year": "092021"}))
 
-            print(this_weeks_entries)
+            this_weeks_entries = list(mongo.db.photos.find(
+                                {"week_and_year": date_time.strftime("%V%G")}))
+
             pagination, photos_paginated = paginated_and_pagination_args(
                                         this_weeks_entries, 50, "page", "per_page")
 

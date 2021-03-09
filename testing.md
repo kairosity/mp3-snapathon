@@ -835,20 +835,86 @@ shutter speed, iso and checking the disclaimer.
 
 Testing process:
 - Navigate to the "recent winners" page. 
-- Fill out the entry form including: title, uploading the entry, story, camera, lens, aperture, 
-shutter speed, iso and checking the disclaimer.
-- Click on the "Compete" button. 
-- Verify that a successful submission screem appears displaying the uploaded entry.
-- Verify that the uploaded image is visible on the user's profile page.
-- Further confirmed by checking that a new entry was created in the Mongo database.
+- Click on a winner's username to view their profile page.
+- Navigate to the  "Browse Images" page.
+- Click on an image. 
+- On the image details page, click on the username of the image's creator.
+- View the profile page. 
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/view_profiles.gif" width="600">
+</div>
 
 ### 2. Browsing and filtering images
 
+Testing process:
+- Navigate to the "Browse" page. 
+- Click on any image to view its image details page.
+- Click back to the browse images page, using the "back to browse" link.
+- Click the pagination links to verify they work.
+- Filter a search by searching for award-winning images only.
+- Reset the search.
+- Filter a search by searching for landscape images only.
+- Reset the search.
+- Filter a search by searching for images associated with the username: "karina".
+- Reset the search.
+- Filter a search by searching for archictectural images that have won awards and have the keyword "sky" attached to them.
+
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/browse-filter.gif" width="600">
+</div>
+
+
 ### 3. Viewing a specific photo entry
+Testing process:
+- Navigate to the "Browse" page. 
+- Click on any image to view its image details page.
+- Navigate to that photo's user.
+- Click on another of their photos to be brought to that photo details page.
+- Navigate to the Winner's Page.
+- Click on one of the winning photos to be brought to that photo details page.
+
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/view-photo.gif" width="600">
+</div>
+
 
 ### 4. Viewing award-winners 
 
+Testing process:
+- Navigate to the "Winners" page. 
+- Scroll down and click on an image.
+- Navigate back to the winner's page.
+- Click on one of the winning photo's user's name.
+- Verify the photo is displayed in the "Awards" tab on their user profile page.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/view-award-winners.gif" width="600">
+</div>
+
 ### 5. Viewing user control panel (admin only)
+
+Testing process:
+- Login as admin
+- Should be automatically redirected to the admin user control panel. 
+- Click on the pencil button to see the specific update user screen for admin users.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/view-user-control.gif" width="600">
+</div>
+
+### 6. Searching by username in user control panel (admin only)
+
+Testing process:
+- In the user control panel type a username and click search
+- View the results.
+- Reset the search fields.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/filter-user-control.gif" width="600">
+</div>
 
 ### __Update__
 
@@ -1006,6 +1072,9 @@ For the user profile page, I confined the logic to the view rather than the temp
                     photos_voted_for_objs.append(photo)  
 
 Where ```photos_voted_for_objs``` was the array passed to the template.  
+
+
+
 
 # Input Validation
 
