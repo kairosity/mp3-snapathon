@@ -833,6 +833,15 @@ shutter speed, iso and checking the disclaimer.
 
 ### 1. Viewing a specific profile
 
+Testing process:
+- Navigate to the "recent winners" page. 
+- Fill out the entry form including: title, uploading the entry, story, camera, lens, aperture, 
+shutter speed, iso and checking the disclaimer.
+- Click on the "Compete" button. 
+- Verify that a successful submission screem appears displaying the uploaded entry.
+- Verify that the uploaded image is visible on the user's profile page.
+- Further confirmed by checking that a new entry was created in the Mongo database.
+
 ### 2. Browsing and filtering images
 
 ### 3. Viewing a specific photo entry

@@ -28,17 +28,17 @@ csrf = CSRFProtect(app)
 
 csp = {
     'default-src': [
-        '\'unsafe-inline\' \'self\'',
+        '\'self\'',
         'cdnjs.cloudflare.com',
         'fonts.googleapis.com'
     ],
     'style-src': [
-        '\'unsafe-inline\' \'self\'',
+        '\'self\'',
         'cdnjs.cloudflare.com',
         'https://fonts.googleapis.com'
     ],
     'font-src': [
-        '\'unsafe-inline\' \'self\'',
+        '\'self\'',
         "https://fonts.gstatic.com",
         'cdnjs.cloudflare.com'
     ],
@@ -94,7 +94,7 @@ def awards():
       came 1st, 2nd or 3rd.
     '''
     #This needs to change to # datetime.now().strftime("%V%G")
-    this_week_and_year_formatted = "082021"
+    this_week_and_year_formatted = "092021"
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
@@ -552,8 +552,10 @@ def compete():
             current_user = mongo.db.users.find_one(
                         {"username": session["user"]})
 
+            #date_time.strftime("%V%G")
+
             this_weeks_entries = list(mongo.db.photos.find(
-                                {"week_and_year": date_time.strftime("%V%G")}))
+                                {"week_and_year": "090221"}))
 
             # If the user has voted
             if current_user["votes_to_use"] == 0:
@@ -564,7 +566,7 @@ def compete():
             else:
                 photo_user_voted_for = None
 
-            current_week_number = int(datetime.now().strftime("%V"))
+            current_week_number = int(datetime.now().strftime("%V"))-1
             this_weeks_comp_category = get_competition(
                                     current_week_number)["category"]
             this_weeks_comp_instructions = get_competition(
@@ -586,11 +588,11 @@ def compete():
                 else:
                     flash("I'm sorry, but you've already entered \
                         an image in this week's competition!")
-
+#date_time.strftime("%V%G")
             this_weeks_entries = list(mongo.db.photos.find(
-                                {"week_and_year": date_time.strftime("%V%G")}))
+                                {"week_and_year": "092021"}))
 
-
+            print(this_weeks_entries)
             pagination, photos_paginated = paginated_and_pagination_args(
                                         this_weeks_entries, 50, "page", "per_page")
 
