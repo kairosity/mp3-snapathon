@@ -60,7 +60,7 @@ Users register accounts and then they enter one competition a week on a particul
         - [Files Collection](#files-collection)
         - [Chunks Collection](#chunks-collection)
     - [Non-Relational Design](#non-relational-design)
-- [3. Front-End Features](#3-frontend-features)
+- [3. Features](#features)
     - [1. Home](#1-home)
     - [2. Winners](#2-winners)
     - [3. Browse](#3-browse)
@@ -71,16 +71,17 @@ Users register accounts and then they enter one competition a week on a particul
     - [8. Compete](#8-compete)
     - [9. Vote](#9-vote)
     - [10. Photo Details](#10-photo-details)
-    - [11. Logout](#11-logout)
-    - [12. Admin User Control](#admin-user-control)
-- [4. Back-End Features](#4-backend-features)
-    - [13. Awards Calculations](#12-awards-calculations)
-    - [14. New Competition](#13-new-competition)
-    - [15. Edit Profile](#14-edit-profile)
-    - [16. Edit Photo Details](#15-edit-photo-details)
-    - [17. Delete Account](#16-delete-account)
-    - [18. Delete Photo](#17-delete-photo)
-- [5. Security](#5-security)
+    - [11. Edit Profile](#14-edit-profile)
+    - [12. Edit Photo Details](#15-edit-photo-details)
+    - [13. Delete Account](#16-delete-account)
+    - [14. Delete Photo](#17-delete-photo)
+    - [15. Logout](#11-logout)
+    - [16. Admin User Control](#admin-user-control)
+    - [17. Awards Calculations](#12-awards-calculations)
+    - [18. New Competition](#13-new-competition)
+- [4. Responsivity](#responsivity)
+- [5. Accessibility](#accessibility)
+- [6. Security](#5-security)
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
     - [3. Approved File Extensions](#3-approved-file-extensions)
@@ -88,6 +89,28 @@ Users register accounts and then they enter one competition a week on a particul
     - [5. Validating file contents](#5-validating-file-contents)
     - [6. Securing the upload filename](#6-securing-the-upload-filenames)
     - [7. CSP](#7-csp)
+- [7. Testing](#testing)
+- [8. Future Features To Implement](#future-features-to-implement)
+- [9. Attribution](#attribution)
+- [10. Deployment](#deployment)
+- [11. Tools and Other Resources Used](#tools-and-other-resources-used)
+    - [1. Design](#1-design)
+    - [2. HTML and CSS](#2-html-and-css)
+    - [3. JavaScript](#3-javascript)
+    - [4. Python](#4-python)
+    - [5. Flask](#5-flask)
+    - [6. Flask Paginate](#6-flask-paginate)
+    - [7. Flask-Mail](#7-flask-mail)
+    - [8. Flask-Talisman](#8-flask-talisman)
+    - [9. MongoDB](#9-mongodb)
+    - [10. Jinja](#10-jinja)
+    - [11. APScheduler](#11-apscheduler)
+    - [12. General/Misc](#12-general-misc)
+- [12. Libraries](#libraries)
+- [13. Technology Used](#technology-used)
+- [14. Acknowledgements](#acknowledgments)
+
+<br>
 
 # UX
 ## User Stories
@@ -740,7 +763,7 @@ such as this one, that might change substantially in its first months of existen
 
 #### back to [contents](#table-of-contents) 
 
-# Front-End Features
+# Features
 
 ## 1. Home
 The landing page is the first impression of the application and a window to what it does. Suffice it to say
@@ -781,6 +804,7 @@ personal message saying ```"welcome username"```
 - The rest of the page is the same except that the "Register to get started today!" link cta is also not present.
 </details>
 
+<br>
 
 ## 2. Winners
 The winners page displays the results of each weekly competition. It is updated on a Sunday evening at 22:00 UTC.
@@ -797,6 +821,8 @@ The winners page displays the results of each weekly competition. It is updated 
 - Displays an award badge on winning images. 
 - If there were no photos entered or no photos got any points, then a message to that effect is displayed. 
 </details>
+
+<br>
 
 ## 3. Browse
 
@@ -820,6 +846,8 @@ and the creator of the image as well as a badge in the upper left hand corner, i
 - The overlay also displays an instruction to the user to click if they want to view the image detail page.
 </details>
 
+<br>
+
 ## 4. Contact
 The contact section allows users to contact the application owners via email. The form is located at the bottom of the homepage and is fully functional.
 Direct lines of communication are important with an application such as this where creative work is displayed. 
@@ -836,6 +864,8 @@ If users have any questions about functionality or copyright issues or questions
 - The Materialize form validations handle any errors in email or message format and both fields are required.
 </details>
 
+<br>
+
 ## 5. Login
 The login page allows registered users to access their account and engage with the application.
 <details><summary><b>click for features</b></summary>
@@ -848,6 +878,8 @@ I think that users more easily forget their usernames, as they usually differ fr
 - If they enter their details incorrectly they see a flash message detailing the issue.
 - User passwords are hashed and then read by Werkzeug. 
 </details>
+
+<br>
 
 ## 6. Register 
 The register page allows new users to register with SNAPATHON, allowing them to engage with the application. 
@@ -871,6 +903,8 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 - When the user registers successfully, a session is created and they are redirected to their new profile page.
 </details>
 
+<br>
+
 ## 7. Profile
 The profile page is a user's calling card and homebase in the application, it displays their photos and the photos they've voted for, as well as their points total.
 Their profile is open for all to view.
@@ -893,6 +927,8 @@ awards.
 5. To the right of their profile header the user sees a message specific to their current time and action status in the competition. These have already been detailed 
 above in [timing messages](#timing-messages). 
 </details>
+
+<br>
 
 ## 8. Compete
 The compete page is where users upload their images to compete in the competition each week. This page is only accessible to registered users 
@@ -933,6 +969,8 @@ a 415 error will be thrown.
 - The form itself contains a hidden csrf token from flask_wtf to protect against cross site request forgery attacks.
 </details>
 
+<br>
+
 ## 9. Vote
 
 The vote page is where users who have entered the competition can vote for their favourite image.
@@ -969,6 +1007,7 @@ ended.
 after the awards are distributed. 
 </details>
 
+<br>
 
 ## 10. Photo Details
 This page allows users to view a larger version of the photos and to display all attendant details such as the photo title, 
@@ -1007,84 +1046,9 @@ If they came from "browse" it will read "back to browse!"
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
 </details>
 
-## 11. Logout
+<br>
 
-This allows a user to logout of the application.
-<details>
-<summary><b>click for features</b></summary>
-
-### Features 
-
-- The logout function is run from a link on the navbar.
-- It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
-</details>
-
-## 12. Admin User Control
-
-When an admin logs in, they are redirected to this page. It is essentially a dashboard for admin to oversee and edit or delete user profiles, should they need
-to.
-
-<details>
-<summary><b>click for features</b></summary>
-
-- The admin dashboard lists all users registered with the application. It is paginated and displays 30 users per page. 
-- Each user listing displays a number of details about the user for a quick overview. It displays a user's:
-    - username
-    - email
-    - user points
-    - number of photos entered
-    - number of photos voted for
-- The idea here is to give the administrator a decent overview of the user's overall interaction with the application, so that if they do break the rules, 
-an admin can make an informed decision as to whether it was oversight or whether they are a spammy user, or bot. 
-- If an admin decides that a user has broken the rules in a manner that means their account must be deleted, they can click the delete button under the user listing. 
-- The delete button will bring the admin to an interim screen that asks again "Delete \<username>\'s account?"
-    - If they are sure, they click a big red delete button and a modal opens prompting them to enter their admin password to confirm the deletion one more time. 
-    - I felt that this level of confirmation was important for something as final as account deletion. 
-- If an admin decides that a user's username, profile photo or email, is inappropriate they can choose instead to change it by clicking the "edit" button.
-    - The edit button opens up the Update Profile template, but without the password change section of the form, and with a different page heading. 
-- An admin can also use the search form to look for a user by keyword search. 
-    - The searched for keyword remains displayed in the search field when the results are displayed for a better admin UX.
-</details>
-### Features 
-
-#### back to [contents](#table-of-contents) 
----
-
-# Back-End Features
-
-## 13. Awards Calculations
-
-The awards are calculated automatically on Sunday evening at 22:00 UTC, the results of these calculations are then displayed on the "Winners" page.
-
-<details>
-<summary><b>click for features</b></summary>
-
-### Features 
-
-- The awards calculation is automatically run at 22:00PM on Sunday evening using a python library called AP Scheduler.
-- From the pool of votes acquired from all the images, the awards function calculates the range of votes and from that range it determines
- what number of votes a photo needs to win a 1st, 2nd & 3rd prize. 
-- The votes gained must be greater than 0 to win an award.
-- If two or more images receive the same number of votes, then those photos all win that level of award.
-- If a user has entered a photo into competition but then between Saturday & Sunday at 22:00PM fails to vote for a photo, that user's entry is 
-made null and void, and this functionality is built into the awards calculations. Their photo's votes (points) are reduced to 0 and thus the entry 
-is invalidated.
-
-</details>
-
-## 14. New Competition
-
-Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
-<details>
-<summary><b>click for features</b></summary>
-
-### Features 
-
-- This is run automatically using APScheduler at 0:00 Monday morning.
-- It switches every user's "can_enter" field to True to allow all users enter the new competition.
-</details>
-
-## 15. Edit Profile
+## 11. Edit Profile
 
 When logged in and viewing their own profiles, users can click the "edit profile" button to alter their
 details. 
@@ -1114,7 +1078,9 @@ details.
 
 </details>
 
-## 16. Edit Photo Details
+<br>
+
+## 12. Edit Photo Details
 
 A logged in user viewing the photo details page of one of their own images, will see an "edit photo details" button. 
 This will allow them to edit any of the details associated with the image, it will not allow them to change the image itself.
@@ -1136,7 +1102,9 @@ This will allow them to edit any of the details associated with the image, it wi
   the photo details page.
 </details>
 
-## 17. Delete Account
+<br>
+
+## 13. Delete Account
 
 If a user is logged in and they click on the "Edit Profile" button on their profile page, they have the option
 user the "update profile" form, to completely delete their account. 
@@ -1153,7 +1121,9 @@ uploaded photos permanently.
 - They also have the option of clicking the "cancel" button, which will bring them back to the "update profile" page.
 </details>
 
-## 18. Delete Photo
+<br>
+
+## 14. Delete Photo
 
 This allows a user to delete any image they have entered into the competition. When a user clicks on the photo details page 
 for one of their own images. Below the details, they will see a "delete photograph" button. 
@@ -1176,7 +1146,88 @@ are not able to enter another image into that week's competition.
 
 </details>
 
+<br>
+
+## 15. Logout
+
+This allows a user to logout of the application.
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- The logout function is run from a link on the navbar.
+- It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
+</details>
+
+<br>
+
+## 16. Admin User Control
+
+When an admin logs in, they are redirected to this page. It is essentially a dashboard for admin to oversee and edit or delete user profiles, should they need
+to.
+
+<details>
+<summary><b>click for features</b></summary>
+
+- The admin dashboard lists all users registered with the application. It is paginated and displays 30 users per page. 
+- Each user listing displays a number of details about the user for a quick overview. It displays a user's:
+    - username
+    - email
+    - user points
+    - number of photos entered
+    - number of photos voted for
+- The idea here is to give the administrator a decent overview of the user's overall interaction with the application, so that if they do break the rules, 
+an admin can make an informed decision as to whether it was oversight or whether they are a spammy user, or bot. 
+- If an admin decides that a user has broken the rules in a manner that means their account must be deleted, they can click the delete button under the user listing. 
+- The delete button will bring the admin to an interim screen that asks again "Delete \<username>\'s account?"
+    - If they are sure, they click a big red delete button and a modal opens prompting them to enter their admin password to confirm the deletion one more time. 
+    - I felt that this level of confirmation was important for something as final as account deletion. 
+- If an admin decides that a user's username, profile photo or email, is inappropriate they can choose instead to change it by clicking the "edit" button.
+    - The edit button opens up the Update Profile template, but without the password change section of the form, and with a different page heading. 
+- An admin can also use the search form to look for a user by keyword search. 
+    - The searched for keyword remains displayed in the search field when the results are displayed for a better admin UX.
+</details>
+
+<br>
+
+## 17. Awards Calculations
+
+The awards are calculated automatically on Sunday evening at 22:00 UTC, the results of these calculations are then displayed on the "Winners" page.
+
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- The awards calculation is automatically run at 22:00PM on Sunday evening using a python library called AP Scheduler.
+- From the pool of votes acquired from all the images, the awards function calculates the range of votes and from that range it determines
+ what number of votes a photo needs to win a 1st, 2nd & 3rd prize. 
+- The votes gained must be greater than 0 to win an award.
+- If two or more images receive the same number of votes, then those photos all win that level of award.
+- If a user has entered a photo into competition but then between Saturday & Sunday at 22:00PM fails to vote for a photo, that user's entry is 
+made null and void, and this functionality is built into the awards calculations. Their photo's votes (points) are reduced to 0 and thus the entry 
+is invalidated.
+
+</details>
+
+<br>
+
+## 18. New Competition
+
+Every Monday morning at 0:00 this feature resets all users so that a new competition can begin. 
+<details>
+<summary><b>click for features</b></summary>
+
+### Features 
+
+- This is run automatically using APScheduler at 0:00 Monday morning.
+- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+</details>
+
+
 #### back to [contents](#table-of-contents) 
+<br>
 ---
 
 # Security
@@ -1218,14 +1269,19 @@ GET renders the edit-profile template form if the username passed
 I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. 
 
 
+#### __back to [contents](#table-of-contents)__
 
-#### back to [contents](#table-of-contents) 
+<br>
 
+# Testing
 
+__[Click here to read all testing documentation.](testing.md)__
 
-# Application Logic
+#### __back to [contents](#table-of-contents)__
 
-# Future Functionality
+<br>
+
+# Future Features To Implement
 
 ## Expanded upload functionality
 
@@ -1233,7 +1289,7 @@ Uploaded images must be kept below 500KB, currently the onus is on the user to r
 I would like to allow the users to upload any size image they want, and the application will resize the image before it is saved to the database. This will allow
 for greater flexibility and improved UX when it comes to using mobile to upload images, as resizing on mobile is still not straightforward.
 
-## Offensive Images Filter 
+## Offensive Images Filter 
 
 If this application grows, it will be necessary to implement some automatic system whereby offensive images are screened using image recognition software, and
 rejected before being saved to the database. 
@@ -1248,25 +1304,28 @@ The upper right side of the profile pages currently look somewhat emptier than t
 to occupy its space, however there is a future design plan. When I integrate achievement badges into the User Experience, that is where the badges will be displayed. 
 The messages will either sit under the badges or will be placed along the top of the profile as a ticker than can be closed with an X button, probably the latter.
 
-## Expand Admin Section Functionality
+## Expand Admin Section Functionality
 
 For future releases I would consider adding extra admin features such as:
 - Allowing admins to leave a note attached to user profiles, this way warnings for bad conduct could be introduced. 
 - Allowing admins to manually select different competition themes. 
 
+<br>
+
 # Attribution
 
-- [Adding class to li after page is loaded](https://stackoverflow.com/questions/40506710/adding-class-to-li-after-page-is-loaded/40506822#40506822)
+- ## [Adding class to li after page is loaded](https://stackoverflow.com/questions/40506710/adding-class-to-li-after-page-is-loaded/40506822#40506822)
 
     I used Rafal Cz.'s solution to this stack overflow question to change the active class on my navbar on desktop and mobile. 
 
-- [CSS based responsive timeline](https://codepen.io/krishnab/pen/OPwqbW/)
+- ## [CSS based responsive timeline](https://codepen.io/krishnab/pen/OPwqbW/)
 
     I used Krishna Babu's responsive CSS Timeline on my homepage to outline the competition schedule. 
 
-- [Finding the date of the next Saturday](https://stackoverflow.com/questions/16769902/finding-the-date-of-the-next-saturday)
+- ## [Finding the date of the next Saturday](https://stackoverflow.com/questions/16769902/finding-the-date-of-the-next-saturday)
 
     I used Emmanuel's answer to this question to write user specific messages on my user's profile pages, when they login. 
+<br>
 
 ## Unsplash Images Used in the Application
 
@@ -1397,10 +1456,9 @@ For future releases I would consider adding extra admin features such as:
 - <span>Photo by <a href="https://unsplash.com/@mak_jp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mak</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@laurachouette?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Laura Chouette</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 
-
-
-
 </details>
+
+<br>
 
 # Deployment
 
@@ -1495,7 +1553,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used throughout the application for images.
 
-## HTML/CSS 
+## 2. HTML/CSS 
 
 - ## [Regex use vs. Regex abuse](https://blog.codinghorror.com/regex-use-vs-regex-abuse/)
 
@@ -1513,21 +1571,24 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     This Stack Overflow question was useful when customizing form elements. 
 
-- ## [Change color of checkbox in Materialize framework](https://stackoverflow.com/questions/35261021/change-color-of-checkbox-in-materialize-framework)
+- ## [Change color of checkbox in Materialize framework](https://stackoverflow.com/questions/35261021/change-color-of-checkbox-in-materialize-framework)
 
     Stack Overflow article enabled me to override the Materialize checkbox colour styles. 
 
-- ## [Beautiful CSS box-shadow examples](https://getcssscan.com/css-box-shadow-examples)
+- ## [Beautiful CSS box-shadow examples](https://getcssscan.com/css-box-shadow-examples)
 
     A great collection of box-shadows
 
-## JavaScript 
+## 3. JavaScript 
 
-- ## [W3 Schools - Location hash Property](https://www.w3schools.com/jsref/prop_loc_hash.asp)
+- ## [W3 Schools - Location hash Property](https://www.w3schools.com/jsref/prop_loc_hash.asp)
 
     Used on the browse page to scroll down to the images when a user searches.
 
-## Python 
+- ## [How to wait for the DOM ready event in plain JavaScript](https://flaviocopes.com/dom-ready/)
+
+    Used for formatting the images on the winner's page. 
+## 4. Python 
 
 - ## [W3Schools Python Datetime Information](https://www.w3schools.com/python/python_datetime.asp)
 
@@ -1541,15 +1602,15 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used briefly for a function that has since been removed. Good to know though.
 
-- ## [Python List Comprehension](https://www.programiz.com/python-programming/list-comprehension)
+- ## [Python List Comprehension](https://www.programiz.com/python-programming/list-comprehension)
 
     List comprehension used in a number of places throughout the application. A much more efficient and nicer way to loop through arrays. 
 
-- ## [Write a long string into multiple lines of code in Python](https://note.nkmk.me/en/python-long-string/)
+- ## [Write a long string into multiple lines of code in Python](https://note.nkmk.me/en/python-long-string/)
     
     How to format long strings while remaining PEP8 compliant. 
 
-- ## [Using ternary operators in Python](https://book.pythontips.com/en/latest/ternary_operators.html)
+- ## [Using ternary operators in Python](https://book.pythontips.com/en/latest/ternary_operators.html)
 
     Nice short way to write conditionals.
 
@@ -1557,7 +1618,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Useful information for refactoring.
 
-## Flask
+## 5. Flask
 
 - ## [Flask templates information](https://flask.palletsprojects.com/en/1.1.x/templating/#context-processors)
 
@@ -1579,7 +1640,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Good information on using WTF File Field.
 
-- ## [Get Form Checkbox Data in Flask with .getlist](https://www.youtube.com/watch?v=_sgVt16Q4O4)
+- ## [Get Form Checkbox Data in Flask with .getlist](https://www.youtube.com/watch?v=_sgVt16Q4O4)
 
     Quick tutorial on how to get and use the form checkbox data in Flask.
 
@@ -1597,7 +1658,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to catch large photo errors gracefully.
 
-## Flask Paginate
+## 6. Flask Paginate
 
 - ## [How to use Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
 
@@ -1607,7 +1668,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to get a better understanding of this extension in order to customise it to use 3 times on my profile page. 
 
-## Flask-Mail
+## 7. Flask-Mail
 
 - ## [Configure Flask-Mail to use GMail](https://stackoverflow.com/questions/37058567/configure-flask-mail-to-use-gmail)
 
@@ -1629,9 +1690,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Another useful Stack Overflow question re: Flask-Mail.
 
-## Flask-Talisman
+## 8. Flask-Talisman
 
-- ## [Flask-Talisman Extension](https://github.com/GoogleCloudPlatform/flask-talisman)
+- ## [Flask-Talisman Extension](https://github.com/GoogleCloudPlatform/flask-talisman)
 
     Brilliant extension to quickly protect against some common security threats.
 
@@ -1643,7 +1704,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Helped me integrate Talisman correctly. 
 
-## MongoDB 
+## 9. MongoDB 
 
 - ## [GridFS Documentation](https://docs.mongodb.com/manual/core/gridfs/)
 
@@ -1667,11 +1728,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Official documentation on building text indexes with Mongo DB.
 
-- ## [How to AND and NOT in MongoDB $text search](https://stackoverflow.com/questions/23985464/how-to-and-and-not-in-mongodb-text-search)
+- ## [How to AND and NOT in MongoDB $text search](https://stackoverflow.com/questions/23985464/how-to-and-and-not-in-mongodb-text-search)
 
     Useful stack overflow question, as the information is missing from the Mongo DB docs.
 
-## Jinja
+## 10. Jinja
 
 - ## [Jinja Documentation](https://jinja.palletsprojects.com/en/2.11.x/)
 
@@ -1679,7 +1740,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used on the recent winners page to determine whether or not there was a tie. 
 
-## APScheduler
+## 11. APScheduler
 
 - ## [Python timing task APScheduler](https://www.programmersought.com/article/6695232439/)
 
@@ -1689,13 +1750,8 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to work out how pass in db as a parameter, as the format is not intuitive.
 
-## JavaScript
 
-- ## [How to wait for the DOM ready event in plain JavaScript](https://flaviocopes.com/dom-ready/)
-
-    Used for formatting the images on the winner's page. 
-
-## General/Misc
+## 12. General/Misc
 
  - ## [RandomKeygen](https://randomkeygen.com/)
 
@@ -1705,11 +1761,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Super useful for setting file size limits on uploads.
 
-- ## [MDN Web Docs: Request.referrer](https://developer.mozilla.org/en-US/docs/Web/API/Request/referrer)
+- ## [MDN Web Docs: Request.referrer](https://developer.mozilla.org/en-US/docs/Web/API/Request/referrer)
 
     Information on using request.referrer.
 
-- ## [SVG, Favicons, and All the Fun Things We Can Do With Them](https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/)
+- ## [SVG, Favicons, and All the Fun Things We Can Do With Them](https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/)
 
     Article about the best way to use favicons and ensure their readability across platforms & browsers. 
 
@@ -1717,7 +1773,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Awesome online tool for converting files to different types. Used in this application to convert favicon from .svg to .ico
 
-- ## [Video to gif Converter](https://ezgif.com/video-to-gif)
+- ## [Video to gif Converter](https://ezgif.com/video-to-gif)
     
     Used to create the short testing gifs included in the testing.md doc
 

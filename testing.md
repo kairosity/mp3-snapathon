@@ -74,8 +74,6 @@
     * [Web Dev Measure](#web-dev-measure)
     
 
-        
-
 # User Story Testing 
 
 ## First Time User Goals Testing
@@ -777,11 +775,37 @@ also return 404 status codes.
 ## Base Functionality
 ### 1. Navigation
 
+Testing process:
+ 
+- Clicked through each navbar item to ensure they directed the user to the correct page. -- PASS
+- Clicked through each sidebar (mobile navigation) item to ensure they directed the user to the correct page. -- PASS
+- Checked every navigation link on the site to ensure they linked to the correct page. -- PASS
+- Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
+
 ### 2. Login
+
+Testing Proces:
+
+- Created a bunch of dummy users and then periodically logged into their accounts when testing other aspects of the code. -- PASS
+- Created an admin user and logged into that account as well. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/login.gif" width="600">
+</div>
+
 
 ### 3. Links 
 
+Testing process:
+ 
+- Checked every link on the site to ensure they linked to the correct page. -- PASS
+- Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
+
 ### 4. Buttons
+
+Testing process:
+
+- 
 
 ### 5. Forms
 
@@ -931,7 +955,38 @@ Testing process:
 ### 2. Delete User Account 
 ### 3. Delete User Account (admin)
 
+<br>
 
+# Testing the Temporal Processes
+
+As many of the pages and application content changes depending on the day of the week and hour of the day, my manual testing needed to include a temporal element to ensure that the pages were behaving as planned and on schedule. 
+
+## Main Application-Wide Temporal Changes 
+
+### 1. Friday @ midnight
+- The "compete" page becomes a "vote" page.
+- The vote page displays all of the past week's entries with 
+- The navbar link for this page changes from "compete" to "vote"
+-
+
+### 2. Sunday @ 22:00 
+- The awards and results are automatically calculated.
+- The winners page is updated to display this week's awards and results.
+- The "vote" page turns into an interim "holding" page directing users over to the winners page to view the results. 
+- The navbar link changes from "vote" to "awards".
+
+## Smaller time-based features
+
+### 1. Profile Page Countdowns
+- The messages on a user's profile page are specific to their individual interaction with the application. 
+
+- If it is between Monday & Friday and the user has not yet entered the competition they should see the following message with a link to the Competition entry page: 
+
+        "You still have to enter an image into this week's competition. You have 2 days, 9 hours and 34 minutes left to enter. Go to COMPETE now to enter an image."
+
+- If it is between Monday & Friday and the user  *has* entered the competition, they should see the following message: 
+
+        "
 
 
 # Testing the Automated Processes
