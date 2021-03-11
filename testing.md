@@ -999,7 +999,7 @@ They must not be left blank. -- PASS
 
 3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
 
-4. There are maximum character length validations set on the following inputs:
+4. There are maximum character length validations set on the following inputs: -- PASS
 
     - Title: 45 chars -- PASS
     - Story: 600 chars -- PASS
@@ -1015,6 +1015,13 @@ to further communicate these max-lengths to the user.
 <br>
 <div align="center">
     <img src="/static/images/testing/max-char-length-compete2.png" width="500">
+</div>
+
+5. Users must tick that they have "read and agree to the terms and conditions" before they are allowed enter the competition. -- PASS
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/tac-compete.png" width="500">
 </div>
 
 </details>
