@@ -788,6 +788,7 @@ Testing Proces:
 
 - Created a bunch of dummy users and then periodically logged into their accounts when testing other aspects of the code. -- PASS
 - Created an admin user and logged into that account as well. -- PASS
+- Used Chrome Dev Tools to ensure a new session was created. -- PASS
 
 <div align="center">
     <img src="/static/images/testing/feature-gifs/login.gif" width="600">
@@ -805,17 +806,118 @@ Testing process:
 
 Testing process:
 
-- 
+- Ensure that any buttons without readable text have descriptive aria-labels. -- PASS
+- Ensure that all form submit buttons, successfully POST the data they are meant to, by manually confirming the data's presence in the database. -- PASS
+- Ensure that buttons are used specifically to submit data and are not a substitute for links. -- PASS
 
 ### 5. Forms
 
+Testing Process:
+
+- Submitted all forms and then immediately manually checked both the Mongo database and the application response to 
+ensure they submitted succesffully. -- PASS
+- Submitted each form with various incorrect or forbidden inputs to ensure that the form was not submitted, and that the 
+appropriate error message was displayed to the user.  -- PASS
+
 ### 6. Input Validation
+
+As Materialize comes with its own very useful set of form input validations, I have relied on those for the application. 
+
+#### __Login Form Input Validations:__
+
+1. Email is a required field. -- PASS
+
+2. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/login-email-input-validation.png" width="600">
+</div>
+
+3. Password is a required field. -- PASS
+
+4. Password must be between 6 - 25 characters in length. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/login-password-input-validation.png" width="600">
+</div>
+
+#### __Registration Form Input Validations:__
+
+1. Username must be present - it's a required field, cannot be left empty. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-required-register.png" width="600">
+</div>
+
+2. Username must be between 6 - 25 characters in length. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-length-register.png" width="600">
+</div>
+
+#### __Update Profile Form Input Validations:__
+
+1. Username must be present - it's a required field, cannot be updated to blank. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-required-update-profile.png" width="600">
+</div>
+
+2. Username must be between 6 - 25 characters in length. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-length-update-profile.png" width="600">
+</div>
+
+3. Email is a required field. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-required-update-profile.png" width="600">
+</div>
+
+4. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-format-requested-update-profile.png" width="600">
+</div>
+
+5. 
 
 ### 7. Pagination
 
+Testing Process:
+
+- Ensured that the pagination links were visible on the browse page. -- PASS
+- Ensured that the pagination links were visible on the vote page. -- PASS
+- Ensured that clicking from pagination link 1 to 2 to 3 successfully works to display different images. -- PASS
+- Checked that the pagination message correctly reflected the photo count and the page the user is currently viewing. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/pagination-msg.gif" width="600">
+</div>
+
 ### 8. Email
 
+Testing Process:
+
+- Used the contact form to send the connected SNAPATHON email account a dummy email from a dummy guest user. -- PASS
+- Verified its successful receipt by logging into the email account and viewing the email, as below: -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/email.gif" width="600">
+</div>
+
 ### 9. Logout
+
+Testing Process:
+
+- Clicked logout and then manually ensured that the user did not have access to any of the logged in functionality. -- PASS
+- Visually checked that the user received the correct successful logout flash message. -- PASS
+- Navigated to the user's profile and ensured that they could not access restricted functionality: the "edit profile" function for example. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/logout.gif" width="600">
+</div>
 
 ## CRUD Functionality
 

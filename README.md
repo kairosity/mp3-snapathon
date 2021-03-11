@@ -1230,6 +1230,20 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 <br>
 ---
 
+# Responsivity 
+
+# Accessibility
+
+## Skip to Main Link
+
+
+
+## Aria Labels
+
+- I was careful not to include buttons or elements without clear text references to their function. 
+- This helped to ensure that functionality would remain evident for visually challenged users without the need for aria-labels. 
+- I didn't use X close buttons for example, opting whenever needed for "Cancel" instead. 
+
 # Security
 The following security features were integrated into this application:
 
