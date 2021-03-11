@@ -94,6 +94,12 @@ ul.dropdown-content.select-dropdown li span:hover{
     background-color: var(--accent-colour);
 }
 
+/* Overriding Materialize Character Counter */
+
+.character-counter {
+    color: var(--accent-colour);
+}
+
 /* Overriding Materialize form label colours */
 /* label color */
 .input-field label,

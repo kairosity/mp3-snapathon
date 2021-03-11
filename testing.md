@@ -919,57 +919,102 @@ As Materialize comes with its own very useful set of form input validations, I h
 <br>
 
 1. Username must be present - it's a required field, cannot be updated to blank. -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/username-required-update-profile.png" width="500">
 </div>
-
+<br>
 2. Username must be between 6 - 25 characters in length. -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/username-length-update-profile.png" width="500">
 </div>
-
+<br>
 3. Email is a required field. -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/email-required-update-profile.png" width="500">
 </div>
-
+<br>
 4. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/email-format-requested-update-profile.png" width="500">
 </div>
-
+<br>
 5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
-
+<br>
 6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
-
+<br>
 7. Current password, new password & new password confirmation fields must all be between 6 - 25 characters in length. -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/current-password-length-update-profile.png" width="500">
 </div>
-
+<br>
 <div align="center">
     <img src="/static/images/testing/newpassword-length-update-profile.png" width="500">
 </div>
-
+<br>
 <div align="center">
     <img src="/static/images/testing/newpassword-confirmation-length-update-profile.png" width="500">
 </div>
-
-8. If a user is trying to change their password they must enter a correct current password. -- PASS
-
+<br>
+8. If a user is trying to change their password they must enter a current password. -- PASS
+<br>
 <div align="center">
     <img src="/static/images/testing/no-current-password-update-profile.png" width="500">
 </div>
 
-9. The new password must match the new password confirmation. -- PASS
+9. If a user is trying to change their password the current password they enter must be correct. -- PASS
+<br>
+<div align="center">
+    <img src="/static/images/testing/current-password-incorrect-update-profile.png" width="500">
+</div>
 
+9. The new password must match the new password confirmation. -- PASS
+<br>
 <div align="center">
     <img src="/static/images/testing/new-passwords-match-update-profile.png" width="500">
+</div>
+
+#### __Enter Competition Input Validations:__
+
+1. A title for the entry, the photograph itself & the camera used are all required for entry into the competition. 
+They must not be left blank. -- PASS
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-title-required.png" width="500">
+</div>
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-photo-required.png" width="500">
+</div>
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-camera-required.png" width="500">
+</div>
+
+2. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+
+3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+
+4. There are maximum character length validations set on the following inputs:
+
+    - Title: 45 chars -- PASS
+    - Story: 600 chars -- PASS
+    - Camera: 35 chars -- PASS
+    - Lens: 20 chars -- PASS
+    - Aperture: 20 chars -- PASS
+    - Shutter Speed: 20 chars -- PASS
+    - ISO: 20 chars -- PASS
+
+In addition to the application not allowing the user to enter more than the maxlength validation allows for, I have also incorporated the Materialize character counter 
+to further communicate these max-lengths to the user. 
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/max-char-length-compete2.png" width="500">
 </div>
 
 </details>
@@ -986,7 +1031,7 @@ Testing Process:
 - Checked that the pagination message correctly reflected the photo count and the page the user is currently viewing. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/feature-gifs/pagination-msg.gif" width="600">
+    <img src="/static/images/testing/pagination-msg.png" width="600">
 </div>
 
 ### __8. Email__

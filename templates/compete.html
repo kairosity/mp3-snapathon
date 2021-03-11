@@ -32,13 +32,13 @@
                     <div class="row">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="input-field col s12 m6">
-                            <input class="validate tooltipped" data-position="bottom" data-tooltip="Enter a creative and descriptive title for your image" id="title" name="title" type="text" required>
+                            <input class="validate tooltipped" data-position="bottom" data-tooltip="Enter a creative and descriptive title for your image" id="title" name="title" type="text" maxlength="45" data-length="45" required>
                             <label for="title">Title</label>
                         </div>
                         <div class="file-field input-field col s12 m6">
                             <div class="btn">
                                 <span>Upload Photo</span>
-                                <input type="file" name="photo">
+                                <input type="file" name="photo" required>
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text">
@@ -47,31 +47,31 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="story" name="story" class="materialize-textarea tooltipped" data-position="bottom" data-tooltip="Write about the background to this photo, how did it come about?"></textarea>
+                            <textarea id="story" name="story" maxlength="600" data-length="600" class="materialize-textarea tooltipped" data-position="bottom" data-tooltip="Write about the background to this photo, how did it come about?"></textarea>
                             <label for="story">Story</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6">
-                            <input id="camera" name="camera" type="text" class="validate tooltipped" data-position="bottom" data-tooltip="Please include brand and model" required>
+                            <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate tooltipped" data-position="bottom" data-tooltip="Please include brand and model" required>
                             <label for="camera">Camera</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="lens" name="lens" type="text" class="validate">
+                            <input id="lens" name="lens" type="text" maxlength="20" data-length="20" class="validate">
                             <label for="lens">Lens</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m4">
-                            <input id="aperture" name="aperture" type="text" class="validate">
+                            <input id="aperture" name="aperture" type="text" maxlength="20" data-length="20" class="validate">
                             <label for="aperture">Aperture</label>
                         </div>
                         <div class="input-field col s12 m4">
-                            <input id="shutter" name="shutter" type="text" class="validate">
+                            <input id="shutter" name="shutter" type="text" maxlength="20" data-length="20" class="validate">
                             <label for="shutter">Shutter Speed</label>
                         </div>
                         <div class="input-field col s12 m4 white-text">
-                            <input id="iso" name="iso" type="text" class="validate">
+                            <input id="iso" name="iso" type="text" maxlength="20" data-length="20" class="validate">
                             <label for="iso">ISO</label>
                         </div>
                     </div>
