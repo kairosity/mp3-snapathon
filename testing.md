@@ -773,7 +773,7 @@ also return 404 status codes.
 # Functionality Testing
 
 ## Base Functionality
-### 1. Navigation
+### __1. Navigation__
 
 Testing process:
  
@@ -782,7 +782,7 @@ Testing process:
 - Checked every navigation link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
 
-### 2. Login
+### __2. Login__
 
 Testing Proces:
 
@@ -795,14 +795,14 @@ Testing Proces:
 </div>
 
 
-### 3. Links 
+### __3. Links__ 
 
 Testing process:
  
 - Checked every link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
 
-### 4. Buttons
+### __4. Buttons__
 
 Testing process:
 
@@ -810,7 +810,7 @@ Testing process:
 - Ensure that all form submit buttons, successfully POST the data they are meant to, by manually confirming the data's presence in the database. -- PASS
 - Ensure that buttons are used specifically to submit data and are not a substitute for links. -- PASS
 
-### 5. Forms
+### __5. Forms__
 
 Testing Process:
 
@@ -819,71 +819,164 @@ ensure they submitted succesffully. -- PASS
 - Submitted each form with various incorrect or forbidden inputs to ensure that the form was not submitted, and that the 
 appropriate error message was displayed to the user.  -- PASS
 
-### 6. Input Validation
+### __6. Input Validations__
 
-As Materialize comes with its own very useful set of form input validations, I have relied on those for the application. 
+As Materialize comes with its own very useful set of form input validations, I have relied quite heavily on those validations and validation messages for this application, but I have supplemented them, specifically with the custom file upload validations. 
+
+<details><summary><b>click for validations</b></summary>
+<br>
 
 #### __Login Form Input Validations:__
+<br>
 
 1. Email is a required field. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-required-login.png" width="500">
+</div>
 
 2. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/login-email-input-validation.png" width="600">
+    <img src="/static/images/testing/login-email-input-validation.png" width="500">
 </div>
 
 3. Password is a required field. -- PASS
 
+<div align="center">
+    <img src="/static/images/testing/login-password-required.png" width="500">
+</div>
+
 4. Password must be between 6 - 25 characters in length. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/login-password-input-validation.png" width="600">
+    <img src="/static/images/testing/login-password-input-validation.png" width="500">
 </div>
 
 #### __Registration Form Input Validations:__
 
+<br>
+
 1. Username must be present - it's a required field, cannot be left empty. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/username-required-register.png" width="600">
+    <img src="/static/images/testing/username-required-register.png" width="500">
 </div>
 
 2. Username must be between 6 - 25 characters in length. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/username-length-register.png" width="600">
+    <img src="/static/images/testing/username-length-register.png" width="500">
 </div>
 
-#### __Update Profile Form Input Validations:__
-
-1. Username must be present - it's a required field, cannot be updated to blank. -- PASS
+3. Email must be present - it's a required field. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/username-required-update-profile.png" width="600">
-</div>
-
-2. Username must be between 6 - 25 characters in length. -- PASS
-
-<div align="center">
-    <img src="/static/images/testing/username-length-update-profile.png" width="600">
-</div>
-
-3. Email is a required field. -- PASS
-
-<div align="center">
-    <img src="/static/images/testing/email-required-update-profile.png" width="600">
+    <img src="/static/images/testing/email-required-register.png" width="500">
 </div>
 
 4. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/email-format-requested-update-profile.png" width="600">
+    <img src="/static/images/testing/email-regex-register.png" width="500">
 </div>
 
-5. 
+5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
 
-### 7. Pagination
+6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+
+7. Password must be set. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-required-register.png" width="500">
+</div>
+
+8. Password must be confirmed. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-confirmation-required-register.png" width="500">
+</div>
+
+9. Both Password & Password Confirmation must be between 6-25 characters in length -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-length-register.png" width="500">
+</div>
+
+<div align="center">
+    <img src="/static/images/testing/password-confirmation-length-register.png" width="500">
+</div>
+
+10. Passwords must match. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-match-register.png" width="500">
+</div>
+
+
+#### __Update Profile Form Input Validations:__
+
+<br>
+
+1. Username must be present - it's a required field, cannot be updated to blank. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-required-update-profile.png" width="500">
+</div>
+
+2. Username must be between 6 - 25 characters in length. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/username-length-update-profile.png" width="500">
+</div>
+
+3. Email is a required field. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-required-update-profile.png" width="500">
+</div>
+
+4. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-format-requested-update-profile.png" width="500">
+</div>
+
+5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+
+6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+
+7. Current password, new password & new password confirmation fields must all be between 6 - 25 characters in length. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/current-password-length-update-profile.png" width="500">
+</div>
+
+<div align="center">
+    <img src="/static/images/testing/newpassword-length-update-profile.png" width="500">
+</div>
+
+<div align="center">
+    <img src="/static/images/testing/newpassword-confirmation-length-update-profile.png" width="500">
+</div>
+
+8. If a user is trying to change their password they must enter a correct current password. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/no-current-password-update-profile.png" width="500">
+</div>
+
+9. The new password must match the new password confirmation. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/new-passwords-match-update-profile.png" width="500">
+</div>
+
+</details>
+
+<br>
+
+### __7. Pagination__
 
 Testing Process:
 
@@ -896,7 +989,7 @@ Testing Process:
     <img src="/static/images/testing/feature-gifs/pagination-msg.gif" width="600">
 </div>
 
-### 8. Email
+### __8. Email__
 
 Testing Process:
 
@@ -907,7 +1000,7 @@ Testing Process:
     <img src="/static/images/testing/feature-gifs/email.gif" width="600">
 </div>
 
-### 9. Logout
+### __9. Logout__
 
 Testing Process:
 

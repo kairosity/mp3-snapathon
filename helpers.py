@@ -10,7 +10,7 @@ from datetime import timedelta
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge
+from werkzeug.exceptions import RequestEntityTooLarge, UnsupportedMediaType
 
 if os.path.exists("env.py"):
     import env
@@ -660,9 +660,12 @@ def save_photo(request, database_var, name_of_image_from_form, app):
 
     photo.filename = secure_filename(photo.filename)
 
-    
+    # This is being super buggy. It's throwing a 413 error for what should be a 
+    # 415 error.????
     try:
         file_id = database_var.save_file(photo.filename, photo)
+    except UnsupportedMediaType:
+        abort(415)
     except RequestEntityTooLarge:
         abort(413)
 
@@ -718,10 +721,7 @@ def register_new_user(database_var, request, app):
         url = redirect(url_for('register'))
         return url
 
-
     photo_filename_to_add_to_user = None
-
-    print("Got here in register_new_user func in helpers")
 
     if request.files['profile-pic']:
         file_id, new_filename = save_photo(
