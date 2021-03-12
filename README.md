@@ -1229,6 +1229,7 @@ thumbnails displayed on the site: in browse, on a user's profile page, in vote, 
 
 ### Features
 #### Guest user
+
 - All the details relating to a particular image are displayed here including:
     - Title 
     - Photo's creator 
@@ -1241,6 +1242,13 @@ thumbnails displayed on the site: in browse, on a user's profile page, in vote, 
     - The aperture used.
     - The shutter speed.
     - The ISO.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/photo-details-guest-view.png">
+</div>
+<br>
+
 - If the non-required details were not entered by the user, those fields will not be visible.
 - Clicking on the username connected with the photo will bring a user to that user's profile page.
 - The photo's points are only displayed when the photo is no longer being considered for competition, so as to not 
@@ -1249,11 +1257,26 @@ skew the competition results.
 - To improve UX this page delivers specific "back" messages which are conditional on how the user arrived
 at the page. For instance if the user arrived from the "winners" page, the back link will read "back to winners!"
 If they came from "browse" it will read "back to browse!"
+- If the photo details page was arrived at from a profile page, and if the logged in user is not the creator of the image, then 
+2 back links will be displayed, one leading to the user's own profile page, the other to the profile page of the photo's creator.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/photo-details-backlinks-2.png">
+</div>
+<br>
 
 #### Logged in user
 - If the user viewing the image is also the creator of that image then they will see two buttons underneath the photo. 
 - "Edit Photo Details" allows the user to edit any of the photo details other than the image itself. 
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/photo-details.png">
+</div>
+<br>
+
 </details>
 
 <br>
