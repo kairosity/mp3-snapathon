@@ -828,6 +828,38 @@ As Materialize comes with its own very useful set of form input validations, I h
 <details><summary><b>click for validations</b></summary>
 <br>
 
+#### __Contact Form Input Validations:__
+<br>
+
+1. Email and Message are both required fields. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/email-required-contact.png" width="500">
+</div>
+
+<div align="center">
+    <img src="/static/images/testing/message-required-contact.png" width="500">
+</div>
+
+2. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
+<br>
+<div align="center">
+    <img src="/static/images/testing/email-input-validation-contact.png" width="500">
+</div>
+<br>
+
+3. Email input must be between 4 - 65 characters in length -- PASS
+
+4. Message input must be between 5 - 1000 characters in length -- PASS
+
+- Materialize data-length attribute used here to display maximum message length to users.
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/message-length-contact.png" width="500">
+</div>
+<br>
+
 #### __Login Form Input Validations:__
 <br>
 

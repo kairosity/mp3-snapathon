@@ -6,7 +6,7 @@ $(document).ready(function(){
     $('.tooltipped').tooltip();
     $('select').formSelect();
     $('.modal').modal();
-    $('input#title, textarea#story, input#camera, input#lens, input#aperture, input#shutter, input#iso').characterCounter();
+    $('input#title, textarea#story, input#camera, input#lens, input#aperture, input#shutter, input#iso, textarea#message').characterCounter();
    
 
     /* 

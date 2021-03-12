@@ -896,6 +896,7 @@ and the creator of the image as well as a badge in the upper left hand corner, i
 <br>
 - If a filtered search returns no results a message is displayed to the user informing them of this. 
 <br>
+<br>
 <p align="center">
     <img src="static/images/features/no-search-results.png">
 </p>
