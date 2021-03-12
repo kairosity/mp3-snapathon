@@ -920,6 +920,12 @@ If users have any questions about functionality or copyright issues or questions
 - The form fields are limited to an email field and the message field as the application does not necessitate a long complicated email form. 
 - The user receives a confirmation flash message as detailed above confirming that the email was sent successfully.
 - The Materialize form validations handle any errors in email or message format and both fields are required.
+<br>
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/email.gif" width="600">
+</div>
+<br>
 </details>
 
 <br>
@@ -931,10 +937,36 @@ The login page allows registered users to access their account and engage with t
 
 ### Features
 - When users login, they are prompted for their email and password. I chose to ask for their email over their username, because although both are unique, 
-I think that users more easily forget their usernames, as they usually differ from application to application. 
-- When users enter their details correctly, they are immediately brought to their profile page, where a welcome message is displayed referencing their username.
+I think that users more easily forget their usernames, as they usually differ from application to application.
+
+- When regular users enter their details correctly, they are immediately brought to their profile page, where a welcome message is displayed referencing their username.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/login-welcome.png" width="600">
+</div>
+<br>
+
+- When admin users log in, they are brought directly to the admin user control panel and are also greeted by a welcome message.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/admin-login.png" width="600">
+</div>
+<br>
+
+- When users are logged in successfully, a new session is started. 
+
 - If they enter their details incorrectly they see a flash message detailing the issue.
-- User passwords are hashed and then read by Werkzeug. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/try-logging-in-after-del.png" width="600">
+</div>
+<br>
+
+- On login user passwords are hashed and then read by Werkzeug.
+
 </details>
 
 <br>

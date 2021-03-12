@@ -832,7 +832,7 @@ As Materialize comes with its own very useful set of form input validations, I h
 <br>
 
 1. Email and Message are both required fields. -- PASS
-
+<br>
 <div align="center">
     <img src="/static/images/testing/email-required-contact.png" width="500">
 </div>
@@ -840,6 +840,7 @@ As Materialize comes with its own very useful set of form input validations, I h
 <div align="center">
     <img src="/static/images/testing/message-required-contact.png" width="500">
 </div>
+<br>
 
 2. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
 <br>
