@@ -824,8 +824,17 @@ The winners page displays the results of each weekly competition. It is updated 
 - Displays the usernames of award-winners which are linked to their profile page.
 - Displays the title of the award-winning photos which are linked to that specific photo detail page.
 - Displays the number of votes received by a particular photo.
-- Displays an award badge on winning images. 
+- Displays an award badge on winning images. This badge is conditionally positioned using JavaScript depending on whether the image is vertical or horizontal. 
 - If there were no photos entered or no photos got any points, then a message to that effect is displayed. 
+
+<p align="center">
+    <img src="static/images/features/winners1.png">
+</p>
+
+<p align="center">
+    <img src="static/images/features/winners-2.png">
+</p>
+
 </details>
 
 <br>

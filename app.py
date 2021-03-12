@@ -353,7 +353,7 @@ def register():
     * If registration is unsuccessfuly the register template is
       reloaded with flash messages detailing why.
     '''
-    
+
     if request.method == "POST":
         print("Does it even get here? ")
         try:
