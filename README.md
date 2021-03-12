@@ -1328,6 +1328,7 @@ More details on these and all other input validations in the [testing.md](testin
 - Other validations include:
     - If a user tries to update their username or email to a username or email already saved in the database, they will
       be redirected with a message detailing the issue. 
+
     - If a user wishes to change their password, they must enter their current password once and their new password twice. Missing any of those 
     fields will result in an unsuccessful update and a flash message to the user detailing why. 
 
@@ -1358,7 +1359,9 @@ This will allow them to edit any of the details associated with the image, it wi
 
 ### Features 
 
-- The user can edit:
+- Firstly the form displays the image. 
+
+- Then the user can edit:
     - Photo title
     - Photo Story
     - The camera used.
@@ -1367,8 +1370,24 @@ This will allow them to edit any of the details associated with the image, it wi
     - The shutter speed.
     - The ISO
 - They will also have to agree to the terms and conditions again before posting the edit form.
+
 - They can choose to click a "back" button that will cancel any edits made and bring them back to 
   the photo details page.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/update-photo-details.png">
+</div>
+<br>
+
+- If the details have been updated successfully, the user will see a flash success message as below:
+
+<br>
+<div align="center">
+    <img src="/static/images/features/photo-details-edited.png">
+</div>
+<br>
+
 </details>
 
 <br>
