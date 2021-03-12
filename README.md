@@ -848,6 +848,12 @@ It also allows users to filter their search.
 
 ### Features
 - On page load all competition images are displayed and they are paginated for faster loading times.
+<br>
+<p align="center">
+    <img src="static/images/features/browse-pagination.png">
+</p>
+<br>
+
 - A user can filter the search by:
     - Keyword search
     - Competition theme search
@@ -860,22 +866,29 @@ It also allows users to filter their search.
 <br>
 - When a user searches for a particular sub-section of images, the returning page scrolls down automatically to feature the images rather than the search box. 
 <br>
+<br>
 <p align="center">
     <img src="static/images/features/browse-scroll.gif">
 </p>
 <br>
 - The keywords / selections / checkboxes the user has searched for remain visible once the results have loaded for increased UX.
 <br>
+<br>
 <p align="center">
     <img src="static/images/features/search-results-1.png">
 </p>
 <br>
 - The search fields can be cleared easily using the reset button.
+
 - When a user hovers over any of the images displayed a link overlay appears with the title of the photograph, 
 and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
+
 - The overlay also displays an instruction to the user to click if they want to view the image detail page.
+
 - Clicking anywhere on the overlay brings the user to that image's photo details page.
+
 - Once on the photo details page, clicking the "back to browse" button will bring the user back to the *specific* browse page they were on prior to leaving. 
+<br>
 <br>
 <p align="center">
     <img src="static/images/features/browse-overlay.gif">
