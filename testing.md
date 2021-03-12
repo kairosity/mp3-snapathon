@@ -1035,24 +1035,17 @@ to further communicate these max-lengths to the user.
 
 #### __Edit Photo Details Input Validations:__
 
-1. A title for the entry, the photograph itself & the camera used are all required for entry into the competition. 
-They must not be left blank. -- PASS
+1. The title and the camera fields must remain filled. -- PASS
 <br>
 <div align="center">
-    <img src="/static/images/testing/compete-title-required.png" width="500">
+    <img src="/static/images/testing/update-photo-title-required.png" width="500">
 </div>
 <br>
+
 <div align="center">
-    <img src="/static/images/testing/compete-photo-required.png" width="500">
-</div>
-<br>
-<div align="center">
-    <img src="/static/images/testing/compete-camera-required.png" width="500">
+    <img src="/static/images/testing/update-photo-camera-required.png" width="500">
 </div>
 
-2. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
-
-3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
 
 4. There are maximum character length validations set on the following inputs: -- PASS
 
@@ -1069,14 +1062,14 @@ to further communicate these max-lengths to the user.
 
 <br>
 <div align="center">
-    <img src="/static/images/testing/max-char-length-compete2.png" width="700">
+    <img src="/static/images/testing/max-char-length-update-photo.png" width="700">
 </div>
 
-5. Users must tick that they have "read and agree to the terms and conditions" before they are allowed enter the competition. -- PASS
+5. Users must tick that they have "read and agree to the terms and conditions" before they are allowed update their photo details. -- PASS
 
 <br>
 <div align="center">
-    <img src="/static/images/testing/tac-compete.png" width="500">
+    <img src="/static/images/testing/tac-update-photo.png" width="500">
 </div>
 
 #### __Delete Account Input Validations:__
