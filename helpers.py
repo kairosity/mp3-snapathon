@@ -1410,12 +1410,12 @@ def upload_comp_entry(request_obj,
             "filename": new_filename,
             "type": "entry",
             "photo_title": request.form.get("title").lower(),
-            "photo_story": request.form.get("story").lower(),
-            "camera": request.form.get("camera").lower(),
-            "lens": request.form.get("lens").lower(),
-            "aperture": request.form.get("aperture").lower(),
-            "shutter": request.form.get("shutter").lower(),
-            "iso": request.form.get("iso").lower(),
+            "photo_story": request.form.get("story"),
+            "camera": request.form.get("camera"),
+            "lens": request.form.get("lens"),
+            "aperture": request.form.get("aperture"),
+            "shutter": request.form.get("shutter"),
+            "iso": request.form.get("iso"),
             "created_by": session["user"],
             "date_entered": datetime.now(),
             "competition_category": this_weeks_comp_category,
@@ -1457,13 +1457,13 @@ def edit_this_photo(request, database_var, photo_filename, photo_obj):
 
     '''
     edited_entry = {
-        "photo_title": request.form.get("title").lower(),
-        "photo_story": request.form.get("story").lower(),
-        "camera": request.form.get("camera").lower(),
-        "lens": request.form.get("lens").lower(),
-        "aperture": request.form.get("aperture").lower(),
-        "shutter": request.form.get("shutter").lower(),
-        "iso": request.form.get("iso").lower()
+        "photo_title": request.form.get("title"),
+        "photo_story": request.form.get("story"),
+        "camera": request.form.get("camera"),
+        "lens": request.form.get("lens"),
+        "aperture": request.form.get("aperture"),
+        "shutter": request.form.get("shutter"),
+        "iso": request.form.get("iso")
         }
 
     database_var.db.photos.update(

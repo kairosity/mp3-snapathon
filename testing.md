@@ -770,6 +770,8 @@ also return 404 status codes.
 <details><summary><b>click for tests</b></summary>
 </details>
 
+<br>
+
 # Functionality Testing
 
 ## Base Functionality
@@ -1031,6 +1033,52 @@ to further communicate these max-lengths to the user.
     <img src="/static/images/testing/tac-compete.png" width="500">
 </div>
 
+#### __Edit Photo Details Input Validations:__
+
+1. A title for the entry, the photograph itself & the camera used are all required for entry into the competition. 
+They must not be left blank. -- PASS
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-title-required.png" width="500">
+</div>
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-photo-required.png" width="500">
+</div>
+<br>
+<div align="center">
+    <img src="/static/images/testing/compete-camera-required.png" width="500">
+</div>
+
+2. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+
+3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+
+4. There are maximum character length validations set on the following inputs: -- PASS
+
+    - Title: 45 chars -- PASS
+    - Story: 600 chars -- PASS
+    - Camera: 35 chars -- PASS
+    - Lens: 20 chars -- PASS
+    - Aperture: 20 chars -- PASS
+    - Shutter Speed: 20 chars -- PASS
+    - ISO: 20 chars -- PASS
+
+In addition to the application not allowing the user to enter more than the maxlength validation allows for, I have also incorporated the Materialize character counter 
+to further communicate these max-lengths to the user. 
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/max-char-length-compete2.png" width="700">
+</div>
+
+5. Users must tick that they have "read and agree to the terms and conditions" before they are allowed enter the competition. -- PASS
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/tac-compete.png" width="500">
+</div>
+
 #### __Delete Account Input Validations:__
 
 
@@ -1059,8 +1107,9 @@ to further communicate these max-lengths to the user.
 4. Passwords must match. -- PASS
 
 <div align="center">
-    <img src="/static/images/testing/password-match-register.png" width="500">
+    <img src="/static/images/testing/password-match-delete-account.png" width="500">
 </div>
+
 
 
 </details>
@@ -1229,6 +1278,16 @@ Testing process:
 ### __Update__
 
 ### 1. Update photo details
+
+
+Testing process:
+- As a logged in user, click into any of their images to view the photo details page.
+- Click "Edit photo details"
+-
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/filter-user-control.gif" width="600">
+</div>
 
 ### 2. Update user details
 

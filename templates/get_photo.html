@@ -46,7 +46,7 @@
 <div class="row">
     <div class="col s12 m6 offset-m3 center-align">
 
-        <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title|capitalize }}</h1>
+        <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title }}</h1>
         <h2 class="artist-name col s10 offset-s1 center-align">by <a href="{{url_for('profile', username=username)}}">{{ username|capitalize }}</a></h2>
 
         <!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
@@ -54,7 +54,7 @@
             <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
         {% endif %}
         <img class="get-photo-img center-align" src="{{ url_for('file', filename=photo.filename) }}">
-        <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story|capitalize }}</p>
+        <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story }}</p>
          {% if photo.awards == 1 %}
              <h4 class="awards first-place-award col s10 offset-s1 center-align"><em>Awards:</em> 1st Place in the {{photo.competition_category}} category.</h4>
         {% elif photo.awards == 2 %}
@@ -62,7 +62,7 @@
         {% elif photo.awards == 3 %}
             <h4 class="awards third-place-award col s10 offset-s1 center-align"><em>Awards:</em> 3rd Place in the {{photo.competition_category}} category.</h4>
         {% endif %}
-        <h3 class="first-tech-spec tech-specs col s10 offset-s1 left-align"><em>Camera:</em> {{ photo.camera|capitalize }}</h3>
+        <h3 class="first-tech-spec tech-specs col s10 offset-s1 left-align"><em>Camera:</em> {{ photo.camera }}</h3>
         {% if photo.lens %}
         <h3 class="tech-specs col s10 offset-s1 left-align"><em>Lens:</em> {{ photo.lens }}</h3>
         {% endif %}
@@ -97,7 +97,7 @@
       <form class="photo-deletion-form" method="POST" action="{{ url_for('delete_photo', filename=photo.filename) }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="modal-content">
-            <h4 class="delete-photo-question">Are you sure you want to delete "{{photo.photo_title|capitalize}}"?</h4>
+            <h4 class="delete-photo-question">Are you sure you want to delete "{{photo.photo_title}}"?</h4>
             <p class="delete-photo-info">This will delete this image permanently.</p>
             {% if photo.awards == 1 %}
                 <p class="delete-photo-info">This image has won a 1st place Gold award, if you delete it, 7 points will be deducted from your points total.</p>

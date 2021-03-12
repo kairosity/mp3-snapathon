@@ -16,36 +16,36 @@
                 </div>
                 <div class="row">
                      <div class="input-field col s12">
-                    <input id="title" name="title" type="text" value="{{photo.photo_title}}" class="validate" required>
+                    <input id="title" name="title" type="text" value="{{photo.photo_title|capitalize}}" class="validate" maxlength="45" data-length="45" required>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <label for="title">Title</label>
                     </div> 
                     <div class="input-field col s12">
-                    <textarea id="story" name="story" class="materialize-textarea">{{ photo.photo_story }}</textarea>
+                    <textarea id="story" name="story" class="materialize-textarea" maxlength="600" data-length="600">{{ photo.photo_story }}</textarea>
                     <label for="story">Story</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                    <input id="camera" name="camera" type="text" class="validate" value="{{ photo.camera }}" required>
+                    <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate" value="{{ photo.camera|capitalize }}" required>
                     <label for="camera">Camera</label>
                     </div>
                     <div class="input-field col s12 m6">
-                    <input id="lens" name="lens" type="text" class="validate" value="{{ photo.lens }}">
+                    <input id="lens" name="lens" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.lens }}">
                     <label for="lens">Lens</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m4">
-                    <input id="aperture" name="aperture" type="text" class="validate" value="{{ photo.aperture }}">
+                    <input id="aperture" name="aperture" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.aperture }}">
                     <label for="aperture">Aperture</label>
                     </div>
                     <div class="input-field col s12 m4">
-                    <input id="shutter" name="shutter" type="text" class="validate" value="{{ photo.shutter }}">
+                    <input id="shutter" name="shutter" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.shutter }}">
                     <label for="shutter">Shutter Speed</label>
                     </div>
                     <div class="input-field col s12 m4 white-text">
-                    <input id="iso" name="iso" type="text" class="validate" value="{{ photo.iso }}">
+                    <input id="iso" name="iso" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.iso }}">
                     <label for="iso">ISO</label>
                     </div>
                 </div>
