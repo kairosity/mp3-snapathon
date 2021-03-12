@@ -29,7 +29,7 @@
         </div>
         {% elif "browse" in source_url or "search" in source_url %}
         <div class="row back-link-div">
-            <a class="back-link" href="{{url_for('browse')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+            <a class="back-link" href="{{source_url}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
                 browse!</a>
         </div>
         {% elif "edit_photo" in source_url %}
