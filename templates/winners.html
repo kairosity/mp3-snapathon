@@ -20,11 +20,15 @@
             {% if img.created_by == user.username %}
                 {% if user.profile_photo is not none %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% else %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% endif %}
             {% endif %}
@@ -70,11 +74,15 @@
         {% if img.created_by == user.username %}
                 {% if user.profile_photo is not none %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% else %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% endif %}
             {% endif %}
@@ -116,11 +124,15 @@
              {% if img.created_by == user.username %}
                 {% if user.profile_photo is not none %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% else %}
                 <div class="col s12 center-align">
-                    <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    <a class="award-text-link" href="{{url_for('profile', username=img.created_by)}}">
+                        <img class="avatar align-center" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" alt="{{users.username}}'s profile pic'">
+                    </a>
                 </div>
                 {% endif %}
             {% endif %}

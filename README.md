@@ -782,26 +782,31 @@ motivated and enthusiastic guest users.
     <img src="static/images/features/homepage.png">
 </p>
 
-- Second section is a blunt introduction to the application using icons, four words and a colourful image.
+- The second section is a blunt introduction to the application using icons, four words and a colourful image.
 
 <p align="center">
     <img src="static/images/features/homepage2.png">
 </p>
 
-- Third section features a timeline that details the temporal nature of the application and what happens when.
+- The third section features a timeline that details the temporal nature of the application and what happens when.
 <p align="center">
     <img src="static/images/features/homepage3.png">
 </p>
 
-- Fourth section expands on the competitive aspect and details how a user might gain points.
-- Which is followed by a collapsible containing all the competition rules.
+- The fourth section expands on the competitive aspect and details how a user might gain points.
+- This is followed by a collapsible containing all the competition rules.
 - Which is followed by another call to action for guest users to "Register to get started today!"
-- A contact form which is detailed further below.
+- Finally there is a contact form which is detailed further below.
 
 #### Logged in user
 - The login & register buttons are not present for logged in users, instead they see a tiny leaf icon and a 
 personal message saying ```"welcome username"```
-- The rest of the page is the same except that the "Register to get started today!" link cta is also not present.
+- The rest of the page is the same *except* that the "Register to get started today!" link cta is not present.
+
+<p align="center">
+    <img src="static/images/features/home-user.png">
+</p>
+
 </details>
 
 <br>
@@ -815,6 +820,7 @@ The winners page displays the results of each weekly competition. It is updated 
 - Tells the viewer what competition results they are viewing, the start date and theme.
 - Displays the photos that have won 1st, 2nd & 3rd place awards. 
 - If multiple photos receive the same number of points, ties are also possible.
+- Displays the profile photos of the award-winning users which are linked to their profile page.
 - Displays the usernames of award-winners which are linked to their profile page.
 - Displays the title of the award-winning photos which are linked to that specific photo detail page.
 - Displays the number of votes received by a particular photo.
