@@ -924,28 +924,34 @@ As Materialize comes with its own very useful set of form input validations, I h
     <img src="/static/images/testing/username-required-update-profile.png" width="500">
 </div>
 <br>
+
 2. Username must be between 6 - 25 characters in length. -- PASS
 <br>
 <div align="center">
     <img src="/static/images/testing/username-length-update-profile.png" width="500">
 </div>
 <br>
+
 3. Email is a required field. -- PASS
 <br>
 <div align="center">
     <img src="/static/images/testing/email-required-update-profile.png" width="500">
 </div>
 <br>
+
 4. Email must match the regex pattern:  ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$``` -- PASS
 <br>
 <div align="center">
     <img src="/static/images/testing/email-format-requested-update-profile.png" width="500">
 </div>
 <br>
+
 5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
 <br>
+
 6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
 <br>
+
 7. Current password, new password & new password confirmation fields must all be between 6 - 25 characters in length. -- PASS
 <br>
 <div align="center">
@@ -960,6 +966,7 @@ As Materialize comes with its own very useful set of form input validations, I h
     <img src="/static/images/testing/newpassword-confirmation-length-update-profile.png" width="500">
 </div>
 <br>
+
 8. If a user is trying to change their password they must enter a current password. -- PASS
 <br>
 <div align="center">
@@ -972,7 +979,7 @@ As Materialize comes with its own very useful set of form input validations, I h
     <img src="/static/images/testing/current-password-incorrect-update-profile.png" width="500">
 </div>
 
-9. The new password must match the new password confirmation. -- PASS
+10. The new password must match the new password confirmation. -- PASS
 <br>
 <div align="center">
     <img src="/static/images/testing/new-passwords-match-update-profile.png" width="500">
@@ -1014,7 +1021,7 @@ to further communicate these max-lengths to the user.
 
 <br>
 <div align="center">
-    <img src="/static/images/testing/max-char-length-compete2.png" width="500">
+    <img src="/static/images/testing/max-char-length-compete2.png" width="700">
 </div>
 
 5. Users must tick that they have "read and agree to the terms and conditions" before they are allowed enter the competition. -- PASS
@@ -1023,6 +1030,38 @@ to further communicate these max-lengths to the user.
 <div align="center">
     <img src="/static/images/testing/tac-compete.png" width="500">
 </div>
+
+#### __Delete Account Input Validations:__
+
+
+1. Both Password & Password Confirmation must be between 6-25 characters in length -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-length-delete-account.png" width="500">
+</div>
+
+<div align="center">
+    <img src="/static/images/testing/password-confirmation-length-delete-account.png" width="500">
+</div>
+
+2. Current password must be entered. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-required-delete-account.png" width="500">
+</div>
+
+3. Password must be confirmed. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-confirmation-required-delete-account.png" width="500">
+</div>
+
+4. Passwords must match. -- PASS
+
+<div align="center">
+    <img src="/static/images/testing/password-match-register.png" width="500">
+</div>
+
 
 </details>
 
