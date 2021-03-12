@@ -994,7 +994,21 @@ The register page allows new users to register with SNAPATHON, allowing them to 
     - Both password fields must be identical and the passwords are case sensitive. 
     - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed via a 
     flash message as to the reason. 
-    - The profile photo must conform to all the competition entry [photo validation requirements](#security-features). 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/username-registered-already.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/features/email-registered-already.png">
+</div>
+<br>
+
+
+- The profile photo must conform to all the competition entry [photo validation requirements](#security-features). 
 
 - When the user registers successfully, a session is created and they are redirected to their new profile page, where they will see a "Registration successful" message.
 
@@ -1010,7 +1024,7 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 
 ## 7. Profile
 The profile page is a user's calling card and homebase in the application, it displays their photos and the photos they've voted for, as well as their points total.
-Their profile is open for all to view.
+Their profile is open to public viewing.
 <details>
 <summary><b>click for features</b></summary>
 
@@ -1019,16 +1033,55 @@ Their profile is open for all to view.
 - Can visit user profile pages and browse the various categories of photos.
 - Guest users can access user profiles by clicking on links on the winners page or on the browse page. 
 - Or, if savvy they can type a username into the url in the format /profile/\<username>
-- Guest users can also see the user's profile pic and how many points they have.
+- Guest users can also view the user's profile pic and how many points they have.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-page-guest-user.png">
+</div>
+<br>
+
+
 #### Logged in user
 
 1. When a user is logged in, they see "Profile" in the navigation.
-2. Their profile page displays their username, their total competition points, their entries into competition, other user's photos that they've voted for and any of their images that have won
-awards. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-nav.png">
+</div>
+<br>
+
+2. Their profile page displays their username, their total competition points, their entries into competition, other user's photos that they've voted for and any of their images that have won awards. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-page-voted-for.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-page-awards.png">
+</div>
+<br>
+
 3. When logged in and on their *own* profile page, a user will see an "edit profile" button which they can use to change any of their profile details including their password.
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-page.png">
+</div>
+<br>
+
 4. In "edit profile" they also have access to a "Delete account" option.
 5. To the right of their profile header the user sees a message specific to their current time and action status in the competition. These have already been detailed 
 above in [timing messages](#timing-messages). 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/profile-page-message.png">
+</div>
+<br>
+
 </details>
 
 <br>
@@ -1044,12 +1097,41 @@ who are logged in.
 - The competition entry page and the vote page, share the same HTML real estate and they are conditionally programmed to appear and disappear depending what day of the 
 week it is.
 - The "Compete" Page is displayed (both the page and the link in the navbar) from Monday to Saturday morning at 0:00.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete-navbar.png">
+</div>
+<br>
+
 - The intro to this page specifies the current competition theme and then gives the user some guidelines as to the types of images
 that are expected for this theme.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete.png">
+</div>
+<br>
+
 - The page features a Materialize collapsible block that includes:
 - Information about the competition rules.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete-rules.png">
+</div>
+<br>
+
 - Upload guidelines for users.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete-upload-guidelines.png">
+</div>
+<br>
+
 - The form to enter an image. 
+
 - The entry form asks for a number of details regarding the photo to be entered into competition:
     - Photo title (required)
     - Photo Story - a background story to the image. (required)
@@ -1061,15 +1143,33 @@ that are expected for this theme.
     - The ISO
 - Users must also check that they've read the legal disclaimer outlining the various important copyright regulations and 
 other rules to abide by.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete-entry-form.png">
+</div>
+<br>
+
 - When successfully posted, the photo is saved to the database and entered into the competition.
-- On Friday/Saturday at midnight the compete page disappears and "Vote" takes its place.
+- Once the user has entered an image, if they return to the "compete" page before Saturday on the same week as they entered, they will see a 
+page thanking them for entering and reminding them when the voting opens, as well as showing them their recent entry. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/compete-thanks-for-entering.png">
+</div>
+<br>
+
+- On the transition from Friday to Saturday at midnight, the "Compete" page disappears and the "Vote" takes its place.
 
 ### Security Features 
+- There are various input validations on the form itself, which are detailed in the [testing.md](testing.md) doc.
 - When the form is submitted if the file extension is not one of the approved image extensions (.svg, .jpg, .jpeg, .gif, .png)
 a 415 error will be thrown. 
 - If the image is larger than 549KB a 413 error will be thrown. 
 - The image filename is secured using werkzeug.utils. 
 - The form itself contains a hidden csrf token from flask_wtf to protect against cross site request forgery attacks.
+- The file contents are themselves also validated (not yet - do this!)
 </details>
 
 <br>
@@ -1093,6 +1193,13 @@ The vote page is where users who have entered the competition can vote for their
 that they cannot. 
 - If a user tries to vote for their own image, a message will flash telling them they cannot.
 - When a user votes, the vote buttons will disappear and a "You voted for this image" message is displayed over the image they voted for.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/voted.png">
+</div>
+<br>
+
 - The images are displayed 50 per page and on each page the order of the images is randomised to try and ensure no image is given an unfair 
 advantage.
 - Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. The vote page ceases it shows a message 
@@ -1103,7 +1210,7 @@ determine winners.
 
 ### Adjunct Features
 - To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images 
-until after the week of that competition. Otherwise you would know what photo was winning and vote for it to win points. 
+until after the week of that particular competition. Otherwise you would know what photo was winning and vote for it to win extra points as per the rules. 
 The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
 ended.  
 - For the same reason, the photo details page of photos currently being voted on, will not display the image's points/votes tally until

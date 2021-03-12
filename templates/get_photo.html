@@ -14,7 +14,11 @@
             {% else %}
                 <div class="row back-link">
                     <a class="back-link" href="{{url_for('profile', username=photo.created_by)}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> Back to {{username|capitalize}}'s Profile</a>
+                        <i class="fas fa-long-arrow-alt-left"></i> View {{username|capitalize}}'s Profile</a>
+                </div>
+                <div class="row back-link">
+                    <a class="back-link" href="{{url_for('profile', username=session.user)}}">
+                        <i class="fas fa-long-arrow-alt-left"></i> View my Profile</a>
                 </div>
             {% endif %}
         {% elif "compete" in source_url %}

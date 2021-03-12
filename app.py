@@ -432,6 +432,8 @@ def profile(username):
                 competition_ends, next_competition_starts,
                 voting_ends, get_time_remaining_string)
 
+    source_url = request.referrer
+
     return render_template("profile.html",
                            username=username,
                            user=user,
@@ -444,7 +446,8 @@ def profile(username):
                            votes_to_use=votes_to_use,
                            comp_closes=comp_closes,
                            voting_closes=voting_closes,
-                           next_comp_starts=next_comp_starts)
+                           next_comp_starts=next_comp_starts,
+                           source_url=source_url)
 
 
 @app.route("/edit-profile/<username>", methods=['GET', 'POST'])
