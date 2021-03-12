@@ -1257,6 +1257,10 @@ skew the competition results.
 - To improve UX this page delivers specific "back" messages which are conditional on how the user arrived
 at the page. For instance if the user arrived from the "winners" page, the back link will read "back to winners!"
 If they came from "browse" it will read "back to browse!"
+
+
+#### Logged in user
+
 - If the photo details page was arrived at from a profile page, and if the logged in user is not the creator of the image, then 
 2 back links will be displayed, one leading to the user's own profile page, the other to the profile page of the photo's creator.
 
@@ -1265,8 +1269,6 @@ If they came from "browse" it will read "back to browse!"
     <img src="/static/images/features/photo-details-backlinks-2.png">
 </div>
 <br>
-
-#### Logged in user
 - If the user viewing the image is also the creator of that image then they will see two buttons underneath the photo. 
 - "Edit Photo Details" allows the user to edit any of the photo details other than the image itself. 
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
@@ -1283,31 +1285,65 @@ If they came from "browse" it will read "back to browse!"
 
 ## 11. Edit Profile
 
-When logged in and viewing their own profiles, users can click the "edit profile" button to alter their
+When logged in and viewing their own profile, a user can click the "edit profile" button to alter their
 details. 
 <details>
 <summary><b>click for features</b></summary>
 
 ### Features 
 
-- When they click the button, users are brought to the update profile page and they can alter their:
+- When a user clicks the "edit profile" button, they are brought to the update profile page and they can alter their:
     - Username
     - Email address
     - Profile Pic
     - Password
+
 - Their current username, profile pic filename & email values are pre-populated in the form. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/update-profile.png">
+</div>
+<br>
+
 - If a user has a custom profile pic already uploaded they will see a small icon they can use to delete their current profile image 
-    without having to upload a new one.
-- They can also change their profile pic for a new one.
-- The form has the following Materialize validations present and will not POST if these are not met:
-    - usernames must be between 5 and 25 characters long.
-    - email addresses must adhere to the regex formula of: ```^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$```
-    - passwords must be between 6 and 25 characters long.
+    without having to upload a new one. There is also a tooltip to explain this to the user.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/update-profile-delete-current-profile-pic.png">
+</div>
+<br>
+
+- They can also choose to change their profile pic for a new one.
+
+- The form has number of validations present and will not POST if these are not met:
+
+1. The username & email are required fields.
+2. The username must be between 6 - 25 characters in length.
+3. The email update must match a regex pattern.
+
+More details on these and all other input validations in the [testing.md](testing.md) doc.
+
 - Other validations include:
     - If a user tries to update their username or email to a username or email already saved in the database, they will
       be redirected with a message detailing the issue. 
     - If a user wishes to change their password, they must enter their current password once and their new password twice. Missing any of those 
     fields will result in an unsuccessful update and a flash message to the user detailing why. 
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/new-passwords-match-update-profile.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/testing/current-password-incorrect-update-profile.png">
+</div>
+<br>
+
+- Under the update profile form, a user can also choose to "Delete Account". 
+
 
 </details>
 
