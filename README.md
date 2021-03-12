@@ -909,7 +909,7 @@ and the creator of the image as well as a badge in the upper left hand corner, i
 ## 4. Contact
 The contact section allows users to contact the application owners via email. The form is located at the bottom of the homepage and is fully functional.
 Direct lines of communication are important with an application such as this where creative work is displayed. 
-If users have any questions about functionality or copyright issues or questions, they need an easy way to get in touch.
+If users have any questions about functionality or copyright issues or any other concerns or questions, they need an easy way to get in touch.
 
 <details><summary><b>click for features</b></summary>
 
@@ -979,18 +979,31 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 - A form prompting the user to enter a username that must be unique, an email that must also be unique, a profile photo (not required) and a password.
 - They are asked to enter their password twice, which is an important feature to prevent a user from accidentally misspelling a password and then not being able to sign in.
 
-- The registration form has the following Materialize validations:
-    - The username must be at least 5 characters long. 
+<br>
+<div align="center">
+    <img src="/static/images/features/register.png" width="600">
+</div>
+<br>
+
+- The registration form has the following Materialize validations (which are detailed further in the testing.md doc):
+    - The username must be between 6-25 characters long. 
     - The email address must be of valid email format. (Regex based so not foolproof)
     - The profile photo is not required.
-    - The password must be at least 6 characters long.
+    - The password must be between 6-25 chars long.
 - And the following backend validations: 
     - Both password fields must be identical and the passwords are case sensitive. 
     - If the username or email address has already been registered, the registration will not go ahead and the user will be instructed via a 
     flash message as to the reason. 
     - The profile photo must conform to all the competition entry [photo validation requirements](#security-features). 
 
-- When the user registers successfully, a session is created and they are redirected to their new profile page.
+- When the user registers successfully, a session is created and they are redirected to their new profile page, where they will see a "Registration successful" message.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/new-registration.png">
+</div>
+<br>
+
 </details>
 
 <br>
