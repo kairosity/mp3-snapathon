@@ -775,7 +775,7 @@ also return 404 status codes.
 # Functionality Testing
 
 ## Base Functionality
-### __1. Navigation__
+### __1. Navigation__ - __PASS__
 
 Testing process:
  
@@ -784,7 +784,7 @@ Testing process:
 - Checked every navigation link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
 
-### __2. Login__
+### __2. Login__ - __PASS__
 
 Testing Proces:
 
@@ -797,14 +797,14 @@ Testing Proces:
 </div>
 
 
-### __3. Links__ 
+### __3. Links__ - __PASS__
 
 Testing process:
  
 - Checked every link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
 
-### __4. Buttons__
+### __4. Buttons__ - __PASS__
 
 Testing process:
 
@@ -812,7 +812,7 @@ Testing process:
 - Ensure that all form submit buttons, successfully POST the data they are meant to, by manually confirming the data's presence in the database. -- PASS
 - Ensure that buttons are used specifically to submit data and are not a substitute for links. -- PASS
 
-### __5. Forms__
+### __5. Forms__ - __PASS__
 
 Testing Process:
 
@@ -821,7 +821,7 @@ ensure they submitted succesffully. -- PASS
 - Submitted each form with various incorrect or forbidden inputs to ensure that the form was not submitted, and that the 
 appropriate error message was displayed to the user.  -- PASS
 
-### __6. Input Validations__
+### __6. Input Validations__ - __PASS__
 
 As Materialize comes with its own very useful set of form input validations, I have relied quite heavily on those validations and validation messages for this application, but I have supplemented them, specifically with the custom file upload validations. 
 
@@ -1104,12 +1104,11 @@ to further communicate these max-lengths to the user.
 </div>
 
 
-
 </details>
 
 <br>
 
-### __7. Pagination__
+### __7. Pagination__ - __PASS__
 
 Testing Process:
 
@@ -1122,7 +1121,7 @@ Testing Process:
     <img src="/static/images/testing/pagination-msg.png" width="600">
 </div>
 
-### __8. Email__
+### __8. Email__ - __PASS__
 
 Testing Process:
 
@@ -1133,7 +1132,7 @@ Testing Process:
     <img src="/static/images/testing/feature-gifs/email.gif" width="600">
 </div>
 
-### __9. Logout__
+### __9. Logout__ - __PASS__
 
 Testing Process:
 
@@ -1152,7 +1151,7 @@ multiple dummy users and competition entries.
 
 ### __Create__
 
-### 1. New User Registration
+### 1. New User Registration - __PASS__
 
 Testing process:
 - Click on one of the various "Register" links, and verify that the register page loads.
@@ -1166,7 +1165,7 @@ photo displaying correctly.
     <img src="/static/images/testing/feature-gifs/registration.gif" width="600">
 </div>
  
-### 2. Entering the Competition
+### 2. Entering the Competition - __PASS__
 
 Testing process:
 - Click on a link to the Compete page.
@@ -1183,7 +1182,7 @@ shutter speed, iso and checking the disclaimer.
 
 ### __Read__
 
-### 1. Viewing a specific profile
+### 1. Viewing a specific profile - __PASS__
 
 Testing process:
 - Navigate to the "recent winners" page. 
@@ -1197,7 +1196,7 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view_profiles.gif" width="600">
 </div>
 
-### 2. Browsing and filtering images
+### 2. Browsing and filtering images - __PASS__
 
 Testing process:
 - Navigate to the "Browse" page. 
@@ -1218,7 +1217,7 @@ Testing process:
 </div>
 
 
-### 3. Viewing a specific photo entry
+### 3. Viewing a specific photo entry - __PASS__
 Testing process:
 - Navigate to the "Browse" page. 
 - Click on any image to view its image details page.
@@ -1233,7 +1232,7 @@ Testing process:
 </div>
 
 
-### 4. Viewing award-winners 
+### 4. Viewing award-winners  - __PASS__
 
 Testing process:
 - Navigate to the "Winners" page. 
@@ -1246,7 +1245,7 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view-award-winners.gif" width="600">
 </div>
 
-### 5. Viewing user control panel (admin only)
+### 5. Viewing user control panel (admin only) - __PASS__
 
 Testing process:
 - Login as admin
@@ -1257,7 +1256,7 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view-user-control.gif" width="600">
 </div>
 
-### 6. Searching by username in user control panel (admin only)
+### 6. Searching by username in user control panel (admin only) - __PASS__
 
 Testing process:
 - In the user control panel type a username and click search
@@ -1270,29 +1269,88 @@ Testing process:
 
 ### __Update__
 
-### 1. Update photo details
-
+### 1. Update photo details - __PASS__
 
 Testing process:
 - As a logged in user, click into any of their images to view the photo details page.
 - Click "Edit photo details"
--
+- Edit the image details. 
+- Click "Update Photo Details"
+- Verify that the correct changes have been made by viewing the photo details page.
 
 <div align="center">
-    <img src="/static/images/testing/feature-gifs/filter-user-control.gif" width="600">
+    <img src="/static/images/testing/feature-gifs/update-photo-details.gif" width="600">
 </div>
 
-### 2. Update user details
+### 2. Update user details - __PASS__
 
-### 3. Update user details (admin)
+Testing process:
+- As a logged in user viewing their profile page, click "edit profile".
+- Edit the profile in some way. 
+- Click "Save Changes"
+- Verify that the correct changes have been saved by viewing the profile page.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/update-profile.gif" width="600">
+</div>
+
+### 3. Update user details (admin) - __PASS__
+
+Testing process:
+- As a logged in admin user on the admin user control page, click "edit profile".
+- Edit the profile in some way. 
+- Click "Save Changes"
+- Verify that the correct changes have been saved by viewing the profile page.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/admin-update-profile.gif" width="600">
+</div>
 
 ### __Delete__
 
-### 1. Delete Photo Entry
+### 1. Delete Photo Entry - __PASS__
 
-### 2. Delete User Account 
-### 3. Delete User Account (admin)
+Testing process:
+- As a logged in user on one of their photo details page, click "delete photograph". 
+- Confirm the deletion by clicking "yes, delete it". 
+- Verify that the photograph has been deleted.
+- Double check the deletion by verifying that the photo is no longer in the "photos" collection, the "files" collection and the "chunks" collection in
+the Mongo database.
 
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/delete-photo.gif" width="600">
+</div>
+
+
+### 2. Delete User Account - __PASS__
+
+Testing process:
+- As a logged in user on their profile page, click "edit profile". 
+- Click "delete account". 
+- Enter the user password twice.
+- Account is deleted and user session ended.
+- Verify the deletions in the database: the user, their profile photo, their entries - all successfully deleted from users, photos, files & chunks collections. 
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/delete-account.gif" width="600">
+</div>
+
+
+<br>
+
+### 3. Delete User Account (admin) - __PASS__
+
+Testing process:
+- As a logged in admin user on the admin user control page, click delete button next to the profile to be deleted. 
+- Click "delete account".
+- Enter the admin password twice.
+- Confirm the account deletion.  
+- Check that the account has been deleted from admin user control. 
+- Verify the deletions in the database: the user, their profile photo, their entries - all successfully deleted from users, photos, files & chunks collections. 
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/admin-delete-account.gif" width="600">
+</div>
 <br>
 
 # Testing the Temporal Processes
