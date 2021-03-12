@@ -875,6 +875,12 @@ It also allows users to filter their search.
 and the creator of the image as well as a badge in the upper left hand corner, if the photo has won any awards.
 - The overlay also displays an instruction to the user to click if they want to view the image detail page.
 - Clicking anywhere on the overlay brings the user to that image's photo details page.
+- Once on the photo details page, clicking the "back to browse" button will bring the user back to the *specific* browse page they were on prior to leaving. 
+<br>
+<p align="center">
+    <img src="static/images/features/browse-overlay.gif">
+</p>
+<br>
 - If a filtered search returns no results a message is displayed to the user informing them of this. 
 <br>
 <p align="center">
