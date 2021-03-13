@@ -1603,7 +1603,7 @@ is the same.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/home-mob-resp.png">
+    <img src="/static/images/responsivity/home-mob-resp.png" width="320">
 </div>
 <br>
 
@@ -1626,6 +1626,28 @@ from screen to screen.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/winners-mob-resp.png">
+</div>
+<br>
+
+#### __Browse Page__
+
+- The search and filter form is in the first placed position as per all screens.
+- The filter inputs stack neatly on top of each other including the award-status checkboxes.
+- The "Reset" & "Search" buttons also sit one on top of the other.
+- The images stack vertically in one column, one on top of the other. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/brow-resp-mob-vert.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/browse-resp-mob-vert.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/browse-resp-mob-vert2.png">
 </div>
 <br>
 
@@ -1663,6 +1685,26 @@ from screen to screen.
 
 - No change from the vertical layout. Just a tiny bit more space. 
 
+
+#### __Browse Page__
+
+- The search and filter form is in the first placed position as per all screens.
+- The filter inputs still stack on top of each other however the checkboxes begin to sit next to each other, two on the first row.
+- The "Reset" & "Search" buttons still sit on top of each other.
+- The images are displayed 3 to a row. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/brow-resp-mob-land.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-land-brow.png">
+</div>
+<br>
+
+
 #### Vote Page & Voting Functionality
 
 - Images (and voting buttons) sit 3 to a row unlike 1 per row on vertical mobile devices.
@@ -1698,6 +1740,25 @@ from screen to screen.
 </div>
 <br>
 
+#### __Browse Page__
+
+- The search and filter form looks nice at this width, everything is neatly stacked.
+- The filter inputs still stack on top of each other.
+- Now the checkboxes line up, all three on one row. They look nicest like this.
+- The "Reset" & "Search" buttons still sit on top of each other.
+- The images are displayed 3 to a row. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/tab-vert-brow.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/tab-vert-brow2.png">
+</div>
+<br>
+
 #### __Vote Page & Voting Functionality__
 - The images are laid out 3 to a row, with their vote buttoms stacked underneath. 
 - The competition message is neatly paragraphed under the title and has a nice amount of space.
@@ -1708,7 +1769,7 @@ from screen to screen.
 </div>
 <br>
 
-### Horizontal Orientation
+### Tablet Horizontal Orientation
 
 #### __Home Page__
 
@@ -1728,6 +1789,18 @@ from screen to screen.
 </div>
 <br>
 
+#### __Browse Page__
+
+- The filter inputs still stack on top of each other.
+- The checkboxes remain three to a row.
+- The "Reset" & "Search" buttons now sit next to each other.
+- The images are displayed 4 to a row. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/browse-resp-tab-land.png">
+</div>
+<br>
+
 #### Vote Page & Voting Functionality
 
 - Images (and voting buttons) sit 4 to a row on tablet horizontal layouts.
@@ -1735,7 +1808,7 @@ from screen to screen.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/vote-tab-resp-land.png">
+    <img src="/static/images/responsivity/vote-tab-land-resp.png">
 </div>
 <br>
 
@@ -1751,6 +1824,24 @@ Only slight differences from tablets, these include:
 <br>
 <div align="center">
     <img src="/static/images/responsivity/home-desk-resp.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- No change to the layout, just more space at the sides.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-desk-resp.png">
+</div>
+<br>
+
+#### __Browse Page__
+
+- Everything remains as it is on horizontal tablets.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/browse-resp-desk.png">
 </div>
 <br>
 
@@ -1774,6 +1865,25 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/home-desk-lg-resp2.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- No change to the layout, just even more space at the sides.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-wide-desk-resp.png">
+</div>
+<br>
+
+#### __Browse Page__
+
+- Everything remains as it is on desktop.
+- Just with more space around the search and filter form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/browse-resp-vwide-desk.png">
 </div>
 <br>
 
