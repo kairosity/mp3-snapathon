@@ -1591,7 +1591,7 @@ This application was developed to be fully responsive and accessible on all devi
 
 ## Mobile Devices (Materialize sm breakpoint)
 
-### _Vertical Orientation_
+### _Mobile Vertical Orientation_
 
 #### __Home Page__
 - Page flow is the same as on larger screens, except the layout is stacked vertically. 
@@ -1603,7 +1603,7 @@ is the same.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/mob-home-resp.png">
+    <img src="/static/images/responsivity/home-mob-resp.png">
 </div>
 <br>
 
@@ -1643,11 +1643,11 @@ from screen to screen.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/voted-resp.png">
+    <img src="/static/images/responsivity/voted-resp.png" width="300">
 </div>
 <br>
 
-### Horizontal Orientation
+### Mobile Horizontal Orientation
 
 #### __Home Page__
 
@@ -1676,7 +1676,7 @@ from screen to screen.
 
 ## Tablet Devices (Materialize m breakpoint) 
 
-### _Vertical Orientation_
+### _Tablet Vertical Orientation_
 
 #### __Home Page__
 - Very similar layout to desktop, blue sky image is visible and keywords stack 2 to a row as on desktop. 
@@ -1744,10 +1744,10 @@ from screen to screen.
 
 #### __Home Page__
 
-Only slight difference from tablets, these include:
+Only slight differences from tablets, these include:
 
 - Slightly larger fonts.
-- The buttons narrow proportionality and then slowly become wider as the screen becomes wider.
+- The buttons narrow proportionately and then slowly become wider as the screen widens.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/home-desk-resp.png">
@@ -1781,7 +1781,7 @@ relation to their height, the wider the screen ratio gets.
 
 - Again the only difference is that the images get proportionality wider in 
 relation to their height, the wider the screen ratio gets. Below is an extreme example of how wide they can go.
-- In reality most screens are not of that ratio.  
+- In reality most screens do not possess this ratio.  
 
 <br>
 <div align="center">
