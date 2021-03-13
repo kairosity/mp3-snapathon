@@ -1651,6 +1651,32 @@ from screen to screen.
 </div>
 <br>
 
+#### __Profile Page__
+
+- 'Username's Profile' is displayed first on mobile, across the top.
+- Followed by the user's avatar / profile photo.
+- Followed by their username.
+- Then their user points from competition.
+- Then (only if the user is logged in) comes the "Edit Profile" button.
+- Followed by the time based message regarding where in the competition the user currently stands
+and what action they can/should take. (For logged in users only.)
+- The screen is divided into 3 tabs and clicking will list the images one stacked on top of the other for each of the categories.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-resp-vert-pro.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/profile-mob-resp-vert.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/resp-profile-not-logged-mob.png">
+</div>
+<br>
+
 #### __Vote Page & Voting Functionality__
 - Images stack vertically and only one image is displayed at a time on the smallest layouts. 
 - The vote button sits underneath as on wider screens. 
@@ -1665,7 +1691,7 @@ from screen to screen.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/voted-resp.png" width="300">
+    <img src="/static/images/responsivity/voted-resp.png" width="320">
 </div>
 <br>
 
@@ -1701,6 +1727,27 @@ from screen to screen.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/mob-land-brow.png">
+</div>
+<br>
+
+#### __Profile Page__
+
+- The top left corner displays the user's profile-photo/avatar.
+- With their user points diagonally to the top right of the image.
+- Their username is displayed under the image.
+- For logged in users viewing their own profile page, the action message is on the right hand side of the screen.
+- Under the profile photo the title "Username's profile" is displayed.
+- Under that, if the user is logged in and viewing their own profile page, they will see the "Edit profile" button. 
+- Again the screen is divided into 3 by the tabs for "Entries", "Votes" and "Awards", and on mobile screens in horizontal orientation
+the images are stacked 3 per row under those tabs.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/profile-land-mob-resp.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/profile-mob-land-resp-2.png">
 </div>
 <br>
 
@@ -1759,8 +1806,26 @@ from screen to screen.
 </div>
 <br>
 
+#### __Profile Page__
+
+- The top left corner displays the user's profile-photo/avatar.
+- With their user points diagonally to the top right of the image.
+- Their username is displayed under the image.
+- For logged in users viewing their own profile page, the action message is on the right hand side of the screen.
+- Under the profile photo the title "Username's profile" is displayed.
+- Under that, if the user is logged in and viewing their own profile page, they will see the "Edit profile" button. 
+- Again the screen is divided into 3 by the tabs for "Entries", "Votes" and "Awards" and
+the images are stacked 3 per row under those tabs.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/tab-pro-vert-resp.png">
+</div>
+<br>
+
+
+
 #### __Vote Page & Voting Functionality__
-- The images are laid out 3 to a row, with their vote buttoms stacked underneath. 
+- The images are laid out 3 to a row, with their vote buttons stacked underneath. 
 - The competition message is neatly paragraphed under the title and has a nice amount of space.
 
 <br>
@@ -1785,7 +1850,7 @@ from screen to screen.
 - No change to the layout, just more space at the sides than when in vertical tablet orientation.
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/winners-tab-landscape-resp.png">
+    <img src="/static/images/responsivity/winners-tab-land-resp.png">
 </div>
 <br>
 
@@ -1801,6 +1866,18 @@ from screen to screen.
 </div>
 <br>
 
+#### __Profile Page__
+
+- The profile header layout is the same as on the vertical tablet orientation.
+- Below that, the screen is divided into 3 by the tabs for "Entries", "Votes" and "Awards" and
+the images per row is now increased to 4 under the category tabs.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/tab-resp-pro-land.png">
+</div>
+<br>
+
 #### Vote Page & Voting Functionality
 
 - Images (and voting buttons) sit 4 to a row on tablet horizontal layouts.
@@ -1808,7 +1885,7 @@ from screen to screen.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/vote-tab-land-resp.png">
+    <img src="/static/images/responsivity/vote-tab-resp-land.png">
 </div>
 <br>
 
@@ -1842,6 +1919,16 @@ Only slight differences from tablets, these include:
 <br>
 <div align="center">
     <img src="/static/images/responsivity/browse-resp-desk.png">
+</div>
+<br>
+
+#### __Profile Page__
+
+- There is no change from the tablet layouts except that there is more space and the photo width/height ratios look better with more space.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/profile-desk-resp.png">
 </div>
 <br>
 
@@ -1879,11 +1966,21 @@ relation to their height, the wider the screen ratio gets.
 
 #### __Browse Page__
 
-- Everything remains as it is on desktop.
+- Everything remains as it is on smaller desktops.
 - Just with more space around the search and filter form.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/browse-resp-vwide-desk.png">
+</div>
+<br>
+
+#### __Profile Page__
+
+- There is just more space around the header elements and the photos are slightly thinner and wider.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/profile-wide-desk.png">
 </div>
 <br>
 

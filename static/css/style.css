@@ -994,9 +994,9 @@ p.avatar-username{
     font-family: var(--subheading-2-font);
     color: var(--main-text-colour);
     font-weight: 400;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    letter-spacing: 2px;
+    font-size: 1rem;
+    line-height: 1.3;
+    letter-spacing: 1px;
 }
 .profile-link{
     color: var(--accent-colour);
@@ -1192,7 +1192,6 @@ div.competition-rules{
 }
 /* Vote Page */
 
-
 button.vote-button{
     width: 100%;
     background-color: var(--accent-colour);
@@ -1341,7 +1340,7 @@ img.award-photo {
 }
 /* Profile Page */
 .profile-page-header{
-    padding-top: 4rem;
+    padding-top: 2rem;
 }
 ul.profile-tabs li.profile-tab > a{
     color: var(--dark-text-color);
@@ -1549,6 +1548,14 @@ h5.user-points-badge{
 }
 .profile-title-username{
     font-size: 2.4rem;
+}
+.time-msg{
+    font-size: 1.3rem;
+    line-height: 1.6;
+    letter-spacing: 2px;
+}
+.profile-page-header{
+    padding-top: 4rem;
 }
 /* Edit Profile Page */
 .cancel-delete-ac-btn,
