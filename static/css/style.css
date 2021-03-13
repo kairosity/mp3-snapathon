@@ -860,6 +860,7 @@ div.back-link-div{
     color: var(--main-text-colour);
     font-weight: 500;
     margin-bottom: 0.2rem;
+    margin-top: 0;
 }
 .artist-name{
     font-family: var(--subheading-font);

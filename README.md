@@ -1677,6 +1677,30 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Photo Details Page__
+
+- First comes the back link along the top of the screen.
+- Then the photo title.
+- Followed by the photo's creator.
+- Followed by the number of points the photo has won. (As long as it's not currently in competition.)
+- Then the image itself.
+- Then the photo story underneath.
+- Followed by all the image's technical details, these stack one above the other in order: camera, lens, aperture, shutter speed and ISO.
+- If the user is logged in and viewing their own image, they will see two buttons stacked atop each other: "Edit Photo Details" & "Delete Photograph".
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/photo-deets-mob-vert.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-photo-deet-vert.png">
+</div>
+<br>
+
+
 #### __Vote Page & Voting Functionality__
 - Images stack vertically and only one image is displayed at a time on the smallest layouts. 
 - The vote button sits underneath as on wider screens. 
@@ -1751,6 +1775,16 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Photo Details Page__
+
+- The order and layout is exactly the same as with the vertical mobile orientation, except that there is more space around the elements.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-land-photo-deet.png">
+</div>
+<br>
+
 
 #### Vote Page & Voting Functionality
 
@@ -1822,7 +1856,16 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Photo Details Page__
 
+- The order and layout is the same as on mobile, but it looks better on tablet, because all the information can be taken in 
+without scrolling.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/tab-vert-photo-deet.png">
+</div>
+<br>
 
 #### __Vote Page & Voting Functionality__
 - The images are laid out 3 to a row, with their vote buttons stacked underneath. 
@@ -1878,6 +1921,17 @@ the images per row is now increased to 4 under the category tabs.
 </div>
 <br>
 
+#### __Photo Details Page__
+
+- The order and layout is the same as the horizontal tablet orientation, but with more space around the elements.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/photo-deets-tab-land.png">
+</div>
+<br>
+
+
 #### Vote Page & Voting Functionality
 
 - Images (and voting buttons) sit 4 to a row on tablet horizontal layouts.
@@ -1932,6 +1986,16 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Photo Details Page__
+
+- The order and layout is the same as the horizontal tablet orientation, but with more space around the elements.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/photo-deets-desk.png">
+</div>
+<br>
+
 #### Vote Page & Voting Functionality
 
 - The only major difference to the voting page from tablet layouts, is that the images get proportionality wider in 
@@ -1981,6 +2045,16 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/profile-wide-desk.png">
+</div>
+<br>
+
+#### __Photo Details Page__
+
+- Exact same as desktop, but with more space.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/photo-deets-desk-wide.png">
 </div>
 <br>
 
