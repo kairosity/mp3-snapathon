@@ -809,8 +809,13 @@ Testing process:
 Testing process:
 
 - Ensure that any buttons without readable text have descriptive aria-labels. -- PASS
-- Ensure that all form submit buttons, successfully POST the data they are meant to, by manually confirming the data's presence in the database. -- PASS
+- Check that all form submit buttons, successfully POST the data they are meant to, by manually confirming the data's presence in the database. -- PASS
 - Ensure that buttons are used specifically to submit data and are not a substitute for links. -- PASS
+
+- Check that the "Vote" buttons sucessfully add 1 vote to the photograph in question. This was checked by manually verifying the votes in the database, as
+well as via the longer "vote testing" processes outlined below. -- PASS
+
+- Check that once a user has voted, that the "Vote" buttons disappear from the page. -- PASS
 
 ### __5. Forms__ - __PASS__
 
@@ -1213,6 +1218,7 @@ shutter speed, iso and checking the disclaimer.
     <img src="/static/images/testing/feature-gifs/compete.gif" width="600">
 </div>
 
+
 ### __Read__
 
 ### 1. Viewing a specific profile - __PASS__
@@ -1339,6 +1345,25 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/admin-update-profile.gif" width="600">
 </div>
 
+
+### 4. Voting in the Competition - __PASS__
+
+Voting could arguably be a "create" or an "update" process, but as this application's voting functionality
+essentially updates the photo document in mongo, I will categorise it as an update.
+
+Testing process:
+- Click on a link to the Vote page.
+- Click on a "vote" button to vote for a particular image.
+- Verify that "Thank you for voting" & "you have voted" messages are displayed. 
+- Verify that the vote buttons have disappeared.
+- Verify that the photo voted for has a yellow "you voted for this image" overlay.
+- Further confirmed by checking that the photo voted for has both been awarded an extra vote and that 
+the user who voted for that image, now has that photo object id added to her photos_voted_for array in the Mongo database.
+
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/voting.gif" width="600">
+</div>
+
 ### __Delete__
 
 ### 1. Delete Photo Entry - __PASS__
@@ -1393,12 +1418,22 @@ As many of the pages and application content changes depending on the day of the
 ## Main Application-Wide Temporal Changes 
 
 ### 1. Friday @ midnight
-- The "compete" page becomes a "vote" page.
-- The vote page displays all of the past week's entries with 
-- The navbar link for this page changes from "compete" to "vote"
--
+
+Testing Process:
+
+Open up the application on Saturday and ensure that all of the following has happened:
+
+- The "compete" page becomes a "vote" page. -- PASS
+- The vote page displays all of the past week's entries with clickable "Vote" buttons underneath them. -- PASS
+- The navbar link for this page changes from "compete" to "vote" -- PASS
+
 
 ### 2. Sunday @ 22:00 
+
+Testing Process:
+
+Open up the application on Sunday after 22:00PM and ensure that all of the following has happened:
+
 - The awards and results are automatically calculated.
 - The winners page is updated to display this week's awards and results.
 - The "vote" page turns into an interim "holding" page directing users over to the winners page to view the results. 

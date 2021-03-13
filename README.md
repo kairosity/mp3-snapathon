@@ -1206,9 +1206,13 @@ The vote page is where users who have entered the competition can vote for their
     <img src="/static/images/features/vote-navbar.png">
 </div>
 <br>
-- Users may only vote if they have entered the competition.
-- Users who have not entered will not see the vote buttons.
+<br>
 
+- Users may only vote if they have entered the competition.
+- Users who have not entered will not see the vote buttons, instead they will see a message telling them that they are not eligible to vote 
+this week and detailing when the new competition starts.
+
+<br>
 
 <br>
 <div align="center">
@@ -1217,7 +1221,7 @@ The vote page is where users who have entered the competition can vote for their
 <br>
 
 - Users may only vote once. 
-- If a user tries to vote for their own image, a message will flash telling them they cannot.
+- If a user tries to vote for their own image, a flash message will tell them they can't do that.
 
 
 <br>
@@ -1225,8 +1229,10 @@ The vote page is where users who have entered the competition can vote for their
     <img src="/static/images/features/vote-self-attempt.png">
 </div>
 <br>
+
 - When a user votes, the vote buttons will disappear and a "You voted for this image" message is displayed over the image they voted for.
 
+<br>
 <br>
 <div align="center">
     <img src="/static/images/features/you-have-voted.png">
@@ -1258,8 +1264,8 @@ determine winners.
 
 ### Adjunct Features
 - To keep the competition fair and competitive, users will not be able to view their own or others' "voted for" images 
-until after the week of that particular competition. Otherwise you would know what photo was winning and vote for it to win extra points as per the rules. 
-The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
+until after the week of that particular competition. Otherwise a user would know what photo was winning and they could vote for it to win extra points 
+as per the rules. The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
 ended.  
 
 <br>
