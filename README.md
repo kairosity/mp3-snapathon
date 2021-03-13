@@ -1587,6 +1587,209 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 
 # Responsivity 
 
+This application was developed to be fully responsive and accessible on all devices. 
+
+## Mobile Devices (Materialize sm breakpoint)
+
+### _Vertical Orientation_
+
+#### __Home Page__
+- Page flow is the same as on larger screens, except the layout is stacked vertically. 
+- The blue sky, balloon image is replaced with a colourful mountain sunset image and this sits atop the intro section, where
+the four keywords are still laid out 2 per line.
+- The timeline changes its layout to stack vertically instead of information switching from left to right, but the flow of information
+is the same.
+- The contact page layout is same, albeit with less space. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-home-resp.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-home-timeline-resp.png">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-resp-contact.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- All elements are stacked neatly in vertical alignment with each other. This layout does not change 
+from screen to screen.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-mob-resp.png">
+</div>
+<br>
+
+#### __Vote Page & Voting Functionality__
+- Images stack vertically and only one image is displayed at a time on the smallest layouts. 
+- The vote button sits underneath as on wider screens. 
+- Likewise the "you voted for this image" overlay displays the same as on wider screens. 
+- All functionality is retained.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/voting.gif">
+</div>
+<br>
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/voted-resp.png">
+</div>
+<br>
+
+### Horizontal Orientation
+
+#### __Home Page__
+
+- The main difference from vertical screens is that the blue sky image remains next to the 4 keywords.
+- The timeline stacks vertically as with the vertical layout. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/mob-home-resp-landscape.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- No change from the vertical layout. Just a tiny bit more space. 
+
+#### Vote Page & Voting Functionality
+
+- Images (and voting buttons) sit 3 to a row unlike 1 per row on vertical mobile devices.
+- The rest of the layout is identical.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/vote-resp-landscape.png">
+</div>
+<br>
+
+## Tablet Devices (Materialize m breakpoint) 
+
+### _Vertical Orientation_
+
+#### __Home Page__
+- Very similar layout to desktop, blue sky image is visible and keywords stack 2 to a row as on desktop. 
+- The timeline also has room enough to stack its branches left and right. 
+- There is more space around the contact form, but its layout remains the same throughout the application. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/home-tab-resp-vert.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- No change from mobile layout, just a lot more breathing room, and slightly larger fonts.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-tab-resp-vert.png">
+</div>
+<br>
+
+#### __Vote Page & Voting Functionality__
+- The images are laid out 3 to a row, with their vote buttoms stacked underneath. 
+- The competition message is neatly paragraphed under the title and has a nice amount of space.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/vote-tab-resp-vert.png">
+</div>
+<br>
+
+### Horizontal Orientation
+
+#### __Home Page__
+
+- No difference from the vertical tablet layout, just slightly more space around the elements. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/home-tab-landscape-resp.png">
+</div>
+<br>
+
+#### __Winners Page__
+
+- No change to the layout, just more space at the sides than when in vertical tablet orientation.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-tab-landscape-resp.png">
+</div>
+<br>
+
+#### Vote Page & Voting Functionality
+
+- Images (and voting buttons) sit 4 to a row on tablet horizontal layouts.
+- The rest of the layout is identical.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/vote-tab-resp-land.png">
+</div>
+<br>
+
+
+## Desktop Devices (Materialize l breakpoint) 
+
+#### __Home Page__
+
+Only slight difference from tablets, these include:
+
+- Slightly larger fonts.
+- The buttons narrow proportionality and then slowly become wider as the screen becomes wider.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/home-desk-resp.png">
+</div>
+<br>
+
+#### Vote Page & Voting Functionality
+
+- The only major difference to the voting page from tablet layouts, is that the images get proportionality wider in 
+relation to their height, the wider the screen ratio gets. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/vote-resp-desk.png">
+</div>
+<br>
+
+## Wide Desktop Devices (Materialize xl breakpoint) 
+#### __Home Page__
+
+- Slightly larger fonts.
+- The buttons narrow proportionality and then slowly become wider as the screen becomes wider.
+- There is a lot more space around the elements.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/home-desk-lg-resp2.png">
+</div>
+<br>
+
+#### Vote Page & Voting Functionality
+
+- Again the only difference is that the images get proportionality wider in 
+relation to their height, the wider the screen ratio gets. Below is an extreme example of how wide they can go.
+- In reality most screens are not of that ratio.  
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/vote-resp-wide-desk.png">
+</div>
+<br>
+
+
 # Accessibility
 
 ## Skip to Main Link

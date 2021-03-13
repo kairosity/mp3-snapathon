@@ -166,9 +166,9 @@
     {% endif %}
 
     {% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") <= "22") ) %}
-            <section class="comp-intro center-align">
+        <section class="comp-intro center-align">
             <div class="row">
-                <div class="col s8 offset-s2">
+                <div class="col s12 m8 offset-m2">
                     {% if user.votes_to_use > 0 %}
                         <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
                     {% elif photo_user_voted_for != None %}

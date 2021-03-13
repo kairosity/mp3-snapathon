@@ -47,6 +47,7 @@
         * [1. Update photo details](#update-photo-details)
         * [2. Update user details](#update-user-details)
         * [3. Update user details (admin)](#update-user-details-admin)
+        * [4. Voting in the competition](#voting-in-the-competition)
     * [Delete](#delete)
         * [1. Delete Photo Entry](#delete-photo-entry)
         * [2. Delete User Account](#delete-user-account)
