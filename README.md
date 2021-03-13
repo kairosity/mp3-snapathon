@@ -1082,6 +1082,12 @@ above in [timing messages](#timing-messages).
 </div>
 <br>
 
+<br>
+<div align="center">
+    <img src="/static/images/features/still-have-to-vote-msg.png">
+</div>
+<br>
+
 </details>
 
 <br>
@@ -1186,25 +1192,67 @@ The vote page is where users who have entered the competition can vote for their
 - This page comes online automatically on Saturday morning at 0:00 and replaces the compete page.
 - It displays all the images entered into the week's competition.
 - Every image has a large "Vote" button allowing users to vote for their favourite photo.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote.png">
+</div>
+<br>
+
 - "Vote" also replaces "Compete" in the navbar. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-navbar.png">
+</div>
+<br>
 - Users may only vote if they have entered the competition.
 - Users who have not entered will not see the vote buttons.
-- Users may only vote once, if they attempt to vote more than once (using url) a message will be flashed telling them
-that they cannot. 
+
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-page-for-users-who-cannot-enter.png">
+</div>
+<br>
+
+- Users may only vote once. 
 - If a user tries to vote for their own image, a message will flash telling them they cannot.
+
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-self-attempt.png">
+</div>
+<br>
 - When a user votes, the vote buttons will disappear and a "You voted for this image" message is displayed over the image they voted for.
 
 <br>
 <div align="center">
-    <img src="/static/images/features/voted.png">
+    <img src="/static/images/features/you-have-voted.png">
 </div>
 <br>
 
 - The images are displayed 50 per page and on each page the order of the images is randomised to try and ensure no image is given an unfair 
 advantage.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-random.gif">
+</div>
+<br>
+
 - Every Sunday at 22:00 the votes are automatically tallied and points assigned to images and users. The vote page ceases it shows a message 
-linking to the "Winners" page where the winning images are displayed. 
+linking to the "Winners" page where the winning images are displayed.
 - It also contains a message giving users information about the next competition that will start at midnight on Monday morning. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-interim-page.png">
+</div>
+<br>
+
+
 - When a user votes successfully within the rules of the competition, a "vote" is added to that particular photograph and then used to 
 determine winners.
 
@@ -1213,8 +1261,21 @@ determine winners.
 until after the week of that particular competition. Otherwise you would know what photo was winning and vote for it to win extra points as per the rules. 
 The code is structured so that the voted for photos are only shown in user profiles when their specific competition has
 ended.  
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-not-displayed.gif">
+</div>
+<br>
+
 - For the same reason, the photo details page of photos currently being voted on, will not display the image's points/votes tally until
 after the awards are distributed. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/vote-no-points-displayed.png">
+</div>
+<br>
 </details>
 
 <br>
@@ -1757,6 +1818,29 @@ For future releases I would consider adding extra admin features such as:
 - <span>Photo by <a href="https://unsplash.com/@mkunsplash84?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Marian Kroell</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@mak_jp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mak</a> on <a href="https://unsplash.com/t/architecture?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 - <span>Photo by <a href="https://unsplash.com/@laurachouette?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Laura Chouette</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+- Photo by <a href="https://unsplash.com/@agord70345203222008?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">A G</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@ditakesphotos?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Diana Parkhouse</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Clode</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@aboeka?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Gwen Weustink</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@gerandeklerk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Geran de Klerk</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kelly Sikkema</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@rayhennessy?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ray Hennessy</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@blreak14?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Brianna R.</a> on <a href="/s/photos/wildlife?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@sebaspenalambarri?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sebastian Pena Lambarri</a> on <a href="/s/photos/fish?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@szutsi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Gábor Szűts</a> on <a href="/s/photos/fish?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Clode</a> on <a href="/s/photos/fish?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Clode</a> on <a href="/s/photos/fish?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@zmachacek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Zdeněk Macháček</a> on <a href="/s/photos/bird?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@alistairdent?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Alistair Dent</a> on <a href="/s/photos/bird?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@kris_ricepees?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Gary Bendig</a> on <a href="/s/photos/bird?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@dibert?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Dibert</a> on <a href="/s/photos/horse?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@knl_photo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kirsten LaChance</a> on <a href="/s/photos/horse?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@kotecinho?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kote Puerto</a> on <a href="/s/photos/cat?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@malek_dridi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Malek Dridi</a> on <a href="/s/photos/cat?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
+
+
+
 
 </details>
 
