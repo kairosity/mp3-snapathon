@@ -1768,7 +1768,7 @@ and what action they can/should take. (For logged in users only.)
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-mob-vert">
+    <img src="/static/images/responsivity/admin-mob-vert.png">
 </div>
 <br>
 
@@ -1779,16 +1779,16 @@ and what action they can/should take. (For logged in users only.)
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-mob-vert">
+    <img src="/static/images/responsivity/del-modal-mob-vert.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-admin-mob-vert">
+    <img src="/static/images/responsivity/del-modal-admin-mob-vert.png">
 </div>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-admin-mob-vert-1">
+    <img src="/static/images/responsivity/del-modal-admin-mob-vert-1.png">
 </div>
 <br>
 
@@ -1921,7 +1921,7 @@ the images are stacked 3 per row under those tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-mob-land">
+    <img src="/static/images/responsivity/admin-mob-land.png">
 </div>
 <br>
 
@@ -1931,12 +1931,12 @@ the images are stacked 3 per row under those tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-mob-land-1">
+    <img src="/static/images/responsivity/del-modals-mob-land-1.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-mob-land-2">
+    <img src="/static/images/responsivity/del-modal-mob-land-2.png">
 </div>
 
 
@@ -2089,7 +2089,7 @@ without scrolling.
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-vert-1.png">
+    <img src="/static/images/responsivity/delete-modals-tab-vert-1.png">
 </div>
 
 
@@ -2216,7 +2216,7 @@ the images per row is now increased to 4 under the category tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-land-1.png">
+    <img src="/static/images/responsivity/delete-modals-tab-land-1.png">
 </div>
 <br>
 <br>
@@ -2226,7 +2226,7 @@ the images per row is now increased to 4 under the category tabs.
 </br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-tab-land.png">
+    <img src="/static/images/responsivity/delete-modal-tab-land.png">
 </div>
 </br>
 
