@@ -27,7 +27,7 @@ Users register accounts and then they enter one competition a week on a particul
   * [Structure](#structure)
       - [*Interaction Design*](#interaction-design)
         - [*Navigation*](#navigation)
-        - [*Consistency, conventions and predictability*](#consistency-conventions-and-predictability)
+        - [*Consistency, conventions & predictability*](#consistency-conventions-predictability)
         - [*Learnability and Communication of Functionality*](#learnability-and-communication-of-functionality)
         - [*Feedback*](#feedback)
         - [*Flash Messages*](#flash-messages)
