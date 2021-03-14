@@ -138,7 +138,7 @@ def awards():
 # clear_all_photo_votes(mongo)
 
 def test_function():
-    print("This was run automagically!")
+    abort(404)
 
 
 @app.context_processor
