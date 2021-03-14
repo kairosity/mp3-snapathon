@@ -1647,8 +1647,9 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 - It switches every user's "can_enter" field to True to allow all users to enter the new competition.
 </details>
 
+<br>
 
-#### back to [contents](#table-of-contents) 
+#### __back to [contents](#table-of-contents)__ 
 <br>
 ---
 
@@ -2567,6 +2568,12 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 </details>
 
+<br>
+
+#### __back to [contents](#table-of-contents)__ 
+
+<br>
+
 # Accessibility
 
 ## Skip to Main Link
@@ -2576,6 +2583,10 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 - I was careful not to include buttons or elements without clear text references to their function. 
 - This helped to ensure that functionality would remain evident for visually challenged users without the need for aria-labels. 
 - I didn't use X close buttons for example, opting whenever needed for "Cancel" instead. 
+
+#### __back to [contents](#table-of-contents)__
+
+<br>
 
 # Security
 The following security features were integrated into this application:
@@ -2657,6 +2668,9 @@ For future releases I would consider adding extra admin features such as:
 - Allowing admins to leave a note attached to user profiles, this way warnings for bad conduct could be introduced. 
 - Allowing admins to manually select different competition themes. 
 
+<br>
+
+#### __back to [contents](#table-of-contents)__
 <br>
 
 # Attribution
@@ -2823,10 +2837,11 @@ For future releases I would consider adding extra admin features such as:
 - Photo by <a href="https://unsplash.com/@malek_dridi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Malek Dridi</a> on <a href="/s/photos/cat?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
 
-
-
-
 </details>
+
+<br>
+
+#### __back to [contents](#table-of-contents)__
 
 <br>
 
@@ -2910,6 +2925,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 <p align="left">
     <img src="static/images/deployment-process-12.png">
 </p>
+
+#### __back to [contents](#table-of-contents)__ 
+<br>
 
  # Tools and Other Resources Used 
 
@@ -3147,6 +3165,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
     
     Used to create the short testing gifs included in the testing.md doc
 
+#### __back to [contents](#table-of-contents)__ 
+<br>
+
 # Libraries
 
 ## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 
@@ -3158,11 +3179,11 @@ Used in this application to schedule the awards & points process that happens ea
 
 A WSGI web application library used in this application for hashing and reading user passwords securely. 
 
-## [Flask-Mail](https://pythonhosted.org/Flask-Mail/)
+## [Flask-Mail](https://pythonhosted.org/Flask-Mail/)
 
 A Flask extension that allows users to send emails via the application. 
 
-## [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
+## [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
 
 A Flask extension to paginate. Says it's for use with bootstrap, but integrated fine with Materialize.
 
