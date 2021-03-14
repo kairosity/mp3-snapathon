@@ -1631,11 +1631,11 @@ is the same.
 
 #### __Login Page__
 
-- All elements are stacked neatly in vertical alignment with each other. This layout does not change 
-from screen to screen.
+- The form is flush with the sides of the screen to give the user the most possible space to enter their details. 
+- The form is visible in its entirety without scrolling.
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/winners-mob-resp.png">
+    <img src="/static/images/responsivity/login-mob-vert-resp.png">
 </div>
 <br>
 
@@ -1771,6 +1771,16 @@ from screen to screen.
 </div>
 <br>
 
+#### __Login Page__
+
+- The form has space to either side and the user has to scroll to complete it.
+- This is not the natural orientation a user would use for filling in a form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/login-mob-land-resp.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change from the vertical layout. Just a tiny bit more space. 
@@ -1853,6 +1863,16 @@ the images are stacked 3 per row under those tabs.
 <br>
 
 #### __Register Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-tab-vert.png">
+</div>
+<br>
+
+#### __Login Page__
 
 - The form sits in the middle of the screen and the user has plenty of space to enter their details. 
 - The form is visible in its entirety without scrolling. 
@@ -1948,6 +1968,16 @@ without scrolling.
 </div>
 <br>
 
+#### __Login Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/login-tab-land.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change to the layout, just more space at the sides than when in vertical tablet orientation.
@@ -2029,6 +2059,16 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Login Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/login-desk-resp.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change to the layout, just more space at the sides.
@@ -2097,6 +2137,15 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/register-desk-wide.png">
+</div>
+<br>
+
+#### __Login Page__
+
+- Same as on smaller desktops - just with more space around the form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/login-desktop-wide.png">
 </div>
 <br>
 
