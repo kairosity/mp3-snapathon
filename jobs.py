@@ -1,5 +1,7 @@
 from apscheduler.schedulers.background import BlockingScheduler
-from app import awards, new_comp, test_function, mongo
+from app import awards, test_function, mongo
+from helpers import new_comp
+from helpers import *
 
 '''
 These are the scheduled functions:
@@ -18,5 +20,3 @@ scheduler.add_job(test_function, 'cron', day_of_week='sun',
                   start_date='2021-02-24')
 
 scheduler.start()
-
-print("testing")

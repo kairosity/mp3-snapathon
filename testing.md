@@ -1765,6 +1765,28 @@ The expectation is that her photo's points are reduced to 0.
 
 As you can see in the chart below, the function worked perfectly and all the predicted test results were correct. 
 
+#|User | User Photo | Photo User Voted For | Expected User Points From Awards | Expected User Points From Voting | Expected User Points Total | Actual User Points Total | Expected Awards | Actual Awards
+---|------------ | -------------|--------------|----------------------|------------|--------|-----|---|--|
+1.| Georgina | Night Swimming | kitten | 0 | 0 | 0 | 0 | 0 |
+2.| Annie | Mr. Frederickson | zebby |  |  |  |  |  |
+3.| Anne1 | Humming Bird | snow on cat |  |  |  |  | |
+4.| Cathy | Robin in tree | turtle |  |  |  |  | |
+5.| Eoghan1 | Zebby | dangerously pretty | 7 | 0 | 7 |  |1 |   
+6.| Horatio | Hare today | macaw |  |  |  | 
+7.| Ignacio | Foxy | turtle |  |  |  | 
+8.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+8.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+9.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+10.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+11.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+12.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+13.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+14.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+15.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+16.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+17.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+18.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+19.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
 
 ## Vote Function
 ## Test 1
