@@ -1700,3 +1700,294 @@ little help from Stack Overflow (attributed in README.md)
 
 This code adds an extra layer of security as it allows in images from all sources, within the parameters of the 
 security measures I have already set up for images, but it does not allow any other media files. 
+
+# Browser Testing
+
+The application's responsivity and functionality was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired by 17th August 2021.
+
+Here are the results of the browser testing using [Browser Stack](https://www.browserstack.com/):
+
+## Desktop Browser Testing
+
+<details><summary><b>click for test results</b></summary>
+
+| OS  | Browser | Version | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **Windows 7, 8, 8.1 & 10**   | *Microsoft Edge*  |  89 (latest) / 90 (dev) | ✓ | ✓
+|   |   | 90 | ✓ | ✓
+|   |   | 89 | ✓ | ✓
+|   |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+|   |   | 18 | ✓ | ✓
+|   |   | 17 | ✓ | ✓
+|   |   | 16 | ✓ | ✓
+|   |   | 15 | ✓ | x
+| **Windows 7, 8, 8.1 & 10 &**  | *Firefox*  |  84 (latest)| ✓ | ✓
+|  **Mac OSX Mavericks and Newer** |   | 86 / 87 (beta) | ✓ | ✓
+|   |   | 87 | ✓ | ✓
+|   |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+|   |   | 79 | ✓ | ✓
+|   |   | 78 | ✓ | ✓
+| ↑  |  ↑  | 36 | ✓ | ✓
+| ↓  |  ↓  | 35 | X | ✓
+| **Windows 7, 8, 8.1 & 10 &**   | *Chrome*  |  87 (latest)
+| **Mac OSX Mavericks and Newer**  |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+| ↑ | ↑  | 49 | ✓ | ✓
+| ↓ | ↓  | 48 | X | ✓
+| **Windows 7, 8, 8.1 & 10 &**  | *Opera*  |  73 (latest) | ✓ | ✓
+| **Mac OSX Mavericks and Newer**  |   | 72 | ✓ | ✓
+|   |   | 71 | ✓ | ✓
+|   |   | 68 | ✓ | ✓
+|   |   | 67 | ✓ | ✓
+|   |   | 66 | ✓ | ✓
+|   |   | 65 | ✓ | ✓
+|  ↑ |  ↑ | 36 | ✓ | ✓
+|  ↓  |  ↓  | 35 | X | ✓
+
+For Mac systems nothing older than OSX Mavericks could sucessfully run the application, and for Windows nothing older than Windows 7. 
+
+- On Windows desktops it worked perfectly on all versions of Microsoft Edge.
+- On Windows Microsoft Edge v15 object-fit doesn't work so functionality and design are compromised.
+- On Windows & Mac desktops it worked on all versions of Firefox from v36 upwards.
+- On Windows & Mac desktops Firefox v35 and down, object-fit no longer functions.
+- On Windows & Mac desktops it worked on all versions of Chrome from v49 upwards.
+- On Windows & Mac desktops it worked on all versions of Opera from v36 upwards.
+
+Below are just a selection of screenshots from the desktop browser testing:
+
+__Windows 10 - Edge - OS 15:__ -- FAIL 
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/win10-edge-15.png">
+</p>
+<br>
+
+__Windows 10 - Edge - OS 89:__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/win-10-edge-89.png">
+</p>
+<br>
+
+__Mac - Firefox - OS 67:__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/ff-mac-67.png">
+</p>
+<br>
+
+__Mac - Chrome - OS 48 :__ -- FAIL
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/chrome-mac-48.png">
+</p>
+<br>
+
+__Mac - Chrome - OS 49 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/chrome-mac-49.png">
+</p>
+<br>
+
+__Windows - Opera - OS 35 :__ -- FAIL
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/win-op-35.png">
+</p>
+<br>
+
+__Windows - Opera - OS 47 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/win-op-47.png">
+</p>
+<br>
+
+</details>
+<br>
+
+## Mobile Browser Testing
+
+<details><summary><b>click for test results</b></summary>
+
+The application's responsivity and functionality were tested across a wide platform of mobile devices, operating systems and mobile browsers as outlined below:
+
+| Mobile Device  | OS  | Browser | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **iPhone & iPad**   | 14  |  Safari & Chrome | ✓ | ✓
+|   | 13  | Safari & Chrome | ✓ | ✓
+|   | 12 | Safari & Chrome | ✓ | ✓
+|   | 11  | Chrome | ✓ | ✓
+|   | 10  | Chrome | ✓ | ✓
+| ↓   | 11  | Safari | X | X
+| ↓   | 9  | Chrome | X | X
+| **Samsung Galaxy S20, S9, S8, S10+, S10e, S9+, S8+, S7, S6, S5, S4, A51, A11, A10, A8, Note 20 - Note3**  | *10, 9, 8, 7, 6, 5, 4.4, 4.3*  |  Chrome, Firefox, Samsung Internet & UC Browser| ✓ | ✓
+|  **Google Pixel 5, 4, 3a, 3, 2, Pixel, PixelXL, Nexus6P, Nexus 6, 5, 9, 7** | 11, 10, 9, 8, 7.1, 7, 6, 5, 4.4, 5.1, 6  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **OnePlus 8, 7T, 7, 6T** | 10, 9  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **Moto G7 Play, Moto X 2nd Gen, Moto G 2nd Gen** | 9, 6, 5  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **Xiaomi Redmi Note** | 8  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **Vivo Y50** | 10  | Chrome & Firefox | ✓ | ✓
+|  **Oppo Reno 3 Pro** | 10  | Chrome & Firefox | ✓ | ✓
+
+<br>
+
+As the above demonstrates there are issues running the application on Apple devices from versions 9 on Chrome & 11 on Safari.
+
+Androids are far more backwards compatible, and using Browser Stack I found zero incompatibility testing the devices and OSs listed above.
+
+Below is a selection of randomly selected screenshots of the application successfully running on a spectrum of mobile devices:
+
+__iPhone IOS9 - Chrome :__ -- FAIL
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/ios9-chrome.png" width=270>
+</p>
+<br>
+
+__iPhone IOS11 - Chrome :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/ios11-chrome.png" width=270>
+</p>
+<br>
+
+__iPad IOS12 - Safari :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/ios12-saf.png" width=270>
+</p>
+<br>
+
+__Android OS 4.4 - Google Nexus :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos4.4-google-nexus7.png" width=270>
+</p>
+<br>
+
+__Android OS 4.3 - Samsung Galaxy Note 3 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/android-4.3-samsung-note3.png" width=270>
+</p>
+<br>
+
+__Android OS 5 - Moto G2 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos5-motog2.png" width=270>
+</p>
+<br>
+
+__Android OS 9 - One Plus 7 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos9-oneplus7.png" width=270>
+</p>
+<br>
+
+__Android OS 9 - Xiaomi Redmi Note 8 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos9-xiaomi-redmi-note-8.png" width=270>
+</p>
+<br>
+
+__Android OS 10 - Oppo Reno 3 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos10-oppo-reno3.png" width=270>
+</p>
+<br>
+
+__Android OS 11 - Samsung Galaxy s21 :__ -- PASS
+
+<br>
+<p align="center">
+  <img src="static/images/testing/browser-tests/androidos11-samsung-galaxys21.png" width=270>
+</p>
+<br>
+
+</details>
+<br>
+
+# Responsivity Testing
+
+In addition to the extensive responsivity section in this application's [README.md](README.md) file, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) for a great overview of how different pages act responsively, and where breakpoint issues arose. 
+
+These tests were part-automated insofar as the responsive viewer enabled me to test the app simultaneously across a number of devices. 
+
+<p align="left">
+  <img src="static/images/testing/responsive-viewer.png">
+</p>
+
+Finally I also employed the standard Chrome Dev Tools Mobile emulator, but with caution, as I had already discovered from previous projects that it is not 100% accurate when 
+emulating functionality. For that, I relied more on actually using as many different devices as I could get my hands on, along with asking friends and family who use different
+phones and tablets to test the app for me. 
+
+<p align="center">
+  <img src="static/images/testing/moto.png" width=200>
+  <img src="static/images/testing/iphone.png" width=200>
+  <img src="static/images/testing/nexus.png" width=200>
+</p>
+
+
+# Code Validators
+
+## HTML Validators
+
+### W3C HTML Validator
+
+### W3C Link Checker
+
+## CSS Validators
+
+### W3C CSS Validator
+
+## JavaScript Validators
+
+### JSHint
+
+## Python Validators
+
+### PEP8 Online
+
+# Performance and Web Development Tools Testing
+
+## Lighthouse
+
+## Web Dev Measure
