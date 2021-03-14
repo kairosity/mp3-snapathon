@@ -1,7 +1,7 @@
 from apscheduler.schedulers.background import BlockingScheduler
 from app import awards, test_function, mongo
 from helpers import new_comp
-from helpers import *
+
 
 '''
 These are the scheduled functions:
