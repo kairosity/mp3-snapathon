@@ -10,10 +10,13 @@
 * [**Issues and bugs caught during testing**](#issues-and-bugs-caught-during-testing)
     * [1. browse()](#browse)
     * [2. winners()](#winners)
-    * [3. get_photo()](#get-photo)
-    * [4. edit_profile()](#edit-profile)
+    * [3. get_photo()](#get_photo)
+    * [4. edit_profile()](#edit_profile)
     * [5. compete()](#compete)
     * [6. base.html](#base-html)
+    * [7. Integrating Email Functionality](#integrating-email-functionality)
+    * [8. awards()](#awards)
+    * [9. Error Messages](#error-messages)
 * [**Status Code Testing**](#status-code-testing)
     * [1. 200 Status Code Testing](#200-status-code-testing)
     * [2. 302 Status Code Testing](#302-status-code-testing)
@@ -24,8 +27,8 @@
     * [7. 500 Status Code Testing](#500-status-code-testing)
 * [**Functionality Testing**](#functionality-testing)
   * [**Base Functionality**](#base-functionality)
-    * [1. Navigation](#navigation)
-    * [2. Login](#login)
+    * [1. Navigation](#1-navigation-pass)
+    * [2. Login](#2-login-pass)
     * [3. Links](#links)
     * [4. Buttons](#buttons)
     * [5. Forms](#forms)
@@ -393,7 +396,7 @@ This allowed me to write logic based on the specific situation whereby a user ha
 
 I found that without this hidden field there were no attributes present and readable in the "file" input field that I could use to write conditional logic. 
 
-## compete() function
+## compete()
 
 ### Issue 1 & Fix 1
 
@@ -468,7 +471,7 @@ be pushed to page 2 or further, at least within those pages the order is randomi
 
 This functionality will do for the first iteration of the application, but there is definitely room for improvement. 
 
-## base.html template
+## base.html
 
 ### Issue 1:
 I needed a way to reference datetime in my navigation html and because the navigation html code was written in the base.html template, there was no route leading to it that I could use to include the datetime 
