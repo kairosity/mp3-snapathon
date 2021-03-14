@@ -1699,11 +1699,11 @@ and what action they can/should take. (For logged in users only.)
 
 #### __Update Profile Page__
 
-- All elements are stacked neatly in vertical alignment with each other. This layout does not change 
-from screen to screen.
+- The form is flush with the sides of the screen to give the user the most possible space to enter their details. 
+- The form is visible in its entirety without scrolling. 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/winners-mob-resp.png">
+    <img src="/static/images/responsivity/update-profile-mob-vert.png">
 </div>
 <br>
 
@@ -1794,7 +1794,7 @@ from screen to screen.
 - The images are displayed 3 to a row. 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/brow-resp-mob-land.png">
+    <img src="/static/images/responsivity/browse-resp-mob-land.png">
 </div>
 <br>
 
@@ -1822,6 +1822,16 @@ the images are stacked 3 per row under those tabs.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/profile-mob-land-resp-2.png">
+</div>
+<br>
+
+#### __Register Page__
+
+- The form has space to either side and the user has to scroll to complete it.
+- This is not the natural orientation a user would use for filling in a form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/update-profile-mob-land.png">
 </div>
 <br>
 
@@ -1926,6 +1936,16 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Update Profile Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/update-profile-resp-vert-tab.png">
+</div>
+<br>
+
 #### __Photo Details Page__
 
 - The order and layout is the same as on mobile, but it looks better on tablet, because all the information can be taken in 
@@ -2009,6 +2029,16 @@ the images per row is now increased to 4 under the category tabs.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/tab-resp-pro-land.png">
+</div>
+<br>
+
+#### __Update Profile Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The user needs to scroll to view the form in its entirety.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/update-pro-resp-tab-land.png">
 </div>
 <br>
 
@@ -2098,6 +2128,15 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Update Profile Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/update-profile-desk.png">
+</div>
+<br>
+
 #### __Photo Details Page__
 
 - The order and layout is the same as the horizontal tablet orientation, but with more space around the elements.
@@ -2178,6 +2217,15 @@ relation to their height, the wider the screen ratio gets.
 </div>
 <br>
 
+#### __Update Profile Page__
+
+- Same as on smaller desktops - just with more space around the form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/update-profile-wide-desk.png">
+</div>
+<br>
+
 #### __Photo Details Page__
 
 - Exact same as desktop, but with more space.
@@ -2204,7 +2252,6 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 # Accessibility
 
 ## Skip to Main Link
-
 
 
 ## Aria Labels
