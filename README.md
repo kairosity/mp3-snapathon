@@ -1474,6 +1474,14 @@ uploaded photos permanently.
 - To confirm deletion they must enter their password correctly twice and then click delete again.
 - When confirmed, this will delete their user data, their profile photo and all their uploaded competition entries.
 - They also have the option of clicking the "cancel" button, which will bring them back to the "update profile" page.
+- Any user who has gained points off the back of one of a deleted account's images, still retains their points total.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-desk-2.png">
+</div>
+<br>
+
 </details>
 
 <br>
@@ -1481,7 +1489,7 @@ uploaded photos permanently.
 ## 14. Delete Photo
 
 This allows a user to delete any image they have entered into the competition. When a user clicks on the photo details page 
-for one of their own images. Below the details, they will see a "delete photograph" button. 
+for one of their own images they will see a "delete photograph" button below the details.
 <details>
 <summary><b>click for features</b></summary>
 
@@ -1489,10 +1497,25 @@ for one of their own images. Below the details, they will see a "delete photogra
 
 - Clicking the "delete photograph" button deletes the photograph from the database and all traces of it from the application front-end. 
 - When the user clicks the button, they are prompted by a deletion confirmation modal and asked to confirm deletion. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/delete-modals-desk1.png">
+</div>
+<br>
+
 - If the image has won an award and the user deletes the image, the points that user gained from that image are also deducted from the 
 user's points total. 
 - The delete confirmation modal informs the user of the above and specifies the award won by the image as well as the number of points that will 
 be deducted. 
+
+
+<br>
+<div align="center">
+    <img src="/static/images/features/delete-points-confirm.png">
+</div>
+<br>
+
 - The user can choose to click "No, cancel" to cancel the deletion request, or "Yes, Delete it", to confirm. 
 - If the photo was entered into the current week's competition and it is before Saturday when the user deletes it, the user is able to upload a 
 replacement photo into the competition should they choose to.
@@ -1513,6 +1536,13 @@ This allows a user to logout of the application.
 
 - The logout function is run from a link on the navbar.
 - It ends a user's session and redirects them to the login page with a flash message telling them that they've logged out successfully.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/logout.png">
+</div>
+<br>
+
 </details>
 
 <br>
@@ -1534,14 +1564,41 @@ to.
     - number of photos voted for
 - The idea here is to give the administrator a decent overview of the user's overall interaction with the application, so that if they do break the rules, 
 an admin can make an informed decision as to whether it was oversight or whether they are a spammy user, or bot. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-desk-wide.png">
+</div>
+<br>
+
 - If an admin decides that a user has broken the rules in a manner that means their account must be deleted, they can click the delete button under the user listing. 
 - The delete button will bring the admin to an interim screen that asks again "Delete \<username>\'s account?"
     - If they are sure, they click a big red delete button and a modal opens prompting them to enter their admin password to confirm the deletion one more time. 
     - I felt that this level of confirmation was important for something as final as account deletion. 
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/admin-delete-account.gif">
+</div>
+<br>
+
 - If an admin decides that a user's username, profile photo or email, is inappropriate they can choose instead to change it by clicking the "edit" button.
     - The edit button opens up the Update Profile template, but without the password change section of the form, and with a different page heading. 
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/feature-gifs/admin-update-profile.gif">
+</div>
+<br>
+
 - An admin can also use the search form to look for a user by keyword search. 
     - The searched for keyword remains displayed in the search field when the results are displayed for a better admin UX.
+
+<br>
+<div align="center">
+    <img src="/static/images/features/admin-login.png">
+</div>
+<br>
 </details>
 
 <br>
@@ -1562,7 +1619,13 @@ The awards are calculated automatically on Sunday evening at 22:00 UTC, the resu
 - If two or more images receive the same number of votes, then those photos all win that level of award.
 - If a user has entered a photo into competition but then between Saturday & Sunday at 22:00PM fails to vote for a photo, that user's entry is 
 made null and void, and this functionality is built into the awards calculations. Their photo's votes (points) are reduced to 0 and thus the entry 
-is invalidated.
+is invalidated. 
+
+<br>
+<div align="center">
+    <img src="/static/images/features/winners1.png">
+</div>
+<br>
 
 </details>
 
@@ -1577,7 +1640,7 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 ### Features 
 
 - This is run automatically using APScheduler at 0:00 Monday morning.
-- It switches every user's "can_enter" field to True to allow all users enter the new competition.
+- It switches every user's "can_enter" field to True to allow all users to enter the new competition.
 </details>
 
 
@@ -1931,7 +1994,7 @@ the images are stacked 3 per row under those tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-mob-land-1.png">
+    <img src="/static/images/responsivity/delete-modals-mob-land-1.png">
 </div>
 <br>
 <br>
@@ -2363,7 +2426,7 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-desk1.png">
+    <img src="/static/images/responsivity/delete-modals-desk1.png">
 </div>
 </br>
 
