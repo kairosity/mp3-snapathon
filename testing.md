@@ -658,6 +658,14 @@ security measures I have already set up for images, but it does not allow any ot
 
 The application was not running the Scheduled processes on time. 
 
+#### Fix
+
+There were various issues I had overlooked:
+
+1. I needed to add a second dyno to my Procfile --> ```clock: python jobs.py```
+
+2. I needed to keep the application "awake" so that it would actually run the scheduled functions at the appointed times. For this I used [Kaffeine](https://kaffeine.herokuapp.com/) a nifty little app that pings Heroku apps to keep them awake. 
+
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
