@@ -1772,6 +1772,25 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Deletion Modals__
+- These take up a large portion of the screen on mobile and they sit over the other content.
+- The other content is visible but only slightly around the sides underneath.
+- Some need to be scrolled, others fit on the screen.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modal-mob-vert">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modal-admin-mob-vert">
+</div>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modal-admin-mob-vert-1">
+</div>
+<br>
 
 
 
@@ -1905,6 +1924,21 @@ the images are stacked 3 per row under those tabs.
     <img src="/static/images/responsivity/admin-mob-land">
 </div>
 <br>
+
+#### __Deletion Modals__
+- On the horizontal orientation, these have slightly more space.
+- The longer ones are a little easier to read.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-mob-land-1">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modal-mob-land-2">
+</div>
+
 
 </details>
 
@@ -2045,6 +2079,20 @@ without scrolling.
 </div>
 <br>
 
+#### __Deletion Modals__
+- These look good on tablets.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-tab-vert">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-tab-vert-1">
+</div>
+
+
 ### Tablet Horizontal Orientation
 
 #### __Home Page__
@@ -2163,12 +2211,34 @@ the images per row is now increased to 4 under the category tabs.
 </div>
 <br>
 
+#### __Deletion Modals__
+- These have slightly more room on the horizontal layout.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-tab-land-1">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-tab-land-2">
+</div>
+</br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modal-tab-land">
+</div>
+</br>
+
+
 </details>
+
+
+
+## Desktop Devices (Materialize l breakpoint) 
 
 <details>
 <summary><b>click for details</b></summary>
-
-## Desktop Devices (Materialize l breakpoint) 
 
 #### __Home Page__
 
@@ -2283,10 +2353,28 @@ relation to their height, the wider the screen ratio gets.
 </div>
 <br>
 
+#### __Deletion Modals__
+- These take up less room proportionately on desktop.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-desk-2">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-desk1">
+</div>
+</br>
+
+
+</details>
+
+## Wide Desktop Devices (Materialize xl breakpoint) 
+
 <details>
 <summary><b>click for details</b></summary>
 
-## Wide Desktop Devices (Materialize xl breakpoint) 
 #### __Home Page__
 
 - Slightly larger fonts.
@@ -2396,12 +2484,25 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 </div>
 <br>
 
+#### __Deletion Modals__
+- These have even more room around them on wider desktops, but are in all other respects identical.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/del-modals-desk-wide">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/delete-modals-desk-wide-1">
+</div>
+</br>
+
 </details>
 
 # Accessibility
 
 ## Skip to Main Link
-
 
 ## Aria Labels
 
