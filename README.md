@@ -1591,6 +1591,9 @@ This application was developed to be fully responsive and accessible on all devi
 
 ## Mobile Devices (Materialize sm breakpoint)
 
+<details>
+<summary><b>click for details</b></summary>
+
 ### _Mobile Vertical Orientation_
 
 #### __Home Page__
@@ -1759,6 +1762,19 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Admin User Control Page__
+- User information blocks stack vertically and only one is displayed per row.
+- Content fills the width of the screen.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-mob-vert">
+</div>
+<br>
+
+
+
+
 ### Mobile Horizontal Orientation
 
 #### __Home Page__
@@ -1880,7 +1896,22 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Admin User Control Page__
+- 2 user informations blocks now share a row.
+- The content still fills the width of the screen.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-mob-land">
+</div>
+<br>
+
+</details>
+
 ## Tablet Devices (Materialize m breakpoint) 
+
+<details>
+<summary><b>click for details</b></summary>
 
 ### _Tablet Vertical Orientation_
 
@@ -2003,6 +2034,17 @@ without scrolling.
 </div>
 <br>
 
+#### __Admin User Control Page__
+- 2 user informations blocks still share a row.
+- The content still fills the width of the screen.
+- There is more space and it is more comfortable accessing this page on tablet.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-tab-vert">
+</div>
+<br>
+
 ### Tablet Horizontal Orientation
 
 #### __Home Page__
@@ -2111,6 +2153,20 @@ the images per row is now increased to 4 under the category tabs.
 </div>
 <br>
 
+#### __Admin User Control Page__
+- The number of user informations blocks per row increases to 3.
+- The content still fills the width of the screen.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-tab-land">
+</div>
+<br>
+
+</details>
+
+<details>
+<summary><b>click for details</b></summary>
 
 ## Desktop Devices (Materialize l breakpoint) 
 
@@ -2215,6 +2271,20 @@ relation to their height, the wider the screen ratio gets.
     <img src="/static/images/responsivity/vote-resp-desk.png">
 </div>
 <br>
+</details>
+
+#### __Admin User Control Page__
+- The number of user informations blocks remains at 3.
+- The content still fills the width of the screen.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-desk-land">
+</div>
+<br>
+
+<details>
+<summary><b>click for details</b></summary>
 
 ## Wide Desktop Devices (Materialize xl breakpoint) 
 #### __Home Page__
@@ -2315,6 +2385,18 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 </div>
 <br>
 
+#### __Admin User Control Page__
+- The number of user informations blocks increases to 4.
+- The content still fills the width of the screen.
+- It's very easy to use on large screens.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/admin-desk-wide">
+</div>
+<br>
+
+</details>
 
 # Accessibility
 
