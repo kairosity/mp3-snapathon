@@ -3159,6 +3159,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to work out how pass in db as a parameter, as the format is not intuitive.
 
+- ## [Kaffeine for Heroku](https://kaffeine.herokuapp.com/)
+
+    In order for APScheduler to work properly, the app needs to stay awake.
 
 ## 12. General/Misc
 

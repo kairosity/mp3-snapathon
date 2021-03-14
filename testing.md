@@ -1562,12 +1562,6 @@ Open up the application on Sunday after 22:00PM and ensure that all of the follo
 ### 1. Profile Page Countdowns
 - The messages on a user's profile page are specific to their individual interaction with the application. 
 
-- If it is between Monday & Friday and the user has not yet entered the competition they should see the following message with a link to the Competition entry page: 
-
-        "You still have to enter an image into this week's competition. You have 2 days, 9 hours and 34 minutes left to enter. Go to COMPETE now to enter an image."
-
-__PASS__
-
 - If it is between Monday & Friday and the user  *has not* entered the competition, they should see the following message: 
 
         "You still have to enter an image into this week's competition. You have 2 days, 3 hours and 34 minutes left to enter."
