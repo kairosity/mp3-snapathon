@@ -1730,6 +1730,16 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Edit Photo Page__
+
+- There is a back link across the top of the screen.
+- The form is flush with the sides of the screen to give the user the most possible space to enter their details. 
+- Every field is on its own row.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-mob-vert.png">
+</div>
+<br>
 
 #### __Vote Page & Voting Functionality__
 - Images stack vertically and only one image is displayed at a time on the smallest layouts. 
@@ -1825,15 +1835,16 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
-#### __Register Page__
+#### __Update Profile Page__
 
+- This is not the natural orientation for using this form. 
 - The form has space to either side and the user has to scroll to complete it.
-- This is not the natural orientation a user would use for filling in a form.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/update-profile-mob-land.png">
 </div>
 <br>
+
 
 #### __Photo Details Page__
 
@@ -1845,6 +1856,18 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Edit Photo Page__
+
+- This is not the natural orientation for using this form. 
+- The form has space to either side and the user has to scroll to complete it.
+- Camera and lens fields share a row. 
+- Aperture, Shutter speed & ISO share a row. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-mob-land.png">
+</div>
+<br>
 
 #### Vote Page & Voting Functionality
 
@@ -1957,6 +1980,19 @@ without scrolling.
 </div>
 <br>
 
+#### __Edit Photo Page__
+
+- Using the form on tablet with a vertical orientation is comfortable.
+- The form has space to either side and the user has to scroll to complete it.
+- Camera and lens fields share a row. 
+- Aperture, Shutter speed & ISO share a row. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-tab-vert.png">
+</div>
+<br>
+
 #### __Vote Page & Voting Functionality__
 - The images are laid out 3 to a row, with their vote buttons stacked underneath. 
 - The competition message is neatly paragraphed under the title and has a nice amount of space.
@@ -2052,6 +2088,17 @@ the images per row is now increased to 4 under the category tabs.
 </div>
 <br>
 
+#### __Edit Photo Page__
+
+- The form has space to either side and the user has to scroll to complete it.
+- Camera and lens fields share a row. 
+- Aperture, Shutter speed & ISO share a row. 
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-tab-land.png">
+</div>
+<br>
 
 #### Vote Page & Voting Functionality
 
@@ -2147,6 +2194,17 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Edit Photo Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The image is larger than on tablets.
+- The heading font is larger.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-desk.png">
+</div>
+<br>
+
 #### Vote Page & Voting Functionality
 
 - The only major difference to the voting page from tablet layouts, is that the images get proportionality wider in 
@@ -2233,6 +2291,15 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/photo-deets-wide-desk.png">
+</div>
+<br>
+
+#### __Edit Photo Page__
+
+- Same as on smaller desktops - just with more space around the form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/edit-photo-desk-wide.png">
 </div>
 <br>
 
