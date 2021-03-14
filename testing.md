@@ -1750,7 +1750,7 @@ The expectation is that her photo's points are reduced to 0.
 
 ### Test Hypotheses:
 
-1. Harriet's image will be disqualified, its total points reduced to 0.
+1. Harriet's image will be disqualified, its total points reduced to 0 and it will not receive an award.
 
 2. Eoghan1's image "Zebby" will come first with 6 points.
 
@@ -1758,7 +1758,7 @@ The expectation is that her photo's points are reduced to 0.
 
 4. Patricia's image "Turtle" will come third with 3 points. 
 
-5. Other expected user points are outlined below in the numbers chart used to keep track of scoring. 
+5. Other expected user points are outlined below in the chart used to keep track of scoring. 
 
 
 ### Test Results:
