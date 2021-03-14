@@ -1775,18 +1775,30 @@ As you can see in the chart below, the function worked perfectly and all the pre
 6.| Horatio | Hare today | macaw |  |  |  | 
 7.| Ignacio | Foxy | turtle |  |  |  | 
 8.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-8.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-9.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-10.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-11.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-12.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-13.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-14.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-15.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-16.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-17.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-18.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-19.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
+9.| Loretta | Birds of a Feather | oil painting |  |  |  | | | -
+10.| Monica | Birds of a Feather | oil painting |  |  |  | | | -
+11.| Nicola | Birds of a Feather | oil painting |  |  |  | | | -
+12.| Orlaith | Birds of a Feather | oil painting |  |  |  | | | -
+13.| Patricia | Birds of a Feather | oil painting |  |  |  | | | -
+14.| Quentin | Birds of a Feather | oil painting |  |  |  | | | -
+15.| Roberta | Birds of a Feather | oil painting |  |  |  | | | -
+16.| Franny | Birds of a Feather | oil painting |  |  |  | | | -
+17.| Stephanie | Birds of a Feather | oil painting |  |  |  | | | -
+18.| Tristan | Birds of a Feather | oil painting |  |  |  | | | -
+19.| Ursula | Birds of a Feather | oil painting |  |  |  | | | -
+20.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
+21.| Karina | Birds of a Feather | oil painting |  |  |  | | | -
+22.| Xavier | Birds of a Feather | oil painting |  |  |  | | | -
+23.| Eoghan | Birds of a Feather | oil painting |  |  |  | | | -
+24.| Yasmine | Birds of a Feather | oil painting |  |  |  | | | -
+25.| Anthony | Birds of a Feather | oil painting |  |  |  | | | -
+26.| Guillerme | Birds of a Feather | oil painting |  |  |  | | | -
+27.| Davina | Birds of a Feather | oil painting |  |  |  | | | -
+28.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
+29.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
+30.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
+31.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
+32.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
 
 ## Vote Function
 ## Test 1
