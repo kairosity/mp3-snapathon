@@ -138,7 +138,8 @@ def awards():
 # clear_all_photo_votes(mongo)
 
 def test_function():
-    abort(404)
+    mongo.db.users.update_one({"username": "apschedulertestuser"}, {'$inc': {"user_points": 1}})
+    print("User points incremented")
 
 
 @app.context_processor

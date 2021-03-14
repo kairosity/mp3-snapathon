@@ -666,7 +666,7 @@ There were various issues I had overlooked:
 
 2. I needed to keep the application "awake" so that it would actually run the scheduled functions at the appointed times. For this I used [Kaffeine](https://kaffeine.herokuapp.com/) a nifty little app that pings Heroku apps every 30 minutes to keep them awake. 
 
-3. I needed to remove the 'start_date' parameter from my schedule function. For some reason (still unknown as to why) it was causing an error and stopping the function.
+3. I needed to change the kind of Scheduler I was using from "BackgroundScheduler" to "BlockingScheduler"
 
 <br>
 
