@@ -651,6 +651,13 @@ little help from Stack Overflow (attributed in README.md)
 This code adds an extra layer of security as it allows in images from all sources, within the parameters of the 
 security measures I have already set up for images, but it does not allow any other media files. 
 
+
+## Running APScheduler on the Free Version of Heroku
+
+#### Issue 1
+
+The application was not running the Scheduled processes on time. 
+
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
