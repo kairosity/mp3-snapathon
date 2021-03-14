@@ -137,9 +137,9 @@ def awards():
 # clear_all_awards(mongo)
 # clear_all_photo_votes(mongo)
 
-
 def test_function():
     print("This was run automagically!")
+
 
 @app.context_processor
 def inject_datetime():
