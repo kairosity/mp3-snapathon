@@ -85,14 +85,13 @@ Users register accounts and then they enter one competition a week on a particul
     - [Desktop Devices](#desktop-devices-materialize-l-breakpoint)
     - [Wide Desktop Devices](#wide-desktop-devices-materialize-xl-breakpoint)
 - [5. Accessibility](#accessibility)
-- [6. Security](#5-security)
+- [6. Security](#security)
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
     - [3. Approved File Extensions](#3-approved-file-extensions)
     - [4. Uploaded file size](#4-uploaded-file-size)
     - [5. Validating file contents](#5-validating-file-contents)
-    - [6. Securing the upload filename](#6-securing-the-upload-filenames)
-    - [7. CSP](#7-csp)
+    - [6. Content Security Policy](#6-content-security-policy)
 - [7. Testing](#testing)
 - [8. Future Features To Implement](#future-features-to-implement)
 - [9. Attribution](#attribution)
@@ -3187,3 +3186,31 @@ A Flask extension that allows users to send emails via the application.
 
 A Flask extension to paginate. Says it's for use with bootstrap, but integrated fine with Materialize.
 
+#### __back to [contents](#table-of-contents)__ 
+<br>
+
+# Technology Used
+
+- HTML5
+- CSS
+- JavaScript
+- MongoDB
+- Python
+- Flask 
+- Git
+- GitHub
+- GitPod
+- Adobe Photoshop
+- Figma 
+- Heroku
+- Slack 
+
+# Acknowledgements
+
+Thanks to tutor support for helping out with a few sticklers.
+
+Thanks to the Code Institute Slack Community for being a sound bunch.
+
+Thanks to my Mother for yet again proof-reading a long document she has no interest in.
+
+Thanks to my Code Institute mentor [Oluwafemi Medale](https://github.com/omedale) for his invaluable insight and instruction.
