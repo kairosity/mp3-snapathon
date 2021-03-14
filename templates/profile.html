@@ -44,7 +44,7 @@
                     <h4 class="time-msg">Go to <a class="profile-link" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to 
                         enter an image.</h4>
                 {% else %}
-                      <h4 class="time-msg">Voting opens in {{comp_closes}}.</h4>
+                      <h4 class="time-msg">Thank you for entering the competition. Voting opens in {{comp_closes}}.</h4>
                 {% endif %}
             <!-- If it is Sat or Sunday before 22:00PM -->
             {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") <= "22") ) %}
@@ -59,7 +59,7 @@
                     <h4 class="time-msg">You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
                 {% endif %}
             {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") >= "22") ) %}
-                <h4 class="time-msg">The winners have been announced! Head to<a class="profile-link" href="{{url_for('recent_winners')}}">RECENT WINNERS</a> and see if you won! </h4>
+                <h4 class="time-msg">The winners have been announced! Head to<a class="profile-link" href="{{url_for('recent_winners')}}">WINNERS</a>to see the results!</h4>
             {% endif %}
             {% endif %}
         </div>

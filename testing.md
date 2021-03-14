@@ -1566,9 +1566,34 @@ Open up the application on Sunday after 22:00PM and ensure that all of the follo
 
         "You still have to enter an image into this week's competition. You have 2 days, 9 hours and 34 minutes left to enter. Go to COMPETE now to enter an image."
 
-- If it is between Monday & Friday and the user  *has* entered the competition, they should see the following message: 
+PASS
 
-        "
+- If it is between Monday & Friday and the user  *has not* entered the competition, they should see the following message: 
+
+        "You still have to enter an image into this week's competition. You have 2 days, 3 hours and 34 minutes left to enter."
+
+- If it is between Monday & Friday and the user *has* entered the competition, they should see the following message: 
+
+        "Thank you for entering the competition. Voting opens in 4 days, 4 hours and 12 minutes."
+
+- If it is between Saturday & Sunday before 22:00 and the user *has* entered the competition and *has* voted, they should see the following message: 
+
+        "Thank you for voting! Voting ends at 22:00 this Sunday in 0 days, 4 hours and 41 minutes, when awards, points & winners will be announced."
+
+- If it is between Saturday & Sunday before 22:00 and the user *has* entered the competition but *has not* voted, they should see the following message: 
+
+        "You still have to vote for your favourite image. You have 0 days, 4 hours and 40 minutes left to vote. 
+        If you don't vote, your entry's points will be reduced to 0.
+        Go to VOTE and cast your vote!"
+
+- If it is between Saturday & Sunday before 22:00 and the user *has not* entered the competition, they should see the following message: 
+
+        "You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in 0 days, 2 hours and 3 minutes, 
+        when awards, points & winners will be announced."
+
+- If it is Sunday after 22:00 all users will see the following message: 
+
+        "The winners have been announced! Head to WINNERS to see the results!"
 
 
 <br>
