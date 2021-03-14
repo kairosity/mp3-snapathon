@@ -2075,7 +2075,7 @@ without scrolling.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-tab-vert">
+    <img src="/static/images/responsivity/admin-tab-vert.png">
 </div>
 <br>
 
@@ -2084,12 +2084,12 @@ without scrolling.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-vert">
+    <img src="/static/images/responsivity/del-modals-tab-vert.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-vert-1">
+    <img src="/static/images/responsivity/del-modals-tab-vert-1.png">
 </div>
 
 
@@ -2207,7 +2207,7 @@ the images per row is now increased to 4 under the category tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-tab-land">
+    <img src="/static/images/responsivity/admin-tab-land.png">
 </div>
 <br>
 
@@ -2216,17 +2216,17 @@ the images per row is now increased to 4 under the category tabs.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-land-1">
+    <img src="/static/images/responsivity/del-modals-tab-land-1.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-tab-land-2">
+    <img src="/static/images/responsivity/del-modals-tab-land-2.png">
 </div>
 </br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-tab-land">
+    <img src="/static/images/responsivity/del-modal-tab-land.png">
 </div>
 </br>
 
@@ -2341,7 +2341,7 @@ relation to their height, the wider the screen ratio gets.
     <img src="/static/images/responsivity/vote-resp-desk.png">
 </div>
 <br>
-</details>
+
 
 #### __Admin User Control Page__
 - The number of user informations blocks remains at 3.
@@ -2349,7 +2349,7 @@ relation to their height, the wider the screen ratio gets.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-desk-land">
+    <img src="/static/images/responsivity/admin-desk-land.png">
 </div>
 <br>
 
@@ -2358,12 +2358,12 @@ relation to their height, the wider the screen ratio gets.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-desk-2">
+    <img src="/static/images/responsivity/del-modals-desk-2.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-desk1">
+    <img src="/static/images/responsivity/del-modals-desk1.png">
 </div>
 </br>
 
@@ -2480,7 +2480,7 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/admin-desk-wide">
+    <img src="/static/images/responsivity/admin-desk-wide.png">
 </div>
 <br>
 
@@ -2489,12 +2489,12 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modals-desk-wide">
+    <img src="/static/images/responsivity/del-modals-desk-wide.png">
 </div>
 <br>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/delete-modals-desk-wide-1">
+    <img src="/static/images/responsivity/delete-modals-desk-wide-1.png">
 </div>
 </br>
 
