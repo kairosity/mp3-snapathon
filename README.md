@@ -2605,14 +2605,23 @@ saved to the database. This function transforms any dodgy filenames into flat sa
 
 ## 3. Approved File Extensions
 
-I added an array of approved filename extensions as an added layer of security, and one that also ensures the 
-files uploaded can be displayed as images. I added ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']```
-to my configuration variables and if a user attempte to upload any other extension type, the application throws a 415 error.
+The application limits the type of files that can be uploaded to a pre-approved subset. This was achieved by using a config instruction: ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']``` Which was then referenced in all methods dealing with uploaded files: the compete(), the edit_profile() and the register() functions.
+
+If a user attempts to upload any other extension type, the application throws a 415 error:
+
+        file_extension = os.path.splitext(photo.filename)[1]
+            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+                abort(400, "Sorry that file extension is not allowed. Please reformat your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
+
+This further limits the ability of users with malicious intent to upload damaging files to the database.
 
 ## 4. Uploaded file size 
 
-The application only allows files under 540KBs to be uploaded, this has the dual purpose of ensuring faster page loading times, and ensuring that 
-users with malicious intent cannot upload large programs. 
+The application only allows files under 560KBs to be uploaded. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes.
+
+This was achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'] = 750 * 750``` Flask automatically halts any large requests and returns a 413 status code. 
+
+Rejecting large files was straightforward, however Flask has big issues returning the appropriate error message and page.
 
 ## 5. Validating file contents
 
@@ -2625,6 +2634,19 @@ GET renders the edit-profile template form if the username passed
 
 I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. 
 
+
+## 7. Access Control
+
+Users must login to their accounts and many of the app's functionality is based on a user being logged in. 
+
+Logged in users may edit their accounts, delete their accounts and delete their photos. 
+They are not able to access the admin control center.
+They are not able to delete, edit or update other user accounts. 
+Admins are not able to edit or delete user images, but they are able to edit user usernames and email addresses should they need to. 
+Admins can also completely delete a user's account.
+Admins may also delete user profile images if they are deemed inappropriate. 
+
+These varying accesses are managed by the login function, which is secured by Werkzeug's password hashing and reading methods.
 
 #### __back to [contents](#table-of-contents)__
 

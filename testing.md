@@ -17,6 +17,7 @@
     * [7. Integrating Email Functionality](#integrating-email-functionality)
     * [8. awards()](#awards)
     * [9. Error Messages](#error-messages)
+    * [10. Flask-Talisman](#flask-talisman)
 * [**Status Code Testing**](#status-code-testing)
     * [1. 200 Status Code Testing](#200-status-code-testing)
     * [2. 302 Status Code Testing](#302-status-code-testing)
@@ -27,38 +28,40 @@
     * [7. 500 Status Code Testing](#500-status-code-testing)
 * [**Functionality Testing**](#functionality-testing)
   * [**Base Functionality**](#base-functionality)
-    * [1. Navigation](#__1-navigation__-__pass__)
-    * [2. Login](#2-login__-__pass)
+    * [1. Navigation](#1-navigation)
+    * [2. Login](#2-login)
     * [3. Links](#3-links)
-    * [4. Buttons](#4-buttons-----pass)
+    * [4. Buttons](#4-buttons)
     * [5. Forms](#5-forms)
     * [6. Input Validation](#6-input-validation)
     * [7. Pagination](#7-pagination)
-    * [8. Email](#email)
-    * [9. Logout](#logout)
+    * [8. Email](#8-email)
+    * [9. Logout](#9-logout)
   * [**CRUD Functionality**](#crud-functionality)
     * [Create](#create)
-        * [1. New User Registration](#new-user-registration)
-        * [2. Entering the Competition](#entering-the-competition)
+        * [1. New User Registration](#1-new-user-registration)
+        * [2. Entering the Competition](#2-entering-the-competition)
     * [Read](#read)
-        * [1. Viewing a specific profile](#viewing-a-profile)
-        * [2. Browsing and filtering images](#browsing-and-filtering-images)
-        * [3. Viewing a specific photo entry](#viewing-a-specific-photo-entry)
-        * [4. Viewing award-winners](#viewing-award-winners)
-        * [5. Viewing user control panel (admin only)](#viewing-user-control)
+        * [1. Viewing a specific profile](#1-viewing-a-specific-profile)
+        * [2. Browsing and filtering images](#2-browsing-and-filtering-images)
+        * [3. Viewing a specific photo entry](#3-viewing-a-specific-photo-entry)
+        * [4. Viewing award-winners](#4-viewing-award-winners)
+        * [5. Viewing user control panel (admin only)](#5-viewing-user-control-panel-admin-only)
+        * [6. Searching by username in control panel (admin only)](#6-searching-by-username-in-user-control-panel-admin-only)
     * [Update](#update)
-        * [1. Update photo details](#update-photo-details)
-        * [2. Update user details](#update-user-details)
-        * [3. Update user details (admin)](#update-user-details-admin)
-        * [4. Voting in the competition](#voting-in-the-competition)
+        * [1. Update photo details](#1-update-photo-details)
+        * [2. Update user details](#2-update-user-details)
+        * [3. Update user details (admin)](#3-update-user-details-admin)
+        * [4. Voting in the competition](#4-voting-in-the-competition)
     * [Delete](#delete)
-        * [1. Delete Photo Entry](#delete-photo-entry)
-        * [2. Delete User Account](#delete-user-account)
-        * [3. Delete User Account (admin)](#delete-user-account-admin)
-  * [**Automated Processes**](#automated-processes)
-    * [1. Awards Function - Test 1](#awards-function-test-1)
-    * [2. Awards Function - Test 2](#awards-function-test-2)
-    * [3. Vote Function - Test 1](#vote-function-test-1)
+        * [1. Delete Photo Entry](#1-delete-photo-entry)
+        * [2. Delete User Account](#2-delete-user-account)
+        * [3. Delete User Account (admin)](#3-delete-user-account-admin)
+  * [**Testing the Temporal Processes**](#testing-the-temporal-processes)
+  * [**Testing the Automated Processes**](#testing-the-automated-processes)
+    * [Awards Function - Test 1](#awards-function-1)
+    * [Awards Function - Test 2](#awards-function-2)
+    * [Vote Function - Test 1](#vote-function)
 * [**Browser Testing**](#browser-testing)
     * [Desktop Browser Testing](#desktop-browser-testing)
     * [Mobile Browser Testing](#mobile-browser-testing)
@@ -599,6 +602,55 @@ After some research I found the following note in the Flask documentation:
 I checked it on the deployed version and it still wasn't working. (FINISH)
 
 
+## Flask-Talisman 
+
+#### Issue 1
+
+I installed flask-talisman to protect against a variety of common security threats and when I reloaded my application, it had changed it somewhat:
+
+<p align="left">
+  <img src="static/images/issues/talisman1.png">
+</p>
+<p align="left">
+  <img src="static/images/issues/talisman2.png">
+</p>
+
+#### Fix 1
+
+I gleaned that Talisman was not allowing the Materialize framework to do its job and it 
+transpired that it was blocking a number of domains from sending data to the site, which of course
+is what it does. To allow in the sources of: Google Fonts, Materialize and jQuery, as well as my own 
+JavaScript files, I had to explicity tell Talisman that those sources were ok. I did so as below with a 
+little help from Stack Overflow (attributed in README.md)
+
+        csp = {
+            'default-src': [
+                '\'self\'',
+                'cdnjs.cloudflare.com',
+                'fonts.googleapis.com'
+            ],
+            'style-src': [
+                "\'self\'",
+                'cdnjs.cloudflare.com',
+                'https://fonts.googleapis.com'
+            ],
+            'font-src': [
+                "\'self\'",
+                "https://fonts.gstatic.com"
+            ],
+            'img-src': '*',
+            'script-src': [
+                'cdnjs.cloudflare.com',
+                'code.jquery.com',
+                '\'self\'',
+            ]
+        }
+
+        talisman = Talisman(app, content_security_policy=csp)
+
+This code adds an extra layer of security as it allows in images from all sources, within the parameters of the 
+security measures I have already set up for images, but it does not allow any other media files. 
+
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
@@ -801,7 +853,8 @@ also return 404 status codes.
 # Functionality Testing
 
 ## Base Functionality
-### __1. Navigation__ - __PASS__
+### __1. Navigation__ 
+__PASS__
 
 Testing process:
  
@@ -810,7 +863,8 @@ Testing process:
 - Checked every navigation link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. (see details below in Validations section of this doc.) -- PASS 
 
-### __2. Login__ - __PASS__
+### __2. Login__
+__PASS__
 
 Testing Proces:
 
@@ -823,14 +877,16 @@ Testing Proces:
 </div>
 
 
-### __3. Links__ - __PASS__
+### __3. Links__
+__PASS__
 
 Testing process:
  
 - Checked every link on the site to ensure they linked to the correct page. -- PASS
 - Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
 
-### __4. Buttons__ - __PASS__
+### __4. Buttons__
+__PASS__
 
 Testing process:
 
@@ -843,7 +899,8 @@ well as via the longer "vote testing" processes outlined below. -- PASS
 
 - Check that once a user has voted, that the "Vote" buttons disappear from the page. -- PASS
 
-### __5. Forms__ - __PASS__
+### __5. Forms__
+__PASS__
 
 Testing Process:
 
@@ -852,7 +909,8 @@ ensure they submitted succesffully. -- PASS
 - Submitted each form with various incorrect or forbidden inputs to ensure that the form was not submitted, and that the 
 appropriate error message was displayed to the user.  -- PASS
 
-### __6. Input Validations__ - __PASS__
+### __6. Input Validations__
+__PASS__
 
 As Materialize comes with its own very useful set of form input validations, I have relied quite heavily on those validations and validation messages for this application, but I have supplemented them, specifically with the custom file upload validations. 
 
@@ -1172,7 +1230,8 @@ to further communicate these max-lengths to the user.
 
 <br>
 
-### __7. Pagination__ - __PASS__
+### __7. Pagination__
+__PASS__
 
 Testing Process:
 
@@ -1185,7 +1244,8 @@ Testing Process:
     <img src="/static/images/testing/pagination-msg.png" width="600">
 </div>
 
-### __8. Email__ - __PASS__
+### __8. Email__
+__PASS__
 
 Testing Process:
 
@@ -1196,7 +1256,8 @@ Testing Process:
     <img src="/static/images/testing/feature-gifs/email.gif" width="600">
 </div>
 
-### __9. Logout__ - __PASS__
+### __9. Logout__
+__PASS__
 
 Testing Process:
 
@@ -1223,7 +1284,8 @@ multiple dummy users and competition entries.
 
 ### __Create__
 
-### 1. New User Registration - __PASS__
+### 1. New User Registration
+__PASS__
 
 Testing process:
 - Click on one of the various "Register" links, and verify that the register page loads.
@@ -1237,7 +1299,8 @@ photo displaying correctly.
     <img src="/static/images/testing/feature-gifs/registration.gif" width="600">
 </div>
  
-### 2. Entering the Competition - __PASS__
+### 2. Entering the Competition
+__PASS__
 
 Testing process:
 - Click on a link to the Compete page.
@@ -1253,9 +1316,11 @@ shutter speed, iso and checking the disclaimer.
 </div>
 
 
-### __Read__
+### __Read__ 
+<br>
 
-### 1. Viewing a specific profile - __PASS__
+### 1. Viewing a specific profile
+__PASS__
 
 Testing process:
 - Navigate to the "recent winners" page. 
@@ -1269,7 +1334,8 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view_profiles.gif" width="600">
 </div>
 
-### 2. Browsing and filtering images - __PASS__
+### 2. Browsing and filtering images
+__PASS__
 
 Testing process:
 - Navigate to the "Browse" page. 
@@ -1290,7 +1356,9 @@ Testing process:
 </div>
 
 
-### 3. Viewing a specific photo entry - __PASS__
+### 3. Viewing a specific photo entry
+__PASS__
+
 Testing process:
 - Navigate to the "Browse" page. 
 - Click on any image to view its image details page.
@@ -1305,7 +1373,8 @@ Testing process:
 </div>
 
 
-### 4. Viewing award-winners  - __PASS__
+### 4. Viewing award-winners 
+__PASS__
 
 Testing process:
 - Navigate to the "Winners" page. 
@@ -1318,7 +1387,8 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view-award-winners.gif" width="600">
 </div>
 
-### 5. Viewing user control panel (admin only) - __PASS__
+### 5. Viewing user control panel (admin only)
+__PASS__
 
 Testing process:
 - Login as admin
@@ -1329,7 +1399,8 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/view-user-control.gif" width="600">
 </div>
 
-### 6. Searching by username in user control panel (admin only) - __PASS__
+### 6. Searching by username in user control panel (admin only)
+__PASS__
 
 Testing process:
 - In the user control panel type a username and click search
@@ -1342,7 +1413,8 @@ Testing process:
 
 ### __Update__
 
-### 1. Update photo details - __PASS__
+### 1. Update photo details
+__PASS__
 
 Testing process:
 - As a logged in user, click into any of their images to view the photo details page.
@@ -1355,7 +1427,8 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/update-photo-details.gif" width="600">
 </div>
 
-### 2. Update user details - __PASS__
+### 2. Update user details
+__PASS__
 
 Testing process:
 - As a logged in user viewing their profile page, click "edit profile".
@@ -1367,7 +1440,8 @@ Testing process:
     <img src="/static/images/testing/feature-gifs/update-profile.gif" width="600">
 </div>
 
-### 3. Update user details (admin) - __PASS__
+### 3. Update user details (admin)
+__PASS__
 
 Testing process:
 - As a logged in admin user on the admin user control page, click "edit profile".
@@ -1380,7 +1454,8 @@ Testing process:
 </div>
 
 
-### 4. Voting in the Competition - __PASS__
+### 4. Voting in the Competition
+__PASS__
 
 Voting could arguably be a "create" or an "update" process, but as this application's voting functionality
 essentially updates the photo document in mongo, I will categorise it as an update.
@@ -1400,7 +1475,8 @@ the user who voted for that image, now has that photo object id added to her pho
 
 ### __Delete__
 
-### 1. Delete Photo Entry - __PASS__
+### 1. Delete Photo Entry
+__PASS__
 
 Testing process:
 - As a logged in user on one of their photo details page, click "delete photograph". 
@@ -1414,7 +1490,8 @@ the Mongo database.
 </div>
 
 
-### 2. Delete User Account - __PASS__
+### 2. Delete User Account
+__PASS__
 
 Testing process:
 - As a logged in user on their profile page, click "edit profile". 
@@ -1430,7 +1507,8 @@ Testing process:
 
 <br>
 
-### 3. Delete User Account (admin) - __PASS__
+### 3. Delete User Account (admin)
+__PASS__
 
 Testing process:
 - As a logged in admin user on the admin user control page, click delete button next to the profile to be deleted. 
@@ -1502,7 +1580,9 @@ Open up the application on Sunday after 22:00PM and ensure that all of the follo
 
 # Testing the Automated Processes
 
-## Testing the awards() function
+## Awards Function
+## Test 1
+
 The awards() function runs automatically on a Sunday evening at 22:00 - and for the first tests I decided to change those settings and run it manually. 
 
 Firstly I created a selection of dummy users and for each of them I entered 1 image into a dummy weekly competition. I then made each user vote for various images and recorded
@@ -1558,7 +1638,10 @@ as needed.
 
 This strategy helped me catch one issue that arose not because of the code logic, but because I had allowed 4 users to upload more than one image. 
 
-### Testing the "user must vote" rule contained in the awards() function. 
+<br>
+
+### __Testing the "user must vote" rule contained in the awards() function.__ 
+<br>
 
 The rules of the competition state that if you enter the competition, you must vote for an image other than you own before 22:00PM on Sunday. Users who enter 
 and who do not vote, will have their entry's points reduced to 0. This happens automatically as votes are counted. To test this, I created a dummy user called "Franny"
@@ -1590,7 +1673,8 @@ as well as reducing her photo "leaves"'s ```photo_votes``` from 100 to 0.
 Leaves received more votes than any other photo in that competition, but did not win any awards, 
 evidenced by its ```awards``` field remaining ```null```
 
-## Testing the awards() function 2
+## Awards Function
+## Test 2
 
 To ensure that everything including the AP Scheduler automaton worked well, I ran another test, but for this one I did not interfere with the timing 
 of the logic.
@@ -1609,7 +1693,8 @@ of the logic.
 
 
 
-## Testing the Vote logic
+## Vote Function
+## Test 1
 
 ### Issue 1
 
@@ -1639,58 +1724,6 @@ For the user profile page, I confined the logic to the view rather than the temp
 
 Where ```photos_voted_for_objs``` was the array passed to the template.  
 
-
-
-
-# Input Validation
-
-## Registration Form
-
-Various validations were employed to ensure the registration form saved the correct inputs to the database. 
-
-1. The 'required' attribute was added to *all* inputs to ensure that no blank fields are returned. 
-
-2. For usernames the 'min-length' attribute was set to 5 and the 'max-length' to 25.
-
-3. For passwords, the 'min-length' attribute was set to 6 and the 'max-length' to 25.
-
-4. For the email input the 'pattern' attribute was employed to use regex to ensure only valid email formats are entered. 
-
-        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-
-    This is not a failsafe regex for email, however it will suffice for the first iteration of this application. 
-
-5. On the backend side of things, both usernames and emails are checked against existing data in the database to ensure neither have already been registered. 
-
-6. Also on the backend, the password & password confirmation fields are checked against each other, to ensure they match and to protect against typos. 
-
-## Compete form for uploading user's photos into competition
-
-- Validations:
-
-### Limiting the maximum size of uploaded files
-
-This was achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024``` This effectively stops any request body that is larger
-than 1MB. Flask automatically halts any large requests and returns a 413 status code. This is a useful validation for two reasons: it stops overly massive images from being uploaded
-that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes. 
-
-### Limiting the type of files that can be uploaded 
-
-This was achieved again by using a config instruction: ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']``` Which was then referenced in 
-the compete() method for uploading photos. When the file is received but before it is saved to the database, the compete() function checks if it is one of these acceptable 
-file types and if not, it throws an error: 
-
-        file_extension = os.path.splitext(photo.filename)[1]
-            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
-                abort(400, "Sorry that file extension is not allowed. Please reformat your image to one of the following acceptable file types: jpg, svg, jpeg, png or gif")
-
-This further limits the ability of users with malicious intent to upload damaging files to the database.
-
-### Sanitizing the filenames for further security 
-
-Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any
-dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage. 
-
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
@@ -1699,56 +1732,83 @@ dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can 
 
 # Security Testing
 
-### WTF-forms & CSRF Protection
+## Access Control Testing
 
-### Flask-Talisman 
+One of the most important aspects of security for any application using user logins is to ensure that other users cannot access private user accounts. 
 
-#### Issue 1
+To test that user accounts are secure, I attempted to access the private pages of both regular users and admin users. I did so both as a guest user and logged in a regular user *and* as an admin user.
 
-I installed flask-talisman to protect against a variety of common security threats and when I reloaded my application, it had changed it somewhat:
+These have been previously covered in the status code testing section, but to reiterate from a security standpoint:
 
-<p align="left">
-  <img src="static/images/issues/talisman1.png">
-</p>
-<p align="left">
-  <img src="static/images/issues/talisman2.png">
-</p>
+As a guest user I manually typed in the urls for:
 
-#### Fix 1
+- /admin - Access denied. -- PASS
+- /edit-profile/username - Access denied. -- PASS
+- /edit-photo/filename - Access denied. -- PASS
+- /admin-delete-user-account/username - Access denied -- PASS
 
-I gleaned that Talisman was not allowing the Materialize framework to do its job and it 
-transpired that it was blocking a number of domains from sending data to the site, which of course
-is what it does. To allow in the sources of: Google Fonts, Materialize and jQuery, as well as my own 
-JavaScript files, I had to explicity tell Talisman that those sources were ok. I did so as below with a 
-little help from Stack Overflow (attributed in README.md)
+As a regular user I manually typed in the urls for:
 
-        csp = {
-            'default-src': [
-                '\'self\'',
-                'cdnjs.cloudflare.com',
-                'fonts.googleapis.com'
-            ],
-            'style-src': [
-                "\'self\'",
-                'cdnjs.cloudflare.com',
-                'https://fonts.googleapis.com'
-            ],
-            'font-src': [
-                "\'self\'",
-                "https://fonts.gstatic.com"
-            ],
-            'img-src': '*',
-            'script-src': [
-                'cdnjs.cloudflare.com',
-                'code.jquery.com',
-                '\'self\'',
-            ]
-        }
+- /admin - Access denied. -- PASS
+- /edit-profile/username - Access denied. -- PASS
+- /edit-photo/filename - Access denied. -- PASS
+- /admin-delete-user-account/username - Access denied -- PASS
 
-        talisman = Talisman(app, content_security_policy=csp)
+As an admin user I manually typed in the urls for:
+- /edit-photo/filename - Access denied. -- PASS
 
-This code adds an extra layer of security as it allows in images from all sources, within the parameters of the 
-security measures I have already set up for images, but it does not allow any other media files. 
+The delete functions to delete accounts & photos were purposefully written as POST methods for added security, so they cannot be accessed via url.
+
+## Testing the Maximum File Size Limit
+
+The application only accepts files that are under 750 X 750 bytes in size. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes. 
+
+### Testing Process:
+
+To test this I tried to upload larger files and the upload forms, whether they were register, update profile or to enter an image into the competition, were rejected and the process halted.
+
+__PASS__
+
+
+## Testing the Approved File Type Security Measure
+
+The application only accepts file uploads with the extensions of: ['.jpg', '.png', '.gif', '.svg', '.jpeg']. 
+
+### Testing Process
+
+- I attempted to upload a host of other file types such as .doc, .pdf, .exe & .zip
+- I verified that the upload did not work and that the POST method was terminated.
+
+
+__PASS__
+
+
+## Testing the Sanitization of the Uploaded Filename
+
+Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage.
+
+### Testing Process
+
+To test this I tried to upload various files with dodgy extensions.
+
+Werkzeug does its job by transforming them with _ underscores e.g. 
+
+- malicious/paths/os/users.jpg  --> malicious_paths_os_users.jpg
+- ../../users/delete.png --> users_delete.png
+
+Rendering them relatively harmless.
+
+On top of that, the application code also works to rename the files anyway, to make them unique and to aid with the database connections.
+
+
+## Testing the CSRF Protection
+
+### Testing Process
+
+## Testing the CSP
+
+### Testing Process
+
 
 # Browser Testing
 
