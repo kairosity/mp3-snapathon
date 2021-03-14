@@ -1619,6 +1619,26 @@ is the same.
 </div>
 <br>
 
+#### __Register Page__
+
+- The form is flush with the sides of the screen to give the user the most possible space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-mob-resp-vert.png">
+</div>
+<br>
+
+#### __Login Page__
+
+- All elements are stacked neatly in vertical alignment with each other. This layout does not change 
+from screen to screen.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-mob-resp.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - All elements are stacked neatly in vertical alignment with each other. This layout does not change 
@@ -1677,6 +1697,16 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Update Profile Page__
+
+- All elements are stacked neatly in vertical alignment with each other. This layout does not change 
+from screen to screen.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/winners-mob-resp.png">
+</div>
+<br>
+
 #### __Photo Details Page__
 
 - First comes the back link along the top of the screen.
@@ -1728,6 +1758,16 @@ and what action they can/should take. (For logged in users only.)
 <br>
 <div align="center">
     <img src="/static/images/responsivity/mob-home-resp-landscape.png">
+</div>
+<br>
+
+#### __Register Page__
+
+- The form has space to either side and the user has to scroll to complete it.
+- This is not the natural orientation a user would use for filling in a form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-mob-land.png">
 </div>
 <br>
 
@@ -1812,6 +1852,16 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Register Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-tab-vert.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change from mobile layout, just a lot more breathing room, and slightly larger fonts.
@@ -1888,6 +1938,16 @@ without scrolling.
 </div>
 <br>
 
+#### __Register Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-tab-land.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change to the layout, just more space at the sides than when in vertical tablet orientation.
@@ -1896,6 +1956,7 @@ without scrolling.
     <img src="/static/images/responsivity/winners-tab-land-resp.png">
 </div>
 <br>
+
 
 #### __Browse Page__
 
@@ -1958,6 +2019,16 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Register Page__
+
+- The form sits in the middle of the screen and the user has plenty of space to enter their details. 
+- The form is visible in its entirety without scrolling. 
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-desk-resp.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change to the layout, just more space at the sides.
@@ -1966,6 +2037,7 @@ Only slight differences from tablets, these include:
     <img src="/static/images/responsivity/winners-desk-resp.png">
 </div>
 <br>
+
 
 #### __Browse Page__
 
@@ -2019,6 +2091,15 @@ relation to their height, the wider the screen ratio gets.
 </div>
 <br>
 
+#### __Register Page__
+
+- Same as on smaller desktops - just with more space around the form.
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/register-desk-wide.png">
+</div>
+<br>
+
 #### __Winners Page__
 
 - No change to the layout, just even more space at the sides.
@@ -2054,7 +2135,7 @@ relation to their height, the wider the screen ratio gets.
 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/photo-deets-desk-wide.png">
+    <img src="/static/images/responsivity/photo-deets-wide-desk.png">
 </div>
 <br>
 
