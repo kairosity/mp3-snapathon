@@ -8,12 +8,10 @@ These are the scheduled functions:
 '''
 scheduler = BackgroundScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='sun',
-                  hour=22, minute=0, second=0,
-                  start_date='2021-01-24')
+                  hour=22, minute=0, second=0)
 scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
-                  hour=00, minute=0, second=0,
-                  start_date='2021-01-24')
+                  hour=00, minute=0, second=0)
 scheduler.add_job(test_function, 'cron', [mongo], day_of_week='sun',
-                  hour=18, minute=22, second=0)
+                  hour=18, minute=27, second=0)
 
 scheduler.start()
