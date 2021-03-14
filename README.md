@@ -3163,6 +3163,18 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     In order for APScheduler to work properly, the app needs to stay awake.
 
+- ## [The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+    Instructions on using the Heroku CLI - needed to scale the clock. 
+
+- ## [Introduction to APScheduler](https://betterprogramming.pub/introduction-to-apscheduler-86337f3bb4a6)
+
+    Information about integrating APScheduler
+
+- ## [Useful SO Article on fixing AP Scheduler Errors in Heroku](https://stackoverflow.com/questions/39441337/how-do-you-schedule-cron-jobs-using-apscheduler-on-heroku)
+
+    Used to determine that I needed to switch from using "BackgroundScheduler" to "BlockingScheduler".
+    
 ## 12. General/Misc
 
  - ## [RandomKeygen](https://randomkeygen.com/)

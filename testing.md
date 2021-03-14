@@ -656,9 +656,9 @@ security measures I have already set up for images, but it does not allow any ot
 
 #### Issue 1
 
-The application was not running the Scheduled processes on time. 
+The application was not running the Scheduled processes on time. I was only able to trigger the scheduled processes within my development environment within GitPod.
 
-#### Fix
+#### Fix
 
 There were various issues I had overlooked:
 
@@ -666,7 +666,11 @@ There were various issues I had overlooked:
 
 2. I needed to keep the application "awake" so that it would actually run the scheduled functions at the appointed times. For this I used [Kaffeine](https://kaffeine.herokuapp.com/) a nifty little app that pings Heroku apps every 30 minutes to keep them awake. 
 
-3. I needed to change the kind of Scheduler I was using from "BackgroundScheduler" to "BlockingScheduler"
+3. I needed to change the kind of Scheduler I was using from "BackgroundScheduler" to "BlockingScheduler", this has something to do with how the schedulers exit together as per [this article on SO](https://stackoverflow.com/questions/39441337/how-do-you-schedule-cron-jobs-using-apscheduler-on-heroku).
+
+4. I needed to scale the 'clock' process so there aren't multiple dynos doing the same work. This was done in the Heroku CLI using the command ```heroku ps:scale clock=1 --app snapathon-comp```
+
+After implementing these changes the Scheduler worked to run the functions at the appointed times.
 
 <br>
 
@@ -1569,7 +1573,7 @@ Testing Process:
 
 Open up the application on Sunday after 22:00PM and ensure that all of the following has happened:
 
-- The awards and results are automatically calculated.
+- The awards and results are automatically calculated using APScheduler.
 - The winners page is updated to display this week's awards and results.
 - The "vote" page turns into an interim "holding" page directing users over to the winners page to view the results. 
 - The navbar link changes from "vote" to "awards".
@@ -1727,18 +1731,39 @@ evidenced by its ```awards``` field remaining ```null```
 To ensure that everything including the AP Scheduler automaton worked well, I ran another test, but for this one I did not interfere with the timing 
 of the logic.
 
-### Process:
+### Test Setup:
 
-1. Again, I created (and re-used) 31 dummy users and images and had them all enter a weekly competition with the theme of "Architecture". 
+1. Again, I created (and re-used) 32 dummy users and images and had them all enter a weekly competition with the theme of "Wildlife". 
 
 2. I ensured that all the awards() logic was as it would in the final deployment. 
 
-3. On Saturday I had 29 of the dummy users vote for their favourite images. 
+3. On Saturday I had 30 of the dummy users vote for their favourite images. 
 
-4. 2 dummy users "forgot" to vote and they are for testing the "user must vote" rule. Their photo's points should be reduced to 0. 
+4. 1 dummy user (harriet) "forgot" to vote and she received 7 votes on her image which would have been enough to give her the 1st place award. 
+The expectation is that her photo's points are reduced to 0.
 
-5. 
+#### Harriet's photo "Kitten" before awards() is run at 22:00PM on Sunday night:
 
+<p align="left">
+  <img src="static/images/testing/harriet.png">
+</p>
+
+### Test Hypotheses:
+
+1. Harriet's image will be disqualified, its total points reduced to 0.
+
+2. Eoghan1's image "Zebby" will come first with 6 points.
+
+3. Yasmine's image "Macaw" will come second with 4 points
+
+4. Patricia's image "Turtle" will come third with 3 points. 
+
+5. Other expected user points are outlined below in the numbers chart used to keep track of scoring. 
+
+
+### Test Results:
+
+As you can see in the chart below, the function worked perfectly and all the predicted test results were correct. 
 
 
 ## Vote Function
