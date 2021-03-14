@@ -3205,6 +3205,9 @@ A Flask extension to paginate. Says it's for use with bootstrap, but integrated 
 - Heroku
 - Slack 
 
+#### __back to [contents](#table-of-contents)__ 
+<br>
+
 # Acknowledgements
 
 Thanks to tutor support for helping out with a few sticklers.
@@ -3214,3 +3217,6 @@ Thanks to the Code Institute Slack Community for being a sound bunch.
 Thanks to my Mother for yet again proof-reading a long document she has no interest in.
 
 Thanks to my Code Institute mentor [Oluwafemi Medale](https://github.com/omedale) for his invaluable insight and instruction.
+
+#### __back to [contents](#table-of-contents)__ 
+<br>

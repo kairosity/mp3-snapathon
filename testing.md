@@ -250,6 +250,12 @@
 
 </details>
 
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
 # Issues and bugs caught during testing
 
 ## browse()
@@ -589,6 +595,14 @@ After some research I found the following note in the Flask documentation:
 
 I checked it on the deployed version and it still wasn't working. (FINISH)
 
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 # Status Code Testing 
 
 ## 200 Status Code testing
@@ -773,6 +787,14 @@ also return 404 status codes.
 
 <br>
 
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 # Functionality Testing
 
 ## Base Functionality
@@ -783,7 +805,7 @@ Testing process:
 - Clicked through each navbar item to ensure they directed the user to the correct page. -- PASS
 - Clicked through each sidebar (mobile navigation) item to ensure they directed the user to the correct page. -- PASS
 - Checked every navigation link on the site to ensure they linked to the correct page. -- PASS
-- Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. -- PASS
+- Used [W3 Link Checker](https://validator.w3.org/checklink) to ensure there were no broken links on the page. (see details below in Validations section of this doc.) -- PASS 
 
 ### __2. Login__ - __PASS__
 
@@ -1183,6 +1205,14 @@ Testing Process:
     <img src="/static/images/testing/feature-gifs/logout.gif" width="600">
 </div>
 
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 ## CRUD Functionality
 
 All the various CRUD actions were thoroughly manually tested by the creation, viewing, editing and destruction of 
@@ -1412,6 +1442,12 @@ Testing process:
 </div>
 <br>
 
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 # Testing the Temporal Processes
 
 As many of the pages and application content changes depending on the day of the week and hour of the day, my manual testing needed to include a temporal element to ensure that the pages were behaving as planned and on schedule. 
@@ -1452,6 +1488,13 @@ Open up the application on Sunday after 22:00PM and ensure that all of the follo
 - If it is between Monday & Friday and the user  *has* entered the competition, they should see the following message: 
 
         "
+
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
 
 
 # Testing the Automated Processes
@@ -1645,10 +1688,13 @@ This further limits the ability of users with malicious intent to upload damagin
 Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any
 dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage. 
 
+<br>
 
+#### __back to [contents](#testing-table-of-contents)__
 
+<br>
 
-## Security Considerations
+# Security Testing
 
 ### WTF-forms & CSRF Protection
 
@@ -1945,6 +1991,14 @@ __Android OS 11 - Samsung Galaxy s21 :__ -- PASS
 </details>
 <br>
 
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 # Responsivity Testing
 
 In addition to the extensive responsivity section in this application's [README.md](README.md) file, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) for a great overview of how different pages act responsively, and where breakpoint issues arose. 
@@ -1966,28 +2020,56 @@ phones and tablets to test the app for me.
 </p>
 
 
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
+
 # Code Validators
 
-## HTML Validators
+## HTML Validators
 
-### W3C HTML Validator
+### W3C HTML Validator
 
 ### W3C Link Checker
 
+- Passed with no issues and no invalid links or anchors.
+
+<p align="center">
+  <img src="static/images/testing/validators/w3-link-checker.png" >
+</p>
+
 ## CSS Validators
 
-### W3C CSS Validator
+### W3C CSS Validator
 
-## JavaScript Validators
+## JavaScript Validators
 
 ### JSHint
 
-## Python Validators
+## Python Validators
 
-### PEP8 Online
+### PEP8 Online
+
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
 
 # Performance and Web Development Tools Testing
 
-## Lighthouse
+## Lighthouse
 
 ## Web Dev Measure
+
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
