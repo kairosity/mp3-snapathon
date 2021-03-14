@@ -1777,18 +1777,18 @@ and what action they can/should take. (For logged in users only.)
 - The other content is visible but only slightly around the sides underneath.
 - Some need to be scrolled, others fit on the screen.
 
+
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-mob-vert.png">
+    <img src="/static/images/responsivity/del-modals-mob-vert-1.png">
 </div>
-<br>
 <br>
 <div align="center">
     <img src="/static/images/responsivity/del-modal-admin-mob-vert.png">
 </div>
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/del-modal-admin-mob-vert-1.png">
+    <img src="/static/images/responsivity/del-modal-mob-vert.png">
 </div>
 <br>
 
