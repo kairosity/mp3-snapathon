@@ -1811,6 +1811,17 @@ and what action they can/should take. (For logged in users only.)
 </div>
 <br>
 
+#### __Compete Page__
+- The collapsible sits neatly in the middle of the screen and when opened the form is flush with the edges of the screen.
+- A user must scroll to fill it in, but it reads well.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-resp-mob-vert.png">
+</div>
+<br>
+
+
 #### __Vote Page & Voting Functionality__
 - Images stack vertically and only one image is displayed at a time on the smallest layouts. 
 - The vote button sits underneath as on wider screens. 
@@ -1971,6 +1982,17 @@ the images are stacked 3 per row under those tabs.
 </div>
 <br>
 
+#### __Compete Page__
+- The collapsible sits neatly in the middle of the screen and when opened the form fills most of the screen, but there are small margins.
+- A user must scroll to fill it in and it's not as intuitive as using it on a mobile vertically oriented.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-mob-land.png">
+</div>
+<br>
+
+
 #### Vote Page & Voting Functionality
 
 - Images (and voting buttons) sit 3 to a row unlike 1 per row on vertical mobile devices.
@@ -2125,6 +2147,16 @@ without scrolling.
 </div>
 <br>
 
+#### __Compete Page__
+- The collapsible sits neatly in the middle of the screen and when opened the user can fill in the form without scrolling.
+- Comfortable to use on a tablet.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-tab-vert.png">
+</div>
+<br>
+
 #### __Vote Page & Voting Functionality__
 - The images are laid out 3 to a row, with their vote buttons stacked underneath. 
 - The competition message is neatly paragraphed under the title and has a nice amount of space.
@@ -2254,6 +2286,16 @@ the images per row is now increased to 4 under the category tabs.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/edit-photo-tab-land.png">
+</div>
+<br>
+
+#### __Compete Page__
+- The collapsible sits neatly in the middle of the screen and when opened the user can fill in the form scrolling once.
+- Comfortable to use on a tablet.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-tab-land.png">
 </div>
 <br>
 
@@ -2398,6 +2440,15 @@ Only slight differences from tablets, these include:
 </div>
 <br>
 
+#### __Compete Page__
+- The collapsible sits neatly in the middle of the screen and when opened the user can fill in the form easily.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-desk.png">
+</div>
+<br>
+
 #### Vote Page & Voting Functionality
 
 - The only major difference to the voting page from tablet layouts, is that the images get proportionality wider in 
@@ -2525,6 +2576,15 @@ relation to their height, the wider the screen ratio gets.
 <br>
 <div align="center">
     <img src="/static/images/responsivity/edit-photo-desk-wide.png">
+</div>
+<br>
+
+#### __Compete Page__
+- Same as on desktop, but with more space.
+
+<br>
+<div align="center">
+    <img src="/static/images/responsivity/compete-desk-wide.png">
 </div>
 <br>
 
