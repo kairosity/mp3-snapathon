@@ -1542,6 +1542,13 @@ the Mongo database.
     <img src="/static/images/testing/feature-gifs/delete-photo.gif" width="600">
 </div>
 
+- If the user deletes a photo uploaded into the current week's competition and the day of the week is still between Mon-Fri, then the user should be able 
+to upload a new image. This was tested by doing the latter. 
+
+<div align="center">
+    <img src="/static/images/testing/del-and-upload.png">
+</div>
+
 
 ### 2. Delete User Account
 __PASS__
@@ -1581,7 +1588,6 @@ Testing process:
 
 <br>
 
-
 # Testing the Temporal Processes
 
 As many of the pages and application content changes depending on the day of the week and hour of the day, my manual testing needed to include a temporal element to ensure that the pages were behaving as planned and on schedule. 
@@ -1605,10 +1611,32 @@ Testing Process:
 
 Open up the application on Sunday after 22:00PM and ensure that all of the following has happened:
 
-- The awards and results are automatically calculated using APScheduler.
-- The winners page is updated to display this week's awards and results.
-- The "vote" page turns into an interim "holding" page directing users over to the winners page to view the results. 
-- The navbar link changes from "vote" to "awards".
+- The awards and results are automatically calculated using APScheduler. -- PASS
+- The winners page is updated to display this week's awards and results. -- PASS
+- The "vote" page turns into an interim "holding" page directing users over to the winners page to view the results. -- PASS
+<br>
+<div align="center">
+    <img src="/static/images/testing/interim-screen.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/testing/votes-tallied.png">
+</div>
+<br>
+
+- The navbar link changes from "vote" to "awards". -- PASS
+
+<br>
+<div align="center">
+    <img src="/static/images/testing/awards-navbar.png">
+</div>
+<br>
+<br>
+<div align="center">
+    <img src="/static/images/testing/sidenav-awards.png">
+</div>
+<br>
 
 ## Smaller time-based features
 
