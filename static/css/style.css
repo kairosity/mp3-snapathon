@@ -98,6 +98,17 @@ ul.dropdown-content.select-dropdown li span:hover{
 a.text-link{
     color: var(--accent-colour);
 }
+/*------------- Skip To Main: Accessibility for keyboard users. */
+.skip-to-main a{
+	color: var(--pure-white);
+	text-transform: uppercase;
+	pointer-events: none;
+	cursor: default;
+    color: var(--dark-text-color);
+}
+#skip-to-main:focus {
+	color: var(--accent-colour);
+}
 
 /* Overriding Materialize Character Counter */
 
@@ -886,6 +897,9 @@ div.back-link-div{
     color: var(--main-text-colour);
     font-weight: 400;
 }
+h2.artist-name a{
+    color: var(--accent-colour);
+}
 .photo-story{
     font-family: var(--subheading-2-font);
     font-size: 1.2rem;
@@ -1079,7 +1093,11 @@ p.password-change-instructions{
 .delete-account-btn:hover,
 .delete-ac-btn:hover,
 .delete-photo-btn:hover,
-.delete-photo-btn-modal:hover{
+.delete-photo-btn-modal:hover,
+.delete-account-btn:focus,
+.delete-ac-btn:focus,
+.delete-photo-btn:focus,
+.delete-photo-btn-modal:focus{
     background-color: red;
     box-shadow: darkred 2px;
     color: var(--main-text-colour);
@@ -1269,7 +1287,8 @@ a.admin-page-edit-btn:hover{
 a.admin-page-delete-btn{
     background-color: red;
 }
-a.admin-page-delete-btn:hover{
+a.admin-page-delete-btn:hover,
+a.admin-page-delete-btn:focus{
     background-color: darkred;
 }
 
