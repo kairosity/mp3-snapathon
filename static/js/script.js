@@ -7,7 +7,7 @@ $(document).ready(function(){
     $('select').formSelect();
     $('.modal').modal();
     $('input#title, textarea#story, input#camera, input#lens, input#aperture, input#shutter, input#iso, textarea#message').characterCounter();
-   
+    
 
     /* 
     Rafał Cz.'s code from Stack Overflow - attributed in README.md
@@ -45,6 +45,15 @@ $(document).ready(function(){
                }
        });
     });
+
+
+    // When you focus on browse-images-container - show its second child.
+    $('.overlay-link').focus(function(){
+        $(this).parent().css({'bottom':'0', "height":"100%"})
+      });
+    $('.overlay-link').blur(function(){
+        $(this).parent().css({'bottom':"", "height":""})
+      });
 
 
     // $(function(){

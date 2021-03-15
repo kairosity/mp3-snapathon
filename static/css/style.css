@@ -65,7 +65,8 @@ html {
     color: var(--dark-text-color);
     border-radius: 24px;
 }
-.btn:hover{
+.btn:hover,
+.btn:focus{
     background-color: var(--dark-accent-colour);
     color: var(--dark-text-color);  
 }
@@ -110,7 +111,7 @@ a.text-link{
 .input-field label.active {
     color: var(--accent-colour) !important;
 }
-/* label focus color */
+/* label focus color */ 
 .input-field input[type=text]:focus + label {
     color: var(--accent-colour);
 }
@@ -150,7 +151,9 @@ ul.mobile-nav-ul a{
 }
 
 nav ul.navbar-nav a:hover,
-ul.mobile-nav-ul a:hover{
+nav ul.navbar-nav a:focus,
+ul.mobile-nav-ul a:hover,
+ul.mobile-nav-ul a:focus{
     color:  var(--dark-text-color);
     background-color: var(--accent-colour);
 }
@@ -230,7 +233,8 @@ div.home-buttons a{
     border-radius: 24px;
     color: var(--dark-text-color);
 }
-div.home-buttons a:hover{
+div.home-buttons a:hover,
+div.home-buttons a:focus{
     background-color: var(--dark-accent-colour);
 }
 .home-button{
@@ -347,7 +351,8 @@ ul.homepage-collapsible-rules{
     justify-content: center;
     transition: all 1s;
 }
-.review-rules-collapsible-header-homepage:hover{
+.review-rules-collapsible-header-homepage:hover,
+.review-rules-collapsible-header-homepage:focus{
     background-color: var(--dark-accent-colour);
 }
 ul li div.competition-rules-homepage{
@@ -383,10 +388,12 @@ div.review-rules-homepage-row{
     text-decoration-style: dashed;
 }
 
-div.row a.cta-link:hover{
+div.row a.cta-link:hover,
+div.row a.cta-link:focus{
     background-color: var(--dark-accent-colour);
 }
-.cta:hover{
+.cta:hover,
+.cta:focus{
    text-decoration-style: double; 
 }
 div.row a.cta-link{
@@ -410,7 +417,8 @@ div.contact-form-box{
     font-size: 1.3em;
     color: var(--dark-text-color);
 }
-.contact-send-btn:hover{
+.contact-send-btn:hover,
+.contact-send-btn:focus{
     background-color: var(--dark-accent-colour);
 }
 .section-home-4{
@@ -533,7 +541,8 @@ i.award-3{
     line-height: 1em;
     color: var(--main-text-colour);
 }
-a.award-text-link:hover{
+a.award-text-link:hover,
+a.award-text-link:focus{
     color: var(--accent-colour);
     text-decoration: underline;
 }
@@ -816,7 +825,7 @@ a.overlay-link{
 .browse-images-container:hover .overlay {
   bottom: 0;
   height: 100%;
-}
+}               
 .overlay-text{
   color: var(--dark-text-color);
   font-family: var(--subheading-font);

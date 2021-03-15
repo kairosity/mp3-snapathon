@@ -2635,6 +2635,9 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 # Accessibility
 
+## Semantic HTML
+
+I ensured that wherever possible, code was semantically structured so as to give the best experience to users who rely on screen readers.
 ## Skip to Main Link
 
 ## Aria Labels
