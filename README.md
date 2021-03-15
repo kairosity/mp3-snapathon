@@ -2638,7 +2638,14 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 ## Semantic HTML
 
 I ensured that wherever possible, code was semantically structured so as to give the best experience to users who rely on screen readers.
+
 ## Skip to Main Link
+
+All pages contain a visibly hidden but keyboard accessible "skip to main" link. It is the first tabbable element on every page and it allows 
+keyboard users to skip all the navigation tabs, which can be really annoying as there are two navbars, one main and one sidebar for mobile. For users 
+relying on keyboard access, without a skip to main link they would have to tab at least 12 times before reaching the page content.
+
+
 
 ## Aria Labels
 

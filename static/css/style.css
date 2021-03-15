@@ -106,7 +106,7 @@ a.text-link{
 	cursor: default;
     color: var(--dark-text-color);
 }
-#skip-to-main:focus {
+.skip-to-main a:focus {
 	color: var(--accent-colour);
 }
 
