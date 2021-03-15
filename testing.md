@@ -18,6 +18,8 @@
     * [8. awards()](#awards)
     * [9. Error Messages](#error-messages)
     * [10. Flask-Talisman](#flask-talisman)
+    * [11. Running APScheduler on the Free Version of Heroku](#running-apscheduler-on-the-free-version-of-heroku)
+    * [12. vote()](#vote) 
 * [**Status Code Testing**](#status-code-testing)
     * [1. 200 Status Code Testing](#200-status-code-testing)
     * [2. 302 Status Code Testing](#302-status-code-testing)
@@ -671,6 +673,36 @@ There were various issues I had overlooked:
 4. I needed to scale the 'clock' process so there aren't multiple dynos doing the same work. This was done in the Heroku CLI using the command ```heroku ps:scale clock=1 --app snapathon-comp```
 
 After implementing these changes the Scheduler worked to run the functions at the appointed times.
+
+## vote()
+
+#### Issue 1
+
+An issue with the functionality of the application arose when I realise that during the voting period ( Friday at midnight until Sunday at 22:00 ) users could see
+the points on the images by clicking into the photo details, or by looking at the profile "Votes" section of different users. Admittedly it would take some amount of independent 
+focused research on behalf of the contestants, however if they did it, it would make it easy for a user to score points by voting for the image doing the best just before voting ends. 
+
+#### Fix
+
+I looked at the locations in the application that display points and I changed the code to make the points display only occur for photos whose week_and_year field was not equal 
+to the current week_and_year. For the photo details page this line was added to the template itself: 
+
+            {% if datetime.strftime("%V%G") != photo.week_and_year %}
+                <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
+            {% endif %}
+
+
+For the user profile page, I confined the logic to the view rather than the template:
+
+
+        if photos_voted_for_array != []:
+        for img in photos_voted_for_array:
+            photo_obj = list(mongo.db.photos.find({"_id": img}))
+            for photo in photo_obj:
+                if photo["week_and_year"] != datetime.now().strftime("%V%G"):
+                    photos_voted_for_objs.append(photo)  
+
+Where ```photos_voted_for_objs``` was the array passed to the template. 
 
 <br>
 
@@ -1763,73 +1795,60 @@ The expectation is that her photo's points are reduced to 0.
 
 ### Test Results:
 
-As you can see in the chart below, the function worked perfectly and all the predicted test results were correct. 
+As you can see in the chart below, the function worked perfectly and all the predicted test results were correct. Harriet's entry was invalidated and the scoring continued 
+unfazed to assign 1st, 2nd & 3rd and to calculate all the user points correctly. 
+
+The results were checked firstly by going to the "Winners" page where the correct winning images & users were displayed.
+
+<p align="center">
+  <img src="static/images/testing/awards-testing.gif">
+</p>
+
+Then the users were individually verified in the Mongo database to ensure that everyone received the correct awards. 
+
+#### Harriet's photo "Kitten" after awards() is run at 22:00PM on Sunday night:
+
+<p align="left">
+  <img src="static/images/testing/harriet-after.png">
+</p>
+
+As everything was spot on, no further tests were needed for this function. 
 
 #|User | User Photo | Photo User Voted For | Expected User Points From Awards | Expected User Points From Voting | Expected User Points Total | Actual User Points Total | Expected Awards | Actual Awards
 ---|------------ | -------------|--------------|----------------------|------------|--------|-----|---|--|
-1.| Georgina | Night Swimming | kitten | 0 | 0 | 0 | 0 | 0 |
-2.| Annie | Mr. Frederickson | zebby |  |  |  |  |  |
-3.| Anne1 | Humming Bird | snow on cat |  |  |  |  | |
-4.| Cathy | Robin in tree | turtle |  |  |  |  | |
-5.| Eoghan1 | Zebby | dangerously pretty | 7 | 0 | 7 |  |1 |   
-6.| Horatio | Hare today | macaw |  |  |  | 
-7.| Ignacio | Foxy | turtle |  |  |  | 
-8.| Jonathan | Birds of a Feather | oil painting |  |  |  | | | -
-9.| Loretta | Birds of a Feather | oil painting |  |  |  | | | -
-10.| Monica | Birds of a Feather | oil painting |  |  |  | | | -
-11.| Nicola | Birds of a Feather | oil painting |  |  |  | | | -
-12.| Orlaith | Birds of a Feather | oil painting |  |  |  | | | -
-13.| Patricia | Birds of a Feather | oil painting |  |  |  | | | -
-14.| Quentin | Birds of a Feather | oil painting |  |  |  | | | -
-15.| Roberta | Birds of a Feather | oil painting |  |  |  | | | -
-16.| Franny | Birds of a Feather | oil painting |  |  |  | | | -
-17.| Stephanie | Birds of a Feather | oil painting |  |  |  | | | -
-18.| Tristan | Birds of a Feather | oil painting |  |  |  | | | -
-19.| Ursula | Birds of a Feather | oil painting |  |  |  | | | -
-20.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-21.| Karina | Birds of a Feather | oil painting |  |  |  | | | -
-22.| Xavier | Birds of a Feather | oil painting |  |  |  | | | -
-23.| Eoghan | Birds of a Feather | oil painting |  |  |  | | | -
-24.| Yasmine | Birds of a Feather | oil painting |  |  |  | | | -
-25.| Anthony | Birds of a Feather | oil painting |  |  |  | | | -
-26.| Guillerme | Birds of a Feather | oil painting |  |  |  | | | -
-27.| Davina | Birds of a Feather | oil painting |  |  |  | | | -
-28.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-29.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-30.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-31.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-32.| Victoria | Birds of a Feather | oil painting |  |  |  | | | -
-
-## Vote Function
-## Test 1
-
-### Issue 1
-
-An issue with the functionality of the application arose when I realise that during the voting period ( Friday at midnight until Sunday at 22:00 ) users could see
-the points on the images by clicking into the photo details, or by looking at the profile "Votes" section of different users. Admittedly it would take some amount of independent 
-focused research on behalf of the contestants, however if they did it, it would make it easy for a user to score points by voting for the image doing the best just before voting ends. 
-
-### Fix 1 
-
-I looked at the locations in the application that display points and I changed the code to make the points display only occur for photos whose week_and_year field was not equal 
-to the current week_and_year. For the photo details page this line was added to the template itself: 
-
-            {% if datetime.strftime("%V%G") != photo.week_and_year %}
-                <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
-            {% endif %}
-
-
-For the user profile page, I confined the logic to the view rather than the template:
-
-
-        if photos_voted_for_array != []:
-        for img in photos_voted_for_array:
-            photo_obj = list(mongo.db.photos.find({"_id": img}))
-            for photo in photo_obj:
-                if photo["week_and_year"] != datetime.now().strftime("%V%G"):
-                    photos_voted_for_objs.append(photo)  
-
-Where ```photos_voted_for_objs``` was the array passed to the template.  
+1.| Georgina | Night Swimming | kitten | 0 | 0 | 0 | 0 | 0 | 0
+2.| Annie | Mr. Frederickson | zebby | 0| 3 | 3 | 3 | 0 | 0
+3.| Anne1 | Humming Bird | snow on cat | 0 | 0 | 0 | 0 | 0|0
+4.| Cathy | Robin in tree | turtle | 0 | 1 | 1 | 1 | 0| 0
+5.| Eoghan1 | Zebby | dangerously pretty | 7 | 0 | 7 | 7 |1 | 1   
+6.| Horatio | Hare today | macaw | 0 | 2 | 2 | 2 | 0 | 0
+7.| Ignacio | Foxy | turtle | 0 | 1 | 1 | 1 | 0 | 0
+8.| Jonathan | Birds of a Feather | oil painting | 0 | 0 | 0 | 0 |0 | 0
+9.| Loretta | oil painting | zebby | 0 | 3 | 3 | 3 | 0| 0
+10.| Monica | grass in the darkness still green | kitten | 0 | 0 | 0 | 0 | 0| 0
+11.| Nicola | huffin' and puffin' | kitten | 0 | 0 | 0 | 0 | 0|0
+12.| Orlaith | red | macaw | 0 | 2 | 2 | 2| 0| 0
+13.| Patricia | turtle |  zebby | 3 | 3 | 6 | 6 | 3 | 3
+14.| Quentin | singing | kitten  | 0 | 0 | 0 | 0| 0| 0
+15.| Roberta | stripes | mr.frederickson | 0 | 0 | 0 | 0| 0| 0
+16.| Franny | gliding | kitten | 0 | 0 | 0 | 0 |0 | 0
+17.| Stephanie | pride of parnell | oil painting | 0 | 0 | 0 | 0| 0| 0
+18.| Tristan | dangerously pretty | singing | 0 | 0 | 0 |0 | 0| 0
+19.| Ursula | elephant | zebby | 0 | 3 | 3 | 3 | 0| 0
+20.| Victoria | black tipped reef shark | huffin & puffin | 0 | 0 | 0 | 0 | 0| 0
+21.| Karina | jellyfish | macaw | 0 | 2 | 2 |2 | 0| 0
+22.| Xavier | palomino pony | turtle | 0 | 1 | 1 | 1| 0| 0
+23.| Eoghan | cry of the moose | palomino pony | 0 | 0 | 0 | 0| 0| 0
+24.| Yasmine | Macaw | kitten | 5 | 0 | 5 | 5| 2| 2
+25.| Anthony | Fishypoo | jellyfish | 0 | 0 | 0 | 0| 0|0
+26.| Guillerme | Flocking Geese | zebby | 0 | 3 | 3 | 3 | 0| 0
+27.| Davina | Show Off | robin in tree | 0 | 0 | 0 |0 |0 | 0
+28.| Henrietta |Tami the Horse | red | 0 | 0 | 0 |0 | 0| 0
+29.| Harriet | Kitten | __DIDN'T VOTE__ | - | - | - | -| -| -
+30.| Gareth | Fish Shoal | kitten | 0 | 0 | 0 | 0| 0| 0
+31.| Bobby | Snow on Cat | macaw | 0 | 2 | 2 | 2 | 0| 0
+32.| Dominic |Cristmas Bird | zebby | 0 | 3 | 3 | 3| 0| 0
+ 
 
 <br>
 

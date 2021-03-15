@@ -47,7 +47,7 @@
                       <h4 class="time-msg">Thank you for entering the competition. Voting opens in {{comp_closes}}.</h4>
                 {% endif %}
             <!-- If it is Sat or Sunday before 22:00PM -->
-            {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") <= "22") ) %}
+            {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") < "22") ) %}
                 <!-- If the user has not voted yet -->
                 {% if votes_to_use > 0 %}
                     <h4 class="time-msg"> You still have to vote for your favourite image. You have {{voting_closes}} left to vote. If you don't vote, your entry's points will be reduced to 0.</h4>
@@ -58,8 +58,8 @@
                 {% else %}
                     <h4 class="time-msg">You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
                 {% endif %}
-            {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") >= "22") ) %}
-                <h4 class="time-msg">The winners have been announced! Head to<a class="profile-link" href="{{url_for('recent_winners')}}">WINNERS</a>to see the results!</h4>
+            {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") > "21") ) %}
+                <h4 class="time-msg">The winners have been announced! Head to <a class="profile-link" href="{{url_for('winners')}}">WINNERS</a> to see the results!</h4>
             {% endif %}
             {% endif %}
         </div>

@@ -94,6 +94,10 @@ ul.dropdown-content.select-dropdown li span:hover{
     background-color: var(--accent-colour);
 }
 
+a.text-link{
+    color: var(--accent-colour);
+}
+
 /* Overriding Materialize Character Counter */
 
 .character-counter {
@@ -547,6 +551,11 @@ section.row a img.award-photo-third{
     border: #cd7f32 solid 4px;
     padding: 0;
     margin-bottom: 1.3rem;
+}
+/* Interim Vote --> Compete Page */
+.interim-image{
+    max-width: 100%;
+    margin-top: 2rem;
 }
 
 /* Homepage Timeline - Code taken from Krishna Babu's Codepen (attributed in README.md) */
