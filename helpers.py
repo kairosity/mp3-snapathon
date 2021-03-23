@@ -4,6 +4,7 @@ from flask import (
     abort)
 from flask_pymongo import PyMongo, pymongo
 from flask_paginate import Pagination, get_page_args
+import imghdr
 import os
 from datetime import datetime
 from datetime import timedelta
@@ -634,6 +635,19 @@ def filter_admin_search(
 
     return filtered_users
 
+def validate_image_type(stream):
+    '''
+    *
+    '''
+    header = stream.read(512)
+    print(header)
+    stream.seek(0)
+    format = imghdr.what(None, header)
+    print(format)
+    if not format:
+        return None
+    return '.' + (format if format != 'jpeg' else 'jpg')
+
 def save_photo(request, database_var, name_of_image_from_form, app):
     '''
     * This saves an image from a form to the mongo DB.
@@ -652,7 +666,8 @@ def save_photo(request, database_var, name_of_image_from_form, app):
 
     file_extension = os.path.splitext(photo.filename)[1]
 
-    if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+    if file_extension not in app.config['UPLOAD_EXTENSIONS'] or \
+        file_extension != validate_image_type(photo.stream):
         abort(415)
 
     # if size_of_file > app.config['MAX_CONTENT_LENGTH']:

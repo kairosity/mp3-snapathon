@@ -3,8 +3,8 @@
 {% block content %}
 
 <div class="row back-link">
-    <a class="back-link" href="{{url_for('get_photo', filename=photo.filename)}}"><i
-            class="fas fa-long-arrow-alt-left"></i> Back to "{{photo.photo_title|capitalize}}" without editing.</a>
+    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('get_photo', filename=photo.filename)}}"><i
+            class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to "{{photo.photo_title|capitalize}}" without editing.</a>
 </div>
 
 <div class="row">
@@ -64,7 +64,7 @@
                 </label></p>
                     </div>
                 </div>
-                <button class="btn waves-effect waves-light col s10 offset-s1 m8 offset-m2" type="submit">Update Photo Details
+                <button class="btn waves-effect waves-light col s10 offset-s1 m8 offset-m2 hvr-grow-shadow" type="submit">Update Photo Details
             </button>
     </form>
 </div>

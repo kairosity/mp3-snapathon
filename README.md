@@ -3277,9 +3277,9 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 # Libraries
 
-## [Hover.css](http://ianlunn.github.io/Hover/)
+## [Hover.css](http://ianlunn.github.io/Hover/)
 
-    Super animation library. Used for animating the navbar.
+Super animation library. Used for animating the navbar.
 
 ## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 
 

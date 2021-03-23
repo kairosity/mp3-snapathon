@@ -30,7 +30,7 @@
        </div>
        {% if user.username == session.user %}
       <div class="col s6 offset-s3 center-align edit-profile-btn-col hide-on-med-and-up">
-            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a> 
+            <a href="{{ url_for('edit_profile', username=user.username) }}" class=" btn edit-profile-btn hvr-grow-shadow">Edit Profile</a> 
         </div>
        {% endif %}
 
@@ -41,7 +41,7 @@
                 <!-- If the user has yet to compete -->
                 {% if can_enter %} 
                     <h4 class="time-msg">You still have to enter an image into this week's competition. You have {{comp_closes}} left to enter.</h4>
-                    <h4 class="time-msg">Go to <a class="profile-link" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to 
+                    <h4 class="time-msg">Go to <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to 
                         enter an image.</h4>
                 {% else %}
                       <h4 class="time-msg">Thank you for entering the competition. Voting opens in {{comp_closes}}.</h4>
@@ -51,7 +51,7 @@
                 <!-- If the user has not voted yet -->
                 {% if votes_to_use > 0 %}
                     <h4 class="time-msg"> You still have to vote for your favourite image. You have {{voting_closes}} left to vote. If you don't vote, your entry's points will be reduced to 0.</h4>
-                    <h4 class="time-msg">Go to <a class="profile-link" href="{{url_for('compete', username=session['user'])}}">VOTE</a> and cast your vote!</h4>
+                    <h4 class="time-msg">Go to <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">VOTE</a> and cast your vote!</h4>
                 <!-- If the user has voted already OR has no votes b/c they did not enter -->
                 {% elif votes_to_use == 0 and user_entry_this_comp != None %}
                     <h4 class="time-msg">Thank you for voting! Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
@@ -59,7 +59,7 @@
                     <h4 class="time-msg">You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
                 {% endif %}
             {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") > "21") ) %}
-                <h4 class="time-msg">The winners have been announced! Head to <a class="profile-link" href="{{url_for('winners')}}">WINNERS</a> to see the results!</h4>
+                <h4 class="time-msg">The winners have been announced! Head to <a class="profile-link hvr-underline-from-center" href="{{url_for('winners')}}">WINNERS</a> to see the results!</h4>
             {% endif %}
             {% endif %}
         </div>

@@ -8,37 +8,37 @@
         {% if "profile" in source_url %}
             {% if photo.created_by == session.user %}
                 <div class="row back-link-div">
-                    <a class="back-link" href="{{url_for('profile', username=photo.created_by)}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> Back to my profile page.</a>
+                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
+                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile page.</a>
                 </div>
             {% else %}
                 <div class="row back-link">
-                    <a class="back-link" href="{{url_for('profile', username=photo.created_by)}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> View {{username|capitalize}}'s Profile</a>
+                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
+                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View {{username|capitalize}}'s Profile</a>
                 </div>
                 <div class="row back-link">
-                    <a class="back-link" href="{{url_for('profile', username=session.user)}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> View my Profile</a>
+                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=session.user)}}">
+                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View my Profile</a>
                 </div>
             {% endif %}
         {% elif "compete" in source_url %}
         <div class="row">
-            <a class="back-link" href="{{url_for('compete', username=photo.created_by)}}"><i
-                    class="fas fa-long-arrow-alt-left"></i> Back to the competition!</a>
+            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('compete', username=photo.created_by)}}"><i
+                    class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to the competition!</a>
         </div>
         {% elif "winners" in source_url %}
         <div class="row">
-            <a class="back-link" href="{{url_for('winners')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('winners')}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to
             winners!</a>
         </div>
         {% elif "browse" in source_url or "search" in source_url %}
         <div class="row back-link-div">
-            <a class="back-link" href="{{source_url}}"><i class="fas fa-long-arrow-alt-left"></i> Back to
+            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{source_url}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to
                 browse!</a>
         </div>
         {% elif "edit_photo" in source_url %}
         <div class="row back-link-div">
-            <a class="back-link" href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left"></i> Back to my profile page.</a>
+            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile page.</a>
         </div>
         {% endif %}
 
@@ -89,10 +89,10 @@
 <div class="row">
     <div class="col s12 m8 offset-m2 l3 offset-l3">
 <a href="{{ url_for('edit_photo', photo=photo, filename=photo.filename) }}"
-    class="waves-effect waves-light btn edit-photo-btn col s10 offset-s1 center-align">Edit Photo Details</a>
+    class="waves-effect waves-light btn edit-photo-btn col s10 offset-s1 center-align hvr-grow-shadow">Edit Photo Details</a>
     </div>
      <div class="col s12 m8 offset-m2 l3 ">
-<a href="#confirm-photo-deletion" class="modal-trigger waves-effect waves-light btn delete-photo-btn col s10 offset-s1">Delete
+<a href="#confirm-photo-deletion" class="modal-trigger waves-effect waves-light btn delete-photo-btn hvr-grow-shadow col s10 offset-s1">Delete
     Photograph</a>
 </div>
 </div>

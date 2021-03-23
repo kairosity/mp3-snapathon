@@ -4,7 +4,9 @@
 
 <section id="main" class="row section-home-1">
     <div class="col s12 m8 offset-m2 center-align">
-        <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down"></i>
+        <div class="hvr-icon-pop">
+            <i class="s4 m6 center-align logo-home fas fa-spa hide-on-med-and-down hvr-icon"></i>
+        </div>
         <h2 class="homepage-subheading1">Love photography?</h2>
         <h1 class="homepage-heading">SNAPATHON</h1>
         <h2 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h2>
@@ -12,21 +14,23 @@
         <div class="home-buttons">
             <div class="col s12">
                 <a href="{{ url_for('login') }}"
-                    class="home-button waves-effect waves-light btn-large z-depth-3">LOGIN</a>
+                    class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">LOGIN</a>
             </div>
             <div class="col s12 register-button-home">
                 <a href="{{ url_for('register') }}"
-                    class="home-button waves-effect waves-light btn-large z-depth-3">REGISTER</a>
+                    class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">REGISTER</a>
             </div>
         </div>
         {% else %}
-        <i class="fas fa-leaf welcome-icon"></i>
+        <div class="hvr-icon-drop">
+            <i class="fas fa-leaf welcome-icon hvr-icon"></i>
+        </div>
         <h4 class="homepage-subheading3 welcome-user">welcome {{ session['user'] }}</h4>
         {% endif %}
         {% if not session['user']%}
-        <a class="content-hinting-link" href="#rules-section">
+        <a class="content-hinting-link hvr-icon-down" href="#rules-section">
             <p class="content-hinting">Learn More</p>
-            <i class="fas fa-angle-double-down content-hinting"></i>
+            <i class="fas fa-angle-double-down content-hinting hvr-icon"></i>
         </a>
         {% endif %}
 
@@ -216,7 +220,7 @@
                         <textarea id="message" name="message" class="validate" minlength="5" maxlength="1000" data-length="1000" aria-label="Message" required></textarea>
                     </div>
                 </div>
-                <button class="contact-send-btn btn-large z-depth-3" type="submit" name="action"
+                <button class="contact-send-btn btn-large z-depth-3 hvr-grow-shadow" type="submit" name="action"
                     value="Submit">SEND</button>
             </form>
         </div>

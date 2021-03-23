@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Zilla+Slab+Highlight:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
+@import 'effects-from-hover.css';
 
 /* Variables */
 
@@ -70,10 +71,9 @@ html {
     background-color: var(--dark-accent-colour);
     color: var(--dark-text-color);  
 }
-.checkbox-yellow[type="checkbox"].filled-in:checked + label:after,
-.checkbox-yellow[type="checkbox"].filled-in:checked+span:not(.lever):after {
-     border: 2px solid var(--accent-colour);
-     background-color: var(--accent-colour);
+.checkbox-yellow[type="checkbox"].filled-in:checked+span:not(.lever):after{
+    border: 2px solid var(--accent-colour) !important;
+    background-color: var(--accent-colour) !important;
 }
 .dark-text {
     color: var(--dark-text-color);
@@ -109,50 +109,6 @@ a.text-link{
 .skip-to-main a:focus {
 	color: var(--accent-colour);
 }
-
-/* Hover.css */
-
-/* Sweep To Right */
-.hvr-sweep-to-right {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    position: relative;
-    -webkit-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-  }
-  .hvr-sweep-to-right:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--dark-accent-colour);
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-  }
-  .hvr-sweep-to-right:hover, .hvr-sweep-to-right:focus, .hvr-sweep-to-right:active {
-    color: white;
-  }
-  .hvr-sweep-to-right:hover:before, .hvr-sweep-to-right:focus:before, .hvr-sweep-to-right:active:before {
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-  }
-
 /* Overriding Materialize Character Counter */
 
 .character-counter {
@@ -623,10 +579,6 @@ section.row a img.award-photo-third{
 }
 
 /* Homepage Timeline - Code taken from Krishna Babu's Codepen (attributed in README.md) */
-
-/* body{
-  color: var(--dark-text-color);
-} */
 
 header h1{
   text-align: center;
@@ -1181,7 +1133,6 @@ p.password-change-instructions{
 .delete-photo-btn-cancel-modal{
     margin-bottom: 2.7rem !important;
 }
-
 
 /* Competition Page */
 

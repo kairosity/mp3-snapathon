@@ -6,13 +6,13 @@
         {% if "profile" in source_url %}
           
                 <div id="main" class="row back-link-div">
-                    <a class="back-link" href="{{url_for('profile', username=user.username)}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> Cancel and back to profile.</a>
+                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=user.username)}}">
+                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> Cancel and back to profile.</a>
                 </div>
         {% elif "admin" in source_url %}
                 <div id="main" class="row back-link-div">
-                    <a class="back-link" href="{{url_for('admin')}}">
-                        <i class="fas fa-long-arrow-alt-left"></i> Cancel and back to admin user control</a>
+                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('admin')}}">
+                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> Cancel and back to admin user control</a>
                 </div>
             
         {% endif %}
@@ -42,7 +42,7 @@
                 {% if user.profile_photo %}
                  <div class="file-field input-field col s11">
                     
-                     <div class="btn">
+                     <div class="btn hvr-grow-shadow">
                          <span>Change Profile Pic</span>
                         <input id="profile-pic" name="profile-pic" type="file">
                     </div>
@@ -57,7 +57,7 @@
                     {% else %}
                     <div class="file-field input-field col s12">
                     
-                     <div class="btn">
+                     <div class="btn hvr-grow-shadow">
                          <span>Change Profile Pic</span>
                         <input id="profile-pic" name="profile-pic" type="file">
                     </div>
@@ -82,16 +82,16 @@
                         <label for="new_password_confirmation">new password confirmation</label>
                     </div>
                 {% endif %}
-                <button class="register-btn btn-large btn waves-effect waves-light center-align" type="submit" name="action">Save Changes
+                <button class="register-btn btn-large btn waves-effect waves-light center-align hvr-grow-shadow" type="submit" name="action">Save Changes
                 </button>
                 {% if session["user"] == user.username %}
-                 <a href="#confirm-account-deletion" id="delete-account-btn" class=" modal-trigger register-btn delete-account-btn btn-large btn waves-effect waves-light center-align">Delete Account
+                 <a href="#confirm-account-deletion" id="delete-account-btn" class=" modal-trigger register-btn delete-account-btn btn-large btn waves-effect waves-light center-align hvr-grow-shadow">Delete Account
                  </a>
                 {% endif %}
             </div>
         </form>
 
-        <!-- Confirm Account Deletion Modal -->
+<!-- Confirm Account Deletion Modal -->
   <div id="confirm-account-deletion" class="modal">
     <div class="modal-content account-deletion-header">
       <h4 class="delete-ac-question">Are you sure you want to delete your account {{user.username|capitalize}}?</h4>

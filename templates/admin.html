@@ -19,9 +19,9 @@
             </div>
             <div class="row">
             <div class="col s12 m10 offset-m1 l8 offset-l2">
-                    <a href="{{ url_for('admin') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn"><i class="fas fa-undo-alt"></i> Reset</a>
-                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn">
-                        <i class="fas fa-search"></i> Search
+                    <a href="{{ url_for('admin') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn hvr-icon-spin hvr-grow-shadow"><i class="fas fa-undo-alt hvr-icon"></i> Reset</a>
+                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn hvr-icon-grow hvr-grow-shadow">
+                        <i class="fas fa-search hvr-icon"></i> Search
                     </button>  
                 </div>
             </div>
@@ -52,8 +52,8 @@
         </div>
         </div>
         <div class="row">
-            <a href="{{url_for('edit_profile', username=user.username)}}" class="btn admin-page-edit-btn waves-effect waves-light center-align col s6" aria-label="Edit this user profile"><i class="material-icons">edit</i></a>
-            <a href="{{url_for('admin_delete_user_account', username=user.username)}}" class="admin-page-delete-btn btn waves-effect waves-light center-align col s6" aria-label="Delete this user's account"><i class="material-icons">delete</i></a>
+            <a href="{{url_for('edit_profile', username=user.username)}}" class="btn admin-page-edit-btn waves-effect waves-light center-align col s6 hvr-icon-buzz" aria-label="Edit this user profile"><i class="material-icons hvr-icon">edit</i></a>
+            <a href="{{url_for('admin_delete_user_account', username=user.username)}}" class="admin-page-delete-btn btn waves-effect waves-light center-align col s6 hvr-icon-down" aria-label="Delete this user's account"><i class="material-icons hvr-icon">delete</i></a>
          </div>
          </form>
       </div>
