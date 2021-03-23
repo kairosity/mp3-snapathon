@@ -64,6 +64,14 @@
     * [Awards Function - Test 1](#awards-function-1)
     * [Awards Function - Test 2](#awards-function-2)
     * [Vote Function - Test 1](#vote-function)
+* [**Security Testing**](#security-testing)
+    * [Testing the CSRF Protection](#testing-the-csrf-protection)
+    * [Testing the Sanitization of the Uploaded Filename](#testing-the-sanitization-of-the-uploaded-filenam)
+    * [Testing the Approved File Extensions Security Measure](#testing-the-approved-file-extensions-security-measure)
+    * [Testing the File Type Validation](#testing-the-file-type-validation)
+    * [Testing the Uploaded File Size Limit](#testing-the-uploaded-file-size-limit)
+    * [Testing Flask-Talisman and the CSP](#testing-flask-talisman-and-the-csp)
+    * [Access Control Testing](#access-control-testing)
 * [**Browser Testing**](#browser-testing)
     * [Desktop Browser Testing](#desktop-browser-testing)
     * [Mobile Browser Testing](#mobile-browser-testing)
@@ -601,8 +609,29 @@ After some research I found the following note in the Flask documentation:
             When using the local development server, you may get a connection reset error instead of a 413 response. 
             You will get the correct status response when running the app with a production WSGI server.
 
-I checked it on the deployed version and it still wasn't working. (FINISH)
+I checked it on the deployed version and it still wasn't working. 
 
+Eventually after much stack overflowing, I made the executive decision to change the way the error was thrown. The preferred method is to set a configuration
+variable like so: ```app.config['MAX_CONTENT_LENGTH'] = 750 * 750``` and then application will automatically throw a 413 error when that size is surpassed by any 
+uploaded file. 
+
+However as I could not get this working at a level whereby the user experience was not negatively impacted, I created my own function to check the file size of images 
+before they are saved to the database. 
+
+        def check_file_size(file, size_limit_in_bytes):
+            file.seek(0, os.SEEK_END)
+            file_length = file.tell()
+            file.seek(0,0)
+
+            if file_length > size_limit_in_bytes:
+                return abort(413)
+            else:
+                return True
+
+This worked a treat, so I was happy to use it instead of the Flask functionality, but with an eye to keeping the issue in mind for future projects. The only downside to using this method that I can see is that you must be cautious to include the function anywhere a file can be uploaded, whereas the config variable method would ensure the 
+functionality is automatically incorporated on an application-wide basis. 
+
+However, as all my uploads are served by one ```save_photo()``` function, and that calls the ```check_file_size``` function, I can be confident it applies site-wide.
 
 ## Flask-Talisman 
 
@@ -1877,7 +1906,6 @@ As everything was spot on, no further tests were needed for this function.
 31.| Bobby | Snow on Cat | macaw | 0 | 2 | 2 | 2 | 0| 0
 32.| Dominic |Cristmas Bird | zebby | 0 | 3 | 3 | 3| 0| 0
  
-
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
@@ -1888,7 +1916,15 @@ As everything was spot on, no further tests were needed for this function.
 
 ## Testing the CSRF Protection
 
+CSRF is hard to test without actually attacking the site, which is outside the scope of this project. However I've listed below some of the 
+checks I implemented so that I can reasonably assume that the site is protected. 
+
 ### Testing Process
+
+- No important or site altering functionality is served by GET requests.
+- Deleting accounts is a POST request that further requires password confirmation.
+- All POST forms are embedded with CSRF tokens from WTF-Forms.
+- The app is wrapped with: ```csrf = CSRFProtect(app)```
 
 ## Testing the Sanitization of the Uploaded Filename
 
@@ -1952,13 +1988,34 @@ To test this I tried to upload larger files and the upload forms, whether they w
 
 __PASS__
 
-## Testing Flask-Talisman & the CSP
+## Testing Flask-Talisman and the CSP
 
 Flask-Talisman adds a host of security features out of the box. These are described in detail in the README.md doc. 
 
 ### Testing Process
 
-- Manually checking that https: is used across the application. __PASS__
+First I checked the Security Overview in Chrome Dev Tools:
+
+<p align="center">
+  <img src="static/images/testing/security-chrome-dev-tools.png">
+</p>
+
+Then to test the overall efficacy of Flask-Talisman I used [Observatory by Mozilla](https://observatory.mozilla.org/) - a super useful security tool that scans your
+site and reports on vulnerabilities. It lists all the key elements of security that Flask-Talisman integrates (as well as many others) and checks that they are functional.  
+
+When fully secured, the site scored 105/100 (an A+) and passed 10 of the 11 tests, which I deemed good enough.
+
+<p align="center">
+  <img src="static/images/testing/moz-ob-A.png">
+</p>
+
+Most notably the usefulness of Observatory is that it enabled me to notice where there were vulnerabilities and to improve the rating from a 65/100 score as shown below:
+
+<p align="center">
+  <img src="static/images/testing/moz-ob-comparison.png">
+</p>
+
+__PASS__
 
 
 ## Access Control Testing

@@ -637,7 +637,16 @@ def filter_admin_search(
 
 def validate_image_type(stream):
     '''
-    *
+    * This checks what type of file is being uploaded.
+
+    \n Args:
+    1. stream(data): The first 512 bytes of the file data.
+
+    \n Returns:
+    * If the data read matches one of a selection of image file types 
+    then the function returns the file extension.
+    * If the data does not match a selection of image file types then 
+    the function returns None.
     '''
     header = stream.read(512)
     stream.seek(0)
@@ -645,6 +654,29 @@ def validate_image_type(stream):
     if not format:
         return None
     return '.' + (format if format != 'jpeg' else 'jpg')
+
+def check_file_size(file, size_limit_in_bytes):
+    '''
+    * This checks the size of the uploaded file against a set limit.
+
+    \n Args:
+    1. file (obj): A file of some form of data.
+    2. size_limit_in_bytes (int): The maximum fize size limit in bytes. 
+
+    \n Returns:
+    * If the file size is greater than the limit set, this function returns 
+    a 413 error: "Payload too large".
+    * If the file size is under the limit this function returns True.
+    '''
+    file.seek(0, os.SEEK_END)
+    file_length = file.tell()
+    file.seek(0,0)
+
+    if file_length > size_limit_in_bytes:
+        return abort(413)
+    else:
+        return True
+
 
 def save_photo(request, database_var, name_of_image_from_form, app):
     '''
@@ -668,19 +700,11 @@ def save_photo(request, database_var, name_of_image_from_form, app):
         file_extension != validate_image_type(photo.stream): 
         abort(415)
 
-    if size_of_file > app.config['MAX_CONTENT_LENGTH']:
-        abort(400)
+    check_file_size(photo, 560000)
 
     photo.filename = secure_filename(photo.filename)
 
-    # This is being super buggy. It's throwing a 413 error for what should be a 
-    # 415 error.????
-    try:
-        file_id = database_var.save_file(photo.filename, photo)
-    except UnsupportedMediaType:
-        abort(415)
-    except RequestEntityTooLarge:
-        abort(413)
+    file_id = database_var.save_file(photo.filename, photo)
 
     # This makes the filename unique
     new_filename = str(file_id) + file_extension

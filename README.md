@@ -2724,16 +2724,27 @@ In addition to the above listed benefits, Flask-Talisman also sets a Content Sec
 
 ## 7. Access Control
 
-Users must login to their accounts and many of the app's functionality is based on a user being logged in. 
+Users must login to their accounts and many of the app's functionality is based on a user being authenticated. 
 
-Logged in users may edit their accounts, delete their accounts and delete their photos. 
-They are not able to access the admin control center.
-They are not able to delete, edit or update other user accounts. 
-Admins are not able to edit or delete user images, but they are able to edit user usernames and email addresses should they need to. 
-Admins can also completely delete a user's account.
-Admins may also delete user profile images if they are deemed inappropriate. 
+- Logged in users may edit their accounts, delete their accounts and delete their photos.
+
+- They are not able to access the admin control center.
+
+- They are not able to delete, edit or update other user accounts.
+
+- Admins are not able to edit or delete user images, but they are able to edit user usernames and email addresses should they need to.
+
+- Admins can also completely delete a user's account.
+
+- Admins may also delete user profile images if they are deemed inappropriate. 
 
 These varying accesses are managed by the login function, which is secured by Werkzeug's password hashing and reading methods.
+
+<br>
+
+__nb.__ Security feature #s 2,3,4 & 5 above were derived from [Miguel Grinberg's superb post on file uploads with Flask.](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask/page/2)
+
+<br>
 
 #### __back to [contents](#table-of-contents)__
 
@@ -3085,6 +3096,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [How to wait for the DOM ready event in plain JavaScript](https://flaviocopes.com/dom-ready/)
 
     Used for formatting the images on the winner's page. 
+
 ## 4. Python 
 
 - ## [W3Schools Python Datetime Information](https://www.w3schools.com/python/python_datetime.asp)
@@ -3114,6 +3126,14 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Passing a function to another function in Python](https://medium.com/@lynzt/python-pass-a-function-to-another-function-and-run-it-with-args-b24141312bd7)
 
     Useful information for refactoring.
+
+- ## [IMGHDR Module](https://docs.python.org/3/library/imghdr.html)
+
+    Python's imghdr module checks the type of image contained in a stream. Very useful for security re: image uploads.
+
+- ## [Stack Overflow: Flask: Get the size of request.files object](https://stackoverflow.com/questions/15772975/flask-get-the-size-of-request-files-object)
+
+    Used to create a function to get around the buggy nature of Flask's 413 error throwing.
 
 ## 5. Flask
 
@@ -3288,6 +3308,11 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Video to gif Converter](https://ezgif.com/video-to-gif)
     
     Used to create the short testing gifs included in the testing.md doc
+
+- ## [Observatory by Mozilla](https://observatory.mozilla.org/)
+
+    Very useful security scanning website that reports back vulnerabilities or areas for improvement. 
+
 
 #### __back to [contents](#table-of-contents)__ 
 <br>
