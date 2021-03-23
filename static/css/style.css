@@ -406,7 +406,8 @@ ul.homepage-collapsible-rules{
     transition: all 1s;
 }
 .review-rules-collapsible-header-homepage:hover,
-.review-rules-collapsible-header-homepage:focus{
+.review-rules-collapsible-header-homepage:focus,
+.keyboard-focused .collapsible-header:focus  {
     background-color: var(--dark-accent-colour);
 }
 ul li div.competition-rules-homepage{

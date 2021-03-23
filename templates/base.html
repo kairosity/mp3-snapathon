@@ -60,28 +60,28 @@
                 <a href="#main" tabindex="1">Skip To Main</a>
             </div>
             <ul class="sidenav grey darken-4 mobile-nav-ul" id="mobile-nav">
-                <li><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
-                <li><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
-                <li><a class="nav-link"  href="{{url_for('browse')}}">Browse</a></li>
+                <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
+                <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
+                <li class="hvr-sweep-to-right"><a class="nav-link"  href="{{url_for('browse')}}">Browse</a></li>
                 {% if session['user'] and session['user'] != 'admin' %}
-                    <li><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('profile', username=session['user'])}}">My Profile</a></li>
                     {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5")  %}
-                        <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
+                        <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Compete</a></li>
                     {% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") < "22") ) %}
-                     <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Vote</a></li>
+                     <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Vote</a></li>
                     {% else %}
-                        <li><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Awards</a></li>
+                        <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('compete', username=session['user'])}}">Awards</a></li>
                     {% endif %}
-                    <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
-                    <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
                 {% elif session['user'] == 'admin' %}
-                    <li><a class="nav-link" href="{{url_for('admin')}}">Admin User Control</a></li>
-                    <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
-                    <li><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('admin')}}">Admin User Control</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
                 {% else %}
-                    <li><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
-                    <li><a class="nav-link" href="{{url_for('login')}}">Login</a></li>
-                    <li><a class="nav-link" href="{{url_for('register')}}">Register</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('home')}}#contact-form">Contact Us</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('login')}}">Login</a></li>
+                    <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('register')}}">Register</a></li>
                 {% endif %}
                 
             </ul>

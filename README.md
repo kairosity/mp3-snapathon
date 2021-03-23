@@ -3058,6 +3058,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     A great collection of box-shadows
 
+
 ## 3. JavaScript 
 
 - ## [W3 Schools - Location hash Property](https://www.w3schools.com/jsref/prop_loc_hash.asp)
@@ -3275,6 +3276,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 <br>
 
 # Libraries
+
+## [Hover.css](http://ianlunn.github.io/Hover/)
+
+    Super animation library. Used for animating the navbar.
 
 ## [APScheduler](https://apscheduler.readthedocs.io/en/stable/#) 
 
