@@ -89,9 +89,10 @@ Users register accounts and then they enter one competition a week on a particul
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
     - [3. Approved File Extensions](#3-approved-file-extensions)
-    - [4. Uploaded file size](#4-uploaded-file-size)
-    - [5. Validating file contents](#5-validating-file-contents)
+    - [4. Validating file contents](#4-validating-file-contents)
+    - [5. Uploaded file size](#5-uploaded-file-size)
     - [6. Content Security Policy](#6-content-security-policy)
+    - [7. Access Control](#7-access-control)
 - [7. Testing](#testing)
 - [8. Future Features To Implement](#future-features-to-implement)
 - [9. Attribution](#attribution)
@@ -2028,7 +2029,6 @@ the images are stacked 3 per row under those tabs.
     <img src="/static/images/responsivity/del-modal-mob-land-2.png">
 </div>
 
-
 </details>
 
 ## Tablet Devices (Materialize m breakpoint) 
@@ -2341,7 +2341,6 @@ the images per row is now increased to 4 under the category tabs.
 
 
 </details>
-
 
 
 ## Desktop Devices (Materialize l breakpoint) 
@@ -2685,7 +2684,17 @@ If a user attempts to upload any other extension type, the application throws a 
 
 This further limits the ability of users with malicious intent to upload damaging files to the database.
 
-## 4. Uploaded file size 
+## 4. Validating File Contents
+
+As a final and very important check on the file uploaded, I've used ```imghdr.what()``` to verify that the filetype is an image. This is an important extra failsafe, 
+as malicious users could upload a non-image file with one of the approved extensions masking its true nature. 
+
+The ```validate_image_type()``` function takes in 512 Bytes of data from the file uploaded before it's saved anywhere and checks what type of file it is.
+
+The code in save_file() checks that if ```file_extension != validate_image_type(photo.stream)``` the save function won't go ahead and an error will be thrown. 
+Thus if the extension is different from the actual file type the upload will fail. 
+
+## 5. Uploaded file size 
 
 The application only allows files under 560KBs to be uploaded. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes.
 
@@ -2693,16 +2702,24 @@ This was achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'
 
 Rejecting large files was straightforward, however Flask has big issues returning the appropriate error message and page.
 
-## 5. Validating file contents
 
-As a final and very important check on the file uploaded, 
+## 6. Flask-Talisman & Content Security policy
 
-GET renders the edit-profile template form if the username passed
-      to the request matches the user currently logged in.
+I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. Flask-Talisman also comes with a number of other 
+security benefits such as (taken from the Flask-Talisman GitHub repo): 
 
-## 6. Content Security policy
+        - Forcing https connection.
+        - Enables HTTP Strict Transport Security.
+        - Sets Flask's session cookie to secure, so it will never be set if your application is somehow accessed via a non-secure connection.
+        - Sets Flask's session cookie to httponly, preventing JavaScript from being able to access its content. CSRF via Ajax uses a separate cookie and should be unaffected.
+        - Sets X-Frame-Options to SAMEORIGIN to avoid clickjacking.
+        - Sets X-XSS-Protection to enable a cross site scripting filter for IE and Safari (note Chrome has removed this and Firefox never supported it).
+        - Sets X-Content-Type-Options to prevent content type sniffing.
+        - Sets a strict Referrer-Policy of strict-origin-when-cross-origin that governs which referrer information should be included with requests made.
 
-I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. 
+source: [Talisman: HTTP security headers for Flask](https://github.com/GoogleCloudPlatform/flask-talisman)
+
+In addition to the above listed benefits, Flask-Talisman also sets a Content Security Policy that I have adapted to make less strict to allow for using certain CDNs such as Google Fonts, FontAwesome, Materialize & the application's own custom scripts.
 
 
 ## 7. Access Control

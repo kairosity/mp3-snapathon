@@ -1886,6 +1886,81 @@ As everything was spot on, no further tests were needed for this function.
 
 # Security Testing
 
+## Testing the CSRF Protection
+
+### Testing Process
+
+## Testing the Sanitization of the Uploaded Filename
+
+Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage.
+
+### Testing Process
+
+To test this I tried to upload various files with dodgy extensions.
+
+Werkzeug does its job by transforming them with _ underscores e.g. 
+
+- malicious/paths/os/users.jpg  --> malicious_paths_os_users.jpg
+- ../../users/delete.png --> users_delete.png
+
+Rendering them relatively harmless.
+
+On top of that, the application code also works to rename the files anyway, to make them unique and to aid with the database connections.
+
+## Testing the Approved File Extensions Security Measure
+
+The application only accepts file uploads with the extensions of: ['.jpg', '.png', '.gif', '.svg', '.jpeg']. 
+
+### Testing Process
+
+- I attempted to upload a host of other file types such as .doc, .pdf, .exe & .zip
+- I verified that the upload did not work and that the POST method was terminated.
+
+
+__PASS__
+
+## Testing the File Type Validation
+
+A very important check on the file uploaded, is the ```imghdr.what()``` that verifies that the filetype is an image. This extends the
+Approved File Type Extension Security Measure insofar as that measure checks the visible extension, but this one goes further to check 
+the actual file type. 
+
+### Testing Process
+To test the functionality of this security code, I first created a .pages file and changed the extension to .jpg
+With the code commented out, I tried to upload this file and it uploaded successfully as you can see below:
+
+<p align="center">
+  <img src="static/images/testing/pre-content-validation.png">
+</p>
+
+Then I un-commented the file type validation code and after deleting the fake image, I tried again to upload it. This time,
+the .pages masquerading as a .jpg was duly rejected and a 415 error was correctly returned to the user, as below:
+
+<p align="center">
+  <img src="static/images/testing/post-content-validation.png">
+</p>
+
+__PASS__
+
+## Testing the Uploaded File Size Limit
+
+The application only accepts files that are under 750 X 750 bytes in size. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes. 
+
+### Testing Process:
+
+To test this I tried to upload larger files and the upload forms, whether they were register, update profile or to enter an image into the competition, were rejected and the process halted.
+
+__PASS__
+
+## Testing Flask-Talisman & the CSP
+
+Flask-Talisman adds a host of security features out of the box. These are described in detail in the README.md doc. 
+
+### Testing Process
+
+- Manually checking that https: is used across the application. __PASS__
+
+
 ## Access Control Testing
 
 One of the most important aspects of security for any application using user logins is to ensure that other users cannot access private user accounts. 
@@ -1912,57 +1987,6 @@ As an admin user I manually typed in the urls for:
 - /edit-photo/filename - Access denied. -- PASS
 
 The delete functions to delete accounts & photos were purposefully written as POST methods for added security, so they cannot be accessed via url.
-
-## Testing the Maximum File Size Limit
-
-The application only accepts files that are under 750 X 750 bytes in size. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes. 
-
-### Testing Process:
-
-To test this I tried to upload larger files and the upload forms, whether they were register, update profile or to enter an image into the competition, were rejected and the process halted.
-
-__PASS__
-
-
-## Testing the Approved File Type Security Measure
-
-The application only accepts file uploads with the extensions of: ['.jpg', '.png', '.gif', '.svg', '.jpeg']. 
-
-### Testing Process
-
-- I attempted to upload a host of other file types such as .doc, .pdf, .exe & .zip
-- I verified that the upload did not work and that the POST method was terminated.
-
-
-__PASS__
-
-
-## Testing the Sanitization of the Uploaded Filename
-
-Another security validation incorporated is the werkzeug ```secure_filename``` util. This is applied to the uploaded photo filename before it is saved to the database, to ensure that any dodgy filenames e.g. /paths/to/os/systems/etc.jpg are sanitized before they can do any damage.
-
-### Testing Process
-
-To test this I tried to upload various files with dodgy extensions.
-
-Werkzeug does its job by transforming them with _ underscores e.g. 
-
-- malicious/paths/os/users.jpg  --> malicious_paths_os_users.jpg
-- ../../users/delete.png --> users_delete.png
-
-Rendering them relatively harmless.
-
-On top of that, the application code also works to rename the files anyway, to make them unique and to aid with the database connections.
-
-
-## Testing the CSRF Protection
-
-### Testing Process
-
-## Testing the CSP
-
-### Testing Process
-
 
 # Browser Testing
 

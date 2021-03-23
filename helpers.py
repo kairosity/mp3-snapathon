@@ -640,10 +640,8 @@ def validate_image_type(stream):
     *
     '''
     header = stream.read(512)
-    print(header)
     stream.seek(0)
     format = imghdr.what(None, header)
-    print(format)
     if not format:
         return None
     return '.' + (format if format != 'jpeg' else 'jpg')
@@ -667,11 +665,11 @@ def save_photo(request, database_var, name_of_image_from_form, app):
     file_extension = os.path.splitext(photo.filename)[1]
 
     if file_extension not in app.config['UPLOAD_EXTENSIONS'] or \
-        file_extension != validate_image_type(photo.stream):
+        file_extension != validate_image_type(photo.stream): 
         abort(415)
 
-    # if size_of_file > app.config['MAX_CONTENT_LENGTH']:
-    #     abort(413)
+    if size_of_file > app.config['MAX_CONTENT_LENGTH']:
+        abort(400)
 
     photo.filename = secure_filename(photo.filename)
 
