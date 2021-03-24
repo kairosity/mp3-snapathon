@@ -833,8 +833,6 @@ def forbidden_error(e):
     return render_template('error.html', error=error, error_msg=error_msg), 403
 
 
-# The print statement is working, but the template
-# is not rendering? Not sure why.
 @app.errorhandler(413)
 def payload_too_large(e):
     error = 413
