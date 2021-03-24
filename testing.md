@@ -2051,15 +2051,44 @@ In addition to the accessibility user story testing outlined above, I also under
 
 ## Lighthouse Accessibility Tests
 
-## WAVE Web Accessibility Evaluation Tool
+The application scored very highly on the lighthouse measure of accessibility in Chrome Dev Tools: 
 
-This is a useful tool for getting a quick overview of areas that might need some accessibility attention. 
+### Mobile: 
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-accessibility-mobile.png">
+</p>
+
+### Desktop:
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-accessibility-desktop.png">
+</p>
+
+## WAVE Web Accessibility Evaluation Tool
+
+This is a [useful tool](https://wave.webaim.org/) for getting a quick overview of areas that might need some accessibility attention. It highlights areas of concern as well as good
+accessibility practice and shows the code it references, as below: 
+
+<p align="center">
+  <img src="static/images/testing/wave-accessibility-test.png">
+</p>
+
+## Web Accessibility by Level Access
+
+
+Another automated accessibility checker that looks at a range of identifiers. Snapathon scored well:
+
+<p align="center">
+  <img src="static/images/testing/web-accessibility-test.png">
+</p>
+
 
 ## Keyboard Manual Testing
 
 - Everytime I added functionality I tested it to make sure it was fully keyboard accessible. 
 
-- The application works perfectly for users relying solely on their keyboard. 
+- The application works perfectly for users relying solely on their keyboard. __PASS__
 
 ## Screen Reader Tests
 
@@ -2072,7 +2101,7 @@ This is a useful tool for getting a quick overview of areas that might need some
 active. 
 - In summary Chrome does not appear to be the best browser for users that rely on screen-reader technology.
 
-- Other than these Chrome adventures, the application is fully screen-reader accessible.
+- Other than these Chrome adventures, the application is fully screen-reader accessible. __PASS__
 
 # Browser Testing
 
@@ -2391,6 +2420,77 @@ phones and tablets to test the app for me.
 # Performance and Web Development Tools Testing
 
 ## Lighthouse
+
+As illustrated below, the final application scored highly in all categories of the Lighthouse Tests. The accessibility results have been covered above, but the remaining tests are here:
+
+### Mobile Lighthouse Test Results:
+
+#### Summary:
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-mobile-summary.png">
+</p>
+
+#### Performace
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-performance-mobile.png">
+</p>
+
+#### Best Practices
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-best-practices-mobile.png">
+</p>
+
+#### SEO
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-seo-mobile.png">
+</p>
+
+
+### Desktop Lighthouse Test Results:
+
+#### Summary:
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-desktop-summary.png">
+</p>
+
+#### Performace
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-performance-desktop.png">
+</p>
+
+#### Best Practices
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-best-practices-desktop.png">
+</p>
+
+#### SEO
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/lighthouse/lighthouse-seo-desktop.png">
+</p>
 
 ## Web Dev Measure
 
