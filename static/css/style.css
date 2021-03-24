@@ -1294,8 +1294,30 @@ a.admin-page-delete-btn:focus{
   height: 50px;
   width: 100%;
 }
-footer p {
-    padding-top: 1rem;
+.footer-flexbox{
+    flex-direction: column-reverse;
+}
+.footer-flexbox,
+.footer-flexbox-1,
+.footer-flexbox-2{
+    display: flex;
+    justify-content: center;
+}
+.twitter-link,
+.instagram-link,
+.facebook-link{
+    margin: 0 0.4rem;
+    font-size: 1.3rem;
+    color: var(--main-text-colour);
+}
+.twitter-link:hover,
+.instagram-link:hover,
+.facebook-link:hover{
+    color: var(--accent-colour);
+}
+.footer-date,
+.privacy-policy{
+    margin: 1rem;
     color: var(--main-text-colour);
 }
 
@@ -1602,6 +1624,7 @@ h5.user-points-badge{
 footer{
     margin-top: 110px;
 }
+
 /* Error Pages */
 .error-msg{
     margin-bottom: 5rem;
