@@ -50,12 +50,12 @@ csp = {
     ]
 }
 
-# talisman = Talisman(app,
-#                     force_https_permanent=True,
-#                     frame_options="DENY",
-#                     session_cookie_secure=True,
-#                     content_security_policy=csp,
-#                     content_security_policy_nonce_in=['script-src'])
+talisman = Talisman(app,
+                    force_https_permanent=True,
+                    frame_options="DENY",
+                    session_cookie_secure=True,
+                    content_security_policy=csp,
+                    content_security_policy_nonce_in=['script-src'])
 
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")

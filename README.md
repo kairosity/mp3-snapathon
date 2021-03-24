@@ -5,6 +5,7 @@
 Snapathon seeks to gamify photography. It is a community-led photo-sharing application that enhances the user experience with friendly competition.
 Users register accounts and then they enter one competition a week on a particular theme. Every user that enters also has one vote to cast for a photo (not theirs).
 
+<a href="https://snapathon-comp.herokuapp.com/"><img src="static/images/snapathon-multi-device-view.png"></a>
 
 # Table of Contents
 
