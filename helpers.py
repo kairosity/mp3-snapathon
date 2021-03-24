@@ -640,7 +640,7 @@ def validate_image_type(stream):
     * This checks what type of file is being uploaded.
 
     \n Args:
-    1. stream(data): The first 512 bytes of the file data.
+    1. stream(data): A particular stream of data.
 
     \n Returns:
     * If the data read matches one of a selection of image file types 
@@ -691,7 +691,6 @@ def save_photo(request, database_var, name_of_image_from_form, app):
        upload "name" field.
     4. app (obj): The WSGI application as an object of the Flask class.
     '''
-    print("Got here!")
     photo = request.files[name_of_image_from_form]
 
     file_extension = os.path.splitext(photo.filename)[1]
@@ -1037,19 +1036,17 @@ def edit_user_profile(user, username, request, database_var, app):
             update_user["email"] = form_email
 
     existing_profile_pic = user["profile_photo"]
-    print(existing_profile_pic)
 
     # 1. If the delete hidden field is activated && no new file is uploaded. 
     if form_del_profile_pic == "del-uploaded-profile-pic" and form_profile_pic.filename == "":
 
-        print("1: Only now do we delete profile pic without uploading a new one")
         # delete user's profile pic.
 
         if existing_profile_pic is not None:
 
             file_to_delete = database_var.db.fs.files.find_one(
                 {"filename": existing_profile_pic})
-            print(f"File to delete: {file_to_delete}")
+
             chunks_to_delete = list(database_var.db.fs.chunks.find({
                                     "files_id": file_to_delete["_id"]}))
 
@@ -1069,9 +1066,7 @@ def edit_user_profile(user, username, request, database_var, app):
     # if there is a file to upload and a current profile pic.
     elif form_profile_pic.filename != "" and existing_profile_pic is not None:
 
-        print("2. Here we delete the current profile pic and upload a new one ")
-
-        #first delete the existing pp then upload the new one.
+        # Delete the current Profile Photo and then upload a new one.
 
         file_to_delete = database_var.db.fs.files.find_one(
             {"filename": existing_profile_pic})
@@ -1087,10 +1082,9 @@ def edit_user_profile(user, username, request, database_var, app):
         for chunk in chunks_to_delete:
             database_var.db.fs.chunks.delete_one(chunk)
 
-        # upload new pic
+        # Upload new Photo
         file_id, new_filename = save_photo(
             request, database_var, "profile-pic", app)
-
 
         new_entry = {
             "file_id": file_id,
@@ -1108,10 +1102,8 @@ def edit_user_profile(user, username, request, database_var, app):
 
         update_user["profile_photo"] = photo_filename_to_add_to_user
 
-    #elif the existing profile is none but there is a new file there to be uploaded.
+    # If there is no existing profile photo but there IS a new photo to be uploaded.
     elif existing_profile_pic is None and form_profile_pic.filename != "":
-
-        print("3. Here there is no profile pic -so we just upload a new one. ")
 
         file_id, new_filename = save_photo(
             request, database_var, "profile-pic", app)
@@ -1190,7 +1182,6 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             username_to_query = user["username"]
 
-        print(username_to_query)
 
         # problematic - need a way to reference the user here?? Does the original user still work? No, still has the old username but with updated deets? 
         user = database_var.db.users.find_one(
@@ -1202,19 +1193,14 @@ def edit_user_profile(user, username, request, database_var, app):
                             {"user": username_to_query}))
 
         user = database_var.db.users.find_one({"username": username_to_query})
-    
-    print(user)
 
     username = user["username"]
-    print(username)
     can_enter = user["can_enter"]
     votes_to_use = user["votes_to_use"]
 
     user_profile_photo, user_photos, \
         photos_voted_for_objs, award_winners, _ = \
         get_profile_page_photos(username, database_var)
-
-    print(user_profile_photo)
 
     today = datetime.now().strftime('%Y-%m-%d')
 
@@ -1362,11 +1348,7 @@ def delete_user_account(username, database_var, request):
 
         if session["user"] == username:
 
-            # all_photos = list(database_var.db.photos.find())
-
             message, url = del_user_account2(form_password, form_password_confirmation, user, user, database_var)
-            print("deleted own account")
-
 
             flash(message)
             return url
@@ -1376,15 +1358,12 @@ def delete_user_account(username, database_var, request):
             admin_user = database_var.db.users.find_one({"username": "admin"})
             message, url = del_user_account2(form_password, form_password_confirmation, admin_user, user, database_var)
 
-            print("deleted another user's account")
 
             flash(message)
             return url
 
 
 # compete() Helpers
-
-
 def get_competition(week_number):
     '''
     * Uses the week number to rotate the competition themes.

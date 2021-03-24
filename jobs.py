@@ -16,7 +16,7 @@ scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
                   hour=00, minute=0, second=0,
                   start_date='2021-02-24')
 scheduler.add_job(test_function, 'cron', day_of_week='sun',
-                  hour=20, minute=32, second=0,
+                  hour=22, minute=00, second=0,
                   start_date='2021-02-24')
 
 scheduler.start()

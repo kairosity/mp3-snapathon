@@ -346,7 +346,6 @@ def register():
     '''
 
     if request.method == "POST":
-        print("Does it even get here? ")
         try:
             time.sleep(3)
             url = register_new_user(mongo, request, app)

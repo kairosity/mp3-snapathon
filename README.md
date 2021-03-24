@@ -85,6 +85,11 @@ Users register accounts and then they enter one competition a week on a particul
     - [Desktop Devices](#desktop-devices-materialize-l-breakpoint)
     - [Wide Desktop Devices](#wide-desktop-devices-materialize-xl-breakpoint)
 - [5. Accessibility](#accessibility)
+    - [1. Accessibility for Users with Visual Impairments](#1-accessibility-for-users-with-visual-impairments)
+    - [2. Accessibility for Keyboard Users](#2-accessibility-for-keyboard-users)
+    - [3. Accessibility for Users with Hearing Impairments](#3-accessibility-for-users-with-hearing-impairments)
+    - [4. Accessibility for Users with Cognitive Impairments](#4-accessibility-for-users-with-cognitive-impairments)
+    - [5. Accessibility for Users with Slow Internet Connections](#5-accessibility-for-users-with-slow-internet-connections)
 - [6. Security](#security)
     - [1. CSRF Protection](#1-csrf-protection)
     - [2. Securing the upload filename](#2-securing-the-upload-filenames)
@@ -2634,8 +2639,7 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 # Accessibility
 
-
-## Accessibility for Users with Visual Impairments
+## 1. Accessibility for Users with Visual Impairments
 
 ### Semantic HTML
 
@@ -2656,7 +2660,11 @@ I was sure to include aria-labels on both of these icons.
 - I ensured that none of the application's functionality is dependent on a user being able to correctly discern between colours. 
 - Colours are used to enhance the experience for normally sighted users, such as "Delete" buttons being red, however they also have "delete" written on them, or they employ the use of icons that clearly illustrate their purpose.
 
-## Accessibility for Users who rely on Keyboards
+### Zoom Ratio
+
+The application is comfortable to view on a screen zoom of up to 300% which is well above the recommended 200% as per accessibility standards. 
+
+## 2.  Accessibility for Keyboard Users
 
 ### Skip to Main Link
 
@@ -2664,16 +2672,36 @@ All pages contain a visibly hidden but keyboard accessible "skip to main" link. 
 keyboard users to skip all the navigation tabs, which can be really annoying as there are two navbars, one main and one sidebar for mobile. For users 
 relying on keyboard access, without a skip to main link they would have to tab at least 12 times before reaching the page content.
 
+<br>
+
+<div align="center">
+    <img src="/static/images/features/skip-to-main.png">
+</div>
+
+</br>
+
 ### Focus Highlights
 
-I have ensured that all tabbable navigation has an obvious focus highlight, either an outline, or that it mimics the hover style, so the keyboard user knows when they are entering a particular element.
+I have ensured that all tabbable navigation has an obvious focus highlight, either an outline, or that it mimics the hover style exactly, so the keyboard user knows when they are entering a particular element.
 
-## Accessibility for Users with Hearing Impairments
+<br>
+
+<div align="center">
+    <img src="/static/images/features/keyboard-highlighting1.png">
+</div>
+
+</br>
+
+<div align="center">
+    <img src="/static/images/features/keyboard-highlighting2.png">
+</div>
+
+## 3. Accessibility for Users with Hearing Impairments
 
 - No part of this application relies on auditory cues, there is no sound involvement, therefore it is fully accessible for users with hearing
 impairments. 
 
-## Accessibility for Users with Cognitive Impairments
+## 4. Accessibility for Users with Cognitive Impairments
 
 - Content is clear and easy to understand. 
 - Buttons are obvious and prominently placed. 
@@ -2681,6 +2709,13 @@ impairments.
 - Layout and navigation is consistent across the application. 
 - Links are of a consistent style and display feedback when hovered over.
 - User registration is straightforward and does not demand too many details. 
+
+## 5. Accessibility for Users with Slow Internet Connections
+
+As it is a photography based application, and therefore image-heavy, slow loading times is a particular concern.
+Having said that, I have instituted a low file size threshold for this very reason, and I've ensured that all 
+images used in the application are compressed and as small as they can reasonably be, without
+sacrificing too much quality. 
 
 
 #### __back to [contents](#table-of-contents)__
