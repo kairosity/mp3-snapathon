@@ -832,7 +832,7 @@ def payload_too_large(e):
     error_msg = "Sorry, but the file you're trying to upload is too large.\
     If you are entering the competition, please have a look at the file size\
     guidelines in the rules section. If you are uploading a profile pic,\
-    please choose one that is under 450KB. Thanks!"
+    please choose one that is under 560KB. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 413
 
 

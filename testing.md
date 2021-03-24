@@ -912,10 +912,58 @@ also return 404 status codes.
 
 ## 413 Status Code Testing
 <details><summary><b>click for tests</b></summary>
+
+<br>
+
+If a user attempts to upload any file (image) with a filesize larger than 560KBs, the operation should be terminated and 
+a 413 error: "Payload Too Large" should be returned.
+
+This applies to both competition entries & profile photo uploads. The following tests were done:
+
+- A profile photo upload attempt during user registration of a photo sized 579KBs.
+- A profile photo update attempt via "Edit Profile" of a photo sized 640KBs.
+- A competition entry upload attempt of a photo sized 628KBs.
+
+These were all rejected and the correct status code & error message was returned. __PASS__ 
+
+
+<p align="left">
+  <img src="static/images/testing/413-status-codes.png">
+</p>
+
+<p align="left">
+  <img src="static/images/testing/413-error.png">
+</p>
+
 </details>
 
 ## 415 Status Code Testing
 <details><summary><b>click for tests</b></summary>
+
+<br>
+
+If a user attempts to upload any file (image) with a filesize larger than 560KBs, the operation should be terminated and 
+a 413 error: "Payload Too Large" should be returned.
+
+This applies to both competition entries & profile photo uploads. The following tests were done:
+
+- A profile photo upload attempt during user registration of a photo sized 579KBs.
+- A profile photo update attempt via "Edit Profile" of a photo sized 640KBs.
+- A competition entry upload attempt of a photo sized 628KBs.
+
+These were all rejected and the correct status code & error message was returned. __PASS__ 
+
+
+<p align="left">
+  <img src="static/images/testing/413-status-codes.png">
+</p>
+
+<p align="left">
+  <img src="static/images/testing/413-error.png">
+</p>
+
+
+
 </details>
 
 ## 500 Status Code Testing

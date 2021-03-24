@@ -3394,6 +3394,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Very useful security scanning website that reports back vulnerabilities or areas for improvement. 
 
+- ## [Am I Responsive?](http://ami.responsivedesign.is/)
+
+    Used for the fetching photo at the beginning of this README.
+
 
 #### __back to [contents](#table-of-contents)__ 
 <br>

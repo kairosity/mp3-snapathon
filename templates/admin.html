@@ -27,6 +27,7 @@
             </div>
           </form>
     {% for user in all_users %}
+      {% if user.username != 'admin' %}
     
       <div class="card col s12 m6 l4 xl3 admin-control-card">
           <form class="admin-control-form">
@@ -57,7 +58,8 @@
          </div>
          </form>
       </div>
-
+      
+     {% endif %}
    
     {% endfor %}
      </div>
