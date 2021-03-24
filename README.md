@@ -2651,18 +2651,22 @@ I was sure to include aria-labels on both of these icons.
 
 ### Colourblind Users
 
-- During the design process I was careful to select colours and contrasts that would look well for colourblind users. 
+- During the design process I selectes colours and contrasts that would look well for colourblind users. 
 - The choice of yellow and dark grey was with an eye to its excellent contrast and how easily viewable it is by the greatest range of users.
 - I ensured that none of the application's functionality is dependent on a user being able to correctly discern between colours. 
 - Colours are used to enhance the experience for normally sighted users, such as "Delete" buttons being red, however they also have "delete" written on them, or they employ the use of icons that clearly illustrate their purpose.
 
-## Accessibility for Users who rely on Keyboards
+## Accessibility for Users who rely on Keyboards
 
 ### Skip to Main Link
 
 All pages contain a visibly hidden but keyboard accessible "skip to main" link. It is the first tabbable element on every page and it allows 
 keyboard users to skip all the navigation tabs, which can be really annoying as there are two navbars, one main and one sidebar for mobile. For users 
 relying on keyboard access, without a skip to main link they would have to tab at least 12 times before reaching the page content.
+
+### Focus Highlights
+
+I have ensured that all tabbable navigation has an obvious focus highlight, either an outline, or that it mimics the hover style, so the keyboard user knows when they are entering a particular element.
 
 ## Accessibility for Users with Hearing Impairments
 

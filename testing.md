@@ -2492,9 +2492,6 @@ As illustrated below, the final application scored highly in all categories of t
   <img src="static/images/testing/lighthouse/lighthouse-seo-desktop.png">
 </p>
 
-## Web Dev Measure
-
-
 <br>
 
 #### __back to [contents](#testing-table-of-contents)__
