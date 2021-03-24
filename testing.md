@@ -244,7 +244,7 @@
 
 - __As a user using screen reader technology, I want my screen reader to describe the page elements correctly. - PASS__
     - Aria-labels have been added to all important elements.
-    - Elements have been written with an eye to the correct semantical format to ensure the best possible experience for screen-reader dependent users.
+    - Elements have been written with an eye to the correct semantic HTML format to ensure the best possible experience for screen-reader dependent users.
 
 </details>
 
@@ -2044,6 +2044,35 @@ As an admin user I manually typed in the urls for:
 - /edit-photo/filename - Access denied. -- PASS
 
 The delete functions to delete accounts & photos were purposefully written as POST methods for added security, so they cannot be accessed via url.
+
+# Accessibility Testing 
+
+In addition to the accessibility user story testing outlined above, I also undertook the following manual & automated tests:
+
+## Lighthouse Accessibility Tests
+
+## WAVE Web Accessibility Evaluation Tool
+
+This is a useful tool for getting a quick overview of areas that might need some accessibility attention. 
+
+## Keyboard Manual Testing
+
+- Everytime I added functionality I tested it to make sure it was fully keyboard accessible. 
+
+- The application works perfectly for users relying solely on their keyboard. 
+
+## Screen Reader Tests
+
+-   I used Apple's voice over utility to test the screen reader accessibility of the site. 
+- Which is how I discovered a surprising issue with Chrome specifically. When a text field receives focus and Chrome offers up suggestions of what to type in that field. (Something it does a lot), this interferes with the screen reader's ability to read the label of that text input. Instead of, for example: "Filter by Keyword" the screen reader will announce "Candidate List Shown".
+- Thus many of the form labels are not read correctly by screen readers for users using Chrome. 
+- Having researched it, there doesn't seem to be alot of options for developers in terms of getting around it, the onus is on Chrome to sort it out. Presumably users who use screen readers are aware of the issue and probably use a browser like FireFox where everything works perfectly.
+- The [ChromeVox](https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en) extension does seem to be aware of this, as the issue does not occur when a user uses it, but as an added issue, the ChromeVox seems to be programmed to ignore "Skip to Main" links. 
+- The other issue I discovered with ChromeVox is that it interfered with keyboard access to the extent that I couldn't select to "Delete Account" when the extension was 
+active. 
+- In summary Chrome does not appear to be the best browser for users that rely on screen-reader technology.
+
+- Other than these Chrome adventures, the application is fully screen-reader accessible.
 
 # Browser Testing
 

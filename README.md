@@ -2634,23 +2634,50 @@ relation to their height, the wider the screen ratio gets. Below is an extreme e
 
 # Accessibility
 
-## Semantic HTML
 
-I ensured that wherever possible, code was semantically structured so as to give the best experience to users who rely on screen readers.
+## Accessibility for Users with Visual Impairments
 
-## Skip to Main Link
+### Semantic HTML
+
+I ensured that wherever possible and contextually logical, I used semantic HTML5 so as to give the best experience to users who rely on screen readers. 
+
+### Aria Labels
+
+- I was careful not to include buttons or elements without clear text references to their function.
+- The only exception to this is in the Admin User Control Page where I use icons to represent editing and deleting a user. To maintain good accessibility
+I was sure to include aria-labels on both of these icons.  
+- This helped to ensure that functionality would remain evident for visually challenged users without the need for aria-labels. 
+- I didn't use X close buttons for example, opting whenever needed for "Cancel" instead. 
+
+### Colourblind Users
+
+- During the design process I was careful to select colours and contrasts that would look well for colourblind users. 
+- The choice of yellow and dark grey was with an eye to its excellent contrast and how easily viewable it is by the greatest range of users.
+- I ensured that none of the application's functionality is dependent on a user being able to correctly discern between colours. 
+- Colours are used to enhance the experience for normally sighted users, such as "Delete" buttons being red, however they also have "delete" written on them, or they employ the use of icons that clearly illustrate their purpose.
+
+## Accessibility for Users who rely on Keyboards
+
+### Skip to Main Link
 
 All pages contain a visibly hidden but keyboard accessible "skip to main" link. It is the first tabbable element on every page and it allows 
 keyboard users to skip all the navigation tabs, which can be really annoying as there are two navbars, one main and one sidebar for mobile. For users 
 relying on keyboard access, without a skip to main link they would have to tab at least 12 times before reaching the page content.
 
+## Accessibility for Users with Hearing Impairments
 
+- No part of this application relies on auditory cues, there is no sound involvement, therefore it is fully accessible for users with hearing
+impairments. 
 
-## Aria Labels
+## Accessibility for Users with Cognitive Impairments
 
-- I was careful not to include buttons or elements without clear text references to their function. 
-- This helped to ensure that functionality would remain evident for visually challenged users without the need for aria-labels. 
-- I didn't use X close buttons for example, opting whenever needed for "Cancel" instead. 
+- Content is clear and easy to understand. 
+- Buttons are obvious and prominently placed. 
+- There are no distractions or irritating ads.
+- Layout and navigation is consistent across the application. 
+- Links are of a consistent style and display feedback when hovered over.
+- User registration is straightforward and does not demand too many details. 
+
 
 #### __back to [contents](#table-of-contents)__
 
