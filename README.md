@@ -98,6 +98,7 @@ Users register accounts and then they enter one competition a week on a particul
     - [5. Uploaded file size](#5-uploaded-file-size)
     - [6. Content Security Policy](#6-content-security-policy)
     - [7. Access Control](#7-access-control)
+    - [8. Request Methods](#8-request-methods)
 - [7. Testing](#testing)
 - [8. Future Features To Implement](#future-features-to-implement)
 - [9. Attribution](#attribution)
@@ -2729,8 +2730,7 @@ The following security features were integrated into this application:
 To protect against cross site request forgery I used the Flask-WTF module's CSRF protection
 by adding it globally and by adding a hidden input containing the crsf token in all forms used in the application.
 
-This protection is particularly important for this application, as it relies on cookie sessions and many of the common
-CRUD requests do not require passwords.
+This protection is particularly important for this application, as it relies on cookie sessions.
 
 ## 2. Securing the upload filenames  
 
@@ -2764,9 +2764,11 @@ Thus if the extension is different from the actual file type the upload will fai
 
 The application only allows files under 560KBs to be uploaded. This is a useful validation for two reasons: it stops overly massive images from being uploaded that would slow the application down, and it stops a decent amount of potential security threats where hackers upload malicious programmes.
 
-This was achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'] = 750 * 750``` Flask automatically halts any large requests and returns a 413 status code. 
+This was initially achieved using a config instruction: ```app.config['MAX_CONTENT_LENGTH'] = 750 * 750``` whereby Flask would automatically halt any large requests and return a 413 status code. 
 
-Rejecting large files was straightforward, however Flask has big issues returning the appropriate error message and page.
+Rejecting large files worked and was straightforward, however Flask had big issues returning the appropriate error message and page, therefore I changed the manner in which I limited the allowed file size. Instead of using a config variable, I added a custom function that only allowed 560KBs and under and I ensured it was called any time a file was uploaded. 
+
+This worked to both limit the file sizes and throw the correct error message for the user. 
 
 
 ## 6. Flask-Talisman & Content Security policy
@@ -2805,6 +2807,18 @@ Users must login to their accounts and many of the app's functionality is based 
 - Admins may also delete user profile images if they are deemed inappropriate. 
 
 These varying accesses are managed by the login function, which is secured by Werkzeug's password hashing and reading methods.
+
+## 8. Request Methods
+
+- The application does not serve any database altering methods using GET requests. 
+
+- All EDIT & DELETE functions are POST requests.
+
+- Additionally, in order to delete a user account, either the user, or the admin, who is doing the deleting, 
+must enter their account password again, to confirm the deletion. 
+
+- This is to ensure that even IF a CSRF attack were to somehow bypass the WTF-Forms protection detailed above, they would not 
+be able to successfully delete an account without knowing the user's or admin's password. 
 
 <br>
 

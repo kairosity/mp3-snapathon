@@ -50,12 +50,12 @@ csp = {
     ]
 }
 
-talisman = Talisman(app,
-                    force_https_permanent=True,
-                    frame_options="DENY",
-                    session_cookie_secure=True,
-                    content_security_policy=csp,
-                    content_security_policy_nonce_in=['script-src'])
+# talisman = Talisman(app,
+#                     force_https_permanent=True,
+#                     frame_options="DENY",
+#                     session_cookie_secure=True,
+#                     content_security_policy=csp,
+#                     content_security_policy_nonce_in=['script-src'])
 
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -76,7 +76,6 @@ mail_settings = {
 app.config.update(mail_settings)
 mail = Mail(app)
 mongo = PyMongo(app)
-
 
 def awards():
     '''
@@ -341,18 +340,13 @@ def register():
     * Logs the new user in and creates a new session for that
       user.
     * Redirects that user to their new profile page template.
-    * If registration is unsuccessfuly the register template is
+    * If registration is unsuccessful the register template is
       reloaded with flash messages detailing why.
     '''
 
     if request.method == "POST":
-        try:
-            time.sleep(3)
             url = register_new_user(mongo, request, app)
             return url
-        except:
-            abort(413)
-
     return render_template("register.html")
 
 

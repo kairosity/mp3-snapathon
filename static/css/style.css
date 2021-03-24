@@ -462,13 +462,12 @@ textarea.materialize-textarea:focus:not([readonly]){
     -webkit-box-shadow: 0 1px 0 0 var(--accent-colour);
     box-shadow: 0 1px 0 0 var(--accent-colour);
 }
-/* Recent Winners */
+/* Winners */
 
 .comp-results-intro{
     font-size: 1.5rem;
 }
 section.first_place{
-    /* border: #FFD700 solid 9px; */
     width: 90%;
 }
 .first-place-title{
@@ -519,7 +518,6 @@ i.award-1{
     color:#FFD700;
 }
 section.second_place{
-    /* border: #d5d5d7 solid 9px; */
     width: 90%;
 }
 .second-place-title{
@@ -533,7 +531,6 @@ i.award-2{
     color: #d5d5d7;
 }
 section.third_place{
-    /* border: #cd7f32 solid 9px; */
     width: 90%;
 }
 .third-place-title{
@@ -572,6 +569,11 @@ section.row a img.award-photo-third{
     padding: 0;
     margin-bottom: 1.3rem;
 }
+.no-winners-description{
+    margin-bottom: 4rem;
+    padding: 3rem;
+}
+
 /* Interim Vote --> Compete Page */
 .interim-image{
     max-width: 100%;
