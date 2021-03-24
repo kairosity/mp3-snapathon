@@ -941,25 +941,29 @@ These were all rejected and the correct status code & error message was returned
 <details><summary><b>click for tests</b></summary>
 
 <br>
+A 415 status code can be thrown in two ways:
 
-If a user attempts to upload any file (image) with a filesize larger than 560KBs, the operation should be terminated and 
-a 413 error: "Payload Too Large" should be returned.
+1. If a user attempts to upload any file with an extension that is not one of the approved extensions:
+['.jpg', '.png', '.gif', '.svg', '.jpeg']
+
+2. If a user attempts to upload a file that is not an image file, even if it has the correct (fake) extension. 
 
 This applies to both competition entries & profile photo uploads. The following tests were done:
 
-- A profile photo upload attempt during user registration of a photo sized 579KBs.
-- A profile photo update attempt via "Edit Profile" of a photo sized 640KBs.
-- A competition entry upload attempt of a photo sized 628KBs.
+- A profile photo update attempt via the "Update Profile" form of a photo with a .exe extension.
+- A competition entry upload attempt of a photo with a .pdf extension.
+- A competition entry upload attempt of a pages document with a .jpg extension. 
+- A profile photo upload attempt via the user registration form of a photo with a .pages extension.
 
 These were all rejected and the correct status code & error message was returned. __PASS__ 
 
 
 <p align="left">
-  <img src="static/images/testing/413-status-codes.png">
+  <img src="static/images/testing/415-status-codes.png">
 </p>
 
 <p align="left">
-  <img src="static/images/testing/413-error.png">
+  <img src="static/images/testing/415-error.png">
 </p>
 
 
