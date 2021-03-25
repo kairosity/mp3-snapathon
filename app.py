@@ -4,9 +4,37 @@ from flask import (
     redirect, request, session, url_for,
     abort, jsonify)
 from flask_pymongo import PyMongo, pymongo
-from helpers import *
+from helpers import (
+    get_this_weeks_comp_users,
+    filter_users_and_exclude_non_voters,
+    get_range_of_scores,
+    awards_score_requirements,
+    determine_winners,
+    add_points_to_winning_users,
+    add_points_to_users_who_voted_well,
+    get_last_monday_and_images,
+    first_second_third_place_compcat_users,
+    get_images_by_week_and_year,
+    paginated_and_pagination_args,
+    filter_user_search,
+    filter_admin_search,
+    register_new_user,
+    login_user,
+    get_profile_page_photos,
+    get_next_weekday,
+    time_strings_for_template,
+    get_time_remaining_string,
+    get_competition,
+    upload_comp_entry,
+    edit_user_profile,
+    delete_user_account,
+    shuffle_array,
+    edit_this_photo,
+    delete_this_photo,
+    vote_for_photo,
+
+    )
 from flask_paginate import Pagination, get_page_args
-# from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail, Message
 import os
@@ -61,7 +89,7 @@ talisman = Talisman(app,
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
 
 mail_settings = {
     "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
@@ -76,6 +104,7 @@ mail_settings = {
 app.config.update(mail_settings)
 mail = Mail(app)
 mongo = PyMongo(app)
+
 
 def awards():
     '''
@@ -94,7 +123,7 @@ def awards():
     * Calculates & assigns points to each user who voted for a photo that
       came 1st, 2nd or 3rd.
     '''
-    #This needs to change to # datetime.now().strftime("%V%G")
+
     this_week_and_year_formatted = datetime.now().strftime("%V%G")
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
@@ -107,15 +136,15 @@ def awards():
 
     range_of_votes = get_range_of_scores(
         this_week_and_year_formatted, mongo)
- 
+
     first_place_vote_count,\
-    second_place_vote_count,\
-    third_place_vote_count = \
+        second_place_vote_count,\
+        third_place_vote_count = \
         awards_score_requirements(range_of_votes)
 
     first_place_users,\
-    second_place_users,\
-    third_place_users = \
+        second_place_users,\
+        third_place_users = \
         determine_winners(
             first_place_vote_count,
             second_place_vote_count,
@@ -129,18 +158,6 @@ def awards():
         valid_users, this_week_and_year_formatted, mongo)
 
     print("Awards & points have been calculated and awarded.")
-
-# awards()
-# new_comp(mongo)
-
-# Development Testing Functions
-# clear_user_points(mongo)
-# clear_all_awards(mongo)
-# clear_all_photo_votes(mongo)
-
-def test_function():
-    mongo.db.users.update_one({"username": "apschedulertestuser"}, {'$inc': {"user_points": 1}})
-    print("User points incremented")
 
 
 @app.context_processor
@@ -269,8 +286,6 @@ def search():
     if not filtered_photos:
         flash("I'm sorry, but your search did not return any images.")
 
-    #Send the search queries back to the form to populate the inputs?
-
     return render_template("browse_images.html",
                            photos=photos_paginated,
                            pagination=pagination,
@@ -278,6 +293,7 @@ def search():
                            category=category,
                            query=query,
                            awards=awards)
+
 
 @app.route('/admin-search')
 def admin_search():
@@ -301,17 +317,19 @@ def admin_search():
 
                 filtered_users = filter_admin_search(query, mongo)
 
-                pagination, users_paginated = paginated_and_pagination_args(
-                                            filtered_users, 10, "page", "per_page")
+                pagination, users_paginated = \
+                    paginated_and_pagination_args(
+                                    filtered_users, 10, "page", "per_page")
 
                 if not filtered_users:
-                    flash("I'm sorry, but your search did not return any images.")
+                    flash("I'm sorry, but your\
+                         search did not return any images.")
 
                 return render_template("admin.html",
-                                    all_users=users_paginated,
-                                    pagination=pagination,
-                                    source_url=source_url,
-                                    query=query)
+                                       all_users=users_paginated,
+                                       pagination=pagination,
+                                       source_url=source_url,
+                                       query=query)
             else:
                 flash("You do not have permission to access this page!")
                 abort(403)
@@ -345,8 +363,8 @@ def register():
     '''
 
     if request.method == "POST":
-            url = register_new_user(mongo, request, app)
-            return url
+        url = register_new_user(mongo, request, app)
+        return url
     return render_template("register.html")
 
 
@@ -397,8 +415,8 @@ def profile(username):
       vote templates.
     '''
     user_profile_photo, user_photos, \
-    photos_voted_for_objs, award_winners,\
-    user_entry_this_comp = \
+        photos_voted_for_objs, award_winners,\
+        user_entry_this_comp = \
         get_profile_page_photos(username, mongo)
 
     user = mongo.db.users.find_one({"username": username})
@@ -467,7 +485,8 @@ def edit_profile(username):
             if request.method == "POST":
 
                 if 'user' in session:
-                    if session["user"] == username or session["user"] == 'admin':
+                    if session["user"] == \
+                            username or session["user"] == 'admin':
 
                         url = edit_user_profile(
                                     user, username, request, mongo, app)
@@ -577,21 +596,24 @@ def compete():
             this_weeks_entries = list(mongo.db.photos.find(
                                 {"week_and_year": date_time.strftime("%V%G")}))
 
-            pagination, photos_paginated = paginated_and_pagination_args(
-                                        this_weeks_entries, 50, "page", "per_page")
+            pagination, photos_paginated = \
+                paginated_and_pagination_args(
+                                this_weeks_entries, 50, "page", "per_page")
 
             photos_paginated_copy = photos_paginated.copy()
 
             photos_paginated_shuffled = shuffle_array(photos_paginated_copy)
 
-            return render_template("compete.html",
-                                this_weeks_entries=photos_paginated_shuffled,
-                                datetime=date_time,
-                                category=this_weeks_comp_category,
-                                instructions=this_weeks_comp_instructions,
-                                pagination=pagination,
-                                user=current_user,
-                                photo_user_voted_for=photo_user_voted_for)
+            return render_template(
+                "compete.html",
+                this_weeks_entries=photos_paginated_shuffled,
+                datetime=date_time,
+                category=this_weeks_comp_category,
+                instructions=this_weeks_comp_instructions,
+                pagination=pagination,
+                user=current_user,
+                photo_user_voted_for=photo_user_voted_for
+                )
 
         else:
             flash("You must be logged in to view the competition page.")
@@ -672,7 +694,8 @@ def edit_photo(filename):
         if 'user' in session:
             photo = mongo.db.photos.find_one({"filename": filename})
             try:
-                user = mongo.db.users.find_one({"username": photo["created_by"]})
+                user = mongo.db.users.find_one(
+                    {"username": photo["created_by"]})
             except TypeError:
                 flash("Sorry, but that photo cannot be found.")
                 abort(404)
@@ -747,7 +770,9 @@ def admin():
 
                 pagination, users_paginated = paginated_and_pagination_args(
                                    all_users, 30, "page", "per_page")
-                return render_template('admin.html', all_users=users_paginated, pagination=pagination)
+                return render_template(
+                    'admin.html',
+                    all_users=users_paginated, pagination=pagination)
 
             else:
                 flash("You do not have permission to access this page!")
@@ -769,7 +794,9 @@ def admin_delete_user_account(username):
                 source_url = request.referrer
                 user = mongo.db.users.find_one({"username": username})
                 if user != None:
-                    return render_template('admin-delete-user-account.html', user=user, username=username, source_url=source_url)
+                    return render_template(
+                        'admin-delete-user-account.html',
+                        user=user, username=username, source_url=source_url)
                 else:
                     flash("Sorry, but that user was not found on the system.")
                     abort(404)
@@ -852,11 +879,10 @@ def request_timeout(e):
     return render_template('error.html', error=error, error_msg=error_msg), 408
 
 
-#Check this works. This works - it just looks really boring. 
+# Check this works. This works - it just looks really boring.
 # @app.errorhandler(Exception)
 # def all_other_exceptions(e):
 #     return f"Something went wrong! Specifically: {e}"
-
 
 
 # SET DEBUG TO FALSE BEFORE DEPLOYMENT

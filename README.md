@@ -2,8 +2,9 @@
 ## Shoot, Compete, Rate, Repeat!
 ## Code Institute Milestone Project 3
 
-Snapathon seeks to gamify photography. It is a community-led photo-sharing application that enhances the user experience with friendly competition.
-Users register accounts and then they enter one competition a week on a particular theme. Every user that enters also has one vote to cast for a photo (not theirs).
+Snapathon gamifies photography. It is a community-led photo-sharing application that enhances the user experience with friendly competition.
+Users register accounts and then they enter one competition a week on a particular theme. Every user that enters the competition can then vote for 
+one other photo (not their own) to win. At the end of the week, votes are tallied and awards distributed automatically.
 
 <a href="https://snapathon-comp.herokuapp.com/"><img src="static/images/snapathon-multi-device-view.png"></a>
 
@@ -2741,7 +2742,7 @@ saved to the database. This function transforms any dodgy filenames into flat sa
 
 ## 3. Approved File Extensions
 
-The application limits the type of files that can be uploaded to a pre-approved subset. This was achieved by using a config instruction: ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg']``` Which was then referenced in all methods dealing with uploaded files: the compete(), the edit_profile() and the register() functions.
+The application limits the type of files that can be uploaded to a pre-approved subset. This was achieved by using a config instruction: ```app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']``` Which was then referenced in all methods dealing with uploaded files: the compete(), the edit_profile() and the register() functions.
 
 If a user attempts to upload any other extension type, the application throws a 415 error:
 
@@ -2843,9 +2844,17 @@ __[Click here to read all testing documentation.](testing.md)__
 
 ## Expanded upload functionality
 
-Uploaded images must be kept below 500KB, currently the onus is on the user to resize their images to fit that specification. For future versions of the app
+Uploaded images must be kept below 560KB, currently the onus is on the user to resize their images to fit that specification. For future versions of the app
 I would like to allow the users to upload any size image they want, and the application will resize the image before it is saved to the database. This will allow
 for greater flexibility and improved UX when it comes to using mobile to upload images, as resizing on mobile is still not straightforward.
+
+## New Image File Types & Image Sizing
+
+There is currently only limited functionality if a user wants to upload images from their phones. Firstly, most phones have large image sizes (well above the 560KB) threshold, and limited abilities to resize those images. Users would have to download a specific app to resize images. So the files will be rejected on that basis. Secondly, new image formats such as the Apple iOS 11 HEIC file type, doesn't yet have good Python compatibility. The imghdr method for example, does not yet recognise that file type as an image. 
+
+So currently, images are best uploaded via desktop, so that resizing and file formats are more easily managed, but for future iterations of the application, greater ease
+of use for mobile users definitely needs to be implemented re: file types and sizing. 
+
 
 ## Offensive Images Filter 
 
@@ -3453,7 +3462,7 @@ Thanks to tutor support for helping out with a few sticklers.
 
 Thanks to the Code Institute Slack Community for being a sound bunch.
 
-Thanks to my Mother for yet again proof-reading a long document she has no interest in.
+Thanks to my Mother for yet again, proof-reading a long document she has no interest in.
 
 Thanks to my Code Institute mentor [Oluwafemi Medale](https://github.com/omedale) for his invaluable insight and instruction.
 

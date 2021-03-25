@@ -92,3 +92,7 @@ else:
     #             {"filename": entry["filename"]})
     #         if photo not in third_place_photos:
     #             third_place_photos.append(photo)
+
+    def test_function():
+    mongo.db.users.update_one({"username": "apschedulertestuser"}, {'$inc': {"user_points": 1}})
+    print("User points incremented")
