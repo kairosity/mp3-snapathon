@@ -1,6 +1,6 @@
 /* Hover.css -- https://ianlunn.github.io/Hover/ */
 
-/* Underline From Right */
+/*-------------------------- Underline From Right */
 .hvr-underline-from-right {
     display: inline-block;
     vertical-align: middle;
@@ -30,7 +30,7 @@
     left: 10%;
   }
 
-  /* Sweep To Right */
+ /*-------------------------- Sweep To Right */
 .hvr-sweep-to-right {
     display: inline-block;
     vertical-align: middle;
@@ -71,7 +71,7 @@
     transform: scaleX(1);
   }
 
-/* Icon Spin */
+/*-------------------------- Icon Spin */
 .hvr-icon-spin {
   display: inline-block;
   vertical-align: middle;
@@ -91,7 +91,7 @@
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
 }
-/* Icon Pulse Grow */
+/*-------------------------- Icon Pulse Grow */
 @-webkit-keyframes hvr-icon-pulse-grow {
   to {
     -webkit-transform: scale(1.3);
@@ -104,7 +104,7 @@
     transform: scale(1.3);
   }
 }
-/* Icon Grow */
+/*-------------------------- Icon Grow */
 .hvr-icon-grow {
   display: inline-block;
   vertical-align: middle;
@@ -128,7 +128,7 @@
   -webkit-transform: scale(1.3) translateZ(0);
   transform: scale(1.3) translateZ(0);
 }
-/* Icon Buzz */
+/*-------------------------- Icon Buzz */
 @-webkit-keyframes hvr-icon-buzz {
   50% {
     -webkit-transform: translateX(3px) rotate(2deg);
@@ -172,7 +172,7 @@
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
-/* Icon Down */
+/*-------------------------- Icon Down */
 @-webkit-keyframes hvr-icon-down {
   0%,
 	50%,
@@ -199,7 +199,7 @@
     transform: translateY(6px);
   }
 }
-/* Icon Down */
+/*-------------------------- Icon Down */
 .hvr-icon-down {
   display: inline-block;
   vertical-align: middle;
@@ -219,7 +219,7 @@
   -webkit-animation-timing-function: ease-out;
   animation-timing-function: ease-out;
 }
-/* Grow Shadow */
+/*-------------------------- Grow Shadow */
 .hvr-grow-shadow {
   display: inline-block;
   vertical-align: middle;
@@ -236,7 +236,7 @@
   -webkit-transform: scale(1.02);
   transform: scale(1.02);
 }
-/* Underline From Center */
+/*-------------------------- Underline From Center */
 .hvr-underline-from-center {
   display: inline-block;
   vertical-align: middle;
@@ -266,7 +266,7 @@
   left: 0;
   right: 0;
 }
-/* Icon Drop */
+/*-------------------------- Icon Drop */
 @-webkit-keyframes hvr-icon-drop {
   0% {
     opacity: 0;
@@ -295,7 +295,7 @@
     opacity: 1;
   }
 }
-/* Icon Drop */
+/*-------------------------- Icon Drop */
 .hvr-icon-drop {
   display: inline-block;
   vertical-align: middle;
@@ -324,7 +324,7 @@
   -webkit-animation-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
   animation-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
-/* Icon Pop */
+/*-------------------------- Icon Pop */
 @-webkit-keyframes hvr-icon-pop {
   50% {
     -webkit-transform: scale(1.5);
@@ -366,7 +366,7 @@
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
 }
-/* Icon Back */
+/*-------------------------- Icon Back */
 .hvr-icon-back {
   display: inline-block;
   vertical-align: middle;
@@ -390,6 +390,3 @@
   -webkit-transform: translateX(-4px);
   transform: translateX(-4px);
 }
-
-
-

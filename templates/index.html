@@ -212,7 +212,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email_of_sender" name="email_of_sender" type="text" class="validate"  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" minlength="4" maxlength="65" required>
+                        <input id="email_of_sender" name="email_of_sender" type="text" class="validate" value="{{ user_email }}"  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" minlength="4" maxlength="65" required>
                         <label for="email_of_sender">Email Address:</label>
                     </div>
                     

@@ -450,21 +450,27 @@ enters their current password incorrectly.
 - __*"You must enter your current password to change your password. Please try again."*__ - When a user trying to edit their profile fails to enter their current password.
 - __*"Incorrect password. Please try again."*__ - When a user trying to delete their account either: enters an incorrect password or their confirmation password is incorrect.
 - __*"You must enter your password twice in order to delete your account. This is a security measure."*__ - When a user trying to delete their account fails to enter their password.
-- __*"You must be logged in to delete your account, and obviously,you are not allowed to delete someone else's account!"*__ - When a user tries (using url) to delete someone else's account
+- __*"To delete your account, please first login, then click the 'edit profile button' & then select 'delete account'."*__ - When a user tries (using url) to delete someone else's account
 or their own account, but without being logged in.
+- __*"You cannot delete another user's account!"*__ - When a logged in user tries to delete another user's account via url.
+- __*"You must be logged in to view the competition page."*__ - When a guest user tries to navigate to /compete.
 - __*"Sorry, but you don't have any votes to use. You've either already voted, or you did not enter this week's competition."*__ - When a user tries to vote without having
 entered the competition or having already voted.
 - __*"Sorry, but you cannot vote for your own photo... obviously."*__ - When a user tries to vote for their own image.
 - __*"I'm sorry, but your search did not return any images."*__ - When a user searches for a filtered selection of photos on the browse page, but there are no results.
-- __*"You cannot edit someone else's account!"*__ - When a user tries via url to edit another user's account.
-- __*"You must be logged in to edit your account, and you are not allowed to edit someone else's account!"*__ - When a user either tries to edit theirs or another
-user's account without being logged in (via url).
+- __*"You cannot edit another user's profile!"*__ - When a user tries via url to edit another user's account.
+- __*"You must be logged in to edit your profile!"*__ - When a user either tries to edit an account without being logged in.
 - __*"I'm sorry, but you've already entered an image in this week's competition!"*__ - If a user tries to enter more than one image in the competition.
-- __*"You cannot edit another user's photo. Edit your own!"*__ - If a user is logged in and tries to edit another user's photo (via url).
+- __*"You cannot edit another user's photo."*__ - If a user is logged in and tries to edit another user's photo (via url).
 - __*"You need to be logged in to edit photos."*__ - If a user tries to edit a photo (via url) without being logged in.
 - __*"You may not delete another user's photo."*__ - If a user tries to delete another user's photo (via url).
 - __*"Sorry, you must be logged in to delete a photograph."*__ - If a user tries to delete a photo without being logged in.
 - __*"You must be logged in to vote."*__ - If a user tries to vote without being logged in.
+- __*"You do not have permission to access this page!"*__ - If a user is trying to access a forbidden page.
+- __*"Apologies, but your email could not be sent. Please try again later."*__ - If an error is thrown when the user tries to send an email via the contact form.
+- __*"Sorry, but that photo cannot be found."*__ - If a user enters a photo filename in the url that does not exist.
+- __*"Sorry, but that user was not found on the system."*__ - If an admin user searches for a user that is not registered. 
+
 
 </details>
 
@@ -501,9 +507,26 @@ When a user has voted in the competition, a number of changes occur to cement th
 3. The vote buttons disappear.
 4. There is an overlay on the image voted for - that says "You voted for this image." 
 
-#### 404 error pages 
-There are also specific error pages covering all manner of errors the user might encounter. The pages all have a clear message as to why an error was thrown, and 
-a link to bring the user back to safety.
+#### Error pages 
+
+There are also a number of specific error pages covering the most common errors a user might encounter. The pages all have a clear message as to why an error was thrown,
+they are designed in the same style as the rest of the application and they contain a link to bring the user back to safety.
+
+Errors specifically catered for include: 403, 404, 408, 413, 415, 500. 
+
+All other errors are catered for as well, albeit with a slightly less personalized message.
+
+Here is an example of a 413 error page:
+
+<p align="center">
+  <img src="static/images/features/413-error.png">
+</p>
+
+For comparison here is the same error, but delivered without the custom message:
+
+<p align="center">
+  <img src="static/images/features/413-not-custom-error.png">
+</p>
 
 
 ## Information Architecture
@@ -813,7 +836,9 @@ motivated and enthusiastic guest users.
 #### Logged in user
 - The login & register buttons are not present for logged in users, instead they see a tiny leaf icon and a 
 personal message saying ```"welcome username"```
-- The rest of the page is the same *except* that the "Register to get started today!" link cta is not present.
+- The rest of the page is mostly the same *except*:
+1. The "Register to get started today!" link cta is not present.
+2. The Email Address Input field on the contact form is pre-filled with the user's email address.
 
 <p align="center">
     <img src="static/images/features/home-user.png">
@@ -1184,10 +1209,10 @@ page thanking them for entering and reminding them when the voting opens, as wel
 - There are various input validations on the form itself, which are detailed in the [testing.md](testing.md) doc.
 - When the form is submitted if the file extension is not one of the approved image extensions (.svg, .jpg, .jpeg, .gif, .png)
 a 415 error will be thrown. 
-- If the image is larger than 549KB a 413 error will be thrown. 
+- If the image is larger than 560KB a 413 error will be thrown. 
 - The image filename is secured using werkzeug.utils. 
 - The form itself contains a hidden csrf token from flask_wtf to protect against cross site request forgery attacks.
-- The file contents are themselves also validated (not yet - do this!)
+- The file contents are themselves also validated.
 </details>
 
 <br>

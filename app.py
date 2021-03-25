@@ -190,9 +190,16 @@ def home():
                 flash("Email Sent!")
                 return redirect(url_for('home'))
         except Exception:
+            flash("Apologies, but your email could not be sent. Please try again later.")
             abort(500)
 
-    return render_template("index.html")
+    if 'user' in session:
+        userToTarget = mongo.db.users.find_one({"username": session["user"]})
+        user_email = userToTarget["email"]
+    else:
+        user_email = ""
+
+    return render_template("index.html", user_email=user_email)
 
 
 @app.route("/winners")
@@ -515,7 +522,7 @@ def delete_account(username):
                 return url
 
             if request.method == "GET":
-                flash("To delete your account, please click the \
+                flash("To delete your account, please first login, then click the \
                     'edit profile button' & then select 'delete account'.")
                 return redirect(url_for('profile', username=session["user"]))
         else:
@@ -823,22 +830,6 @@ def logout():
         return redirect(url_for("login"))
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    error = 404
-    error_msg = "I'm sorry, we've searched everywhere, \
-    but the page you are looking for does not exist."
-    return render_template('error.html', error=error, error_msg=error_msg), 404
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    error = 500
-    error_msg = "We're so sorry! There's been an internal server error.\
-    It's not you, it's definitely us, but maybe try again later?"
-    return render_template('error.html', error=error, error_msg=error_msg), 500
-
-
 @app.errorhandler(403)
 def forbidden_error(e):
     error = 403
@@ -847,13 +838,30 @@ def forbidden_error(e):
     return render_template('error.html', error=error, error_msg=error_msg), 403
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    error = 404
+    error_msg = "I'm sorry, we've searched everywhere, \
+    but the page you are looking for does not exist."
+    return render_template('error.html', error=error, error_msg=error_msg), 404
+
+
+@app.errorhandler(408)
+def request_timeout(e):
+    error = 408
+    error_msg = "Sorry, but the server timed out waiting for the request.\
+    You might try again."
+    return render_template('error.html', error=error, error_msg=error_msg), 408
+
+
 @app.errorhandler(413)
 def payload_too_large(e):
     error = 413
     error_msg = "Sorry, but the file you're trying to upload is too large.\
     If you are entering the competition, please have a look at the file size\
     guidelines in the rules section. If you are uploading a profile pic,\
-    please choose one that is under 560KB. Thanks!"
+    or a competition entry, please resize your image so that it is under\
+    560KB. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 413
 
 
@@ -865,13 +873,12 @@ def unsupported_media_type(e):
     return render_template('error.html', error=error, error_msg=error_msg), 415
 
 
-@app.errorhandler(408)
-def request_timeout(e):
-    error = 408
-    error_msg = "Sorry, but the server timed out waiting for the request.\
-    You might try again."
-    return render_template('error.html', error=error, error_msg=error_msg), 408
-
+@app.errorhandler(500)
+def internal_server_error(e):
+    error = 500
+    error_msg = "We're so sorry! There's been an internal server error.\
+    It's not you, it's definitely us, but maybe try again later?"
+    return render_template('error.html', error=error, error_msg=error_msg), 500
 
 
 @app.errorhandler(Exception)
