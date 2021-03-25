@@ -1,6 +1,6 @@
 
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     redirect, request, session, url_for,
     abort, jsonify)
 from flask_pymongo import PyMongo, pymongo
@@ -31,22 +31,15 @@ from helpers import (
     shuffle_array,
     edit_this_photo,
     delete_this_photo,
-    vote_for_photo,
-
+    vote_for_photo
     )
-from flask_paginate import Pagination, get_page_args
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail, Message
 import os
-from bson.objectid import ObjectId
-from apscheduler.schedulers.background import BackgroundScheduler
-from datetime import datetime, date, time
+from datetime import datetime
 from datetime import timedelta
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge, ServiceUnavailable, HTTPException
+from werkzeug.exceptions import HTTPException
 from flask_talisman import Talisman
-import time
 if os.path.exists("env.py"):
     import env
 
@@ -89,7 +82,8 @@ talisman = Talisman(app,
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
+app.config['UPLOAD_EXTENSIONS'] = \
+    ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
 
 mail_settings = {
     "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
@@ -157,8 +151,6 @@ def awards():
     add_points_to_users_who_voted_well(
         valid_users, this_week_and_year_formatted, mongo)
 
-    print("Awards & points have been calculated and awarded.")
-
 
 @app.context_processor
 def inject_datetime():
@@ -187,15 +179,18 @@ def home():
     * POST method sends SNAPATHON an email from the user.
     '''
     if request.method == "POST":
-        with app.app_context():
-            msg = Message(subject="New Email From Contact Form")
-            msg.sender = request.form.get("email_of_sender")
-            msg.recipients = [os.environ.get('MAIL_USERNAME')]
-            message = request.form.get("message")
-            msg.body = f"Email From: {msg.sender} \nMessage: {message}"
-            mail.send(msg)
-            flash("Email Sent!")
-            return redirect(url_for('home'))
+        try:
+            with app.app_context():
+                msg = Message(subject="New Email From Contact Form")
+                msg.sender = request.form.get("email_of_sender")
+                msg.recipients = [os.environ.get('MAIL_USERNAME')]
+                message = request.form.get("message")
+                msg.body = f"Email From: {msg.sender} \nMessage: {message}"
+                mail.send(msg)
+                flash("Email Sent!")
+                return redirect(url_for('home'))
+        except Exception:
+            abort(500)
 
     return render_template("index.html")
 
@@ -830,7 +825,6 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    print(e)
     error = 404
     error_msg = "I'm sorry, we've searched everywhere, \
     but the page you are looking for does not exist."
@@ -879,10 +873,11 @@ def request_timeout(e):
     return render_template('error.html', error=error, error_msg=error_msg), 408
 
 
-# Check this works. This works - it just looks really boring.
-# @app.errorhandler(Exception)
-# def all_other_exceptions(e):
-#     return f"Something went wrong! Specifically: {e}"
+
+@app.errorhandler(Exception)
+def all_other_exceptions(e):
+    error_msg = "I'm sorry but the above error has occured."
+    return render_template('error.html', error=e, error_msg=error_msg)
 
 
 # SET DEBUG TO FALSE BEFORE DEPLOYMENT

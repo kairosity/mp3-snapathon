@@ -1,8 +1,7 @@
 from flask import (
-    Flask, flash, render_template,
+    flash, render_template,
     redirect, request, session, url_for,
     abort)
-from flask_pymongo import PyMongo, pymongo
 from flask_paginate import Pagination, get_page_args
 import imghdr
 import os
@@ -11,41 +10,50 @@ from datetime import timedelta
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge, UnsupportedMediaType
-
-if os.path.exists("env.py"):
-    import env
-
 
 # Constant Variables
 competitions = [
     {
         "category": "portraiture",
-        "instructions": "Enter your portraits now! These can be of animals or humans and can be close up or full length. They should communicate something substantial about the subject."
+        "instructions": "Enter your portraits now! \
+            These can be of animals or humans and can be \
+                close up or full length.They should communicate\
+                     something substantial about the subject."
     },
     {
         "category": "landscape",
-        "instructions": "Enter your lanscapes now! These should be primarily focused on the natural world. No city-scapes. Focus on delivering images with great lighting in interesting locations."
+        "instructions": "Enter your lanscapes now!\
+             These should be primarily focused on the natural world.\
+                  No city-scapes. Focus on delivering images with great\
+                       lighting in interesting locations."
     },
     {
         "category": "architecture",
-        "instructions": "Enter your architectural photos now! Interesting angles and great composition is key here."
+        "instructions": "Enter your architectural photos now!\
+             Interesting angles and great composition is key here."
     },
     {
         "category": "wildlife",
-        "instructions": "Enter your wildlife and nature photos now. Flora OR fauna are acceptable. Capture amazing images of the natural world at its most spectacular."
+        "instructions": "Enter your wildlife and nature photos now!\
+             Flora OR fauna are acceptable. Capture amazing images of\
+                  the natural world at its most spectacular."
     },
     {
         "category": "street",
-        "instructions": "Enter your street photography now. Encounters and imagery from urban jungles."
+        "instructions": "Enter your street photography now!\
+             Encounters and imagery from urban jungles."
     },
     {
         "category": "monochrome",
-        "instructions": "Enter your monochrome photography now. Any subject, any place, black and white imagery only. PLEASE no sepia tones!"
+        "instructions": "Enter your monochrome photography now.\
+             Any subject, any place, black and white imagery only.\
+                  PLEASE no sepia tones!"
     },
     {
         "category": "event",
-        "instructions": "Enter your event photography now. Weddings, baptisms, concerts, theatre etc.. If it has guests, it's an event!"
+        "instructions": "Enter your event photography now!\
+             Weddings, baptisms, concerts, theatre etc.. If it\
+                  has guests, it's an event!"
     }
 ]
 
@@ -72,7 +80,6 @@ def clear_user_points(database_var):
         database_var.db.users.update_one(
             {"username": user["username"]},
             {'$set': {"user_points": 0}})
-    print("All user points zeroed")
 
 
 def clear_all_awards(database_var):
@@ -92,7 +99,6 @@ def clear_all_awards(database_var):
         database_var.db.photos.update_one(
             {"filename": photo["filename"]},
             {'$set': {"awards": None}})
-    print("No photo has any awards now.")
 
 
 def clear_all_photo_votes(database_var):
@@ -111,7 +117,6 @@ def clear_all_photo_votes(database_var):
         database_var.db.photos.update_one(
             {"filename": photo["filename"]},
             {'$set': {"photo_votes": 0}})
-    print("No photo has any votes now.")
 
 
 def delete_collection(database_var):
@@ -150,7 +155,6 @@ def new_comp(database_var):
         database_var.db.users.update_one(
             {"username": user["username"]},
             {'$set': {"can_enter": True}})
-    print("All users can now enter a new image in competition")
 
 
 # awards() Helper Functions:
@@ -212,7 +216,6 @@ def filter_users_and_exclude_non_voters(
     for user in array_of_users:
         if user["votes_to_use"] > 0:
             non_voters.append(user)
-            print(f"This week's non-votes are:{non_voters}")
         else:
             valid_users.append(user)
 
@@ -630,10 +633,10 @@ def filter_admin_search(
     if keyword_search:
         full_query["$text"] = {"$search": full_search}
 
-
     filtered_users = list(database_var.db.users.find(full_query))
 
     return filtered_users
+
 
 def validate_image_type(stream):
     '''
@@ -643,9 +646,9 @@ def validate_image_type(stream):
     1. stream(data): A particular stream of data.
 
     \n Returns:
-    * If the data read matches one of a selection of image file types 
+    * If the data read matches one of a selection of image file types
     then the function returns the file extension.
-    * If the data does not match a selection of image file types then 
+    * If the data does not match a selection of image file types then
     the function returns None.
     '''
     header = stream.read(512)
@@ -655,16 +658,17 @@ def validate_image_type(stream):
         return None
     return '.' + (format if format != 'jpeg' else 'jpg')
 
+
 def check_file_size(file, size_limit_in_bytes):
     '''
     * This checks the size of the uploaded file against a set limit.
 
     \n Args:
     1. file (obj): A file of some form of data.
-    2. size_limit_in_bytes (int): The maximum fize size limit in bytes. 
+    2. size_limit_in_bytes (int): The maximum fize size limit in bytes.
 
     \n Returns:
-    * If the file size is greater than the limit set, this function returns 
+    * If the file size is greater than the limit set, this function returns
     a 413 error: "Payload too large".
     * If the file size is under the limit this function returns True.
     '''
@@ -696,7 +700,7 @@ def save_photo(request, database_var, name_of_image_from_form, app):
     file_extension = os.path.splitext(photo.filename)[1]
 
     if file_extension not in app.config['UPLOAD_EXTENSIONS'] or \
-        file_extension != validate_image_type(photo.stream): 
+            file_extension != validate_image_type(photo.stream):
         abort(415)
 
     check_file_size(photo, 560000)
@@ -729,7 +733,7 @@ def register_new_user(database_var, request, app):
     \n Returns:
     * If successful this will save the new user's data to the db and
       render the new user's profile page.
-    * It also logs the user in and  starts a new session with that 
+    * It also logs the user in and  starts a new session with that
       user's username as the session variable's value.
     * If unsuccessful this will flash a message detailing the issue and
       reload the register template.
@@ -919,15 +923,15 @@ def get_next_weekday(startdate, weekday):
 
 def get_time_remaining_string(timedelta):
     '''
-    * This returns a string describing an amount of time in days, 
+    * This returns a string describing an amount of time in days,
       hours and minutes.
-    
+
     \n Args:
-    1. timedelta (datetime.timedelta): Describes an amount of time. 
+    1. timedelta (datetime.timedelta): Describes an amount of time.
 
     \n Returns:
-    * A string in English made from the timedelta describing the 
-      time in the format: 'x' days, 'y' hours and 'z' minutes. 
+    * A string in English made from the timedelta describing the
+      time in the format: 'x' days, 'y' hours and 'z' minutes.
     '''
     days = timedelta.days
     timedelta_string = str(timedelta)
@@ -977,8 +981,8 @@ def time_strings_for_template(
 def edit_user_profile(user, username, request, database_var, app):
     '''
     * When successful this updates the user information. When not successful
-      it flashes a message to the user explaining why and redirects them, either
-      to an error page, or it reloads the edit_profile template.
+      it flashes a message to the user explaining why and redirects them,\
+      either to an error page, or it reloads the edit_profile template.
 
     \n Args:
     1. user (obj): The user object from the db
@@ -1008,13 +1012,13 @@ def edit_user_profile(user, username, request, database_var, app):
     form_new_password_confirmation = \
         request.form.get("new_password_confirmation")
 
-
     # If the user has changed their username
     if form_username != user["username"]:
         existing_username = database_var.db.users.find_one(
                             {"username": form_username})
         if existing_username:
-            flash("That username is already taken, please choose a different one.")
+            flash("That username is already taken, please choose a\
+                 different one.")
             url = redirect(url_for('edit_profile',
                            user=user, username=username))
             return url
@@ -1023,7 +1027,7 @@ def edit_user_profile(user, username, request, database_var, app):
             update_photos["created_by"] = form_username
             update_profile_photo_ref["user"] = form_username
 
-    if form_email != user["email"]: #user_to_edit
+    if form_email != user["email"]:
         existing_email = database_var.db.users.find_one(
                         {"email": form_email})
         if existing_email:
@@ -1037,11 +1041,11 @@ def edit_user_profile(user, username, request, database_var, app):
 
     existing_profile_pic = user["profile_photo"]
 
-    # 1. If the delete hidden field is activated && no new file is uploaded. 
-    if form_del_profile_pic == "del-uploaded-profile-pic" and form_profile_pic.filename == "":
+    # 1. If the delete hidden field is activated && no new file is uploaded.
+    if form_del_profile_pic == "del-uploaded-profile-pic" and\
+            form_profile_pic.filename == "":
 
         # delete user's profile pic.
-
         if existing_profile_pic is not None:
 
             file_to_delete = database_var.db.fs.files.find_one(
@@ -1061,7 +1065,6 @@ def edit_user_profile(user, username, request, database_var, app):
             database_var.db.users.update_one(
                                     {"username": username},
                                     {'$set': {"profile_photo": None}})
-
 
     # If there is a file to upload and a current profile pic.
     elif form_profile_pic.filename != "" and existing_profile_pic is not None:
@@ -1101,7 +1104,8 @@ def edit_user_profile(user, username, request, database_var, app):
         for chunk in chunks_to_delete:
             database_var.db.fs.chunks.delete_one(chunk)
 
-    # If there is no existing profile photo but there IS a new photo to be uploaded.
+    # If there is no existing profile photo but there...
+    # ...IS a new photo to be uploaded.
     elif existing_profile_pic is None and form_profile_pic.filename != "":
 
         file_id, new_filename = save_photo(
@@ -1152,7 +1156,8 @@ def edit_user_profile(user, username, request, database_var, app):
                            'edit_profile', user=user, username=form_username))
             return url
 
-    if (form_new_password and not form_current_password) or (form_new_password_confirmation and not form_current_password):
+    if (form_new_password and not form_current_password) or \
+            (form_new_password_confirmation and not form_current_password):
         flash("You must enter your current password to change your password.\
             Please try again.")
         url = redirect(url_for(
@@ -1164,7 +1169,7 @@ def edit_user_profile(user, username, request, database_var, app):
         database_var.db.photos.update_many(
             {"created_by": username}, {"$set": update_photos})
 
-    #updating profile pic to being created by new username 
+    # Updating profile pic to being created by new username
     if update_profile_photo_ref:
         database_var.db.photos.update_many(
             {"user": username}, {"$set": update_profile_photo_ref})
@@ -1181,8 +1186,6 @@ def edit_user_profile(user, username, request, database_var, app):
         else:
             username_to_query = user["username"]
 
-
-        # problematic - need a way to reference the user here?? Does the original user still work? No, still has the old username but with updated deets? 
         user = database_var.db.users.find_one(
                                      {"username": username_to_query})
         user_photos = list(database_var.db.photos.find(
@@ -1229,7 +1232,8 @@ def edit_user_profile(user, username, request, database_var, app):
     return url
 
 
-def del_user_account2(password, password_confirmation, user_deleting, user_to_delete, database_var):
+def del_user_account2(password, password_confirmation,
+                      user_deleting, user_to_delete, database_var):
 
     if password:
         if check_password_hash(user_deleting["password"], password):
@@ -1270,12 +1274,14 @@ def del_user_account2(password, password_confirmation, user_deleting, user_to_de
 
                 if user_deleting["username"] == 'admin':
                     user_deleted_username = user_to_delete["username"]
-                    message = f"{user_deleted_username}'s account & photos have been deleted successfully!"
+                    message = f"{user_deleted_username}'s account &\
+                         photos have been deleted successfully!"
                     url = redirect(url_for('admin'))
                 else:
                     # 2. Pop the session.
                     session.pop("user", None)
-                    message = "Your account & photos have been deleted successfully!"
+                    message = "Your account & photos have \
+                        been deleted successfully!"
                     url = redirect(url_for('home'))
 
                 return message, url
@@ -1283,18 +1289,22 @@ def del_user_account2(password, password_confirmation, user_deleting, user_to_de
             elif user_deleting["username"] == 'admin':
                 message = "You must enter your admin password correctly twice in \
                     order to delete an account. This is a security measure."
-                url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+                url = redirect(url_for(
+                    'admin_user_details', username=user_to_delete["username"]))
 
             else:
                 message = "You must enter your password correctly twice in order to delete your\
                       account. This is a security measure."
-                url = redirect(url_for('edit_profile', username=user_deleting["username"]))
+                url = redirect(url_for(
+                    'edit_profile', username=user_deleting["username"]))
 
             return message, url
 
         elif user_deleting["username"] == 'admin':
-                message = "Incorrect admin password, please try again. This is a security measure."
-                url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+            message = "Incorrect admin password, please\
+                 try again. This is a security measure."
+            url = redirect(url_for(
+                'admin_user_details', username=user_to_delete["username"]))
 
         else:
             message = "Incorrect password. Please try again."
@@ -1305,7 +1315,8 @@ def del_user_account2(password, password_confirmation, user_deleting, user_to_de
 
     elif user_deleting["username"] == 'admin':
         message = "You must enter your admin password to delete an account."
-        url = redirect(url_for('admin_user_details', username=user_to_delete["username"]))
+        url = redirect(url_for(
+            'admin_user_details', username=user_to_delete["username"]))
     else:
         message = "You must enter your password to delete your account."
         url = redirect(url_for(
@@ -1316,8 +1327,8 @@ def del_user_account2(password, password_confirmation, user_deleting, user_to_de
 
 def delete_user_account(username, database_var, request):
     '''
-    * This deletes all traces of a user's account including the user details and all their
-    images, both entries & profile photo.
+    * This deletes all traces of a user's account including
+    the user details and all their images, both entries & profile photo.
 
     \n Args:
     1. username (str): The username of the account to be deleted.
@@ -1347,7 +1358,9 @@ def delete_user_account(username, database_var, request):
 
         if session["user"] == username:
 
-            message, url = del_user_account2(form_password, form_password_confirmation, user, user, database_var)
+            message, url = del_user_account2(
+                form_password, form_password_confirmation,
+                user, user, database_var)
 
             flash(message)
             return url
@@ -1355,8 +1368,9 @@ def delete_user_account(username, database_var, request):
         elif session["user"] == 'admin':
 
             admin_user = database_var.db.users.find_one({"username": "admin"})
-            message, url = del_user_account2(form_password, form_password_confirmation, admin_user, user, database_var)
-
+            message, url = del_user_account2(
+                form_password, form_password_confirmation,
+                admin_user, user, database_var)
 
             flash(message)
             return url
@@ -1484,7 +1498,7 @@ def edit_this_photo(request, database_var, photo_filename, photo_obj):
     database_var.db.photos.update(
         {"_id": photo_obj["_id"]}, {"$set": edited_entry})
     flash("Photo details edited successfully!")
-    url =redirect(url_for("get_photo", filename=photo_filename))
+    url = redirect(url_for("get_photo", filename=photo_filename))
     return url
 
 
@@ -1586,12 +1600,12 @@ def vote_for_photo(database_var, photo_to_vote_for):
 
     else:
         database_var.db.users.update({"username": session["user"]},
-                                {'$inc':{"votes_to_use": -1}})
+                                     {'$inc': {"votes_to_use": -1}})
 
         database_var.db.users.update(
-                            {"username": session["user"]},
-                            {"$push":
-                            {"photos_voted_for": photo_to_vote_for["_id"]}})
+                {"username": session["user"]},
+                {"$push":
+                    {"photos_voted_for": photo_to_vote_for["_id"]}})
 
         database_var.db.photos.update_one(
                 {"_id": photo_to_vote_for["_id"]},
@@ -1605,4 +1619,3 @@ def vote_for_photo(database_var, photo_to_vote_for):
 def shuffle_array(arr):
     random.shuffle(arr)
     return arr
-

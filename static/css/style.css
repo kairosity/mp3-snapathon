@@ -3,8 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
 @import 'effects-from-hover.css';
 
-/* Variables */
-
+/*-------------------------- Variables */
 :root {
     --main-heading-font: "Anton", sans-serif;
     --subheading-font: "Raleway", sans-serif;
@@ -15,8 +14,7 @@
     --dark-text-color: #212121;
     --dark-accent-colour: #E0AC00;
 }
-/* Universal Styles */
-
+/*-------------------------- Universal Styles */
 #page-container {
   position: relative;
   min-height: calc(100vh - 190px)
@@ -98,7 +96,7 @@ ul.dropdown-content.select-dropdown li span:hover{
 a.text-link{
     color: var(--accent-colour);
 }
-/*------------- Skip To Main: Accessibility for keyboard users. */
+/*-------------------------- Skip To Main: Accessibility for keyboard users. */
 .skip-to-main a{
 	color: var(--pure-white);
 	text-transform: uppercase;
@@ -109,13 +107,13 @@ a.text-link{
 .skip-to-main a:focus {
 	color: var(--accent-colour);
 }
-/* Overriding Materialize Character Counter */
+/*-------------------------- Overriding Materialize Character Counter */
 
 .character-counter {
     color: var(--accent-colour);
 }
 
-/* Overriding Materialize form label colours */
+/*-------------------------- Overriding Materialize form label colours */
 /* label color */
 .input-field label,
 .input-field label.active {
@@ -135,7 +133,7 @@ a.text-link{
     color: var(--accent-colour);
 }
 
-/* Pagination */
+/*-------------------------- Pagination */
 .pagination-page-info{
     color: var(--main-text-colour);
 }
@@ -149,7 +147,7 @@ a.text-link{
     color: var(--main-text-colour);
 }
 
-/* Navigation */
+/*-------------------------- Navigation */
 
 nav ul.navbar-nav a,
 ul.mobile-nav-ul a {
@@ -180,7 +178,7 @@ nav i.logo {
     margin-left: 20px;
 }
 
-/* Home Page */
+/*-------------------------- Home Page */
 
 .homepage-heading {
     font-family: var(--main-heading-font);
@@ -345,7 +343,6 @@ section div.schedule-row{
 }
 .points-scoring-row{
     background-color: var(--accent-colour);
-    /* padding-bottom: 3rem; */
 }
 .points-box{
     margin-bottom: 2rem;
@@ -398,7 +395,6 @@ div.review-rules-homepage-row{
     text-decoration: underline;
     text-decoration-style: dashed;
 }
-
 div.row a.cta-link:hover,
 div.row a.cta-link:focus{
     background-color: var(--dark-accent-colour);
@@ -435,16 +431,15 @@ div.contact-form-box{
 .section-home-4{
     padding-bottom: 4em;
 }
-/* Flash Messages */
-
+/*-------------------------- Flash Messages */
 h4.flashmsg {
     line-height: 2;
     color: var(--dark-text-color);
     background-color: var(--accent-colour);
 }
-/* Forms */
+/*-------------------------- Forms */
 
-/* Override Materialize Form Colours */
+/*-------------------------- Override Materialize Form Colours */
 input:not([type]):focus:not([readonly]), 
 input[type=text]:not(.browser-default):focus:not([readonly]), 
 input[type=password]:not(.browser-default):focus:not([readonly]), 
@@ -462,7 +457,7 @@ textarea.materialize-textarea:focus:not([readonly]){
     -webkit-box-shadow: 0 1px 0 0 var(--accent-colour);
     box-shadow: 0 1px 0 0 var(--accent-colour);
 }
-/* Winners */
+/*-------------------------- Winners Page */
 
 .comp-results-intro{
     font-size: 1.5rem;
@@ -574,13 +569,13 @@ section.row a img.award-photo-third{
     padding: 3rem;
 }
 
-/* Interim Vote --> Compete Page */
+/*-------------------------- Interim Vote --> Compete Page */
 .interim-image{
     max-width: 100%;
     margin-top: 2rem;
 }
 
-/* Homepage Timeline - Code taken from Krishna Babu's Codepen (attributed in README.md) */
+/*-------------------------- Homepage Timeline - Code taken from Krishna Babu's Codepen (attributed in README.md) */
 
 header h1{
   text-align: center;
@@ -592,7 +587,6 @@ header h1{
    text-align: center;
    margin-bottom: 0;
  }
-
 .hexa{
   border: 0px;
   float: left;
@@ -605,7 +599,6 @@ header h1{
   position: relative;
   margin-top: 15px;
 }
-
 .hexa:before{
   content: ""; 
   position: absolute; 
@@ -617,7 +610,6 @@ header h1{
   border-right: 30px solid transparent;
   top: -15px;
 }
-
 .hexa:after{
   content: ""; 
   position: absolute; 
@@ -629,7 +621,6 @@ header h1{
   border-top: 15px solid var(--main-text-colour);
   bottom: -15px;
 }
-
 .timeline {
   position: relative;
   padding: 0;
@@ -637,7 +628,6 @@ header h1{
   margin-top: 20px;
   list-style-type: none;
 }
-
 .timeline:before {
   position: absolute;
   left: 50%;
@@ -656,11 +646,9 @@ header h1{
   background: linear-gradient(to bottom, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
   z-index: 5;
 }
-
 .timeline li {
   padding: 2em 0;
 }
-
 .timeline .hexa{
   width: 16px;
   height: 10px;
@@ -674,33 +662,28 @@ header h1{
   top: -30px;
   margin-top: 0;
 }
-
 .timeline .hexa:before {
   border-bottom: 4px solid var(--accent-colour);
   border-left-width: 8px;
   border-right-width: 8px;
   top: -4px;
 }
-
 .timeline .hexa:after {
   border-left-width: 8px;
   border-right-width: 8px;
   border-top: 4px solid var(--accent-colour);
   bottom: -4px;
 }
-
 .direction-l,
 .direction-r {
   float: none;
   width: 100%;
   text-align: center;
 }
-
 .flag-wrapper {
   text-align: center;
   position: relative;
 }
-
 .flag {
   position: relative;
   display: inline;
@@ -711,7 +694,6 @@ header h1{
   text-align: left;
   border-radius: 5px;
 }
-
 .direction-l .flag:after,
 .direction-r .flag:after {
   content: "";
@@ -726,19 +708,16 @@ header h1{
   border-width: 8px;
   pointer-events: none;
 }
-
 .direction-l .flag {
   -webkit-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   -moz-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
 }
-
 .direction-r .flag {
   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
 }
-
 .time-wrapper {
   display: block;
   position: relative;
@@ -748,21 +727,17 @@ header h1{
   vertical-align: middle;
   color: var(--dark-text-color);
 }
-
 .direction-l .time-wrapper {
   float: none;
 }
-
 .direction-r .time-wrapper {
   float: none;
 }
-
 .time {
   background: var(--accent-colour);
   display: inline-block;
   padding: 8px;
 }
-
 .desc {
   position: relative;
   margin: 1em 0 0 0;
@@ -773,7 +748,6 @@ header h1{
   box-shadow: 0 0 1px rgba(0,0,0,0.20);
   z-index: 15;
 }
-
 .direction-l .desc,
 .direction-r .desc {
   position: relative;
@@ -782,7 +756,7 @@ header h1{
   z-index: 15;
 }
 
-/* Browse Images */
+/*-------------------------- Browse Images */
 .browse-images-container,
 .vote-images-container {
   position: relative;
@@ -814,7 +788,7 @@ a.overlay-link{
     height: 100%;
 }
 
-/* The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
+/*-------------------------- The following code to create an overlay was taken mostly from the W3 Schools Image Overlay Slide */
 .browse-photo {
   display: block;
   width: 100%;
@@ -856,7 +830,7 @@ a.overlay-link{
   font-size: 1.1rem;
   font-weight: 400;
 }
-/* W3 Image overlay slide code ends here */
+/*-------------------------- W3 Image overlay slide code ends here */
 .overlay-text-awards{
   top: 45%;
   left: 50%;
@@ -871,7 +845,8 @@ a.overlay-link{
 .hidden-awards{
     display: none;
 }
-/* Photo Details Page */
+
+/*-------------------------- Photo Details Page */
 
 a.back-link{
     color: var(--accent-colour);
@@ -946,7 +921,7 @@ h2.artist-name a{
     margin-bottom: 1.4rem;
 }
 
-/* Login & Register Pages */
+/*-------------------------- Login & Register Pages */
 .login-btn,
 .register-btn{
     width: 100%;
@@ -959,7 +934,7 @@ h2.artist-name a{
     background-color: var(--dark-accent-colour);
 }
 
-/* User profile Page */
+/*-------------------------- User profile Page */
 .profile-page-header{
     padding-top: 2rem;
 }
@@ -1074,7 +1049,8 @@ ul.profile-tabs .profile-tab a:focus.active {
 .edit-profile-btn:hover{
     background-color: var(--dark-accent-colour);
 }
-/* Edit Profile Page */
+
+/*--------------------------Edit Profile Page */
 
 p.password-change-instructions{
     color: var(--main-text-colour);
@@ -1136,9 +1112,8 @@ p.password-change-instructions{
     margin-bottom: 2.7rem !important;
 }
 
-/* Competition Page */
+/*-------------------------- Competition Page */
 
-/* Text */
 .compete-subheading{
     font-weight: 400;
 }
@@ -1220,7 +1195,8 @@ div.competition-rules{
     height: 0;
     width: 0;
 }
-/* Vote Page */
+
+/*-------------------------- Vote Page */
 
 button.vote-button{
     width: 100%;
@@ -1250,7 +1226,7 @@ button.vote-button:hover{
     font-size: 1.3rem;
 }
 
-/* Error Pages */
+/*-------------------------- Error Pages */
 .error-link{
     font-family: var(--subheading-2-font);
     font-size: 1.3rem;
@@ -1266,7 +1242,7 @@ button.vote-button:hover{
     color: darkred;
     font-size: 2rem;
 }
-/* Admin User Control Page */
+/*-------------------------- Admin User Control Page */
 .admin-control-card,
 .admin-control-form{
     background-color: var(--dark-text-color);
@@ -1289,7 +1265,7 @@ a.admin-page-delete-btn:focus{
     background-color: darkred;
 }
 
-/* Footer */
+/*-------------------------- Footer */
 #footer {
   height: 50px;
   width: 100%;
@@ -1321,15 +1297,14 @@ a.admin-page-delete-btn:focus{
     color: var(--main-text-colour);
 }
 
+/*-------------------------- MEDIA QUERIES 
+(based on the Materialize screen size categorizations) */
 
-
-/* MEDIA QUERIES - (based on the Materialize screen size categorizations) */
-
-/* Tablet Devices */
+/*-------------------------- Tablet Devices */
 
 @media screen and (min-width: 600px) {
 
-/* Universal Styles */
+/*-------------------------- Universal Styles */
 .page-heading{
     font-size: 4.5rem;
     letter-spacing: 3px;
@@ -1338,7 +1313,7 @@ a.admin-page-delete-btn:focus{
     font-size: 2.5rem;
     letter-spacing: 2px;
 }
-/* Homepage */
+/*-------------------------- Homepage */
 .homepage-heading {
     font-size: 3rem;
 }
@@ -1386,12 +1361,12 @@ i.content-hinting{
     margin: 0;
     padding: 3rem 1.2rem;
 }
-/* Recent Winners */
+/*-------------------------- Winners Page */
 img.award-photo {
   max-height: 600px;
   max-width: 100%;
 }
-/* Profile Page */
+/*-------------------------- Profile Page */
 .profile-page-header{
     padding-top: 2rem;
 }
@@ -1418,7 +1393,7 @@ h5.user-points-badge{
     font-size: 2.6rem;
 }
 
-/* Edit Profile Page */
+/*-------------------------- Edit Profile Page */
 #confirm-account-deletion{
     padding: 3rem;
 }
@@ -1426,7 +1401,7 @@ h5.user-points-badge{
 #confirm-photo-deletion{
     min-height: 300px;
 }
-/* Compete */
+/*-------------------------- Compete Page */
 div.add-photo-collapsible-header,
 div.review-rules-collapsible-header{
     padding: 1rem;
@@ -1436,20 +1411,19 @@ div.review-rules-collapsible-header{
     font-size: 1.4rem;
     font-weight: 400;
 }
-/* Footer */
+/*-------------------------- Footer */
 footer{
     margin-top: 35px;
 }
 }
 
-/* Homepage Timeline  */
+/*--------------------------Homepage Timeline - Specific Media Query  */
 @media(min-width: 768px){
   .timeline {
     width: 660px;
     margin: 0 auto;
     margin-top: 20px;
   }
-
   .timeline li:after {
     content: "";
     display: block;
@@ -1457,40 +1431,33 @@ footer{
     clear: both;
     visibility: hidden;
   }
-  
   .timeline .hexa {
     left: -28px;
     right: auto;
     top: 8px;
   }
-
   .timeline .direction-l .hexa {
     left: auto;
     right: -28px;
   }
-
   .direction-l {
     position: relative;
     width: 310px;
     float: left;
     text-align: right;
   }
-
   .direction-r {
     position: relative;
     width: 310px;
     float: right;
     text-align: left;
   }
-
   .flag-wrapper {
     display: inline-block;
   }
-  
   .flag {
     font-size: 18px;
   }
-
   .direction-l .flag:after {
     left: auto;
     right: -16px;
@@ -1500,7 +1467,6 @@ footer{
     border-left-color: var(--main-text-colour);
     border-width: 8px;
   }
-
   .direction-r .flag:after {
     top: 50%;
     margin-top: -8px;
@@ -1509,30 +1475,25 @@ footer{
     border-width: 8px;
     left: -8px;
   }
-
   .time-wrapper {
     display: inline;
     vertical-align: middle;
     margin: 0;
   }
-
   .direction-l .time-wrapper {
     float: left;
   }
-
   .direction-r .time-wrapper {
     float: right;
   }
-
   .time {
     padding: 5px 10px;
   }
-
   .direction-r .desc {
     margin: 1em 0 0 0.75em;
   }
 
-/* Error Pages */
+/*-------------------------- Error Pages */
 .error-link{
     font-size: 2rem;
     padding: 1.1rem;
@@ -1542,9 +1503,10 @@ footer{
 }
 }
 
-/* Desktop Devices */
+/*-------------------------- Desktop Devices */
 @media screen and (min-width: 992px) {
-/* Homepage */
+
+/*-------------------------- Homepage */
 .homepage-heading {
     font-size: 4rem;
 }
@@ -1557,20 +1519,18 @@ footer{
 div.home-buttons a{
     width: 50%;
 }
-/* Homepage Timeline */
+/*-------------------------- Homepage Timeline */
 .timeline {
     width: 800px;
     margin: 0 auto;
     margin-top: 20px;
   }
-
   .direction-l {
     position: relative;
     width: 380px;
     float: left;
     text-align: right;
   }
-
   .direction-r {
     position: relative;
     width: 380px;
@@ -1578,7 +1538,7 @@ div.home-buttons a{
     text-align: left;
   }
 
-/* Recent Winners */
+/*-------------------------- Winners Page */
 section.first_place,
 section.second_place,
 section.third_place{
@@ -1588,7 +1548,8 @@ img.award-photo {
   max-height: 600px;
   max-width: 100%;
 }
-/* Profile Page */
+
+/*--------------------------Profile Page */
 ul.profile-tabs li.profile-tab > a{
     color: var(--dark-text-color);
     font-family: var(--subheading-font);
@@ -1611,7 +1572,8 @@ h5.user-points-badge{
 .profile-page-header{
     padding-top: 4rem;
 }
-/* Edit Profile Page */
+
+/*-------------------------- Edit Profile Page */
 .cancel-delete-ac-btn,
 .delete-photo-btn-cancel-modal{
     margin-top: 1.7rem !important;
@@ -1620,12 +1582,13 @@ h5.user-points-badge{
 #confirm-photo-deletion{
     min-height: 100px;
 }
-/* Footer */
+
+/*-------------------------- Footer */
 footer{
     margin-top: 110px;
 }
 
-/* Error Pages */
+/*-------------------------- Error Pages */
 .error-msg{
     margin-bottom: 5rem;
 }
@@ -1636,7 +1599,8 @@ footer{
     font-size: 3.6rem;
 }
 }
-/* Large Desktop Devices */
+
+/*-------------------------- Large Desktop Devices */
 @media screen and (min-width: 1200px) {
 .homepage-heading {
     font-size: 6rem;
@@ -1647,7 +1611,7 @@ footer{
 div.home-buttons a{
     width: 40%;
 }
-/* Recent Winners */
+/*-------------------------- Winners Page */
 section.first_place,
 section.second_place,
 section.third_place{
@@ -1658,13 +1622,13 @@ img.award-photo {
   max-width: 100%;
   margin: 0 auto;
 }
-/* Login & Register & Update Profile Forms */
+/*--------------------------Login & Register & Update Profile Forms */
 .login-form,
 .register-form{
     padding: 4em 5em 5em;
     margin-top: 2em;
 }
-/* Profile Page */
+/*-------------------------- Profile Page */
 ul.profile-tabs li.profile-tab > a{
     color: var(--dark-text-color);
     font-family: var(--subheading-font);
@@ -1681,6 +1645,7 @@ h5.user-points-badge{
 }
 }
 
+/*-------------------------- Extra Large Desktop Devices  */
 @media screen and (min-width: 1400px) {
 
 i.award{
