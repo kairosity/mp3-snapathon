@@ -1016,7 +1016,7 @@ def edit_user_profile(user, username, request, database_var, app):
         if existing_username:
             flash("That username is already taken, please choose a different one.")
             url = redirect(url_for('edit_profile',
-                           user=user, username=form_username))
+                           user=user, username=username))
             return url
         else:
             update_user["username"] = form_username
