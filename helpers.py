@@ -1063,24 +1063,8 @@ def edit_user_profile(user, username, request, database_var, app):
                                     {'$set': {"profile_photo": None}})
 
 
-    # if there is a file to upload and a current profile pic.
+    # If there is a file to upload and a current profile pic.
     elif form_profile_pic.filename != "" and existing_profile_pic is not None:
-
-        # Delete the current Profile Photo and then upload a new one.
-
-        file_to_delete = database_var.db.fs.files.find_one(
-            {"filename": existing_profile_pic})
-
-        chunks_to_delete = list(database_var.db.fs.chunks.find({
-                                "files_id": file_to_delete["_id"]}))
-
-        database_var.db.photos.delete_one(
-            {"filename": existing_profile_pic})
-
-        database_var.db.fs.files.delete_one(file_to_delete)
-
-        for chunk in chunks_to_delete:
-            database_var.db.fs.chunks.delete_one(chunk)
 
         # Upload new Photo
         file_id, new_filename = save_photo(
@@ -1101,6 +1085,21 @@ def edit_user_profile(user, username, request, database_var, app):
         photo_filename_to_add_to_user = photo_to_add_to_user["filename"]
 
         update_user["profile_photo"] = photo_filename_to_add_to_user
+
+        # Delete the current Profile Photo.
+        file_to_delete = database_var.db.fs.files.find_one(
+            {"filename": existing_profile_pic})
+
+        chunks_to_delete = list(database_var.db.fs.chunks.find({
+                                "files_id": file_to_delete["_id"]}))
+
+        database_var.db.photos.delete_one(
+            {"filename": existing_profile_pic})
+
+        database_var.db.fs.files.delete_one(file_to_delete)
+
+        for chunk in chunks_to_delete:
+            database_var.db.fs.chunks.delete_one(chunk)
 
     # If there is no existing profile photo but there IS a new photo to be uploaded.
     elif existing_profile_pic is None and form_profile_pic.filename != "":

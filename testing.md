@@ -941,7 +941,7 @@ These were all rejected and the correct status code & error message was returned
 <details><summary><b>click for tests</b></summary>
 
 <br>
-A 415 status code can be thrown in two ways:
+A 415 "Unsupported Media Type" status code can arise in two ways:
 
 1. If a user attempts to upload any file with an extension that is not one of the approved extensions:
 ['.jpg', '.png', '.gif', '.svg', '.jpeg']
@@ -957,7 +957,6 @@ This applies to both competition entries & profile photo uploads. The following 
 
 These were all rejected and the correct status code & error message was returned. __PASS__ 
 
-
 <p align="left">
   <img src="static/images/testing/415-status-codes.png">
 </p>
@@ -966,15 +965,7 @@ These were all rejected and the correct status code & error message was returned
   <img src="static/images/testing/415-error.png">
 </p>
 
-
-
 </details>
-
-## 500 Status Code Testing
-<details><summary><b>click for tests</b></summary>
-</details>
-
-<br>
 
 
 <br>
