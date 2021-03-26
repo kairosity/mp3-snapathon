@@ -2,7 +2,6 @@ from apscheduler.schedulers.background import BlockingScheduler
 from app import awards, mongo
 from helpers import new_comp
 
-
 '''
 These are the scheduled functions:
 1. awards() runs automatically on Sunday at 22:00PM
@@ -14,9 +13,6 @@ scheduler.add_job(awards, 'cron', day_of_week='sun',
                   start_date='2021-02-24')
 scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
                   hour=00, minute=0, second=0,
-                  start_date='2021-02-24')
-scheduler.add_job(test_function, 'cron', day_of_week='sun',
-                  hour=22, minute=00, second=0,
                   start_date='2021-02-24')
 
 scheduler.start()

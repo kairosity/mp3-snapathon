@@ -2434,13 +2434,18 @@ phones and tablets to test the app for me.
 This proved quite useful. I found that Jinja templating made it easy to end up with broken tags. The validator caught these 
 and I refactored appropriately.
 
-Some warnings raised:
+Some application-wide warnings raised:
 
 1. There was a warning that the content security policy was a bad one. But since the application scored so highly during security 
 testing and since this issue has also [been raised by other developers](https://github.com/validator/validator/issues/438),
 it's not an issue.
 
-2. The validator also flagged that the Flash Messages section had no header, which of course is intentional. 
+2. The validator also flagged that the Flash Messages section had no header, which of course is intentional, thus is also of no concern.
+
+#### Landing Page: 
+
+
+
 ### W3C Link Checker
 
 - Passed with no issues and no invalid links or anchors.
