@@ -2444,6 +2444,18 @@ phones and tablets to test the app for me.
 
 ### W3C CSS Validator
 
+- Two non-issues were raised as errors:
+
+1. The validator claimed that "text-decoration-thickness" doesn't exist, but as of 2019 it does exist.
+2. "Value Error : background 92% is not a color-stop value )" - Again the validator is incorrect and a quick Stack Overflow
+found multiple developers complaining about [this].(https://stackoverflow.com/questions/64754909/css-validator-error-value-error-background-100-is-not-a-color-stop-value)
+
+- Multiple "Warnings" were raised, all of which were about vendor extensions.
+
+So other than the above issues that can safely ignored, the CSS validated perfectly. 
+
+__PASS__
+
 ## JavaScript Validators
 
 ### JSHint

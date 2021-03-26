@@ -1102,8 +1102,6 @@ p.password-change-instructions{
 .delete-photo-btn:focus,
 .delete-photo-btn-modal:focus{
     background-color: red;
-    -webkit-box-shadow: darkred 2px;
-            box-shadow: darkred 2px;
     color: var(--main-text-colour);
 }
 #confirm-account-deletion,
