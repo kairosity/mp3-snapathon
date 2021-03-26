@@ -32,7 +32,7 @@ keyboard users.
  
 });
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function() {
  
 /**
  * This function checks to see if an image on the winners page is horizontal or vertical
@@ -114,31 +114,42 @@ if (document.URL.includes('search')){
 
         let selectOptions = document.getElementsByTagName('option')
         let awardCheckBoxes = document.querySelectorAll('.checkbox-yellow')
-        let category = document.querySelector('.hidden-category')
-        let awards = document.querySelector('.hidden-awards').innerHTML
 
+        let category;
+        if(document.querySelector('.hidden-category')){
+            category = document.querySelector('.hidden-category')
+        }
+        
+        let awards;
+        if (document.querySelector('.hidden-awards')){
+            awards = document.querySelector('.hidden-awards').innerHTML
+        }
+        
         let check1 = document.createAttribute('checked')
         let check2 = document.createAttribute('checked')
         let check3 = document.createAttribute('checked')
 
         for (let i=0; i<awardCheckBoxes.length; i++){
-            
-            if (awards.includes("1") && awardCheckBoxes[i].value == 1){
-                awardCheckBoxes[i].setAttributeNode(check1)
-            } 
-            if (awards.includes("2") && awardCheckBoxes[i].value == 2){
-                awardCheckBoxes[i].setAttributeNode(check2)
-            } 
-            if (awards.includes("3") && awardCheckBoxes[i].value == 3){
-                awardCheckBoxes[i].setAttributeNode(check3)
+            if (awards){
+                if (awards.includes("1") && awardCheckBoxes[i].value == 1){
+                    awardCheckBoxes[i].setAttributeNode(check1)
+                } 
+                if (awards.includes("2") && awardCheckBoxes[i].value == 2){
+                    awardCheckBoxes[i].setAttributeNode(check2)
+                } 
+                if (awards.includes("3") && awardCheckBoxes[i].value == 3){
+                    awardCheckBoxes[i].setAttributeNode(check3)
+                }
             }
         }
-
-        for (let i = 0; i < selectOptions.length; i++) {
+        if (category){
+            for (let i = 0; i < selectOptions.length; i++) {
             if (category.innerHTML == selectOptions[i].value ){
                 let sel = document.createAttribute('selected')
                 selectOptions[i].setAttributeNode(sel)
+                }
             }
         }
+        
     })
 }

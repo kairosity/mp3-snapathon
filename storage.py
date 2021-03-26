@@ -110,3 +110,7 @@ Was a template called photos.html
     {{ pic_to_show }}
 
 {% endblock %}
+
+
+<!-- Materialize Icons CDN -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
