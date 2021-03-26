@@ -53,7 +53,7 @@
 <!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
             <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
         {% endif %}
-        <img class="get-photo-img center-align" src="{{ url_for('file', filename=photo.filename) }}">
+        <img class="get-photo-img center-align" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
         <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story }}</p>
         {% if photo.awards == 1 %}
             <h4 class="awards first-place-award col s10 offset-s1 center-align"><em>Awards:</em> 1st Place in the {{photo.competition_category}} category.</h4>
