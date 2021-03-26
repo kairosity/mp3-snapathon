@@ -606,10 +606,10 @@ def compete():
                 if current_user["can_enter"] is True:
 
                     url = upload_comp_entry(request,
-                                    mongo,
-                                    app,
-                                    this_weeks_comp_category,
-                                    current_user)
+                                            mongo,
+                                            app,
+                                            this_weeks_comp_category,
+                                            current_user)
 
                     flash("Entry Received!")
                     return redirect(url_for('compete'))
@@ -844,7 +844,7 @@ def admin_delete_user_account(username):
             if session["user"] == "admin":
                 source_url = request.referrer
                 user = mongo.db.users.find_one({"username": username})
-                if user != None:
+                if user is not None:
                     return render_template(
                         'admin-delete-user-account.html',
                         user=user, username=username, source_url=source_url)
