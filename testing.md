@@ -2442,9 +2442,108 @@ it's not an issue.
 
 2. The validator also flagged that the Flash Messages section had no header, which of course is intentional, thus is also of no concern.
 
-#### Landing Page: 
+Another issue I found was that URI link testing only worked for non-protected pages, so for the others I had to login and then copy and 
+paste the html directly into the validator. 
+
+<br>
+
+<details><summary><b>click for test results</b></summary>
+
+<br>
+
+#### Landing Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-home.png" >
+</p>
+
+<br>
+
+#### Winners Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-winner.png" >
+</p>
+
+<br>
+
+#### Browse Page __PASS__: 
+
+- The aria-label is not "misused" as in the warning as it is needed to declare the checkboxes label for screen-reader dependent users.
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-browse.png" >
+</p>
+
+<br>
+
+#### User Profile Page __PASS__: 
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-profile.png" >
+</p>
+
+<br>
+
+#### User Edit Profile Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-edit-profile.png" >
+</p>
+
+<br>
+
+#### Compete & Vote Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-compete.png" >
+</p>
+
+<br>
+
+#### Admin User Control Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-admin.png" >
+</p>
+
+<br>
+
+#### Admin Edit User Profile Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-admin-edit-user-profile.png" >
+</p>
+
+<br>
 
 
+#### Login Page __PASS__:
+
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-login.png" >
+</p>
+
+<br>
+
+#### Photo Details Page __PASS__:
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-photo-details.png" >
+</p>
+
+<br>
+
+#### Register Page __PASS__:
+<p align="center">
+  <img src="static/images/testing/validators/html-validator/html-register.png" >
+</p>
+
+<br>
+
+
+</details>
+
+<br>
 
 ### W3C Link Checker
 
