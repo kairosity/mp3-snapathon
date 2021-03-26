@@ -36,7 +36,7 @@
               <img class="avatar admin-control-avatar" src="{{url_for('file', filename=user.profile_photo)}}" alt="{{user.username}}'s profile photo" />
             {% else %}
               <img class="avatar admin-control-avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}"
-              alt="{{user.username}}'s default profile avatar />
+              alt="{{user.username}}'s default profile avatar" />
             {% endif %}
           </div>
         </div>
