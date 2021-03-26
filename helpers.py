@@ -1357,9 +1357,7 @@ def delete_user_account(username, database_var, request):
     * Unless the user is not logged in and trying to delete another user's
       account, in this case it will throw a 403 error with a message.
     '''
-
     if session:
-
         form_password = request.form.get("password")
         form_password_confirmation = request.form.get(
             "password_confirmation")

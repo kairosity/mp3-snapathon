@@ -2,8 +2,8 @@
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for,
-    abort, jsonify)
-from flask_pymongo import PyMongo, pymongo
+    abort)
+from flask_pymongo import PyMongo
 from helpers import (
     get_this_weeks_comp_users,
     filter_users_and_exclude_non_voters,
@@ -38,15 +38,17 @@ from flask_mail import Mail, Message
 import os
 from datetime import datetime
 from datetime import timedelta
-from werkzeug.exceptions import HTTPException
 from flask_talisman import Talisman
 if os.path.exists("env.py"):
     import env
 
 
 app = Flask(__name__)
+
+# WTF-Forms CSRF Protection
 csrf = CSRFProtect(app)
 
+# Content Security Policy
 csp = {
     'default-src': [
         '\'self\'',
@@ -70,7 +72,7 @@ csp = {
         '\'self\'',
     ]
 }
-
+# Flask Talisman Security Settings
 talisman = Talisman(app,
                     force_https_permanent=True,
                     frame_options="DENY",
@@ -78,13 +80,14 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 
-
+# App Configuration Settings
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['UPLOAD_EXTENSIONS'] = \
     ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
 
+# Email Settings
 mail_settings = {
     "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
     "MAIL_PORT": os.environ.get('MAIL_PORT'),
@@ -97,6 +100,8 @@ mail_settings = {
 
 app.config.update(mail_settings)
 mail = Mail(app)
+
+# Mongo database connection
 mongo = PyMongo(app)
 
 
@@ -170,6 +175,8 @@ inject_datetime()
 def home():
     '''
     * Displays homepage template & allows user to send email.
+    * If user is logged in, email form is pre-filled with their
+    email address.
 
     \n Args:
     1. User inputs (str): email and message from contact form.
@@ -190,7 +197,8 @@ def home():
                 flash("Email Sent!")
                 return redirect(url_for('home'))
         except Exception:
-            flash("Apologies, but your email could not be sent. Please try again later.")
+            flash("Apologies, but your email could not be sent. \
+                  Please try again later.")
             abort(500)
 
     if 'user' in session:
@@ -514,7 +522,22 @@ def edit_profile(username):
 
 @app.route('/delete-account/<username>', methods=['GET', 'POST'])
 def delete_account(username):
+    '''
+    * Deletes a user and all associated photos completely.
 
+    \n Args:
+    1. username (str): The username of the user to be deleted.
+
+    \n Returns:
+    * If successful, deletes all records of the user from the db.
+    * If a user was deleting their own account they are redirected to
+    the app homepage.
+    * If an admin was deleting a user's account they are redirected to
+    the admin user control page.
+    * If unsuccessful users are redirected to the 'edit profile' page.
+    * If unsuccessful admin are redirected to the user deletion page of
+      the user they are trying to delete.
+    '''
     if 'user' in session:
         if session["user"] == username or session["user"] == 'admin':
             if request.method == "POST":
@@ -614,8 +637,7 @@ def compete():
                 instructions=this_weeks_comp_instructions,
                 pagination=pagination,
                 user=current_user,
-                photo_user_voted_for=photo_user_voted_for
-                )
+                photo_user_voted_for=photo_user_voted_for)
 
         else:
             flash("You must be logged in to view the competition page.")
@@ -749,6 +771,16 @@ def delete_photo(filename):
 
 @app.route("/vote/<filename>", methods=["POST"])
 def vote(filename):
+    '''
+    * Votes for a particular photo.
+
+    \n Args:
+    1. filename (str): The unique filename of the image voted for.
+
+    \n Returns:
+    * If successful, adds a vote to that image.
+    * Reloads the page.
+    '''
 
     photo = mongo.db.photos.find_one({"filename": filename})
 
@@ -763,9 +795,16 @@ def vote(filename):
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    '''
+    * Displays the admin user control page that lists
+      all non-admin users.
 
+    \n Args: None
+
+    \n Returns:
+    * Displays the admin page.
+    '''
     all_users = list(mongo.db.users.find())
-
     if session:
         if 'user' in session:
             if session["user"] == "admin":
@@ -789,7 +828,17 @@ def admin():
 
 @app.route("/admin-delete-user-account/<username>")
 def admin_delete_user_account(username):
+    '''
+    * Displays the page that allows an admin to delete
+    a user's account.
 
+    \n Args:
+    1. username (str): The specific username registered to a user in
+       the db.
+
+    \n Returns:
+    * Displays the delete user account template for admins.
+    '''
     if session:
         if 'user' in session:
             if session["user"] == "admin":
@@ -802,7 +851,6 @@ def admin_delete_user_account(username):
                 else:
                     flash("Sorry, but that user was not found on the system.")
                     abort(404)
-
             else:
                 flash("You do not have permission to access this page!")
                 abort(403)
@@ -816,7 +864,16 @@ def admin_delete_user_account(username):
 
 @app.route("/logout")
 def logout():
+    '''
+    * Logs a user out.
 
+    \n Args:
+    1. None
+
+    \n Returns:
+    * Logs a user out of their session and revokes their
+      access to protected pages.
+    '''
     if session:
         if 'user' in session:
             session.pop("user", None)
