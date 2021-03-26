@@ -80,10 +80,10 @@
                         <label for="new_password_confirmation">new password confirmation</label>
                     </div>
                 {% endif %}
-                <button class="register-btn btn-large btn waves-effect waves-light center-align hvr-grow-shadow" type="submit" name="action">Save Changes</button>
+                <button class="register-btn btn-large btn center-align hvr-grow-shadow" type="submit" name="action">Save Changes</button>
                 {% if session["user"] == user.username %}
                     <a href="#confirm-account-deletion" id="delete-account-btn"
-                        class=" modal-trigger register-btn delete-account-btn btn-large btn waves-effect waves-light center-align hvr-grow-shadow">Delete Account
+                        class=" modal-trigger register-btn delete-account-btn btn-large btn center-align hvr-grow-shadow">Delete Account
                     </a>
                 {% endif %}
             </div>
