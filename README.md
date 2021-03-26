@@ -81,6 +81,7 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
     - [16. Admin User Control](#16-admin-user-control)
     - [17. Awards Calculations](#17-awards-calculations)
     - [18. New Competition](#18-new-competition)
+    - [19. Custom Error pages](#19-custom-error-pages)
 - [4. Responsivity](#responsivity)
     - [Mobile Devices](#mobile-devices-materialize-sm-breakpoint)
     - [Tablet Devices](#tablet-devices-materialize-m-breakpoint)
@@ -1678,6 +1679,37 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 
 - This is run automatically using APScheduler at 0:00 Monday morning.
 - It switches every user's "can_enter" field to True to allow all users to enter the new competition.
+</details>
+
+<br>
+
+
+## 19. Custom Error pages 
+
+As aforementioned there are custom error pages covering the most common errors. 
+
+<details>
+<summary><b>click for features</b></summary>
+
+### Features
+
+- The pages all have a clear message as to why an error was thrown.
+- The error pages are designed in the same style as the rest of the application and they contain a link to bring the user back to safety.
+- Errors catered for include: 403, 404, 408, 413, 415, 500. 
+- All other errors are returned on the same page design, but with a slightly less personalized message.
+
+Here is an example of a 413 custom error page:
+
+<p align="center">
+  <img src="static/images/features/413-error.png">
+</p>
+
+For comparison here is the same error, but delivered without the custom message:
+
+<p align="center">
+  <img src="static/images/features/413-not-custom-error.png">
+</p>
+
 </details>
 
 <br>
