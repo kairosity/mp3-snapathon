@@ -160,10 +160,11 @@ def new_comp(database_var):
 # awards() Helper Functions:
 # 1. get_this_weeks_comp_users(*args)
 # 2. filter_users_and_exclude_non_voters(*args)
-# 3. awards_score_requirements(*args)
-# 4. determine_winners(*args)
-# 5. add_points_to_winning_users(*args)
-# 6. add_points_to_users_who_voted_well(*args)
+# 3. get_range_of_scores(*args)
+# 4. awards_score_requirements(*args)
+# 5. determine_winners(*args)
+# 6. add_points_to_winning_users(*args)
+# 7. add_points_to_users_who_voted_well(*args)
 def get_this_weeks_comp_users(entries, database_var):
     '''
     * Creates a list of the users who entered a particular competition.
@@ -246,7 +247,6 @@ def get_range_of_scores(comp_week_and_year, database_var):
       competition.
 
     '''
-
     this_weeks_entries_ordered = list(database_var.db.photos.find(
         {'$query': {"week_and_year": comp_week_and_year},
             '$orderby': {'photo_votes': -1}}))
@@ -426,6 +426,9 @@ def add_points_to_users_who_voted_well(
 
 
 # Winners Helper Functions
+# 1. get_images_by_week_and_year(*args)
+# 2. get_last_monday_and_images(*args)
+# 3. first_second_third_place_compcat_users(*args)
 def get_images_by_week_and_year(w_a_y, database_var):
     '''
     * Returns a list of images entered into a competition in a
@@ -538,7 +541,7 @@ def first_second_third_place_compcat_users(photo_array, database_var):
         third_place, list_of_users, competition_category
 
 
-# Pagination Helper.
+# Pagination Helper Function
 def paginated_and_pagination_args(
         objs_arr, PER_PAGE, page_param, per_page_param):
     '''
@@ -578,6 +581,9 @@ def paginated_and_pagination_args(
     return pagination_args, objs_to_display
 
 
+# Filter Search Functions
+# 1. filter_user_search(*args)
+# 2. filter_admin_search(*args)
 def filter_user_search(
         select_search, keyword_search, checkbox_search, database_var):
     '''
@@ -638,6 +644,10 @@ def filter_admin_search(
     return filtered_users
 
 
+# Upload Image Functions
+# 1. validate_image_type(arg)
+# 2. check_file_size(*args)
+# 3. save_photo(*args)
 def validate_image_type(stream):
     '''
     * This checks what type of file is being uploaded.
@@ -1128,7 +1138,6 @@ def edit_user_profile(user, username, request, database_var, app):
         update_user["profile_photo"] = photo_filename_to_add_to_user
 
     if form_current_password:
-
         if check_password_hash(user["password"], form_current_password):
             if form_new_password:
 
@@ -1321,7 +1330,7 @@ def del_user_account2(password, password_confirmation,
         message = "You must enter your password to delete your account."
         url = redirect(url_for(
                 'edit_profile', username=user_deleting["username"]))
-    
+
     return message, url
 
 
@@ -1376,7 +1385,9 @@ def delete_user_account(username, database_var, request):
             return url
 
 
-# compete() Helpers
+# compete() Helper Functions
+# 1. get_competition(*args)
+# 2. upload_comp_entry(*args)
 def get_competition(week_number):
     '''
     * Uses the week number to rotate the competition themes.
