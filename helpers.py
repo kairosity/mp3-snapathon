@@ -138,6 +138,8 @@ def delete_collection(database_var):
 
 # Scheduled/Timed Functions:
 # 1. new_comp(database_var)
+
+
 def new_comp(database_var):
     '''
     * This function allows all users to enter a new competition.
@@ -165,6 +167,8 @@ def new_comp(database_var):
 # 5. determine_winners(*args)
 # 6. add_points_to_winning_users(*args)
 # 7. add_points_to_users_who_voted_well(*args)
+
+
 def get_this_weeks_comp_users(entries, database_var):
     '''
     * Creates a list of the users who entered a particular competition.
@@ -429,6 +433,8 @@ def add_points_to_users_who_voted_well(
 # 1. get_images_by_week_and_year(*args)
 # 2. get_last_monday_and_images(*args)
 # 3. first_second_third_place_compcat_users(*args)
+
+
 def get_images_by_week_and_year(w_a_y, database_var):
     '''
     * Returns a list of images entered into a competition in a
@@ -541,7 +547,6 @@ def first_second_third_place_compcat_users(photo_array, database_var):
         third_place, list_of_users, competition_category
 
 
-# Pagination Helper Function
 def paginated_and_pagination_args(
         objs_arr, PER_PAGE, page_param, per_page_param):
     '''
@@ -584,6 +589,8 @@ def paginated_and_pagination_args(
 # Filter Search Functions
 # 1. filter_user_search(*args)
 # 2. filter_admin_search(*args)
+
+
 def filter_user_search(
         select_search, keyword_search, checkbox_search, database_var):
     '''
@@ -648,6 +655,8 @@ def filter_admin_search(
 # 1. validate_image_type(arg)
 # 2. check_file_size(*args)
 # 3. save_photo(*args)
+
+
 def validate_image_type(stream):
     '''
     * This checks what type of file is being uploaded.
@@ -684,7 +693,7 @@ def check_file_size(file, size_limit_in_bytes):
     '''
     file.seek(0, os.SEEK_END)
     file_length = file.tell()
-    file.seek(0,0)
+    file.seek(0, 0)
 
     if file_length > size_limit_in_bytes:
         return abort(413)
@@ -1386,6 +1395,8 @@ def delete_user_account(username, database_var, request):
 # compete() Helper Functions
 # 1. get_competition(*args)
 # 2. upload_comp_entry(*args)
+
+
 def get_competition(week_number):
     '''
     * Uses the week number to rotate the competition themes.
