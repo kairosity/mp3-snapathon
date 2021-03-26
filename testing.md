@@ -2573,6 +2573,25 @@ __PASS__
 
 ### JSHint
 
+As always JSHint was invaluable for telling me about the thousands of semi-colons I had omitted. 
+
+Here is the first run of JSHint:
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/validators/jshint/jshint-pre.png" >
+</p>
+
+Here is the second run, semi-colons in their rightful places:
+
+<p align="center">
+  <img src="static/images/testing/validators/jshint/jshint-post.png" >
+</p>
+
+The rest of the warnings concerned the use of ES6, so were fine.
+
+
 ## Python Validators
 
 ### PEP8 Online

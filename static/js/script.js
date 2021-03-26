@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 // Initialises all Materialize JS components
     $('.sidenav').sidenav();
     $('.tabs').tabs();
@@ -16,8 +15,7 @@ $(document).ready(function(){
                         $(this).parent().addClass("active");
                 }
         });
-    });
-    
+    });   
 /* This function sets the keyboard focus styles for the images in 
 the Browse section so that the :hover overlay styles apply to 
 keyboard users.
@@ -30,8 +28,7 @@ keyboard users.
         });
 });
     
-document.addEventListener('DOMContentLoaded', function() {
-     
+document.addEventListener('DOMContentLoaded', function() {  
 /**
  * This function checks to see if an image on the winners page is horizontal or vertical
  * and if horizontal it adds some styles to format it correctly.
@@ -48,8 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     verticalOrHorizontalAwardImage();
-});
-    
+}); 
 /**
  * This function checks to see if the edit profile page is loaded and if so, it waits until it's fully loaded.
  * Then it checks to see if the profile image field has a custom profile photo and if it does, 
@@ -90,8 +86,7 @@ if (document.URL.includes('edit-profile')){
         delProfilePicIcon.addEventListener('click', deleteCustomProfilePic);
     }
 });
-}
-    
+}   
 /**
  * This function checks to see if the search page is loaded and if so, it waits until it's fully loaded.
  * Then it checks if there are any photo results & if there are it makes sure to scroll the window to them, so the 
