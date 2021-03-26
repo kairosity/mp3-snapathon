@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Zilla+Slab+Highlight:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
@@ -126,7 +133,8 @@ a.text-link{
 /* label underline focus color */
 .input-field input[type=text]:focus {
     border-bottom: 1px solid var(--accent-colour);
-    box-shadow: 0 1px 0 0 #000;
+    -webkit-box-shadow: 0 1px 0 0 #000;
+            box-shadow: 0 1px 0 0 #000;
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
@@ -262,7 +270,8 @@ i.content-hinting{
 img.home-image {
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 .intro-words{
     font-family: var(--main-heading-font);
@@ -272,7 +281,8 @@ img.home-image {
     background-color: var(--accent-colour);
 }
 img.home-image-desktop{
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 div.row div.img-col{
     padding-right: 3rem;
@@ -284,8 +294,10 @@ div.row div.img-col{
     width: 100%;
     height: 300px;
     margin-top: 7rem;
-    object-fit: cover;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
     padding: 0;
 }
 ul.home-list {
@@ -300,7 +312,8 @@ ul.home-list {
     height: 210px;
     border-radius: 5%;
     margin: 0 auto;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 .cta-icons{
    font-size: 2rem;
@@ -332,7 +345,8 @@ section div.schedule-row{
 .em{
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--dark-accent-colour);
+    -webkit-text-decoration-color: var(--dark-accent-colour);
+            text-decoration-color: var(--dark-accent-colour);
     text-decoration-thickness: 2px;
     font-size: 1.17em;
 }
@@ -355,7 +369,11 @@ ul.homepage-collapsible-rules{
 }
 .review-rules-collapsible-header-homepage{
     background-color: var(--accent-colour);
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
     transition: all 1s;
 }
 .review-rules-collapsible-header-homepage:hover,
@@ -393,7 +411,8 @@ div.review-rules-homepage-row{
     margin: 0;
     padding: 1.8rem 1.2rem;
     text-decoration: underline;
-    text-decoration-style: dashed;
+    -webkit-text-decoration-style: dashed;
+            text-decoration-style: dashed;
 }
 div.row a.cta-link:hover,
 div.row a.cta-link:focus{
@@ -401,7 +420,8 @@ div.row a.cta-link:focus{
 }
 .cta:hover,
 .cta:focus{
-   text-decoration-style: double; 
+   -webkit-text-decoration-style: double;
+           text-decoration-style: double; 
 }
 div.row a.cta-link{
     background-color: var(--accent-colour);
@@ -409,8 +429,12 @@ div.row a.cta-link{
     padding: 1.2rem;
     width: 2rem;
     font-size: 1.6rem;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-right: 1rem;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
     transition: all 1s;
 }
 div.contact-form-box{
@@ -467,7 +491,8 @@ section.first_place{
 }
 .first-place-title{
     text-decoration: underline;
-    text-decoration-color: #FFD700;
+    -webkit-text-decoration-color: #FFD700;
+            text-decoration-color: #FFD700;
 }
 .tie-announcement-first{
    color: var(--main-text-colour);
@@ -480,7 +505,8 @@ img.award-photo {
   display: block;
   max-width: 100% !important;
   max-height: 500px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   margin: 0 auto;
   margin-bottom: 2rem;
 }
@@ -494,6 +520,8 @@ img.award-photo-horizontal{
   right: 0;
   width: 100%;
   height:100%;
+  -webkit-transition: .5s ease;
+  -o-transition: .5s ease;
   transition: .5s ease;  
 }
 i.award{
@@ -517,7 +545,8 @@ section.second_place{
 }
 .second-place-title{
     text-decoration: underline;
-    text-decoration-color: #d5d5d7;
+    -webkit-text-decoration-color: #d5d5d7;
+            text-decoration-color: #d5d5d7;
 }
 .tie-announcement-second{
     color: var(--main-text-colour);
@@ -530,7 +559,8 @@ section.third_place{
 }
 .third-place-title{
     text-decoration: underline;
-    text-decoration-color: #cd7f32;
+    -webkit-text-decoration-color: #cd7f32;
+            text-decoration-color: #cd7f32;
 }
 .tie-announcement-third{
     color: var(--main-text-colour);
@@ -638,11 +668,8 @@ header h1{
   height: 100%;
   margin-left: -1px;
   background: var(--main-text-colour);
-  background: -moz-linear-gradient(top, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
-  background: -webkit-linear-gradient(top, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
   background: -o-linear-gradient(top, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
-  background: -ms-linear-gradient(top, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(213,213,213,0)), color-stop(8%, var(--main-text-colour)), color-stop(92%, var(--main-text-colour)), to(rgba(213,213,213,0)));
   background: linear-gradient(to bottom, rgba(213,213,213,0) 0%, var(--main-text-colour) 8%, var(--main-text-colour) 92%, rgba(213,213,213,0) 100%);
   z-index: 5;
 }
@@ -710,12 +737,10 @@ header h1{
 }
 .direction-l .flag {
   -webkit-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
-  -moz-box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   box-shadow: -1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
 }
 .direction-r .flag {
   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
   box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
 }
 .time-wrapper {
@@ -744,7 +769,6 @@ header h1{
   padding: 1em;
   background: var(--main-text-colour);
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.20);
-  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.20);
   box-shadow: 0 0 1px rgba(0,0,0,0.20);
   z-index: 15;
 }
@@ -803,6 +827,8 @@ a.overlay-link{
   overflow: hidden;
   width: 100%;
   height:0;
+  -webkit-transition: .5s ease;
+  -o-transition: .5s ease;
   transition: .5s ease;
 }
 .browse-images-container:hover .overlay {
@@ -957,7 +983,8 @@ div.avatar-wrapper img.avatar {
     border: 2px solid var(--main-text-colour);
     border-radius: 50%;
     background-color: var(--main-text-colour);
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 .small-avatar{
     width: 90px;
@@ -965,12 +992,14 @@ div.avatar-wrapper img.avatar {
     border: 2px solid var(--main-text-colour);
     border-radius: 50%;
     background-color: var(--main-text-colour);
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 img.thumbnail-photo{
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 div.profile-photos-row,
 div.profile-photos-col{
@@ -1073,7 +1102,8 @@ p.password-change-instructions{
 .delete-photo-btn:focus,
 .delete-photo-btn-modal:focus{
     background-color: red;
-    box-shadow: darkred 2px;
+    -webkit-box-shadow: darkred 2px;
+            box-shadow: darkred 2px;
     color: var(--main-text-colour);
 }
 #confirm-account-deletion,
@@ -1132,7 +1162,9 @@ ul.collapsible{
 div.add-photo-collapsible-header,
 div.review-rules-collapsible-header{
     background-color: var(--main-text-colour); 
-    justify-content: center;
+    -webkit-box-pack: center; 
+        -ms-flex-pack: center; 
+            justify-content: center;
     padding: 0;
 }
 div.add-photo-collapsible-header:hover,
@@ -1203,11 +1235,15 @@ button.vote-button{
     background-color: var(--accent-colour);
     color: var(--dark-text-color);
     font-weight: 500;
+    -webkit-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
     transition: 0.3s ease-in;
 }
 button.vote-button:hover{
     background-color: var(--dark-accent-colour);
-    transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+            transform: scale(1.03);
 }
 .vote-icon{
     font-size: 3em;
@@ -1232,11 +1268,14 @@ button.vote-button:hover{
     font-size: 1.3rem;
     color: var(--accent-colour);
     padding: 1.1rem;
+    -webkit-transition: 0.6s ease;
+    -o-transition: 0.6s ease;
     transition: 0.6s ease;
 }
 .error-link:hover{
     text-decoration: underline;
-    text-decoration-color: var(--accent-colour);
+    -webkit-text-decoration-color: var(--accent-colour);
+            text-decoration-color: var(--accent-colour);
 }
 .error-number{
     color: darkred;
@@ -1271,13 +1310,20 @@ a.admin-page-delete-btn:focus{
   width: 100%;
 }
 .footer-flexbox{
-    flex-direction: column-reverse;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
 }
 .footer-flexbox,
 .footer-flexbox-1,
 .footer-flexbox-2{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 .twitter-link,
 .instagram-link,

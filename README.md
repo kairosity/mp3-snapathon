@@ -3464,6 +3464,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used for the fetching photo at the beginning of this README.
 
+- ## [Autoprefixer CSS online](https://autoprefixer.github.io/)
+
+    Used for automatically adding vendor prefixes to the CSS.
+
 
 #### __back to [contents](#table-of-contents)__ 
 <br>
