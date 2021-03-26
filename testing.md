@@ -2425,7 +2425,6 @@ phones and tablets to test the app for me.
 
 <br>
 
-
 # Code Validators
 
 ## HTML Validators
@@ -2433,10 +2432,11 @@ phones and tablets to test the app for me.
 Some warnings raised:
 
 1. There was a warning that the content security policy was a bad one. But since the application scored so highly during security 
-testing and since message issue has also [been raised with the validator developers by other users](https://github.com/validator/validator/issues/438),
-I'm choosing to ignore it.
+testing and since this issue has also [been raised by other developers](https://github.com/validator/validator/issues/438),
+it's not an issue.
 
 2. The validator also flagged that the Flash Messages section had no header, which of course is intentional. 
+
 
 ### W3C HTML Validator
 
