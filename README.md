@@ -2897,7 +2897,7 @@ __[Click here to read all testing documentation.](testing.md)__
 
 <br>
 
-# Future Features To Implement
+# Future Features To Implement / Issues Remaining
 
 ## Expanded upload functionality
 
@@ -2911,7 +2911,6 @@ There is currently only limited functionality if a user wants to upload images f
 
 So currently, images are best uploaded via desktop, so that resizing and file formats are more easily managed, but for future iterations of the application, greater ease
 of use for mobile users definitely needs to be implemented re: file types and sizing. 
-
 
 ## Offensive Images Filter 
 
@@ -2934,10 +2933,18 @@ For future releases I would consider adding extra admin features such as:
 - Allowing admins to leave a note attached to user profiles, this way warnings for bad conduct could be introduced. 
 - Allowing admins to manually select different competition themes. 
 
+## Form Behaviour
+
+There seems to be some misfiring on the Materialize forms. The behaviour is very unpredictable, occurs once in maybe 20 uses of a form, 
+and it's hard to pinpoint exactly what's causing it. My best guess would be that it has something to do with the CSP, and not allowing inline 
+styles. It may be having a strange interaction with the Materialize code. However, as it is not an application breaking error, and as the CSP 
+is an important security feature for a data-centric application, I am happy to leave it for the time being.
+
 <br>
 
 #### __back to [contents](#table-of-contents)__
 <br>
+
 
 # Attribution
 
