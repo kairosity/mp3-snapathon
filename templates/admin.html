@@ -1,78 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- Page Heading -->
 <h1 id="main" class="page-heading center-align">Admin User Control</h1>
-
-  <div class="row">
-       <div class="col s12">
-
-         <form action="{{ url_for('admin_search') }}" method="get" class="col s12 m10 offset-m1 search-form">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="row valign-wrapper center-align">
-
-                <div class="input-field col s12 m8 offset-m2">
-                     <input type="text" name="query" id="query" class="validate" minlength="3" value="{{query}}">
-                     <label for="query">Filter by username or email</label>
-                </div>
-                
-            </div>
-            <div class="row">
-            <div class="col s12 m10 offset-m1 l8 offset-l2">
-                    <a href="{{ url_for('admin') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn hvr-icon-spin hvr-grow-shadow"><i class="fas fa-undo-alt hvr-icon"></i> Reset</a>
-                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn hvr-icon-grow hvr-grow-shadow">
-                        <i class="fas fa-search hvr-icon"></i> Search
-                    </button>  
-                </div>
-            </div>
-          </form>
-    {% for user in all_users %}
-      {% if user.username != 'admin' %}
-    
-      <div class="card col s12 m6 l4 xl3 admin-control-card">
-          <form class="admin-control-form">
-          <div class="row">
-        <div class="card-image col s6 offset-s3 avatar-wrapper">
-          
-            {% if user.profile_photo %}
-                <img class="avatar admin-control-avatar" src="{{url_for('file', filename=user.profile_photo)}}"/>
-            {% else %}
-                <img class="avatar admin-control-avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}"/>
-            {% endif %}
+<!-- Main Content -->
+<div class="row">
+  <div class="col s12">
+    <!-- User Search Form -->
+    <form action="{{ url_for('admin_search') }}" method="get" class="col s12 m10 offset-m1 search-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <div class="row valign-wrapper center-align">
+        <div class="input-field col s12 m8 offset-m2">
+          <input type="text" name="query" id="query" class="validate" minlength="3" value="{{query}}">
+          <label for="query">Filter by username or email</label>
         </div>
-        </div>
+      </div>
       <div class="row">
-        <div class="card-content col ">
-          <ul>
-            <li>1. Username: {{user.username}} </li>
-            <li>2. Email: {{user.email}} </li>
-            <li>3. User Points: {{user.user_points}}  </li>
-            <li>4. Photos Entered: {{user.photos|length}}</li>
-            <li>5. Photos Voted For: {{user.photos_voted_for|length}}</li>
-          </ul>
+        <div class="col s12 m10 offset-m1 l8 offset-l2">
+          <a href="{{ url_for('admin') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn hvr-icon-spin hvr-grow-shadow">
+            <i class="fas fa-undo-alt hvr-icon"></i> Reset</a>
+          <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn hvr-icon-grow hvr-grow-shadow">
+            <i class="fas fa-search hvr-icon"></i> Search
+          </button>
         </div>
+      </div>
+    </form>
+<!-- User Listings -->
+    {% for user in all_users %}
+    {% if user.username != 'admin' %}
+    <div class="card col s12 m6 l4 xl3 admin-control-card">
+      <form class="admin-control-form">
+        <div class="row">
+          <div class="card-image col s6 offset-s3 avatar-wrapper">
+            {% if user.profile_photo %}
+            <img class="avatar admin-control-avatar" src="{{url_for('file', filename=user.profile_photo)}}" />
+            {% else %}
+            <img class="avatar admin-control-avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}" />
+            {% endif %}
+          </div>
         </div>
         <div class="row">
-            <a href="{{url_for('edit_profile', username=user.username)}}" class="btn admin-page-edit-btn waves-effect waves-light center-align col s6 hvr-icon-buzz" aria-label="Edit this user profile"><i class="material-icons hvr-icon">edit</i></a>
-            <a href="{{url_for('admin_delete_user_account', username=user.username)}}" class="admin-page-delete-btn btn waves-effect waves-light center-align col s6 hvr-icon-down" aria-label="Delete this user's account"><i class="material-icons hvr-icon">delete</i></a>
-         </div>
-         </form>
-      </div>
-      
-     {% endif %}
-   
-    {% endfor %}
-     </div>
-     </div>
-
-      <div class="row">
-        <div class="col s10 offset-s1 m8 offset-m2 center-align">
-            {{ pagination.info }}
+          <div class="card-content col ">
+            <ul>
+              <li>1. Username: {{user.username}} </li>
+              <li>2. Email: {{user.email}} </li>
+              <li>3. User Points: {{user.user_points}} </li>
+              <li>4. Photos Entered: {{user.photos|length}}</li>
+              <li>5. Photos Voted For: {{user.photos_voted_for|length}}</li>
+            </ul>
+          </div>
         </div>
-        <div class="col s10 offset-s1 m8 offset-m2 center-align">
-            {{ pagination.links }}
+        <div class="row">
+          <a href="{{url_for('edit_profile', username=user.username)}}" class="btn admin-page-edit-btn waves-effect waves-light center-align col s6 hvr-icon-buzz"
+            aria-label="Edit this user profile"><i class="material-icons hvr-icon">edit</i></a>
+          <a href="{{url_for('admin_delete_user_account', username=user.username)}}" class="admin-page-delete-btn btn waves-effect waves-light center-align col s6 hvr-icon-down"
+            aria-label="Delete this user's account"><i class="material-icons hvr-icon">delete</i></a>
         </div>
-        
+      </form>
     </div>
-    
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+<!-- Pagination -->
+<div class="row">
+  <div class="col s10 offset-s1 m8 offset-m2 center-align">
+    {{ pagination.info }}
+  </div>
+  <div class="col s10 offset-s1 m8 offset-m2 center-align">
+    {{ pagination.links }}
+  </div>
+</div>
+
 {% endblock %}

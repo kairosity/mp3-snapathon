@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- Landing Page Title & Tagline -->
 <section id="main" class="row section-home-1">
     <div class="col s12 m8 offset-m2 center-align">
         <div class="hvr-icon-pop">
@@ -11,35 +11,35 @@
         <h1 class="homepage-heading">SNAPATHON</h1>
         <h2 class="homepage-subheading2">Shoot, Compete, Rate, Repeat!</h2>
         {% if not session['user']%}
-        <div class="home-buttons">
-            <div class="col s12">
-                <a href="{{ url_for('login') }}"
-                    class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">LOGIN</a>
+            <div class="home-buttons">
+                <div class="col s12">
+                    <a href="{{ url_for('login') }}"
+                        class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">LOGIN</a>
+                </div>
+                <div class="col s12 register-button-home">
+                    <a href="{{ url_for('register') }}"
+                        class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">REGISTER</a>
+                </div>
             </div>
-            <div class="col s12 register-button-home">
-                <a href="{{ url_for('register') }}"
-                    class="home-button waves-effect waves-light btn-large z-depth-3 hvr-grow-shadow">REGISTER</a>
-            </div>
-        </div>
         {% else %}
-        <div class="hvr-icon-drop">
-            <i class="fas fa-leaf welcome-icon hvr-icon"></i>
-        </div>
-        <h3 class="homepage-subheading3 welcome-user">welcome {{ session['user'] }}</h3>
+            <div class="hvr-icon-drop">
+                <i class="fas fa-leaf welcome-icon hvr-icon"></i>
+            </div>
+            <h3 class="homepage-subheading3 welcome-user">welcome {{ session['user'] }}</h3>
         {% endif %}
         {% if not session['user']%}
-        <a class="content-hinting-link hvr-icon-down" href="#rules-section">
-            <p class="content-hinting">Learn More</p>
-            <i class="fas fa-angle-double-down content-hinting hvr-icon"></i>
-        </a>
+            <a class="content-hinting-link hvr-icon-down" href="#rules-section">
+                <p class="content-hinting">Learn More</p>
+                <i class="fas fa-angle-double-down content-hinting hvr-icon"></i>
+            </a>
         {% endif %}
-
     </div>
 </section>
+<!-- Brief Intro Section to Application -->
 <section id="rules-section" class="light-bg section-home-2">
     <div class="row">
         <div class="col s12 show-on-small hide-on-med-and-up homepage-mobile-image-1">
-            <img class="home-image" src="{{url_for('static', filename='images/in-app/replacethis.jpg')}}" alt="">
+            <img class="home-image" src="{{url_for('static', filename='images/in-app/sunset-mountains.jpg')}}" alt="Sunset over a mountain range">
         </div>
     </div>
     <div class="row">
@@ -48,11 +48,8 @@
         </div>
     </div>
     <div class="row intro">
-
         <div class="col s12 m6 word-col">
-
             <div class="row">
-
                 <div class="col s6 m6 center-align">
                     <i class="fas fa-id-badge cta-icons "></i>
                     <h3 class="intro-words ">REGISTER</h3>
@@ -62,7 +59,6 @@
                     <h3 class="intro-words ">COMPETE</h3>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col s6 m6 center-align">
                     <i class="fas fa-star cta-icons"></i>
@@ -73,24 +69,22 @@
                     <h3 class="intro-words ">WIN POINTS</h3>
                 </div>
             </div>
-
         </div>
-
         <div class="col m6 l5 img-col hide-on-small-only right-align">
             <img class="home-image home-image-desktop right-align"
-                src="{{url_for('static', filename='images/in-app/balloons.jpg')}}" alt="mountains at sunset">
+                src="{{url_for('static', filename='images/in-app/balloons.jpg')}}" alt="Hot air balloons in a blue sky">
         </div>
-
     </div>
 </section>
+<!-- Competition timeline & rules section -->
 <section class="light-bg section-home-3">
+<!-- Timeline -->
     <div class="row schedule-row">
         <div class="schedule col s10 offset-s1">
             <h3 class="center-align homepage-subheading4 light-text">BE THE CONTESTANT AND THE JUDGE!</h3>
-
             <div id="content">
                 <ul class="timeline">
-                    <!-- Item 1 -->
+<!-- Monday @00:00 -->
                     <li>
                         <div class="direction-r">
                             <div class="flag-wrapper">
@@ -101,8 +95,7 @@
                             <div class="desc timeline-explanations">A new photography competition begins.</div>
                         </div>
                     </li>
-
-                    <!-- Item 2 -->
+<!-- Monday to Friday  -->
                     <li>
                         <div class="direction-l">
                             <div class="flag-wrapper">
@@ -113,8 +106,7 @@
                             <div class="desc timeline-explanations">Enter an image to compete in this week's competition.</div>
                         </div>
                     </li>
-
-                    <!-- Item 3 -->
+<!-- Saturday & Sunday until 22:00PM -->
                     <li>
                         <div class="direction-r">
                             <div class="flag-wrapper">
@@ -125,7 +117,7 @@
                             <div class="desc timeline-explanations">Competitors cast their vote. All users who entered the competition get 1 vote.</div>
                         </div>
                     </li>
-                    <!-- Item 4 -->
+<!-- Sunday @ 22:00PM -->
                     <li>
                         <div class="direction-l">
                             <div class="flag-wrapper">
@@ -139,8 +131,8 @@
                 </ul>
             </div>
         </div>
-
     </div>
+<!-- "How does the competition work" section -->
     <div class="row points-scoring-row valign-wrapper">
         <img class="home-image-2 col l4 offset-l1 hide-on-med-and-down"
             src="{{url_for('static', filename='images/in-app/leaves.jpg')}}" alt="">
@@ -149,61 +141,64 @@
             <div class="points center-align">
                 <p>When you enter a photograph in a SNAPATHON weekly competition you can win points in two ways: </p>
                 <ul>
-                    <li>1. Your entry wins 1st, 2nd or 3rd place.</li> 
-                    <li>2. You vote for the 1st, 2nd or 3rd placed photo.</li> 
+                    <li>1. Your entry wins 1st, 2nd or 3rd place.</li>
+                    <li>2. You vote for the 1st, 2nd or 3rd placed photo.</li>
                 </ul>
                 <p>Click below for a complete explanation of the rules and how to enter.</p>
             </div>
         </div> <br>
     </div>
-     <div class="row review-rules-homepage-row">
-    <ul class="collapsible homepage-collapsible-rules">
-        <li class="col s12 homepage-rules-li">
-            <div class="collapsible-header valign-wrapper review-rules-collapsible-header-homepage">
-                <i class="far fa-list-alt"></i><h2 class="review-rules-text-homepage">Review the competition rules</h2><i class="fas fa-angle-down"></i>
-            </div>
-            <div class="collapsible-body competition-rules competition-rules-homepage">
-                <div class="row">
-                <h3 class="center-align rules-heading">The rules are as follows:</h3>
-                <ul class="rules col s12 m10 offset-m1">
-                    <li>To get involved and enter competitions, you must first register as a member.</li>
-                    <li>As a member you may enter 1 photograph into each weekly competition.</li>
-                    <li>The photograph must be your own original creation.</li>
-                    <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
-                    <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
-                    <li>The photograph must not violate the rights of any third party.</li>
-                    <li>The photograph must not breach copyright law.</li>
-                    <li>Entries are accepted through our online form each week from 0:00AM Monday until Friday at midnight.</li>
-                    <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
-                    <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
-                    <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
-                    <li>If you fail to vote between Saturday morning at 0:00 and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
-                    <li>All times quoted are UTC+00:00</li>
-                    <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins 
-                        a 1st place gold award badge and its' creator receives 7 points. The next placed photo receives a 2nd place silver award badge and its' creator receives
-                        5 points. Finally the 3rd placed photo receives a bronze award badge and its' creator receives 3 points. 
-                    </li>
-                     <li>Users can also win points by voting for winning images. If a user votes for the 1st placed photo, that user receives 3 points. If a user votes for the 
-                         2nd placed photo, that user receives 2 points. Finally if a user votes for the 3rd placed photo, that user receives 1 point.
-                     </li>
-                     <li>It follows that the highest number of points a user can receive per competition is 9 (by winning 1st place and voting for the 2nd place image).
-                     </li>
-                </ul>
+<!-- Review competition rules collapsible -->
+    <div class="row review-rules-homepage-row">
+        <ul class="collapsible homepage-collapsible-rules">
+            <li class="col s12 homepage-rules-li">
+                <div class="collapsible-header valign-wrapper review-rules-collapsible-header-homepage">
+                    <i class="far fa-list-alt"></i>
+                    <h2 class="review-rules-text-homepage">Review the competition rules</h2><i class="fas fa-angle-down"></i>
                 </div>
-
-            </div>
-        </li>
-    </ul>
-    </div>  
-     {% if not session['user']%}
-    <div class="row">
-        <a class="col s12 cta-link valign-wrapper" href="{{ url_for('register') }}">
-            <i class="fas fa-id-badge"></i><h3 class="cta "> Register to get started today!</h3>
-        </a>
+                <div class="collapsible-body competition-rules competition-rules-homepage">
+                    <div class="row">
+                        <h3 class="center-align rules-heading">The rules are as follows:</h3>
+                        <ul class="rules col s12 m10 offset-m1">
+                            <li>To get involved and enter competitions, you must first register as a member.</li>
+                            <li>As a member you may enter 1 photograph into each weekly competition.</li>
+                            <li>The photograph must be your own original creation.</li>
+                            <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
+                            <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
+                            <li>The photograph must not violate the rights of any third party.</li>
+                            <li>The photograph must not breach copyright law.</li>
+                            <li>Entries are accepted through our online form each week from 0:00AM Monday until Friday at midnight.</li>
+                            <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
+                            <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
+                            <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
+                            <li>If you fail to vote between Saturday morning at 0:00 and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
+                            <li>All times quoted are UTC+00:00</li>
+                            <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins
+                                a 1st place gold award badge and its' creator receives 7 points. The next placed photo receives a 2nd place silver award badge and its' creator receives
+                                5 points. Finally the 3rd placed photo receives a bronze award badge and its' creator receives 3 points.
+                            </li>
+                            <li>Users can also win points by voting for winning images. If a user votes for the 1st placed photo, that user receives 3 points. If a user votes for the
+                                2nd placed photo, that user receives 2 points. Finally if a user votes for the 3rd placed photo, that user receives 1 point.
+                            </li>
+                            <li>It follows that the highest number of points a user can receive per competition is 9 (by winning 1st place and voting for the 2nd place image).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
-     {% endif %}
-
+    {% if not session['user']%}
+<!-- Register Link - visible to guest users only -->
+        <div class="row">
+            <a class="col s12 cta-link valign-wrapper" href="{{ url_for('register') }}">
+                <i class="fas fa-id-badge"></i>
+                <h3 class="cta "> Register to get started today!</h3>
+            </a>
+        </div>
+    {% endif %}
 </section>
+<!-- Contact Form -->
 <section id="contact-form" class="dark-bg section-home-4">
     <div class="row">
         <div class="contact-form-box col s8 offset-s2 m6 offset-m3">
@@ -212,21 +207,18 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email_of_sender" name="email_of_sender" type="text" class="validate" value="{{ user_email }}"  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" minlength="4" maxlength="65" required>
+                        <input id="email_of_sender" name="email_of_sender" type="text" class="validate" value="{{ user_email }}" 
+                               pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" minlength="4" maxlength="65" required>
                         <label for="email_of_sender">Email Address:</label>
                     </div>
-                    
                     <div class="input-field col s12">
                         <textarea id="message" name="message" class="validate" minlength="5" maxlength="1000" data-length="1000" aria-label="Message" required></textarea>
                     </div>
                 </div>
-                <button class="contact-send-btn btn-large z-depth-3 hvr-grow-shadow" type="submit" name="action"
-                    value="Submit">SEND</button>
+                <button class="contact-send-btn btn-large z-depth-3 hvr-grow-shadow" type="submit" name="action" value="Submit">SEND</button>
             </form>
         </div>
     </div>
 </section>
-
-
 
 {% endblock %}

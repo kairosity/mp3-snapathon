@@ -1,240 +1,230 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- Profile Page Header -->
 <section class="profile-page-header">
-    
     <div class="row">
-        <div class="col s10 offset-s1 m7 offset-m1 hide-on-med-and-up">  
+        <div class="col s10 offset-s1 m7 offset-m1 hide-on-med-and-up">
             <h1 id="main" class="profile-page-heading">{{ user.username|capitalize }}'s profile</h1>
         </div>
     </div>
     <div class="row">
+<!-- User Profile Display For Large Screens -->
         <div class="col s10 m2 offset-m1 center-align avatar-wrapper hide-on-small-only">
             {% if user_profile_photo %}
-                <img class="avatar" src="{{url_for('file', filename=user_profile_photo.filename)}}" alt="{{user.username}} profile photo"/>
+                <img class="avatar" src="{{url_for('file', filename=user_profile_photo.filename)}}" alt="{{user.username}} profile photo" />
             {% else %}
-                <img class="avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}" alt="{{user.username}} profile photo default avatar"/>
+                <img class="avatar" src="{{url_for('static', filename='/images/profile-pic/profile-pic-default.svg')}}" alt="{{user.username}} profile photo default avatar" />
             {% endif %}
             <h5 class="badge user-points-badge">{{ user.user_points }}</h5>
-             <p class="avatar-username">{{ user.username|capitalize }}</p>
+            <p class="avatar-username">{{ user.username|capitalize }}</p>
         </div>
-         <div class="col s10 offset-s1 m2 offset-m1 center-align">
+<!-- User Profile Display For Small Screens -->
+        <div class="col s10 offset-s1 m2 offset-m1 center-align">
             {% if user_profile_photo %}
-                <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('file', filename=user_profile_photo.filename)}}"/>
+                <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('file', filename=user_profile_photo.filename)}}"
+                alt="{{user.username}}'s profile photo" />
             {% else %}
-            <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}"/><br>
+                <img class="small-avatar hide-on-med-and-up center-align" src="{{url_for('static', filename='images/profile-pic/profile-pic-default.svg')}}" 
+                alt="{{user.username}}'s profile default avatar"/><br>
             {% endif %}
-             <p class="center-align avatar-username hide-on-med-and-up">{{ user.username|capitalize }}</p>
-             <h5 class="center-align badge user-points-badge hide-on-med-and-up">{{ user.user_points }}</h5>
-       </div>
-       {% if user.username == session.user %}
-      <div class="col s6 offset-s3 center-align edit-profile-btn-col hide-on-med-and-up">
-            <a href="{{ url_for('edit_profile', username=user.username) }}" class=" btn edit-profile-btn hvr-grow-shadow">Edit Profile</a> 
+            <p class="center-align avatar-username hide-on-med-and-up">{{ user.username|capitalize }}</p>
+            <h5 class="center-align badge user-points-badge hide-on-med-and-up">{{ user.user_points }}</h5>
         </div>
-       {% endif %}
-
+        {% if user.username == session.user %}
+<!-- Edit Profile Button if user is logged in and viewing own profile -->
+            <div class="col s6 offset-s3 center-align edit-profile-btn-col hide-on-med-and-up">
+                <a href="{{ url_for('edit_profile', username=user.username) }}" class=" btn edit-profile-btn hvr-grow-shadow">Edit Profile</a>
+            </div>
+        {% endif %}
         <div class="col s10 offset-s1 m6 offset-m2 center-align">
             {% if user.username == session.user %}
-            <!-- If it is Mon-Fri -->
-            {% if datetime.weekday() in range(0,5) %}
-                <!-- If the user has yet to compete -->
-                {% if can_enter %} 
-                    <h4 class="time-msg">You still have to enter an image into this week's competition. You have {{comp_closes}} left to enter.</h4>
-                    <h4 class="time-msg">Go to <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to 
-                        enter an image.</h4>
-                {% else %}
-                      <h4 class="time-msg">Thank you for entering the competition. Voting opens in {{comp_closes}}.</h4>
+                {% if datetime.weekday() in range(0,5) %}
+                    {% if can_enter %}
+<!-- If user is logged in, viewing their own profile, it is Mon-Fri and they have yet to enter the competition -->
+                        <h4 class="time-msg">You still have to enter an image into this week's competition. You have {{comp_closes}} left to enter.</h4>
+                        <h4 class="time-msg">Go to <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">COMPETE</a> now to
+                            enter an image.</h4>
+                    {% else %}
+<!-- If user is logged in, viewing their own profile, it is Mon-Fri and they HAVE entered the competition -->
+                        <h4 class="time-msg">Thank you for entering the competition. Voting opens in {{comp_closes}}.</h4>
+                    {% endif %}
+                {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") < "22" ) ) %}
+                    {% if votes_to_use > 0 %}
+<!-- User is logged in, viewing own profile, it is Sat-Sun before 22:00PM, they HAVE entered the competition & have NOT voted yet  -->
+                        <h4 class="time-msg"> You still have to vote for your favourite image. You have {{voting_closes}} left to vote. 
+                            If you don't vote, your entry's points will be reduced to 0.</h4>
+                        <h4 class="time-msg">Go to 
+                            <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">
+                                VOTE
+                            </a> and cast your vote!
+                        </h4>
+                    {% elif votes_to_use == 0 and user_entry_this_comp != None %}
+<!-- User is logged in, viewing own profile, it is Sat-Sun before 22:00PM and they HAVE voted  -->
+                        <h4 class="time-msg">Thank you for voting! Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
+                    {% else %}
+<!-- User is logged in, viewing own profile, it is Sat-Sun before 22:00PM and they cannot vote because they did not enter the competition -->
+                        <h4 class="time-msg">You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this 
+                        Sunday in {{voting_closes}}, when awards, points & winners will be announced.
+                        </h4>
+                    {% endif %}
+                {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") > "21") ) %}
+<!-- It is Sunday after 22:00PM and winners have been announced -->
+                    <h4 class="time-msg">The winners have been announced! Head to <a class="profile-link hvr-underline-from-center" href="{{url_for('winners')}}">WINNERS</a> to see the results!</h4>
                 {% endif %}
-            <!-- If it is Sat or Sunday before 22:00PM -->
-            {% elif (datetime.weekday() == 5) or (datetime.weekday() == 6 and (datetime.strftime("%H") < "22") ) %}
-                <!-- If the user has not voted yet -->
-                {% if votes_to_use > 0 %}
-                    <h4 class="time-msg"> You still have to vote for your favourite image. You have {{voting_closes}} left to vote. If you don't vote, your entry's points will be reduced to 0.</h4>
-                    <h4 class="time-msg">Go to <a class="profile-link hvr-underline-from-center" href="{{url_for('compete', username=session['user'])}}">VOTE</a> and cast your vote!</h4>
-                <!-- If the user has voted already OR has no votes b/c they did not enter -->
-                {% elif votes_to_use == 0 and user_entry_this_comp != None %}
-                    <h4 class="time-msg">Thank you for voting! Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
-                {% else %}
-                    <h4 class="time-msg">You did not enter this week's competition and therefore cannot vote. Voting ends at 22:00 this Sunday in {{voting_closes}}, when awards, points & winners will be announced.</h4>
-                {% endif %}
-            {% elif (datetime.weekday() == 6 and (datetime.strftime("%H") > "21") ) %}
-                <h4 class="time-msg">The winners have been announced! Head to <a class="profile-link hvr-underline-from-center" href="{{url_for('winners')}}">WINNERS</a> to see the results!</h4>
-            {% endif %}
             {% endif %}
         </div>
-
     </div>
+<!-- Profile Name & Edit Button (conditional on login status)-->
     <div class="row">
-        <div class="col s10 offset-s1 m7 offset-m1 hide-on-small-only">  
+        <div class="col s10 offset-s1 m7 offset-m1 hide-on-small-only">
             <h1 class="profile-page-heading">{{ user.username|capitalize }}'s profile</h1>
         </div>
-       
         {% if user.username == session.user %}
-
-         <div class="col s6 offset-s1 m6 offset-m1 left-align hide-on-small-only">
-            <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a> 
-        </div>
-
-        <!-- End if user is logged in -->
+            <div class="col s6 offset-s1 m6 offset-m1 left-align hide-on-small-only">
+                <a href="{{ url_for('edit_profile', username=user.username) }}" class="waves-effect waves-light btn edit-profile-btn">Edit Profile</a>
+            </div>
         {% endif %}
-       
     </div>
-    
 </section>
-     
-    <div class="row profile-row">
+<!-- Profile Page Photos -->
+<div class="row profile-row">
     <div class="col s12 no-padding">
-      <ul class="tabs profile-tabs">
-        <li class="tab profile-tab remove-border col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has entered into competition" href="#entries">Entries</a></li>
-        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has voted for" href="#votes">Votes</a></li>
-        <li class="tab profile-tab col s4"><a class="tooltipped" data-position="top" data-tooltip="All of {{ user.username|capitalize }}'s award-winning images" href="#awards">Awards</a></li>
-      </ul>
+        <ul class="tabs profile-tabs">
+            <li class="tab profile-tab remove-border col s4">
+                <a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has entered into competition" 
+                href="#entries">Entries
+                </a>
+            </li>
+            <li class="tab profile-tab col s4">
+                <a class="tooltipped" data-position="top" data-tooltip="Photos {{ user.username|capitalize }} has voted for" 
+                href="#votes">Votes
+                </a>
+            </li>
+            <li class="tab profile-tab col s4">
+                <a class="tooltipped" data-position="top" data-tooltip="All of {{ user.username|capitalize }}'s award-winning images" 
+                href="#awards">Awards
+                </a>
+            </li>
+        </ul>
     </div>
-
+<!-- User Entries -->
     <div id="entries" class="row s12">
-        <!-- <div class="row profile-photos-row"></div> -->
-            {% for photo in user_photos %}
-
-                {% if photo.awards == 1 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                    <div class="award-overlay award-overlay-1">
-                        <i class="fas fa-award award award-1 thumbnail-award"></i>
-                    </div>
-                    </div>
-                    </a>
-
-                 {% elif photo.awards == 2 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                    <div class="award-overlay award-overlay-2">
-                        <i class="fas fa-award award award-2 thumbnail-award"></i>
-                    </div>
-                    </div>
-                    </a>
-                
-                {% elif photo.awards == 3 %}
-
-                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                <div class="award-overlay award-overlay-3">
-                    <i class="fas fa-award award award-3 thumbnail-award"></i>
-                </div>
-                </div>
-                </a>
-
-                {% else %}
-            
-                <div class="col s12 m4 l3 profile-photos-col">
-                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}"></a>
-                </div>
-
-                {% endif %}
-            
-            {% endfor %}
-
-    </div>
-    
-
-    </div>
-     <div id="votes" class="row s12">
-
-             {% for photo in photos_voted_for %}
-
-             {% if photo.awards == 1 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                    <div class="award-overlay award-overlay-1">
-                        <i class="fas fa-award award award-1 thumbnail-award"></i>
-                    </div>
-                    </div>
-                    </a>
-            {% elif photo.awards == 2 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                    <div class="award-overlay award-overlay-2">
-                        <i class="fas fa-award award award-2 thumbnail-award"></i>
-                    </div>
-                    </div>
-                    </a>
-                
-                {% elif photo.awards == 3 %}
-
-                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                <div class="award-overlay award-overlay-3">
-                    <i class="fas fa-award award award-3 thumbnail-award"></i>
-                </div>
-                </div>
-                </a>
-
-                {% else %}
-            
-                <div class="col s12 m4 l3 profile-photos-col">
-                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
-                </div>
-                {% endif %}
-            
-            {% endfor %}
-
-    </div>
-
-    <div id="awards" class="row s12">
-        {% for photo in award_winners %}
-
+        {% for photo in user_photos %}
             {% if photo.awards == 1 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}">
                     <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                        <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                        <div class="award-overlay award-overlay-1">
+                            <i class="fas fa-award award award-1 thumbnail-award"></i>
+                        </div>
+                    </div>
+                </a>
+            {% elif photo.awards == 2 %}    
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                        <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                        <div class="award-overlay award-overlay-2">
+                            <i class="fas fa-award award award-2 thumbnail-award"></i>
+                        </div>
+                    </div>
+                </a>
+            {% elif photo.awards == 3 %}
+                <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                        <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                        <div class="award-overlay award-overlay-3">
+                            <i class="fas fa-award award award-3 thumbnail-award"></i>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <div class="col s12 m4 l3 profile-photos-col">
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                        <img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<!-- Photos User has Voted for -->
+<div id="votes" class="row s12">
+    {% for photo in photos_voted_for %}
+        {% if photo.awards == 1 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
                     <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
                     <div class="award-overlay award-overlay-1">
                         <i class="fas fa-award award award-1 thumbnail-award"></i>
                     </div>
-                    </div>
-                    </a>
-            {% elif photo.awards == 2 %}
-
-                    <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
-                    <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                </div>
+            </a>
+        {% elif photo.awards == 2 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
                     <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
                     <div class="award-overlay award-overlay-2">
                         <i class="fas fa-award award award-2 thumbnail-award"></i>
                     </div>
-                    </div>
-                    </a>
-                
-                {% elif photo.awards == 3 %}
-
-                <a href="{{ url_for('get_photo', filename=photo.filename) }}"> 
+                </div>
+            </a>
+        {% elif photo.awards == 3 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
                 <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
-                <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                <div class="award-overlay award-overlay-3">
-                    <i class="fas fa-award award award-3 thumbnail-award"></i>
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-3">
+                        <i class="fas fa-award award award-3 thumbnail-award"></i>
+                    </div>
                 </div>
-                </div>
+            </a>
+        {% else %}
+            <div class="col s12 m4 l3 profile-photos-col">
+                <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                    <img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
                 </a>
-
-                {% else %}
-            
-                <div class="col s12 m4 l3 profile-photos-col">
-                    <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"></a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<!-- User's award winning photos -->
+<div id="awards" class="row s12">
+    {% for photo in award_winners %}
+        {% if photo.awards == 1 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-1">
+                        <i class="fas fa-award award award-1 thumbnail-award"></i>
+                    </div>
                 </div>
-
-                {% endif %}
-            
-            {% endfor %}
-    </div>
-
+            </a>
+        {% elif photo.awards == 2 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-2">
+                        <i class="fas fa-award award award-2 thumbnail-award"></i>
+                    </div>
+                </div>
+            </a>
+        {% elif photo.awards == 3 %}
+            <a href="{{ url_for('get_photo', filename=photo.filename) }}">
+                <div class="award-overlay-container  col s12 m4 l3 profile-photos-col ">
+                    <img class="thumbnail-photo " src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                    <div class="award-overlay award-overlay-3">
+                        <i class="fas fa-award award award-3 thumbnail-award"></i>
+                    </div>
+                </div>
+            </a>
+        {% else %}
+            <div class="col s12 m4 l3 profile-photos-col">
+                <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                    <img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
 
 {% endblock %}

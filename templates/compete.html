@@ -1,38 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- If the day of the week is Mon - Friday show the competition entry form. -->
+<!-- Page Heading "COMPETE" Mon-Fri -->
 {% if (datetime.strftime("%w") == "1") or (datetime.strftime("%w") == "2") or (datetime.strftime("%w") == "3") or (datetime.strftime("%w") == "4") or (datetime.strftime("%w") == "5") %}
 <section class="comp-intro center-align">
     <div class="row">
         <div class="col s10 offset-s1">
             {% if user.can_enter %}
-                <h1 id="main" class="page-heading">Compete</h1>
+            <h1 id="main" class="page-heading">Compete</h1>
             {% else %}
-                <h1 class="page-heading">Thank you for entering!</h1>
+            <h1 class="page-heading">Thank you for entering!</h1>
             {% endif %}
             {% if user.can_enter %}
-                <h2 class="grey-text text-lighten-4 page-subheading compete-subheading">This week's theme is {{category|capitalize}}</h2>
-
-                <h5 class="grey-text text-lighten-4 page-sub-subheading-text">{{instructions}}</h5>
+            <h2 class="grey-text text-lighten-4 page-subheading compete-subheading">This week's theme is {{category|capitalize}}</h2>
+            <h5 class="grey-text text-lighten-4 page-sub-subheading-text">{{instructions}}</h5>
             {% endif %}
         </div>
     </div>
 </section>
 {% if user.can_enter %}
+<!-- Entry Form, Rules & Guidelines: If user has not entered competition already -->
 <div class="row">
     <ul class="collapsible">
+        <!-- Entry Form -->
         <li class="col s12 m10 offset-m1">
             <div class="collapsible-header add-photo-collapsible-header valign-wrapper">
-                <i class="fas fa-plus center-align"></i><p class="center-align add-a-photo-text">Add a Photo!</p>
+                <i class="fas fa-plus center-align"></i>
+                <p class="center-align add-a-photo-text">Add a Photo!</p>
             </div>
             <div class="collapsible-body">
                 <form class="col s12 m12" method="post" action="{{ url_for('compete') }}"
                     enctype="multipart/form-data">
                     <div class="row">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <div class="input-field col s12 m6">
-                            <input class="validate tooltipped" data-position="bottom" data-tooltip="Enter a creative and descriptive title for your image" id="title" name="title" type="text" maxlength="45" data-length="45" required>
+                            <input class="validate tooltipped" data-position="bottom" data-tooltip="Enter a creative and descriptive 
+                                    title for your image" id="title" name="title" type="text" maxlength="45" data-length="45" required>
                             <label for="title">Title</label>
                         </div>
                         <div class="file-field input-field col s12 m6">
@@ -47,13 +50,15 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="story" name="story" maxlength="600" data-length="600" class="materialize-textarea tooltipped" data-position="bottom" data-tooltip="Write about the background to this photo, how did it come about?"></textarea>
+                            <textarea id="story" name="story" maxlength="600" data-length="600" class="materialize-textarea tooltipped" data-position="bottom"
+                                data-tooltip="Write about the background to this photo, how did it come about?"></textarea>
                             <label for="story">Story</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6">
-                            <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate tooltipped" data-position="bottom" data-tooltip="Please include brand and model" required>
+                            <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate tooltipped" data-position="bottom"
+                                data-tooltip="Please include brand and model" required>
                             <label for="camera">Camera</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -75,161 +80,170 @@
                             <label for="iso">ISO</label>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col s12">
                             <p class="grey-text terms-and-conditions">I confirm that this photograph is my own original creation and I have the right to
                                 share and distribute it. I certify that this photograph does not violate the rights of any third party or
                                 any copyright. I understand that I am prohibited from entering sexual imagery, violent imagery or
                                 any images that might be deemed offensive. I also confirm that this photo has not been heavily edited with the
-                                only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree 
+                                only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree
                                 to grant SNAPATHON the free of charge right to use and distribute this photograph in any manner and using any media, including
                                 and without limitation, the right to distribute, publish, adapt, display and copy the image.<br><br>
                                 <label> <input type="checkbox" class="filled-in checkbox-yellow" required />
                                     <span>I have read and agree to these terms and conditions</span>
-                                </label></p>
+                                </label>
+                            </p>
                         </div>
                     </div>
                     <button class="btn waves-effect waves-light compete-form-btn hvr-grow-shadow" type="submit" name="action">Compete!
                     </button>
                 </form>
-
             </div>
         </li>
+<!-- Upload Guidelines -->
         <li class="col s12 m10 offset-m1">
             <div class="collapsible-header valign-wrapper review-rules-collapsible-header"><i class="fas fa-upload"></i>
-                <p class="review-rules-text">Review the Upload Guidelines</p></div>
+                <p class="review-rules-text">Review the Upload Guidelines</p>
+            </div>
             <div class="collapsible-body competition-rules">
                 <div class="row">
-                <h3 class="center-align rules-heading">Upload Guidelines:</h3>
-                <ul class="rules col s12 m10 offset-m1">
-                    <li> Files must be of the type: .jpg, .jpeg, .svg, .png or .gif - No other file types will be accepted.</li>
-                    <li> Uploaded images must not be larger than 560KBs (0.5MB). </li>
-                    <li> When resizing your image, a good rule of thumb is setting a resolution of 72dpi and no larger than 850px on the photo's longest side.</li>
-                    <li> While keeping under the above file size limit, please do ensure that your image is not pixelated.</li>
-                    <li> Pixelated images, or bad quality images will not be removed, but are unlikely to score highly in the competition.</li>
-                </ul>
+                    <h3 class="center-align rules-heading">Upload Guidelines:</h3>
+                    <ul class="rules col s12 m10 offset-m1">
+                        <li> Files must be of the type: .jpg, .jpeg, .svg, .png or .gif - No other file types will be accepted.</li>
+                        <li> Uploaded images must not be larger than 560KBs (0.5MB). </li>
+                        <li> When resizing your image, a good rule of thumb is setting a resolution of 72dpi and no larger than 850px on the photo's longest side.</li>
+                        <li> While keeping under the above file size limit, please do ensure that your image is not pixelated.</li>
+                        <li> Pixelated images, or bad quality images will not be removed, but are unlikely to score highly in the competition.</li>
+                    </ul>
                 </div>
 
             </div>
         </li>
+<!-- Competition Rules -->
         <li class="col s12 m10 offset-m1">
-            <div class="collapsible-header valign-wrapper review-rules-collapsible-header"><i class="far fa-list-alt"></i><p class="review-rules-text">Review the competition rules</p></div>
+            <div class="collapsible-header valign-wrapper review-rules-collapsible-header"><i class="far fa-list-alt"></i>
+                <p class="review-rules-text">Review the competition rules</p>
+            </div>
             <div class="collapsible-body competition-rules">
                 <div class="row">
-                <h3 class="center-align rules-heading">The rules are as follows:</h3>
-                <ul class="rules col s12 m10 offset-m1">
-                    <li>As a member you may enter 1 photograph into each weekly competition.</li>
-                    <li>The photograph must be your own original creation.</li>
-                    <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
-                    <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
-                    <li>The photograph must not violate the rights of any third party.</li>
-                    <li>The photograph must not breach copyright law.</li>
-                    <li>Entries are accepted through our online form (above) each week from 0:00AM Monday until 22:00PM Friday.</li>
-                    <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
-                    <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
-                    <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
-                    <li>If you fail to vote between Saturday and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
-                    <li>All times quoted are UTC+00:00</li>
-                    <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins 
-                        a 1st place gold award badge and its' user receives 7 points. The next placed photo receives a 2nd place silver award badge and its' user receives
-                        5 points. Finally the 3rd placed photo receives a bronze award badge and its' user gets 3 points. 
-                    </li>
-                     <li>Users can also win points by voting for winning images. If a user votes for the 1st placed photo, that user receives 3 points. If a user votes for the 
-                         2nd placed photo, that user receives 2 points. Finally if a user votes for the 3rd placed photo, that user receives 1 point.
-                     </li>
-                     <li>In this way the highest number of points a user can receive per competition is 9 (by winning 1st place and voting for the 2nd place image).
-                     </li>
-                </ul>
+                    <h3 class="center-align rules-heading">The rules are as follows:</h3>
+                    <ul class="rules col s12 m10 offset-m1">
+                        <li>As a member you may enter 1 photograph into each weekly competition.</li>
+                        <li>The photograph must be your own original creation.</li>
+                        <li>The photograph must not depict anything of a violent, sexual or offensive nature.</li>
+                        <li>The photograph must not be heavily edited. Only light retouching of exposure, contrast & white-balance is permitted.</li>
+                        <li>The photograph must not violate the rights of any third party.</li>
+                        <li>The photograph must not breach copyright law.</li>
+                        <li>Entries are accepted through our online form (above) each week from 0:00AM Monday until 22:00PM Friday.</li>
+                        <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
+                        <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
+                        <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
+                        <li>If you fail to vote between Saturday and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
+                        <li>All times quoted are UTC+00:00</li>
+                        <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins
+                            a 1st place gold award badge and its' user receives 7 points. The next placed photo receives a 2nd place silver award badge and its' user receives
+                            5 points. Finally the 3rd placed photo receives a bronze award badge and its' user gets 3 points.
+                        </li>
+                        <li>Users can also win points by voting for winning images. If a user votes for the 1st placed photo, that user receives 3 points. If a user votes for the
+                            2nd placed photo, that user receives 2 points. Finally if a user votes for the 3rd placed photo, that user receives 1 point.
+                        </li>
+                        <li>In this way the highest number of points a user can receive per competition is 9 (by winning 1st place and voting for the 2nd place image).
+                        </li>
+                    </ul>
                 </div>
-
             </div>
         </li>
     </ul>
+</div>
+{% else %}
+<!-- User Entry Listing: If User has Entered Competition Already -->
+{% for entry in this_weeks_entries %}
+{% if entry.created_by == user.username %}
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <h4 class="page-sub-subheading-text center-align">Voting opens Saturday until Sunday at 22:00PM. Please come back then to vote for
+            your favourite entry.<br> Remember if you don't vote, your entry is invalidated.</h4>
+        <h4 class="page-sub-subheading-text center-align">Your entry: "{{entry.photo_title|capitalize}}"</h4>
+        <div class="center-align">
+            <a href="{{ url_for('get_photo', filename=entry.filename )}}"><img class="entered-image" src="{{ url_for('file', filename=entry.filename) }}" alt="entry.photo_title" /></a>
+        </div>
     </div>
-    {% else %}
-    
-    {% for entry in this_weeks_entries %}
-        {% if entry.created_by == user.username %}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") < "22" ) ) %}
+<!-- "VOTE" Page: Sat-Sun before 22:00PM -->
+    <section class="comp-intro center-align">
         <div class="row">
             <div class="col s12 m8 offset-m2">
-            <h4 class="page-sub-subheading-text center-align">Voting opens Saturday until Sunday at 22:00PM. Please come back then to vote for your favourite entry.<br> Remember if you don't vote, your entry is invalidated.</h4>
-            <h4 class="page-sub-subheading-text center-align">Your entry: "{{entry.photo_title|capitalize}}"</h4>
-            <div class="center-align">
-                <a href="{{ url_for('get_photo', filename=entry.filename )}}"><img class="entered-image" src="{{ url_for('file', filename=entry.filename) }}" alt="entry.photo_title"/></a>
-            </div>
+                {% if user.votes_to_use > 0 %}
+<!-- Heading for users who have a vote -->
+                    <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
+                {% elif photo_user_voted_for != None %}
+<!-- Heading for users who have voted -->
+                    <h1 class="grey-text text-lighten-4 page-heading">YOU HAVE VOTED!</h1>
+                {% elif photo_user_voted_for == None %}
+<!-- Heading for users who cannot vote because they did not enter competition -->
+                    <h1 class="grey-text text-lighten-4 page-heading">VOTING CLOSES SUNDAY at 22:00PM</h1>
+                    <h2 class="page-subheading">You can enter a new competition on Monday.</h2>
+                {% endif %}
+                <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is {{category|capitalize}}</h2>
+                {% if user.votes_to_use > 0 %}
+<!-- Subheading for users who have a vote -->
+                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Vote for your favourite entries now! Obviously you cannot vote for your own image.
+                        If you do not vote by 22:00PM on Sunday evening UTC, your entry's points will be nullified. Winning images & users will be announced Sunday night when voting
+                        closes.
+                    </h5>
+                {% elif photo_user_voted_for != None %}
+<!-- Subheading for users who have voted -->
+                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Thank you for voting! Winning images & users will be announced Sunday night when voting
+                        closes.
+                    </h5>
+                {% elif photo_user_voted_for == None %}
+<!-- Subheading for users who cannot vote because they did not enter competition -->
+                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">You cannot vote this week. Winning images & users will be announced Sunday night when voting
+                        closes and you may enter a new competition on Monday.
+                    </h5>
+                {% endif %}
             </div>
         </div>
-        {% endif %}
-    {% endfor %}
-    
-    {% endif %}
-
-    {% elif (datetime.strftime("%w") == "6") or ( (datetime.strftime("%w") == "0") and (datetime.strftime("%H") < "22") ) %}
-        <section class="comp-intro center-align">
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    {% if user.votes_to_use > 0 %}
-                        <h1 class="grey-text text-lighten-4 page-heading">VOTE</h1>
-                    {% elif photo_user_voted_for != None %}
-                         <h1 class="grey-text text-lighten-4 page-heading">YOU HAVE VOTED!</h1>
-                    {% elif photo_user_voted_for == None %}
-                        <h1 class="grey-text text-lighten-4 page-heading">VOTING CLOSES SUNDAY at 22:00PM</h1>
-                        <h2 class="page-subheading">You can enter a new competition on Monday.</h2>
+    </section>
+<!-- List of Entries to be Voted on -->
+    <div id="entries" class="row s12">
+        {% for photo in this_weeks_entries %}
+            <div class="col s12 m4 l3 profile-photos-col vote-images-container">
+                {% if user.votes_to_use > 0 %}
+<!-- User has a vote -->
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                        <img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}" />
+                    </a>
+                {% else %}
+<!-- User has voted -->
+                    <a href="{{ url_for('get_photo', filename=photo.filename )}}">
+                        <img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}" />
+                    </a>
+                    {% if photo_user_voted_for == photo._id %}
+<!-- Overlay for photo user voted for -->
+                        <div class="overlay vote-overlay">
+                            <h4 class="vote-overlay-text overlay-text-username"><i class="fas fa-vote-yea vote-icon-sm"></i> You voted for this image.</h4>
+                        </div>
                     {% endif %}
-
-
-                    <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is {{category|capitalize}}</h2>
-                    {% if user.votes_to_use > 0 %}
-                     <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Vote for your favourite entries now! Obviously you cannot vote for your own image. 
-                        If you do not vote by 22:00PM on Sunday evening UTC, your entry's points will be nullified. Winning images & users will be announced Sunday night when voting 
-                        closes. 
-                    </h5>
-                    {% elif photo_user_voted_for != None %}
-                    <h5 class="grey-text text-lighten-4 page-sub-subheading-text">Thank you for voting! Winning images & users will be announced Sunday night when voting 
-                        closes. 
-                    </h5>
-                    {% elif photo_user_voted_for == None %}
-                        <h5 class="grey-text text-lighten-4 page-sub-subheading-text">You cannot vote this week. Winning images & users will be announced Sunday night when voting 
-                        closes and you may enter a new competition on Monday. 
-                    </h5>
-                    {% endif %}
+                {% endif %}
+<!-- Vote Button -->
+                <div class="vote-container">
+                    <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        {% if user.votes_to_use > 0 %}
+                            <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
-        </section>
-    
-
-    <div id="entries" class="row s12">
-       
-        {% for photo in this_weeks_entries %}
-
-        <div class="col s12 m4 l3 profile-photos-col vote-images-container">
-
-        {% if user.votes_to_use > 0 %}
-            <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
-        {% else %}
-
-        <a href="{{ url_for('get_photo', filename=photo.filename )}}"><img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="f"/></a>
-        
-            {% if photo_user_voted_for == photo._id %}
-                    <div class="overlay vote-overlay">
-                        <h4 class="vote-overlay-text overlay-text-username"><i class="fas fa-vote-yea vote-icon-sm"></i> You voted for this image.</h4>
-                    </div>
-            {% endif %}
-
-        {% endif %}
-        <div class="vote-container">
-        <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            {% if user.votes_to_use > 0 %}
-                <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
-            {% endif %}
-        </form>
-        </div>
-        </div>
-
         {% endfor %}
     </div>
+<!-- Pagination -->
     <div class="row">
         <div class="col s10 offset-s1 m8 offset-m2 center-align">
             {{ pagination.info }}
@@ -237,20 +251,18 @@
         <div class="col s10 offset-s1 m8 offset-m2 center-align">
             {{ pagination.links }}
         </div>
-        
     </div>
-    {% else %}
-         <section class="comp-intro center-align">
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <h1 class="grey-text text-lighten-4 page-heading">THE VOTES HAVE BEEN TALLIED!</h1>
-                    <h2 class="grey-text text-lighten-4 page-subheading">Please head over to <a class="text-link" href="{{url_for('winners')}}">WINNERS</a> to view the results! </h2>
-                    <img class="interim-image" src="{{url_for('static', filename='images/in-app/balloons.jpg')}}" alt="balloons"/>
-                </div>
+{% else %}
+<!-- Votes Tallied Page: Sunday after 22:00PM -->
+    <section class="comp-intro center-align">
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <h1 class="grey-text text-lighten-4 page-heading">THE VOTES HAVE BEEN TALLIED!</h1>
+                <h2 class="grey-text text-lighten-4 page-subheading">Please head over to <a class="text-link" href="{{url_for('winners')}}">WINNERS</a> to view the results! </h2>
+                <img class="interim-image" src="{{url_for('static', filename='images/in-app/balloons.jpg')}}" alt="balloons" />
             </div>
-        </section>
-    {% endif %}
-
-
+        </div>
+    </section>
+{% endif %}
 
 {% endblock %}

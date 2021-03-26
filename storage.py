@@ -96,3 +96,17 @@ else:
     def test_function():
     mongo.db.users.update_one({"username": "apschedulertestuser"}, {'$inc': {"user_points": 1}})
     print("User points incremented")
+
+
+Was a template called photos.html
+    {% extends "base.html" %}
+{% block content %}
+    {% for photo in photos %}
+
+        {{ photo.photo_title }}
+    
+    {% endfor %}
+
+    {{ pic_to_show }}
+
+{% endblock %}

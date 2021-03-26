@@ -1,26 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- Page Heading -->
 <h1 id="main" class="page-heading center-align">Browse Images</h1>
-
-      <div class="search-card row">
-         
-          <form action="{{ url_for('search') }}" method="get" class="col s12 m10 offset-m1 search-form">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="row valign-wrapper center-align">
-
-                <div class="input-field col s12 m8 offset-m2">
-                     <input type="text" name="query" id="query" class="validate" minlength="3" aria-label="filter by keyword" value="{{query}}">
-                     <label for="query" aria-label="filter by keyword">Filter by keyword</label>
-                </div>
-                
+<!-- Search Form -->
+<div class="search-card row">
+    <form action="{{ url_for('search') }}" method="get" class="col s12 m10 offset-m1 search-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="row valign-wrapper center-align">
+            <div class="input-field col s12 m8 offset-m2">
+                <input type="text" name="query" id="query" class="validate" minlength="3" aria-label="filter by keyword" value="{{query}}">
+                <label for="query" aria-label="filter by keyword">Filter by keyword</label>
             </div>
-            <div class="row valign-wrapper center-align">
-                <div class="input-field col s12 m8 offset-m2">
-                      <div class="input-field col s12">
-                        <select id="category" name="category">
-                        <option value="" disabled selected >Select category:</option>
+        </div>
+        <div class="row valign-wrapper center-align">
+            <div class="input-field col s12 m8 offset-m2">
+                <div class="input-field col s12">
+                    <select id="category" name="category">
+                        <option value="" disabled selected>Select category:</option>
                         <option value="portraiture">Portraiture</option>
                         <option value="landscape">Landscape</option>
                         <option value="architecture">Architecture</option>
@@ -28,81 +25,73 @@
                         <option value="street">Street</option>
                         <option value="event">Event</option>
                         <option value="wildlife">Wildlife</option>
-                        </select>
-                        <label for="category">Filter by competition category</label>
-                    </div>
+                    </select>
+                    <label for="category">Filter by competition category</label>
                 </div>
             </div>
-                <div class="row award-status-row">
-                <div class="col s10 offset-s1 m8 offset-m2">
-                    <!-- Again JS here? -->
-                    <p class="filter-award" tabindex="0" aria-label="filter by award status">Filter by award status</p>
-                    <label class="award-search-label">
-                        <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="1" />
-                        <span>1st Place</span>
-                    </label>    
-                    <label class="award-search-label">
-                        <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="2" />
-                        <span>2nd Place</span>
-                    </label>    
-                    <label class="award-search-label">
-                        <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="3" />
-                        <span>3rd Place</span>
-                    </label>
-                </div>
+        </div>
+        <div class="row award-status-row">
+            <div class="col s10 offset-s1 m8 offset-m2">
+                <p class="filter-award" tabindex="0" aria-label="filter by award status">Filter by award status</p>
+                <label class="award-search-label">
+                    <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="1" />
+                    <span>1st Place</span>
+                </label>
+                <label class="award-search-label">
+                    <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="2" />
+                    <span>2nd Place</span>
+                </label>
+                <label class="award-search-label">
+                    <input type="checkbox" class="filled-in checkbox-yellow" name="award" value="3" />
+                    <span>3rd Place</span>
+                </label>
             </div>
-            <div class="row">
+        </div>
+        <div class="row">
             <div class="col s12 m10 offset-m1 l8 offset-l2">
-                    <a href="{{ url_for('browse') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn hvr-icon-spin hvr-grow-shadow"><i class="fas fa-undo-alt hvr-icon"></i> Reset</a>
-                    <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn hvr-icon-grow hvr-grow-shadow">
-                        <i class="fas fa-search hvr-icon"></i> Search
-                    </button>  
-                </div>
+                <a href="{{ url_for('browse') }}" class="btn col s12 m10 offset-m1 l4 offset-l2 reset-btn hvr-icon-spin hvr-grow-shadow"><i class="fas fa-undo-alt hvr-icon"></i> Reset</a>
+                <button type="submit" class="btn col s12 m10 offset-m1 l4 search-btn hvr-icon-grow hvr-grow-shadow">
+                    <i class="fas fa-search hvr-icon"></i> Search
+                </button>
             </div>
-          </form>
-        
-       
-      </div>
-   
-
+        </div>
+    </form>
+</div>
+<!-- Images List -->
 <div id="entries" class="row s12">
-            {% for photo in photos %}
-            
-                <div class="col s12 m4 l3 profile-photos-col browse-images-container">
-                    <img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
-                    <div class="overlay">
-                        <a class="overlay-link" href="{{ url_for('get_photo', filename=photo.filename )}}">
-                        <h4 class="overlay-text overlay-text-title">{{photo.photo_title|capitalize}}</h4>
-                        <h5 class="overlay-text overlay-text-username">by {{photo.created_by|capitalize}}</h5>
-                        {% if photo.awards == 1 %}
-                            <i class="fas fa-award award award-1 thumbnail-award"></i>
-                        {% elif photo.awards == 2 %}
-                          <i class="fas fa-award award award-2 thumbnail-award"></i>
-                        {% elif photo.awards == 3 %}
-                          <i class="fas fa-award award award-3 thumbnail-award"></i>
-                        {% endif %}
-                        <p class="overlay-text overlay-text-instruc">Click to see image details</p>
-                        </a>
-                    </div>
-                </div>
-            
-            {% endfor %}
-           
-    </div>
-    <div class="row">
-        <div class="col s10 offset-s1 m8 offset-m2 center-align">
-            {{ pagination.info }}
+    {% for photo in photos %}
+        <div class="col s12 m4 l3 profile-photos-col browse-images-container">
+            <img class="thumbnail-photo browse-photo" src="{{ url_for('file', filename=photo.filename) }}" alt="{{photo.photo_title}}">
+            <div class="overlay">
+                <a class="overlay-link" href="{{ url_for('get_photo', filename=photo.filename )}}">
+                    <h4 class="overlay-text overlay-text-title">{{photo.photo_title|capitalize}}</h4>
+                    <h5 class="overlay-text overlay-text-username">by {{photo.created_by|capitalize}}</h5>
+                    {% if photo.awards == 1 %}
+                        <i class="fas fa-award award award-1 thumbnail-award"></i>
+                    {% elif photo.awards == 2 %}
+                        <i class="fas fa-award award award-2 thumbnail-award"></i>
+                    {% elif photo.awards == 3 %}
+                        <i class="fas fa-award award award-3 thumbnail-award"></i>
+                    {% endif %}
+                    <p class="overlay-text overlay-text-instruc">Click to see image details</p>
+                </a>
+            </div>
         </div>
-        <div class="col s10 offset-s1 m8 offset-m2 center-align">
-            {{ pagination.links }}
-        </div>
-        
+    {% endfor %}
+</div>
+<!-- Pagination -->
+<div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 center-align">
+        {{ pagination.info }}
     </div>
-
-    {% if category or awards %}
-        <div class="hidden-category">{{category}}</div>
-        <div class="hidden-awards">{{awards}}</div>
-    {% endif %}
-    
+    <div class="col s10 offset-s1 m8 offset-m2 center-align">
+        {{ pagination.links }}
+    </div>
+</div>
+<!-- Hidden Fields -->
+{% if category or awards %}
+<div class="hidden-category">{{category}}</div>
+<div class="hidden-awards">{{awards}}</div>
+{% endif %}
 
 {% endblock %}

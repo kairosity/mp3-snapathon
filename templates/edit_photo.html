@@ -1,73 +1,72 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<!-- Backlink -->
 <div class="row back-link">
-    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('get_photo', filename=photo.filename)}}"><i
-            class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to "{{photo.photo_title|capitalize}}" without editing.</a>
+    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('get_photo', filename=photo.filename)}}">
+        <i class="fas fa-long-arrow-alt-left hvr-icon"></i>
+        Back to "{{photo.photo_title|capitalize}}" without editing.
+    </a>
 </div>
-
+<!-- Edit Photo Form -->
 <div class="row">
     <h1 id="main" class="page-heading col s10 offset-s1 center-align">Edit Photo</h1>
-
     <form class="col s10 offset-s1 m8 offset-m2 l6 offset-l3" method="post" action="{{ url_for('edit_photo', filename=photo.filename) }}">
-                <div class="row center-align">
-                    <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
-                </div>
-                <div class="row">
-                     <div class="input-field col s12">
-                    <input id="title" name="title" type="text" value="{{photo.photo_title|capitalize}}" class="validate" maxlength="45" data-length="45" required>
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <label for="title">Title</label>
-                    </div> 
-                    <div class="input-field col s12">
-                    <textarea id="story" name="story" class="materialize-textarea" maxlength="600" data-length="600">{{ photo.photo_story }}</textarea>
-                    <label for="story">Story</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                    <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate" value="{{ photo.camera|capitalize }}" required>
-                    <label for="camera">Camera</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                    <input id="lens" name="lens" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.lens }}">
-                    <label for="lens">Lens</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m4">
-                    <input id="aperture" name="aperture" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.aperture }}">
-                    <label for="aperture">Aperture</label>
-                    </div>
-                    <div class="input-field col s12 m4">
-                    <input id="shutter" name="shutter" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.shutter }}">
-                    <label for="shutter">Shutter Speed</label>
-                    </div>
-                    <div class="input-field col s12 m4 white-text">
-                    <input id="iso" name="iso" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.iso }}">
-                    <label for="iso">ISO</label>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col s12">
-                    <p class="grey-text">I confirm that this photograph is my own original creation and I have the right to
-                                share and distribute it. I certify that this photograph does not violate the rights of any third party or
-                                any copyright. I understand that I am prohibited from entering sexual imagery, violent imagery or
-                                any images that might be deemed offensive. I also confirm that this photo has not been heavily edited with the
-                                only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree 
-                                to grant SNAPATHON the free of charge right to use and distribute this photograph in any manner and using any media, including
-                                and without limitation, the right to distribute, publish, adapt, display and copy the image.<br>
-                        <label> <input type="checkbox" class="filled-in checkbox-yellow" required />
-                    <span>I have read and agree to these terms and conditions</span>
-                </label></p>
-                    </div>
-                </div>
-                <button class="btn waves-effect waves-light col s10 offset-s1 m8 offset-m2 hvr-grow-shadow" type="submit">Update Photo Details
-            </button>
+        <div class="row center-align">
+            <img class="get-photo-img" src="{{ url_for('file', filename=photo.filename) }}">
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="title" name="title" type="text" value="{{photo.photo_title|capitalize}}" class="validate" maxlength="45" data-length="45" required>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <label for="title">Title</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea id="story" name="story" class="materialize-textarea" maxlength="600" data-length="600">{{ photo.photo_story }}</textarea>
+                <label for="story">Story</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input id="camera" name="camera" type="text" maxlength="35" data-length="35" class="validate" value="{{ photo.camera|capitalize }}" required>
+                <label for="camera">Camera</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input id="lens" name="lens" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.lens }}">
+                <label for="lens">Lens</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m4">
+                <input id="aperture" name="aperture" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.aperture }}">
+                <label for="aperture">Aperture</label>
+            </div>
+            <div class="input-field col s12 m4">
+                <input id="shutter" name="shutter" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.shutter }}">
+                <label for="shutter">Shutter Speed</label>
+            </div>
+            <div class="input-field col s12 m4 white-text">
+                <input id="iso" name="iso" type="text" maxlength="20" data-length="20" class="validate" value="{{ photo.iso }}">
+                <label for="iso">ISO</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p class="grey-text">I confirm that this photograph is my own original creation and I have the right to
+                    share and distribute it. I certify that this photograph does not violate the rights of any third party or
+                    any copyright. I understand that I am prohibited from entering sexual imagery, violent imagery or
+                    any images that might be deemed offensive. I also confirm that this photo has not been heavily edited with the
+                    only allowed exception being some simple tweaks to contrast, exposure and white-balance. In submitting this image I agree
+                    to grant SNAPATHON the free of charge right to use and distribute this photograph in any manner and using any media, including
+                    and without limitation, the right to distribute, publish, adapt, display and copy the image.<br>
+                    <label> <input type="checkbox" class="filled-in checkbox-yellow" required />
+                        <span>I have read and agree to these terms and conditions</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light col s10 offset-s1 m8 offset-m2 hvr-grow-shadow" type="submit">Update Photo Details</button>
     </form>
 </div>
-
 
 {% endblock %}

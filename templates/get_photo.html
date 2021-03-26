@@ -1,105 +1,101 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Back Link -->
 <div id="main" class="row">
-
-    {% if source_url %}
-
-        {% if "profile" in source_url %}
-            {% if photo.created_by == session.user %}
-                <div class="row back-link-div">
-                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
-                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile page.</a>
-                </div>
-            {% else %}
-                <div class="row back-link">
-                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
-                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View {{username|capitalize}}'s Profile</a>
-                </div>
-                <div class="row back-link">
-                    <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=session.user)}}">
-                        <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View my Profile</a>
-                </div>
-            {% endif %}
-        {% elif "compete" in source_url %}
+{% if source_url %}
+    {% if "profile" in source_url %}
+        {% if photo.created_by == session.user %}
+            <div class="row back-link-div">
+                <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
+                    <i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile page.</a>
+            </div>
+        {% else %}
+            <div class="row back-link">
+                <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}">
+                    <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View {{username|capitalize}}'s Profile</a>
+            </div>
+            <div class="row back-link">
+                <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=session.user)}}">
+                    <i class="fas fa-long-arrow-alt-left hvr-icon"></i> View my Profile</a>
+            </div>
+        {% endif %}
+    {% elif "compete" in source_url %}
         <div class="row">
             <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('compete', username=photo.created_by)}}"><i
                     class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to the competition!</a>
         </div>
-        {% elif "winners" in source_url %}
+    {% elif "winners" in source_url %}
         <div class="row">
             <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('winners')}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to
-            winners!</a>
+                winners!</a>
         </div>
-        {% elif "browse" in source_url or "search" in source_url %}
+    {% elif "browse" in source_url or "search" in source_url %}
         <div class="row back-link-div">
             <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{source_url}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to
                 browse!</a>
         </div>
-        {% elif "edit_photo" in source_url %}
+    {% elif "edit_photo" in source_url %}
         <div class="row back-link-div">
-            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile page.</a>
+            <a class="back-link hvr-underline-from-right hvr-icon-back" href="{{url_for('profile', username=photo.created_by)}}"><i class="fas fa-long-arrow-alt-left hvr-icon"></i> Back to my profile
+                page.</a>
         </div>
-        {% endif %}
-
-        {% else %}
-        {% endif %}
-
+    {% endif %}
+{% else %}
+{% endif %}
 </div>
-
+<!-- Photo Details -->
 <div class="row">
     <div class="col s12 m6 offset-m3 center-align">
-
         <h1 class="photo-title col s10 offset-s1 center-align">{{ photo.photo_title }}</h1>
         <h2 class="artist-name col s10 offset-s1 center-align">by <a href="{{url_for('profile', username=username)}}">{{ username|capitalize }}</a></h2>
-
-        <!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
         {% if datetime.strftime("%V%G") != photo.week_and_year %}
+<!-- Show photo points if this current week_and_year is different or != as the week and year the photo was entered.  -->
             <h3 class="photo-points col s10 offset-s1 center-align">{{photo.photo_votes}} points</h3>
         {% endif %}
         <img class="get-photo-img center-align" src="{{ url_for('file', filename=photo.filename) }}">
         <p class="photo-story col s10 offset-s1 left-align">{{ photo.photo_story }}</p>
-         {% if photo.awards == 1 %}
-             <h4 class="awards first-place-award col s10 offset-s1 center-align"><em>Awards:</em> 1st Place in the {{photo.competition_category}} category.</h4>
+        {% if photo.awards == 1 %}
+            <h4 class="awards first-place-award col s10 offset-s1 center-align"><em>Awards:</em> 1st Place in the {{photo.competition_category}} category.</h4>
         {% elif photo.awards == 2 %}
-             <h4 class="awards second-place-award col s10 offset-s1 center-align"><em>Awards:</em> 2nd Place in the {{photo.competition_category}} category.</h4>
+            <h4 class="awards second-place-award col s10 offset-s1 center-align"><em>Awards:</em> 2nd Place in the {{photo.competition_category}} category.</h4>
         {% elif photo.awards == 3 %}
             <h4 class="awards third-place-award col s10 offset-s1 center-align"><em>Awards:</em> 3rd Place in the {{photo.competition_category}} category.</h4>
         {% endif %}
         <h3 class="first-tech-spec tech-specs col s10 offset-s1 left-align"><em>Camera:</em> {{ photo.camera }}</h3>
         {% if photo.lens %}
-        <h3 class="tech-specs col s10 offset-s1 left-align"><em>Lens:</em> {{ photo.lens }}</h3>
+            <h3 class="tech-specs col s10 offset-s1 left-align"><em>Lens:</em> {{ photo.lens }}</h3>
         {% endif %}
         {% if photo.aperture %}
-        <h3 class="tech-specs col s10 offset-s1  left-align"><em>Aperture:</em> {{photo.aperture }}</h3>
+            <h3 class="tech-specs col s10 offset-s1  left-align"><em>Aperture:</em> {{photo.aperture }}</h3>
         {% endif %}
         {% if photo.shutter %}
-        <h3 class="tech-specs col s10 offset-s1  left-align"><em>Shutter Speed:</em> {{ photo.shutter }}</h3>
+            <h3 class="tech-specs col s10 offset-s1  left-align"><em>Shutter Speed:</em> {{ photo.shutter }}</h3>
         {% endif %}
         {% if photo.iso %}
-        <h3 class="tech-specs col s10 offset-s1  left-align"><em>ISO:</em> {{ photo.iso }}</h3>
+            <h3 class="tech-specs col s10 offset-s1  left-align"><em>ISO:</em> {{ photo.iso }}</h3>
         {% endif %}
-
     </div>
 </div>
-
-<!-- These buttons should only be visible if the session["user"] is the same as the photo creator. -->
 {% if username == session.user %}
-<!-- The Edit button needs to link to an edit photo page - where all the inputs draw from the photo details. deleted user=user from editphoto url-->
+<!-- Edit & Delete Photo Buttons: Only visible if the current user is the photo creator  -->
 <div class="row">
     <div class="col s12 m8 offset-m2 l3 offset-l3">
-<a href="{{ url_for('edit_photo', photo=photo, filename=photo.filename) }}"
-    class="waves-effect waves-light btn edit-photo-btn col s10 offset-s1 center-align hvr-grow-shadow">Edit Photo Details</a>
+        <a href="{{ url_for('edit_photo', photo=photo, filename=photo.filename) }}"
+            class="waves-effect waves-light btn edit-photo-btn col s10 offset-s1 center-align hvr-grow-shadow">
+            Edit Photo Details
+        </a>
     </div>
-     <div class="col s12 m8 offset-m2 l3 ">
-<a href="#confirm-photo-deletion" class="modal-trigger waves-effect waves-light btn delete-photo-btn hvr-grow-shadow col s10 offset-s1">Delete
-    Photograph</a>
-</div>
+    <div class="col s12 m8 offset-m2 l3 ">
+        <a href="#confirm-photo-deletion" class="modal-trigger waves-effect waves-light btn delete-photo-btn hvr-grow-shadow col s10 offset-s1">
+            Delete Photograph
+        </a>
+    </div>
 </div>
 <!-- Confirm Photo Deletion Modal -->
-  <div id="confirm-photo-deletion" class="modal">
-      <form class="photo-deletion-form" method="POST" action="{{ url_for('delete_photo', filename=photo.filename) }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+<div id="confirm-photo-deletion" class="modal">
+    <form class="photo-deletion-form" method="POST" action="{{ url_for('delete_photo', filename=photo.filename) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="modal-content">
             <h4 class="delete-photo-question">Are you sure you want to delete "{{photo.photo_title}}"?</h4>
             <p class="delete-photo-info">This will delete this image permanently.</p>
@@ -112,14 +108,13 @@
             {% endif %}
         </div>
         <div class="row">
-            <div class="col s12 modal-footer photo-deletion-footer center-align"> 
-            <button class="btn delete-photo-btn-modal col s12 l6" type="submit">Yes, delete it.</button>
-            <a class="modal-close btn delete-photo-btn-cancel-modal col s12 l6" href="#!">No, cancel.</a>
-        </div>
+            <div class="col s12 modal-footer photo-deletion-footer center-align">
+                <button class="btn delete-photo-btn-modal col s12 l6" type="submit">Yes, delete it.</button>
+                <a class="modal-close btn delete-photo-btn-cancel-modal col s12 l6" href="#!">No, cancel.</a>
+            </div>
         </div>
     </form>
-  </div>
-
+</div>
 {% endif %}
 
 {% endblock %}
