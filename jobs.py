@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BlockingScheduler
-from app import awards, test_function, mongo
+from app import awards, mongo
 from helpers import new_comp
 
 
