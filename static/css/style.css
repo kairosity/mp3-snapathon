@@ -9,6 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Zilla+Slab+Highlight:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,900');
 @import 'effects-from-hover.css';
+@import 'pre-loader.css';
 
 /*-------------------------- Variables */
 :root {

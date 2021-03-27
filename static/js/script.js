@@ -145,4 +145,14 @@ if (document.URL.includes('search')){
         
     });
 }
+// Code for preloader
+(function($){
+    'use strict';
+      $(window).on('load', function () {
+          if ($(".pre-loader").length > 0)
+          {
+              $(".pre-loader").fadeOut("slow");
+          }
+      });
+  })(jQuery)
     
