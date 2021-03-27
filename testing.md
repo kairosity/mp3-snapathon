@@ -13,7 +13,7 @@
     * [3. get_photo()](#get_photo)
     * [4. edit_profile()](#edit_profile)
     * [5. compete()](#compete)
-    * [6. base.html](#base-html)
+    * [6. base.html](#basehtml)
     * [7. Integrating Email Functionality](#integrating-email-functionality)
     * [8. awards()](#awards)
     * [9. Error Messages](#error-messages)
@@ -27,7 +27,6 @@
     * [4. 404 Status Code Testing](#404-status-code-testing)
     * [5. 413 Status Code Testing](#413-status-code-testing)
     * [6. 415 Status Code Testing](#415-status-code-testing)
-    * [7. 500 Status Code Testing](#500-status-code-testing)
 * [**Functionality Testing**](#functionality-testing)
   * [**Base Functionality**](#base-functionality)
     * [1. Navigation](#1-navigation)
@@ -35,7 +34,7 @@
     * [3. Links](#3-links)
     * [4. Buttons](#4-buttons)
     * [5. Forms](#5-forms)
-    * [6. Input Validation](#6-input-validation)
+    * [6. Input Validation](#6-input-validations)
     * [7. Pagination](#7-pagination)
     * [8. Email](#8-email)
     * [9. Logout](#9-logout)
@@ -61,12 +60,12 @@
         * [3. Delete User Account (admin)](#3-delete-user-account-admin)
   * [**Testing the Temporal Processes**](#testing-the-temporal-processes)
   * [**Testing the Automated Processes**](#testing-the-automated-processes)
-    * [Awards Function - Test 1](#awards-function-1)
-    * [Awards Function - Test 2](#awards-function-2)
+    * [Awards Function - Test 1](#awards-function1)
+    * [Awards Function - Test 2](#awards-function2)
     * [Vote Function - Test 1](#vote-function)
 * [**Security Testing**](#security-testing)
     * [Testing the CSRF Protection](#testing-the-csrf-protection)
-    * [Testing the Sanitization of the Uploaded Filename](#testing-the-sanitization-of-the-uploaded-filenam)
+    * [Testing the Sanitization of the Uploaded Filename](#testing-the-sanitization-of-the-uploaded-filename)
     * [Testing the Approved File Extensions Security Measure](#testing-the-approved-file-extensions-security-measure)
     * [Testing the File Type Validation](#testing-the-file-type-validation)
     * [Testing the Uploaded File Size Limit](#testing-the-uploaded-file-size-limit)
@@ -77,18 +76,16 @@
     * [Mobile Browser Testing](#mobile-browser-testing)
 * [**Responsivity Testing**](#responsivity-testing)
 * [**Code Validators**](#code-validators)
-    * [HTML Validators](#html-validators)
+    * [1. HTML Validators](#1-html-validators)
         * [W3C HTML Validator](#w3c-html-validator)
         * [W3C Link Checker](#w3c-link-checker)
-    * [CSS Validators](#css-validators)
+    * [2. CSS Validators](#2-css-validators)
         * [W3C CSS Validator](#w3c-css-validator)
-    * [JavaScript Validators](#javascript-validators)
+    * [3. JavaScript Validators](#3-javascript-validators)
         * [JSHint](#jshint)
-    * [Python Validators](#python-validators)
+    * [4. Python Validators](#4-python-validators)
         * [PEP8 Online](#pep8-online)
 * [**Performance and Web Development Tools Testing**](#performance-and-web-development-tools-testing)
-    * [Lighthouse](#lighthouse)
-    * [Web Dev Measure](#web-dev-measure)
     
 
 # User Story Testing 
@@ -2088,6 +2085,12 @@ As an admin user I manually typed in the urls for:
 
 The delete functions to delete accounts & photos were purposefully written as POST methods for added security, so they cannot be accessed via url.
 
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
 # Accessibility Testing 
 
 In addition to the accessibility user story testing outlined above, I also undertook the following manual & automated tests:
@@ -2145,6 +2148,14 @@ active.
 - In summary Chrome does not appear to be the best browser for users that rely on screen-reader technology.
 
 - Other than these Chrome adventures, the application is fully screen-reader accessible. __PASS__
+
+
+<br>
+
+#### __back to [contents](#testing-table-of-contents)__
+
+<br>
+
 
 # Browser Testing
 
@@ -2388,8 +2399,6 @@ __Android OS 11 - Samsung Galaxy s21 :__ -- PASS
 <br>
 
 </details>
-<br>
-
 
 <br>
 
@@ -2400,7 +2409,7 @@ __Android OS 11 - Samsung Galaxy s21 :__ -- PASS
 
 # Responsivity Testing
 
-In addition to the extensive responsivity section in this application's [README.md](README.md) file, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) for a great overview of how different pages act responsively, and where breakpoint issues arose. 
+In addition to the extensive testing outlined in the responsivity section in this application's [README.md](README.md) file, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) for a great overview of how different pages act responsively, and where breakpoint issues arose. 
 
 These tests were part-automated insofar as the responsive viewer enabled me to test the app simultaneously across a number of devices. 
 
@@ -2408,9 +2417,7 @@ These tests were part-automated insofar as the responsive viewer enabled me to t
   <img src="static/images/testing/responsive-viewer.png">
 </p>
 
-Finally I also employed the standard Chrome Dev Tools Mobile emulator, but with caution, as I had already discovered from previous projects that it is not 100% accurate when 
-emulating functionality. For that, I relied more on actually using as many different devices as I could get my hands on, along with asking friends and family who use different
-phones and tablets to test the app for me. 
+Finally I also employed the standard Chrome Dev Tools Mobile emulator, but with a certain caution, as I had already discovered from previous projects that it is not 100% accurate when emulating functionality. For that, I relied more on actually using as many different devices as I could get my hands on, along with asking friends and family who use different phones and tablets to test the app for me. 
 
 <p align="center">
   <img src="static/images/testing/moto.png" width=200>
@@ -2427,7 +2434,7 @@ phones and tablets to test the app for me.
 
 # Code Validators
 
-## HTML Validators
+## 1. HTML Validators
 
 ### W3C HTML Validator
 
@@ -2553,7 +2560,7 @@ paste the html directly into the validator.
   <img src="static/images/testing/validators/w3-link-checker.png" >
 </p>
 
-## CSS Validators
+## 2. CSS Validators
 
 ### W3C CSS Validator
 
@@ -2569,7 +2576,7 @@ So other than the above issues that can safely ignored, the CSS validated perfec
 
 __PASS__
 
-## JavaScript Validators
+## 3. JavaScript Validators
 
 ### JSHint
 
@@ -2592,7 +2599,7 @@ Here is the second run, semi-colons in their rightful places:
 The rest of the warnings concerned the use of ES6, so were fine.
 
 
-## Python Validators
+## 4. Python Validators
 
 ### PEP8 Online
 
@@ -2616,6 +2623,10 @@ The rest of the warnings concerned the use of ES6, so were fine.
 <p align="center">
   <img src="static/images/testing/validators/pep8-helpers.png">
 </p>
+
+<br>
+
+The python code all validated perfectly.
 
 <br>
 

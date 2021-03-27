@@ -29,7 +29,7 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
   * [Structure](#structure)
       - [*Interaction Design*](#interaction-design)
         - [*Navigation*](#navigation)
-        - [*Consistency, conventions & predictability*](#consistency-conventions-predictability)
+        - [*Consistency, conventions and predictability*](#consistency-conventions-and-predictability)
         - [*Learnability and Communication of Functionality*](#learnability-and-communication-of-functionality)
         - [*Feedback*](#feedback)
         - [*Flash Messages*](#flash-messages)
@@ -37,7 +37,7 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
         - [*Deletion Confirmation Modals*](#deletion-confirmation-modals)
         - [*Small Specific Messages*](#small-specific-messages)
         - [*State Changes*](#state-changes)
-        - [*404 Error Pages*](#404-error-pages)
+        - [*Error Pages*](#error-pages)
       - [*Information Architecture*](#information-architecture)
       - [*Application Sections*](#application-sections)
         - [Guest Users (not logged in)](#guest-users-not-logged-in)
@@ -99,11 +99,11 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
     - [3. Approved File Extensions](#3-approved-file-extensions)
     - [4. Validating file contents](#4-validating-file-contents)
     - [5. Uploaded file size](#5-uploaded-file-size)
-    - [6. Content Security Policy](#6-content-security-policy)
+    - [6. Flask-Talisman and Content Security policy](#6-flask-talisman-and-content-security-policy)
     - [7. Access Control](#7-access-control)
     - [8. Request Methods](#8-request-methods)
 - [7. Testing](#testing)
-- [8. Future Features To Implement](#future-features-to-implement)
+- [8. Future Features To Implement and Issues Remaining](#future-features-to-implement-and-issues-remaining)
 - [9. Attribution](#attribution)
 - [10. Deployment](#deployment)
 - [11. Tools and Other Resources Used](#tools-and-other-resources-used)
@@ -118,10 +118,10 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
     - [9. MongoDB](#9-mongodb)
     - [10. Jinja](#10-jinja)
     - [11. APScheduler](#11-apscheduler)
-    - [12. General/Misc](#12-general-misc)
+    - [12. General](#12-general)
 - [12. Libraries](#libraries)
 - [13. Technology Used](#technology-used)
-- [14. Acknowledgements](#acknowledgments)
+- [14. Acknowledgements](#acknowledgements)
 
 <br>
 
@@ -334,7 +334,7 @@ the view at all times when on desktop, and a hamburger icon on mobile and smalle
 The back button is never relied on. Design features, buttons, forms, switches, filters and search bars are all laid out and work in a consistent, 
 predictable fashion. 
 
-### Consistency, conventions & predictability
+### Consistency, conventions and predictability
 To ensure predictability in the application, I have relied on tried and tested conventions. All content, typography and method of interacting with 
 the application has been designed to ensure consistency across the board, there are no surprises in store for the user. All buttons and links behave 
 consistently and the feedback given to the user follows the same design and language patterns across the application. 
@@ -1692,7 +1692,7 @@ Every Monday morning at 0:00 this feature resets all users so that a new competi
 <br>
 
 
-## 19. Custom Error pages 
+## 19. Custom Error Pages 
 
 As aforementioned there are custom error pages covering the most common errors. 
 
@@ -2838,7 +2838,7 @@ Rejecting large files worked and was straightforward, however Flask had big issu
 This worked to both limit the file sizes and throw the correct error message for the user. 
 
 
-## 6. Flask-Talisman & Content Security policy
+## 6. Flask-Talisman and Content Security policy
 
 I've integrated Flask-Talisman to incorporate a somewhat comprehensive CSP quickly and easily. Flask-Talisman also comes with a number of other 
 security benefits such as (taken from the Flask-Talisman GitHub repo): 
@@ -2905,7 +2905,7 @@ __[Click here to read all testing documentation.](testing.md)__
 
 <br>
 
-# Future Features To Implement / Issues Remaining
+# Future Features To Implement and Issues Remaining
 
 ## Expanded upload functionality
 
@@ -2968,7 +2968,7 @@ is an important security feature for a data-centric application, I am happy to l
 
     I used Emmanuel's answer to this question to write user specific messages on my user's profile pages, when they login. 
 
-- ## [Vivid CSS Spinner](https://codepen.io/kevinjannis/pen/KwJvpa)
+- ## [Vivid CSS Spinner](https://codepen.io/kevinjannis/pen/KwJvpa)
 
     I used Kevin Jannis's CSS Spinner for the application's pre-loader, because it was so nice.
 
@@ -3227,7 +3227,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used throughout the application for images.
 
-## 2. HTML/CSS 
+## 2. HTML and CSS 
 
 - ## [Regex use vs. Regex abuse](https://blog.codinghorror.com/regex-use-vs-regex-abuse/)
 
@@ -3454,7 +3454,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
     Used to determine that I needed to switch from using "BackgroundScheduler" to "BlockingScheduler".
     
-## 12. General/Misc
+## 12. General
 
  - ## [RandomKeygen](https://randomkeygen.com/)
 
