@@ -34,7 +34,7 @@
     * [3. Links](#3-links)
     * [4. Buttons](#4-buttons)
     * [5. Forms](#5-forms)
-    * [6. Input Validation](#6-input-validations)
+    * [6. Input Validations](#6-input-validations)
     * [7. Pagination](#7-pagination)
     * [8. Email](#8-email)
     * [9. Logout](#9-logout)
@@ -60,9 +60,9 @@
         * [3. Delete User Account (admin)](#3-delete-user-account-admin)
   * [**Testing the Temporal Processes**](#testing-the-temporal-processes)
   * [**Testing the Automated Processes**](#testing-the-automated-processes)
-    * [Awards Function - Test 1](#awards-function1)
-    * [Awards Function - Test 2](#awards-function2)
-    * [Vote Function - Test 1](#vote-function)
+    * [Awards Testing 1](#awards-testing-1)
+    * [Awards Testing 2](#awards-testing-2)
+    * [Vote Testing](#vote-testing)
 * [**Security Testing**](#security-testing)
     * [Testing the CSRF Protection](#testing-the-csrf-protection)
     * [Testing the Sanitization of the Uploaded Filename](#testing-the-sanitization-of-the-uploaded-filename)
@@ -1761,8 +1761,7 @@ __PASS__
 
 # Testing the Automated Processes
 
-## Awards Function
-## Test 1
+## Awards Testing 1
 
 The awards() function runs automatically on a Sunday evening at 22:00 - and for the first tests I decided to change those settings and run it manually. 
 
@@ -1854,8 +1853,7 @@ as well as reducing her photo "leaves"'s ```photo_votes``` from 100 to 0.
 Leaves received more votes than any other photo in that competition, but did not win any awards, 
 evidenced by its ```awards``` field remaining ```null```
 
-## Awards Function
-## Test 2
+## Awards Testing 2
 
 To ensure that everything including the AP Scheduler automaton worked well, I ran another test, but for this one I did not interfere with the timing 
 of the logic.
@@ -1947,6 +1945,24 @@ As everything was spot on, no further tests were needed for this function.
 32.| Dominic |Cristmas Bird | zebby | 0 | 3 | 3 | 3| 0| 0
  
 <br>
+
+## Vote Testing 
+
+Obviously the voting process is tested alongside both above awards tests. However I also conducted more manual testing on the voting process. 
+
+### Test Setup:
+
+ - During the voting days (Sat-Sun), I used a number of dummy users that had previously (that week) entered the competition.
+ - I got each of them to vote on particular images and then I manually checked the database to ensure 2 things happened:
+
+ 1. The image voted on in each case had its "photo_votes" field incremented by 1 each time. 
+ 2. The user in question had their "votes_to_use" field decremented by 1, from 1 to 0. 
+
+ This was true in every case, so in addition to the functionality outlined by the awards() tests, I could be sure that the voting 
+ was working as expected.
+
+ __PASS__
+
 
 #### __back to [contents](#testing-table-of-contents)__
 
