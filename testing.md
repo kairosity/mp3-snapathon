@@ -1953,10 +1953,12 @@ Obviously the voting process is tested alongside both above awards tests. Howeve
 ### Test Setup:
 
  - During the voting days (Sat-Sun), I used a number of dummy users that had previously (that week) entered the competition.
- - I got each of them to vote on particular images and then I manually checked the database to ensure 2 things happened:
+ - I got each of them to vote on particular images and then I manually checked the database to ensure 4 things happened:
 
  1. The image voted on in each case had its "photo_votes" field incremented by 1 each time. 
  2. The user in question had their "votes_to_use" field decremented by 1, from 1 to 0. 
+ 3. That the photo voted for did not have their "points" display anywhere on their photo details page.
+ 4. That the photo voted for was not displayed in the voter's "VOTE" gallery. (This is only updated after the competition ends).
 
  This was true in every case, so in addition to the functionality outlined by the awards() tests, I could be sure that the voting 
  was working as expected.
