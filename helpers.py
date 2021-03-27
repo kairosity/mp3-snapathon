@@ -960,9 +960,12 @@ def get_time_remaining_string(timedelta):
     days_singular = "day,"
     hours_singular = 'hour'
     hours_plural = 'hours'
-    minutes_singular = 'minute'
-    minutes_plural = 'minutes'
-    final_time_string = f"{days} {days_singular if int(days)==1 else days_plural} {hours} {hours_singular if int(hours)==1 else hours_plural} and {minutes} {minutes_singular if int(minutes)==1 else minutes_plural}"
+    mins_singular = 'minute'
+    mins_plural = 'minutes'
+    fd = f"{days} {days_singular if int(days)==1 else days_plural}"
+    fh = f"{hours} {hours_singular if int(hours)==1 else hours_plural}"
+    fm = f" and {minutes} {mins_singular if int(minutes)==1 else mins_plural}"
+    final_time_string = fd + fh + fm
     return final_time_string
 
 
