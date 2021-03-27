@@ -76,6 +76,7 @@ if (document.URL.includes('edit-profile')){
             delProfilePicInput.setAttributeNode(delProfilePicInputClass);
 
             let delProfilePicInputValue = document.createAttribute('value');
+            delProfilePicInputValue.value = "del-uploaded-profile-pic"
             delProfilePicInput.setAttributeNode(delProfilePicInputValue);
 
             elementToAppendTo.appendChild(delProfilePicInput);
@@ -86,7 +87,7 @@ if (document.URL.includes('edit-profile')){
         delProfilePicIcon.addEventListener('click', deleteCustomProfilePic);
     }
 });
-}   
+}
 /**
  * This function checks to see if the search page is loaded and if so, it waits until it's fully loaded.
  * Then it checks if there are any photo results & if there are it makes sure to scroll the window to them, so the 

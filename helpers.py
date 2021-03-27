@@ -1066,9 +1066,11 @@ def edit_user_profile(user, username, request, database_var, app):
 
         # delete user's profile pic.
         if existing_profile_pic is not None:
+            print("profile pic is here to be deleted without a new upload")
 
             file_to_delete = database_var.db.fs.files.find_one(
                 {"filename": existing_profile_pic})
+            print(file_to_delete)
 
             chunks_to_delete = list(database_var.db.fs.chunks.find({
                                     "files_id": file_to_delete["_id"]}))
