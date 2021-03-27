@@ -578,8 +578,7 @@ def paginated_and_pagination_args(
                                  per_page=PER_PAGE,
                                  total=total,
                                  page_parameter=page_param,
-                                 per_page_parameter=per_page_param,
-                                 css_framework='materialize')
+                                 per_page_parameter=per_page_param)
 
     objs_to_display = objs_arr[offset: offset + PER_PAGE]
 
