@@ -135,7 +135,7 @@
                         <li>The photograph must not violate the rights of any third party.</li>
                         <li>The photograph must not breach copyright law.</li>
                         <li>Entries are accepted through our online form (above) each week from 0:00AM Monday until 22:00PM Friday.</li>
-                        <li>Voting takes place from Saturday morning at 0:00 until 22:00PM Sunday.</li>
+                        <li>Voting takes place from Saturday morning at 00:00 until 22:00PM Sunday.</li>
                         <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
                         <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
                         <li>If you fail to vote between Saturday and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
@@ -213,7 +213,7 @@
 <!-- List of Entries to be Voted on -->
     <div id="entries" class="row s12">
         {% for photo in this_weeks_entries %}
-            <div class="col s12 m4 l3 profile-photos-col vote-images-container">
+            <div id="main" class="col s12 m4 l3 profile-photos-col vote-images-container">
                 {% if user.votes_to_use > 0 %}
 <!-- User has a vote -->
                     <a href="{{ url_for('get_photo', filename=photo.filename )}}">
@@ -236,7 +236,7 @@
                     <form action="{{ url_for('vote', filename=photo.filename) }}" method="POST">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         {% if user.votes_to_use > 0 %}
-                            <button class="btn-large vote-button" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon"></i> Vote for this image</button>
+                            <button class="btn-large vote-button hvr-icon-pop" type="submit" value="Submit"><i class="fas fa-vote-yea vote-icon hvr-icon"></i> Vote for this image</button>
                         {% endif %}
                     </form>
                 </div>

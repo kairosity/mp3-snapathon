@@ -1238,11 +1238,9 @@ button.vote-button{
     -o-transition: 0.3s ease-in;
     transition: 0.3s ease-in;
 }
-button.vote-button:hover{
+button.vote-button:hover,
+button.vote-button:focus{
     background-color: var(--dark-accent-colour);
-    -webkit-transform: scale(1.03);
-        -ms-transform: scale(1.03);
-            transform: scale(1.03);
 }
 .vote-icon{
     font-size: 3em;
