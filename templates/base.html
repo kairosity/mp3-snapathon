@@ -22,23 +22,6 @@
     <title>Snapathon</title>
 </head>
 <body class="grey darken-4">
-<!-- Pre-Loader -->
-    <div class="pre-loader">
-        <div class="sk-fading-circle">
-          <div class="sk-circle1 sk-circle"></div>
-          <div class="sk-circle2 sk-circle"></div>
-          <div class="sk-circle3 sk-circle"></div>
-          <div class="sk-circle4 sk-circle"></div>
-          <div class="sk-circle5 sk-circle"></div>
-          <div class="sk-circle6 sk-circle"></div>
-          <div class="sk-circle7 sk-circle"></div>
-          <div class="sk-circle8 sk-circle"></div>
-          <div class="sk-circle9 sk-circle"></div>
-          <div class="sk-circle10 sk-circle"></div>
-          <div class="sk-circle11 sk-circle"></div>
-          <div class="sk-circle12 sk-circle"></div>
-        </div>
-      </div>
 <!-- Page Content -->
     <div id="page-container">
         <div id="content-wrap">
@@ -47,7 +30,7 @@
                 <nav class="grey darken-4">
                     <div class="nav-wrapper">
                         <a href="{{ url_for('home')}}" class="brand-logo" tabindex="2" aria-label="Snapathon logo"><i class="logo fas fa-spa"></i></a>
-                        <a href="{{ url_for('home')}}" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                        <a href="{{ url_for('home')}}" data-target="mobile-nav" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                         <ul id="nav-mobile" class="right hide-on-med-and-down navbar-nav">
                             <li class="hvr-sweep-to-right" ><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
                             <li class="hvr-sweep-to-right"><a class="nav-link" href="{{url_for('winners')}}">Winners</a></li>
@@ -134,6 +117,18 @@
             {% endblock %}
         </div>
     </div>
+<!-- Pre-Loader -->
+<aside class="wrapper dark">
+    <div class="spinner">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+</aside>
 <!-- Footer -->
     <footer id="footer" class="footer">
         <div class="row">

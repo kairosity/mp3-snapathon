@@ -146,14 +146,10 @@ if (document.URL.includes('search')){
         
     });
 }
-// Code for preloader
+// Code for preloader - taken from https://codepen.io/kevinjannis/pen/KwJvpa
 (function($){
-    'use strict';
       $(window).on('load', function () {
-          if ($(".pre-loader").length > 0)
-          {
-              $(".pre-loader").fadeOut("slow");
-          }
+          document.querySelector(".wrapper").style.display = "none";
       });
   })(jQuery)
     

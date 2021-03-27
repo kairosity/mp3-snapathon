@@ -2599,6 +2599,26 @@ The rest of the warnings concerned the use of ES6, so were fine.
 
 <br>
 
+#### 1. app.py - __PASS__
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/validators/app-pep8-pass.png">
+</p>
+
+<br>
+
+#### 2. helpers.py - __PASS__
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/validators/pep8-helpers.png">
+</p>
+
+<br>
+
 #### __back to [contents](#testing-table-of-contents)__
 
 <br>
@@ -2620,7 +2640,7 @@ As illustrated below, the final application scored highly in all categories of t
   <img src="static/images/testing/lighthouse/lighthouse-mobile-summary.png">
 </p>
 
-#### Performace
+#### Performance
 
 <br>
 

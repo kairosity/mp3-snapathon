@@ -480,8 +480,7 @@ throughout.
 
 #### Form Validation Messages
 Alongside the Flash messages, the Materialize library has some great in built form validation messages that are delivered to the user to tell them what is expected of them 
-when filling out the various forms on the site. This catches smaller formatting issues withou relying on flash message or page reloads. All validations are expanded on in greater
-depth in the testing.md doc. 
+when filling out the various forms on the site. This catches smaller formatting issues without relying on flash message or page reloads. All validations are expanded on in greater depth in the testing documentation.
 
 #### Deletion Confirmation Modals 
 If a user chooses to delete their account, or an image they have entered into competition, they are prompted to first confirm
@@ -527,6 +526,15 @@ For comparison here is the same error, but delivered without the custom message:
 
 <p align="center">
   <img src="static/images/features/413-not-custom-error.png">
+</p>
+
+#### Pre-Loader 
+
+I've included a pre-loader for slower page loads to reassure the user that the page is actually loading.
+Thank you to [(by Kevin Jannis)](https://codepen.io/kevinjannis/pen/KwJvpa) for the gorgeous CSS loader:
+
+<p align="center">
+  <img src="static/images/features/pre-loader.png">
 </p>
 
 
@@ -2959,6 +2967,11 @@ is an important security feature for a data-centric application, I am happy to l
 - ## [Finding the date of the next Saturday](https://stackoverflow.com/questions/16769902/finding-the-date-of-the-next-saturday)
 
     I used Emmanuel's answer to this question to write user specific messages on my user's profile pages, when they login. 
+
+- ## [Vivid CSS Spinner](https://codepen.io/kevinjannis/pen/KwJvpa)
+
+    I used Kevin Jannis's CSS Spinner for the application's pre-loader, because it was so nice.
+
 <br>
 
 ## Unsplash Images Used in the Application
@@ -3239,6 +3252,10 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 - ## [Beautiful CSS box-shadow examples](https://getcssscan.com/css-box-shadow-examples)
 
     A great collection of box-shadows
+
+- ## [Top 30 Most Captivating PreLoaders for Your Website](https://steelkiwi.com/blog/30-most-captivating-preloaders-for-website/)
+
+    Nice collection of pre-loaders.
 
 
 ## 3. JavaScript 
