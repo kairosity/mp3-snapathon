@@ -38,6 +38,7 @@ one other photo (not their own) to win. At the end of the week, votes are tallie
         - [*Small Specific Messages*](#small-specific-messages)
         - [*State Changes*](#state-changes)
         - [*Error Pages*](#error-pages)
+        - [*Pre-Loader*](#pre-loader)
       - [*Information Architecture*](#information-architecture)
       - [*Application Sections*](#application-sections)
         - [Guest Users (not logged in)](#guest-users-not-logged-in)
@@ -196,7 +197,7 @@ As already touched upon, the aim with this project is to create a usable photogr
 As a professional photographer, I would love to use an application where the emphasis is less on sharing personal images and more on sharing images based on the quality of their photography.
 High quality cameras on phones and mobile devices have made photography hugely accessible for everyone, however there has also been a marked drop in the quality of the photography people post online. 
 
-The main goal for this application is to create an interface and an environment that encourage great quality images. That encourages looking for good light and interesting subjects.
+The main goal for this application is to create an interface and an environment that encourages great quality images, that inspires photographers to look for good light and interesting subjects.
 
 My application goals summarized: 
 
@@ -209,11 +210,11 @@ My application goals summarized:
 - Create an application that might be monetized in the future once it develops a decent sized following of loyal users.
 
 ## Target users
-The target users for this application are anyone who enjoys photography as a pasttime or professionally. There are no restrictions on tools or technology used to take photographs, a mobile phone camera is just as valid as a high-end dSLR or mirrorless. 
-The importance is placed on the image itself, and how much that image speaks to its audience. The target market is also not limited by age or any other demographic, other than they will obviously be somewhat computer & technically literate.
+The target user for this application is anyone who enjoys photography as a past-time or professionally. There are no restrictions on tools or technology used to take photographs, a mobile phone camera is just as valid as a high-end dSLR or mirrorless. 
+The importance is placed on the image itself, and how much that image speaks to its audience. The target market is also not limited by age or any other demographic, other than they will obviously have to be somewhat computer & technically literate.
 
 ## Research
-I am a professional photographer, working in many different photographic fields for over a decade and I have a love/hate relationship with online photography competitions. Competitions based on the determination of a "panel of judges" 
+I have a background as a professional photographer, I've worked in many different photographic fields for over a decade and I have a love/hate relationship with online photography competitions. Competitions based on the determination of a "panel of judges" 
 can be overly subjective and these panels are usually comprised of the site owner who may or may not have any authority on the matter. I wanted to create a democratic competition where the competitors are also the judges and therefore the final awards are 
 as meritocratic as possible. Especially since one of the more innovative aspects of this application is that users will be awarded points not only when their images win, but also if they vote for any of the top 3 placed images. In this way, users will be encouraged to actively vote for what they think are the best images, and not selectively based on strategizing. 
 
@@ -1054,7 +1055,7 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 <br>
 
 
-- The profile photo must conform to all the competition entry [photo validation requirements](#security-features). 
+- The profile photo must conform to all the competition entry [photo validation requirements](#security). 
 
 - When the user registers successfully, a session is created and they are redirected to their new profile page, where they will see a "Registration successful" message.
 
@@ -1216,7 +1217,7 @@ page thanking them for entering and reminding them when the voting opens, as wel
 
 ### Security Features 
 - There are various input validations on the form itself, which are detailed in the [testing.md](testing.md) doc.
-- When the form is submitted if the file extension is not one of the approved image extensions (.svg, .jpg, .jpeg, .gif, .png)
+- When the form is submitted, if the file extension is not one of the approved image extensions (.svg, .jpg, .jpeg, .gif, .png)
 a 415 error will be thrown. 
 - If the image is larger than 560KB a 413 error will be thrown. 
 - The image filename is secured using werkzeug.utils. 
@@ -1300,7 +1301,7 @@ linking to the "Winners" page where the winning images are displayed.
 
 <br>
 <div align="center">
-    <img src="/static/images/features/vote-interim-page.png">
+    <img src="/static/images/features/interim-screen.png">
 </div>
 <br>
 
@@ -1382,14 +1383,19 @@ If they came from "browse" it will read "back to browse!"
     <img src="/static/images/features/photo-details-backlinks-2.png">
 </div>
 <br>
+
 - If the user viewing the image is also the creator of that image then they will see two buttons underneath the photo. 
-- "Edit Photo Details" allows the user to edit any of the photo details other than the image itself. 
+
+- "Edit Photo Details" allows the user to edit any of the photo details other than the image itself.
+
 - "Delete Photograph" will delete the image from the competition and the application, and all connected associations.
 
 <br>
+
 <div align="center">
     <img src="/static/images/features/photo-details.png">
 </div>
+
 <br>
 
 </details>
