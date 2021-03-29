@@ -15,7 +15,8 @@ $(document).ready(function(){
                         $(this).parent().addClass("active");
                 }
         });
-    });   
+    });
+
 /* This function sets the keyboard focus styles for the images in 
 the Browse section so that the :hover overlay styles apply to 
 keyboard users.
@@ -26,11 +27,13 @@ keyboard users.
     $('.overlay-link').blur(function(){
         $(this).parent().css({'bottom':"", "height":""});
         });
+
 });
     
-document.addEventListener('load', function() {  
+window.addEventListener('load', function() {  
 /**
- * This function checks to see if an image on the winners page is horizontal or vertical
+ * This function waits until all the images have loaded and then it
+ * Checks to see if an image on the winners page is horizontal or vertical
  * and if horizontal it adds some styles to format it correctly.
  */
     function verticalOrHorizontalAwardImage(){
@@ -46,6 +49,7 @@ document.addEventListener('load', function() {
     
     verticalOrHorizontalAwardImage();
 }); 
+
 /**
  * This function checks to see if the edit profile page is loaded and if so, it waits until it's fully loaded.
  * Then it checks to see if the profile image field has a custom profile photo and if it does, 

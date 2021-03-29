@@ -19,7 +19,9 @@
     * [9. Error Messages](#error-messages)
     * [10. Flask-Talisman](#flask-talisman)
     * [11. Running APScheduler on the Free Version of Heroku](#running-apscheduler-on-the-free-version-of-heroku)
-    * [12. vote()](#vote) 
+    * [12. vote()](#vote)
+    * [13. Awards Badges Styles](#awards-badges-styles)
+    * [14. Heroku Dyno Hours](#heroku-dyno-hours)
 * [**Status Code Testing**](#status-code-testing)
     * [1. 200 Status Code Testing](#200-status-code-testing)
     * [2. 302 Status Code Testing](#302-status-code-testing)
@@ -729,6 +731,66 @@ For the user profile page, I confined the logic to the view rather than the temp
                     photos_voted_for_objs.append(photo)  
 
 Where ```photos_voted_for_objs``` was the array passed to the template. 
+
+## Awards Badges Styles
+
+#### Issue 1
+
+The placement of awards badges on the winner's page is defined by two classes called 'award-horizontal' and 'award-photo-horizontal'. When applied to the 
+photo and badges of horizontal images they change the position of how the badge sits, so it looks well. 
+
+The following code was only running on page refresh and not on the initial page load.
+
+      document.addEventListener('DOMContentLoaded', function() {  
+        function verticalOrHorizontalAwardImage(){
+            let photos = document.querySelectorAll('.award-photo');
+            photos.forEach(photo => {
+                if (photo.width > photo.height){
+                    photo.classList.add('award-photo-horizontal');
+                    let awardBadge = photo.nextElementSibling.children[0];
+                    awardBadge.classList.add('award-horizontal');
+                }
+            });
+        }
+        
+        verticalOrHorizontalAwardImage();
+    }); 
+
+The awards badges were displaying too close to the centre of the image as follows:
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/issues/incorrect-award-placement.png">
+</p>
+
+<br>
+
+#### Fix
+
+My mentor Femi suggested I use ```load``` instead of ```DOMContentLoaded``` and I found that this change coupled with adding the 
+EventListener to ```window``` instead of document returned the desired functionality and the awards badges loaded correctly as below:
+
+<br>
+
+<p align="center">
+  <img src="static/images/testing/issues/correct-award-placement.png">
+</p>
+
+<br>
+
+## Heroku Dyno Hours
+
+#### Issue 1
+
+I am using [Kaffeine](https://kaffeine.herokuapp.com/) to keep my application awake, so as to ensure the automated functions fire when they should. 
+An unforeseen downside to this is that I ran out of free Dyno hours and the awards function did not fire when it should have. Dyno hours are reset 
+each month and I will receive an extra 450 for registering a card with Heroku, however it may occur again and if the awards don't fire on a Sunday evening,
+this is likely why. 
+
+#### Fix
+
+There is no real fix as this is not an error in the application itself. Were it running 'in production' as a working application, the extra dyno hours would be paid for fully and this error would be a non-issue.
 
 <br>
 
