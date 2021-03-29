@@ -2144,7 +2144,7 @@ the images are stacked 3 per row under those tabs.
 - The form is visible in its entirety without scrolling. 
 <br>
 <div align="center">
-    <img src="/static/images/responsivity/register-tab-vert.png">
+    <img src="/static/images/responsivity/login-tab-vert.png">
 </div>
 <br>
 
@@ -2949,10 +2949,17 @@ For future releases I would consider adding extra admin features such as:
 
 ## Form Behaviour
 
-There seems to be some misfiring on the Materialize forms. The behaviour is very unpredictable, occurs once in maybe 20 uses of a form, 
-and it's hard to pinpoint exactly what's causing it. My best guess would be that it has something to do with the CSP, and not allowing inline 
-styles. It may be having a strange interaction with the Materialize code. However, as it is not an application breaking error, and as the CSP 
-is an important security feature for a data-centric application, I am happy to leave it for the time being.
+There seems to be some misfiring on the Materialize forms. *Sometimes* the label overlaps the input. The behaviour is very unpredictable, 
+occurs once in maybe 20 uses of a form, and it's hard to pinpoint exactly what's causing it. My best guess would be that it has something 
+to do with the CSP, and not allowing inline styles. It may be having a strange interaction with the Materialize code. However, as it is 
+not an application breaking error, and as the CSP is an important security feature for a data-centric application, I am happy to leave 
+it for the time being.
+
+## Email Errors
+
+In order to integrate gmail to receive mail from the application, I had to lower all of Gmail's security preferences, and it would seem 
+that every now and then gmail decides that this is not ok, and rejects the access. This is a common issue that developers have found and it 
+only applies sometimes. I have written a specific custom error code to tell users to try again later, if it does occur. 
 
 <br>
 
@@ -3364,7 +3371,7 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
 
 ## 7. Flask-Mail
 
-- ## [Configure Flask-Mail to use GMail](https://stackoverflow.com/questions/37058567/configure-flask-mail-to-use-gmail)
+- ## [Configure Flask-Mail to use Gmail](https://stackoverflow.com/questions/37058567/configure-flask-mail-to-use-gmail)
 
     Stack overflow article I found useful when figuring out how to connect Flask-Mail to gmail correctly.
 

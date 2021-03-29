@@ -28,7 +28,7 @@ keyboard users.
         });
 });
     
-document.addEventListener('DOMContentLoaded', function() {  
+document.addEventListener('load', function() {  
 /**
  * This function checks to see if an image on the winners page is horizontal or vertical
  * and if horizontal it adds some styles to format it correctly.
