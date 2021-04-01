@@ -7,13 +7,16 @@ $(document).ready(function(){
     $('select').formSelect();
     $('.modal').modal();
     $('input#title, textarea#story, input#camera, input#lens, input#aperture, input#shutter, input#iso, textarea#message').characterCounter();
-        
-// Adds the "active" class to the nav-link currently active.
-        $(function(){
+
+/* Adds the "active" class to the nav-link currently active. 
+Because of query strings - it checks whether the href contains the pathname
+rather than is equal TO the pathname.
+*/
+    $(function(){
         $(".nav-link").each(function(){
-                if ($(this).attr("href") == window.location.pathname){
-                        $(this).parent().addClass("active");
-                }
+            if ($(this).attr("href").indexOf(window.location.pathname) > -1){
+                    $(this).parent().addClass("active");
+            } 
         });
     });
 

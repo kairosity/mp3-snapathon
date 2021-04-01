@@ -1642,7 +1642,6 @@ footer{
     font-size: 3.6rem;
 }
 }
-
 /*-------------------------- Large Desktop Devices */
 @media screen and (min-width: 1200px) {
 .homepage-heading {
@@ -1687,7 +1686,6 @@ h5.user-points-badge{
     right: 22%;
 }
 }
-
 /*-------------------------- Extra Large Desktop Devices  */
 @media screen and (min-width: 1400px) {
 
