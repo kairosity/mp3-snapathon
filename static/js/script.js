@@ -13,13 +13,16 @@ Because of query strings - it checks whether the href contains the pathname
 rather than is equal TO the pathname.
 */
     $(function(){
+        let path = window.location.href.split('/').pop();
+        path = "/".concat(path)
+        
         $(".nav-link").each(function(){
-            if ($(this).attr("href").indexOf(window.location.pathname) > -1){
-                    $(this).parent().addClass("active");
-            } 
+            if ($(this).attr("href").indexOf(path) > -1){
+                $(this).parent().addClass("active");
+        } 
         });
     });
-
+  
 /* This function sets the keyboard focus styles for the images in 
 the Browse section so that the :hover overlay styles apply to 
 keyboard users.
