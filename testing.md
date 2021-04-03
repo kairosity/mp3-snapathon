@@ -340,8 +340,7 @@ attribute of the winning images. For landscape images I needed the width to be t
 max-height was set at 600px and by forcing the image to take up 100% of the space, much of the image would be hidden. 
 
 ### Fix
-I used the following function to conditionally set extra classes for the horizontal images, this was vertical images were the default and I could change the max-width: 100%
-to width:100%, and I set the particular left: position for the horizontal awards as well. 
+I used the following function to conditionally set extra classes for the horizontal images, as vertical images were the default and I could then change where the max-width was set to 100% to just be width:100%, and then I set the particular left: position for the horizontal awards as well. 
 
                 function verticalOrHorizontalAwardImage(){
                     let photos = document.querySelectorAll('.award-photo')
@@ -365,7 +364,7 @@ The above worked, except sometimes the styles didn't seem to apply, and only on 
 
 This is the photo detail page, and I wanted to dynamically set the "back to..." button to check what the source url was and then insert a link to go back to that particular page. 
 
-This was coded using request.referrer in the get_photo() route and then that was passed into the template using a "source_url" variable, which was then reference conditionally for example:
+This was coded using request.referrer in the get_photo() route and then that was passed into the template using a "source_url" variable, which was then referenced conditionally for example:
 
             {% if "profile" in source_url %}
 
@@ -412,7 +411,7 @@ I found that without this hidden field there were no attributes present and read
 
 ### Issue 1 & Fix 1
 
-The difficulty here was in using gridfs to store the larger file type of a photograph. Mongo does not store images in their db directly, so I had to understand 
+The difficulty here was in using GridFS to store the larger file type of a photograph. Mongo does not store images in their db directly, so I had to understand 
 how the request object and gridfs work together to store files. 
 
         if 'photo' in request.files:
@@ -431,7 +430,7 @@ in order to add that specific photo's _id to the user's photos array. Hence all 
 ### Issue 2:
 
 The method of retrieving and displaying files that gridfs uses made this functionality more complicated, as the send_file() function that it relies on, only uses the file's "filename"
-to send the file. This was frustrating because it is quite possible that there be more than one photo with the same filename. 'photo.jpg' or the like. So as I had to rely on the filenames, 
+to send the file. This was frustrating because it is quite possible that there could be more than one photo with the same filename. 'photo.jpg' or the like. So as I had to rely on the filenames, 
 instead of on the objectIds as I'd hoped, I needed a way to make every filename completely unique. 
 
 ### Fix:
@@ -449,21 +448,18 @@ this to create a filename for each image that is completely unique and identical
 
 ### Issue 3:
 I wanted to implement a shuffle function for the vote page so that no one's images are given undue physical priority. For example if one image is always the first 
-listed, and there are 50 images in the competition, which are paginated 10 per page, all images one page 1 are more than likely going to get more votes. 
+listed, and there are 50 images in the competition, which are paginated 10 per page, all images on page 1 are more than likely going to get more votes. 
 
 ### Fix:
-This proved harder than imagined to fix, first I created a shuffle function that took an array and return a random shuffle of that array, which I then passed to the paginate
-function. The problem with this is that it shuffled each time a new page was loaded, so a photo might appear on page 1, but appear again on page 4. So this implementation
+This proved harder than imagined to fix, first I created a shuffle function that took an array and returned a random shuffle of that array, which I then passed to the paginate function. The problem with this is that it shuffled each time a new page was loaded, so a photo might appear on page 1, but appear again on page 4. So this implementation
 was useless. 
 
-My next thought was to shuffle the images at source, so as they emerge from Mongo DB, that way, they would not be shuffled each time the page is loaded. But that resulted in 
-the exact same issue, just with the shuffle happening at an earlier stage.
+My next thought was to shuffle the images at source, so as they emerge from MongoDB, they would not be shuffled each time the page is loaded. But that resulted in the exact same issue, just with the shuffle happening at an earlier stage.
 
 I realised that there is a logical inconsistency with merging a random shuffle with pagination that is difficult to overcome. If the shuffle is truly random then we are left with
 the initial problem that once a page is "turned" a photo can be on two pages at once, and some images may not display at all. 
 
-As a compromise, I decided to increase the number of images per page to 50 for the vote and compete pages, and although this might increase the page loading time, at lease the shuffle
-will be consistent and all images will display, I also changed the location of when the shuffle function is called. 
+As a compromise, I decided to increase the number of images per page to 50 for the vote and compete pages, and although this might increase the page loading time, at least the shuffle will be consistent and all images will display, I also changed the location where the shuffle function is called. 
 
                 this_weeks_entries = list(mongo.db.photos.find(
                         {"week_and_year": date_time.strftime("%V%G")}))
@@ -526,13 +522,13 @@ The email functionality was working fine in the local port, but when deployed to
 </p>
 
 ### Fix:
-I had not inputed my new mail configuration variables in the Heroku config vars input area. Once I did it connected perfectly.
+I had not input my new mail configuration variables in the Heroku config vars input area. Once I did, it connected perfectly.
 
 ## awards()
 
 ### Issue 1 
 
-When the awards function was run, it was over awarding certain users. During testing I ran a number of simulations and found that 4 users in particular were being awarded
+When the awards function was run, it was over-awarding certain users. During testing I ran a number of simulations and found that 4 users in particular were being awarded
 an illogical number of points. Everyone else was being awarded the correct number of user_points, and the awards were working correctly as far as the photos were concerned. 
 
 ### Fix 1 
@@ -540,7 +536,7 @@ an illogical number of points. Everyone else was being awarded the correct numbe
 I ran through the function line by line and using print() statements on every logical segment, I discovered that the users in question were being added twice to the valid_users
 array. Eventually I realised that in testing the application I had uploaded more than the one allotted photo for each of those users and since the function is based on an assumption
 of 1 entry per user per week, that fact was breaking the code. I deleted the offending extra images and it worked well again, but there is definitely room to refactor that code *if* 
-I decide that the application could host more than a single competition per week, or if users are allowed upload more than one image per competition. 
+I decide that the application could host more than a single competition per week, or if users are allowed to upload more than one image per competition. 
 
 ### Issue 2 
 
@@ -706,9 +702,8 @@ After implementing these changes the Scheduler worked to run the functions at th
 
 #### Issue 1
 
-An issue with the functionality of the application arose when I realise that during the voting period ( Friday at midnight until Sunday at 22:00 ) users could see
-the points on the images by clicking into the photo details, or by looking at the profile "Votes" section of different users. Admittedly it would take some amount of independent 
-focused research on behalf of the contestants, however if they did it, it would make it easy for a user to score points by voting for the image doing the best just before voting ends. 
+An issue with the functionality of the application arose when I realised that during the voting period ( Friday at midnight until Sunday at 22:00 ) users could see
+the points on the images by clicking into the photo details, or by looking at the profile "Votes" section of different users. Admittedly it would take some amount of independent focused research on behalf of the contestants, however if they did this, it would make it easy for a user to score points by voting for the image doing the best just before voting ends. 
 
 #### Fix
 
@@ -761,7 +756,7 @@ The awards badges were displaying too close to the centre of the image as follow
 <br>
 
 <p align="center">
-  <img src="static/images/testing/issues/incorrect-award-placement.png">
+  <img src="static/images/issues/incorrect-award-placement.png">
 </p>
 
 <br>
@@ -774,7 +769,7 @@ EventListener to ```window``` instead of document returned the desired functiona
 <br>
 
 <p align="center">
-  <img src="static/images/testing/issues/correct-award-placement.png">
+  <img src="static/images/issues/correct-award-placement.png">
 </p>
 
 <br>
@@ -1924,7 +1919,7 @@ of the logic.
 
 1. Again, I created (and re-used) 32 dummy users and images and had them all enter a weekly competition with the theme of "Wildlife". 
 
-2. I ensured that all the awards() logic was as it would in the final deployment. 
+2. I ensured that all the awards() logic was as it would be in the final deployment. 
 
 3. On Saturday I had 30 of the dummy users vote for their favourite images. 
 
@@ -2015,11 +2010,11 @@ Obviously the voting process is tested alongside both above awards tests. Howeve
 ### Test Setup:
 
  - During the voting days (Sat-Sun), I used a number of dummy users that had previously (that week) entered the competition.
- - I got each of them to vote on particular images and then I manually checked the database to ensure 4 things happened:
+ - I got each of them to vote for particular images and then I manually checked the database to ensure 4 things happened:
 
- 1. The image voted on in each case had its "photo_votes" field incremented by 1 each time. 
+ 1. The image voted for in each case had its' "photo_votes" field incremented by 1 each time. 
  2. The user in question had their "votes_to_use" field decremented by 1, from 1 to 0. 
- 3. That the photo voted for did not have their "points" display anywhere on their photo details page.
+ 3. That the photo voted for did not have their "points" displayed anywhere on their photo details page.
  4. That the photo voted for was not displayed in the voter's "VOTE" gallery. (This is only updated after the competition ends).
 
  This was true in every case, so in addition to the functionality outlined by the awards() tests, I could be sure that the voting 

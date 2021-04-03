@@ -11,12 +11,11 @@ $(document).ready(function(){
 /* Adds the "active" class to the nav-link currently active. 
 Because of query strings - it checks whether the href contains the pathname
 rather than is equal TO the pathname. Also adds a special case for when the page 
-first loads and the path is /
+first loads and the path is '/'
 */
     $(function(){
         let path = window.location.href.split('/').pop();
         path = "/".concat(path)
-        console.log(path)
         
         $(".nav-link").each(function(){
             if ($(this).attr("href").indexOf(path) > -1){
@@ -29,7 +28,7 @@ first loads and the path is /
             }
         });
     });
-  
+    
 /* This function sets the keyboard focus styles for the images in 
 the Browse section so that the :hover overlay styles apply to 
 keyboard users.
