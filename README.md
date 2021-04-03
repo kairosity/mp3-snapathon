@@ -139,7 +139,7 @@ Snapathon hopes to entice users to register and upload their images in weekly co
 
 - Easily understand the purpose of this web application. 
 - Quickly and easily understand how to navigate and use the application.
-- Read the competition rules and how to enter and have these be clearly explained.
+- Read the competition rules and how to enter and have these clearly explained.
 - View an application that is visually and creatively appealing and physically easy to look at. 
 - Browse images entered by other people to get a sense of what the application does and how it runs. 
 - Filter my browsing by keyword, or by selecting only images that have won awards.
@@ -205,7 +205,7 @@ My application goals summarized:
 - Gamify photography (both amateur & professional), and thus encourage high quality imagery as opposed to the current trend of low-quality personal images.
 - Make the content publicly accessible / viewable, so as to encourage users to register and use the application. 
 - Create a loyal community of users who regularly engage and compete against each other for points and bragging rights. 
-- Allow users to easily register and then login and out of the application and have them be able to store and retrieve their data easily.
+- Allow users to register easily and then login and out of the application and enable them be able to store and retrieve their data easily.
 - Create an application that is easy to use and fully responsive on all major screen sizes and types.
 - Create an application that might be monetized in the future once it develops a decent sized following of loyal users.
 
@@ -248,7 +248,7 @@ Some of the features developed with this aim in mind are listed below:
 4.| Register a username as separate from login email | 6 | 9 | 15
 5.| Receive an email link to confirm a genuine email address |3 | 3 | 6
 . | __*USER LOGIN FUNCTIONALITY & FEATURES*__ 
-1.| User logs in with email and password |10 | 9 | 19
+1.| Users can login with email and password |10 | 9 | 19
 2.| When a user logs in they are brought to their profile page |6 | 10 | 16
 3.| A session is started and the user's login status is remembered as they use the application |9 | 9 | 18
 4.| When a user is logged in they can enter competitions and vote.  |10 | 9 | 19
@@ -303,9 +303,7 @@ be implemented if the application is to work at a fundamental level. Those are t
 13. The Browse page allows registered and unregistered users to look through the entire collection of uploaded images and filter them by awards or keywords.
 14. Anywhere an image is displayed, it can be clicked on and the user will be brought to that photograph's view page which displays more detailed information about the image as well as a larger version of the photo.
 
-These are what I determined are the very basic level features to make the competition work, photo "likes", the ability of users to comment on images, the ability to follow other users, 
-these are all features that are expected at some level, because most social media platforms follow such a similar formula, however because they are not essential to the working of this application, 
-they can be implemented in future updates. The "long wow".
+These are what I determined are the very basic level features to make the competition work. Features such as photo "likes", the ability of users to comment on images, the ability to follow other users, these are all features that are expected at some level, because most social media platforms follow such a similar formula, however because they are not essential to the working of this application, they can be implemented in future updates. The "long wow".
 
 ## Content requirements
 
@@ -372,7 +370,7 @@ separate space for the competition to take place.
 
 The design of my landing page was particularly important, as it is the window to the rest of the application. Whether or not a user is bothered engaging 
 further rests on how well this page is presented. I've tried to balance content and simplicity here, while not wanting to overload my new users with information, 
-I did need to explain the application in a way that leaves no doubt as to what it does and how it does it.
+I did need to explain the application in a way that leaves no doubt as to what it does and how it works.
 
 When the user first lands on the homepage, I've used language to provide a concise summary of what they can expect. The app's name "SNAPATHON" effectively 
 marries the idea of a photo 'snap' with the suffix '-athon' which brings up images of marathons, talkathons etc... Its meaning is: something 
@@ -657,7 +655,7 @@ complex functioning becomes understandable, engaging and normalised.
 ## Reassuring Conventions
 
 I've included many conventional design choices to further assuage a user's mistrust of complexity. I've used pagination on all pages that display images, I've kept
-the structure and design as simple as possible as regards information to avoid cognitive overload and I've ensured that the navigation bar is always accessible 
+the structure and design as simple as possible with regard to information to avoid cognitive overload and I've ensured that the navigation bar is always accessible 
 whether on mobile or desktop. 
 
 ## Contextually Organised Content
@@ -686,7 +684,7 @@ If you choose to view them this way, please click download as the GitHub viewer 
 
 ## Design Considerations
 
-With this application's design I wanted to merge the feeling of a fun gamified application with the idea of 
+When designing this application, I wanted to merge the feeling of a fun gamified application with the idea of 
 a dimly lit museum. Essentially I wanted it to be both extroverted and introverted, not too much colour as that would 
 detract from the photography, but it needed enough punch to be noticeable, so I went with a dark tone for the backgrounds,
 a light grey for most of the text and a dark yellow accent colour. Yellow is a creative colour, so I think it meshes well 
@@ -699,7 +697,7 @@ with a photography application.
 ## Typography
 
 For the typography I veered a little outside my usual Roboto/Lato comfort zone and used a 
-Google Font called "Anton" for the main page headings. This is a thick and bold and very immediately noticeable font. 
+Google Font called "Anton" for the main page headings. This is a thick, bold and very immediately noticeable font. 
 For the sub-headings I deferred to the old faithfuls of "Roboto" and "Open Sans" for a feeling of clarity and consistency.
 
 ![typography](static/images/typography/typography.png)
@@ -776,7 +774,7 @@ The GridFS Files Collection is automatically generated when the save_file method
 - I wanted a more human-readable key, so I copied this '_id' on file creation and saved the resultant filename (with image extension)
 as a second primary key. 
 - I also used this second key to populate my Photo's collection "filename" field - this way both Photos & Files collections do have unique identifiers (their '_ids')
-but they are also easily connected by their 'filename' fields, allowing me to overcome some of the complexity inherent to using the GridFS system. 
+but they are also easily connected by their 'filename' fields, allowing me to overcome some of the complexity inherent in using the GridFS system. 
 - So anytime I need to call up the actual image data for a Photo document, I can just refer to the Photo document's filename as if they were one document. 
 - In doing this I have emulated the idea of storing the file reference as a field on the Photos collection's documents. 
 
@@ -812,7 +810,7 @@ such as this one, that might change substantially in its first months of existen
 
 ## 1. Home
 The landing page is the first impression of the application and a window to what it does. Suffice it to say
-its purpose is to pique a user's interest, to concisely explain the application and to direct the user as to what they should do next to engage.
+its purpose is to pique a user's interest, to concisely explain the application and to direct the user to what they should do next to engage.
 <details><summary><b>click for features</b></summary>
 
 
@@ -1070,7 +1068,7 @@ The register page allows new users to register with SNAPATHON, allowing them to 
 <br>
 
 ## 7. Profile
-The profile page is a user's calling card and homebase in the application, it displays their photos and the photos they've voted for, as well as their points total.
+The profile page is a user's calling card and homebase in the application, it displays their photos and the photos they've voted for, as well as their own points total.
 Their profile is open to public viewing.
 <details>
 <summary><b>click for features</b></summary>
@@ -1514,7 +1512,7 @@ This will allow them to edit any of the details associated with the image, it wi
 ## 13. Delete Account
 
 If a user is logged in and they click on the "Edit Profile" button on their profile page, they have the option
-user the "update profile" form, to completely delete their account. 
+to completely delete their account. 
 <details>
 <summary><b>click for features</b></summary>
 
@@ -2729,8 +2727,8 @@ I was sure to include aria-labels on both of these icons.
 
 ### Colourblind Users
 
-- During the design process I selectes colours and contrasts that would look well for colourblind users. 
-- The choice of yellow and dark grey was with an eye to its excellent contrast and how easily viewable it is by the greatest range of users.
+- During the design process I selected colours and contrasts that would look well for colourblind users. 
+- The choice of yellow and dark grey was with an eye to their excellent contrast and how easily viewable they are by the greatest range of users.
 - I ensured that none of the application's functionality is dependent on a user being able to correctly discern between colours. 
 - Colours are used to enhance the experience for normally sighted users, such as "Delete" buttons being red, however they also have "delete" written on them, or they employ the use of icons that clearly illustrate their purpose.
 
@@ -2860,7 +2858,7 @@ security benefits such as (taken from the Flask-Talisman GitHub repo):
 
 source: [Talisman: HTTP security headers for Flask](https://github.com/GoogleCloudPlatform/flask-talisman)
 
-In addition to the above listed benefits, Flask-Talisman also sets a Content Security Policy that I have adapted to make less strict to allow for using certain CDNs such as Google Fonts, FontAwesome, Materialize & the application's own custom scripts.
+In addition to the above listed benefits, Flask-Talisman also sets a Content Security Policy that I have adapted and made less strict to allow for using certain CDNs such as Google Fonts, FontAwesome, Materialize & the application's own custom scripts.
 
 
 ## 7. Access Control
