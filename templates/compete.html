@@ -135,10 +135,10 @@
                         <li>The photograph must not violate the rights of any third party.</li>
                         <li>The photograph must not breach copyright law.</li>
                         <li>Entries are accepted through our online form (above) each week from 0:00AM Monday until 22:00PM Friday.</li>
-                        <li>Voting takes place from Saturday morning at 00:00 until 22:00PM Sunday.</li>
+                        <li>Voting takes place from Saturday morning at 00:00 until 22:00 UTC Sunday.</li>
                         <li>Winners are announced on the "Recent Winners" page and all points & awards are automatically assigned.</li>
                         <li>If you enter a photograph into competition, you MUST vote for 1 photograph (you cannot vote for your own image).</li>
-                        <li>If you fail to vote between Saturday and Sunday at 22:00, your entry will be nullified and its points/votes set to 0.</li>
+                        <li>If you fail to vote between Saturday and Sunday at 22:00 UTC, your entry will be nullified and its points/votes set to 0.</li>
                         <li>All times quoted are UTC+00:00</li>
                         <li>Scoring is based on the number of votes an image receives from other members. The photo which receives the highest number of votes wins
                             a 1st place gold award badge and its' user receives 7 points. The next placed photo receives a 2nd place silver award badge and its' user receives
@@ -161,7 +161,7 @@
 {% if entry.created_by == user.username %}
 <div class="row">
     <div class="col s12 m8 offset-m2">
-        <h4 class="page-sub-subheading-text center-align">Voting opens Saturday until Sunday at 22:00PM. Please come back then to vote for
+        <h4 class="page-sub-subheading-text center-align">Voting opens Saturday until Sunday at 22:00 UTC. Please come back then to vote for
             your favourite entry.<br> Remember if you don't vote, your entry is invalidated.</h4>
         <h4 class="page-sub-subheading-text center-align">Your entry: "{{entry.photo_title|capitalize}}"</h4>
         <div class="center-align">
@@ -186,7 +186,7 @@
                     <h1 class="grey-text text-lighten-4 page-heading">YOU HAVE VOTED!</h1>
                 {% elif photo_user_voted_for == None %}
 <!-- Heading for users who cannot vote because they did not enter competition -->
-                    <h1 class="grey-text text-lighten-4 page-heading">VOTING CLOSES SUNDAY at 22:00PM</h1>
+                    <h1 class="grey-text text-lighten-4 page-heading">VOTING CLOSES SUNDAY at 22:00 UTC</h1>
                     <h2 class="page-subheading">You can enter a new competition on Monday.</h2>
                 {% endif %}
                 <h2 class="grey-text text-lighten-4 page-subheading">This week's theme is {{category|capitalize}}</h2>
