@@ -956,8 +956,8 @@ def get_time_remaining_string(timedelta):
     time_array = timedelta_string.split(",").pop().split(":")
     hours = time_array[0]
     minutes = time_array[1]
-    days_plural = "days,"
-    days_singular = "day,"
+    days_plural = "days, "
+    days_singular = "day, "
     hours_singular = 'hour'
     hours_plural = 'hours'
     mins_singular = 'minute'
