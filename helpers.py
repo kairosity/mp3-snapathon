@@ -301,10 +301,20 @@ def awards_score_requirements(array_of_scores):
 
 
 def get_valid_entries(this_weeks_entries, valid_users):
+    '''
+    * This returns only the valid entries from the list of
+    that week's entries.
 
-    # if an entry is not by a valid user then remove it
-    # from the this week's entries array.
+    \n Args:
+    1. this_weeks_entries (arr): All photos entered into this
+    week's competition.
+    2. valid_users(arr): The array of users who have voted and
+    entered the competition.
 
+    \n Returns:
+    * valid_entries (arr): An array of entries minus any created by
+    users who failed to vote.
+    '''
     valid_entries = []
 
     for entry in this_weeks_entries:
@@ -312,7 +322,6 @@ def get_valid_entries(this_weeks_entries, valid_users):
             if entry["created_by"] == user["username"]:
                 valid_entries.append(entry)
 
-    print(f"Valid Entries: {valid_entries}")
     return valid_entries
 
 

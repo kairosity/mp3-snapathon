@@ -132,30 +132,18 @@ def awards():
     this_weeks_users = get_this_weeks_comp_users(
         this_weeks_entries, mongo)
 
-    print(f"This weeks comp users: {this_weeks_users}")
-
     valid_users = filter_users_and_exclude_non_voters(
         this_weeks_users, mongo, this_week_and_year_formatted)
 
-    print(f"Valid users: {valid_users}")
-
     range_of_votes = get_range_of_scores(
         this_week_and_year_formatted, mongo)
-
-    print(f"Range of Scores: {range_of_votes}")
 
     first_place_vote_count,\
         second_place_vote_count,\
         third_place_vote_count = \
         awards_score_requirements(range_of_votes)
 
-    print(f"First place vote count: {first_place_vote_count}")
-    print(f"Second place vote count: {second_place_vote_count}")
-    print(f"Third place vote count: {third_place_vote_count}")
-
     valid_entries = get_valid_entries(this_weeks_entries, valid_users)
-
-    print(f"Valid Entries2: {valid_entries}")
 
     first_place_users,\
         second_place_users,\
@@ -165,10 +153,6 @@ def awards():
             second_place_vote_count,
             third_place_vote_count,
             valid_entries, mongo)
-    
-    print(f"First place users: {first_place_users}")
-    print(f"Second place users: {second_place_users}")
-    print(f"Third place users: {third_place_users}")
 
     add_points_to_winning_users(
         first_place_users, second_place_users, third_place_users, mongo)
