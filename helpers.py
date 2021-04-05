@@ -224,6 +224,8 @@ def filter_users_and_exclude_non_voters(
         else:
             valid_users.append(user)
 
+    print(f"Non Voters: {non_voters}")
+
     for user in non_voters:
         database_var.db.photos.update_one(
             {"created_by": user["username"],
@@ -296,6 +298,22 @@ def awards_score_requirements(array_of_scores):
 
     return first_place_vote_count, \
         second_place_vote_count, third_place_vote_count
+
+
+def get_valid_entries(this_weeks_entries, valid_users):
+
+    # if an entry is not by a valid user then remove it
+    # from the this week's entries array.
+
+    valid_entries = []
+
+    for entry in this_weeks_entries:
+        for user in valid_users:
+            if entry["created_by"] == user["username"]:
+                valid_entries.append(entry)
+
+    print(f"Valid Entries: {valid_entries}")
+    return valid_entries
 
 
 def determine_winners(
