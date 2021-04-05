@@ -9,7 +9,7 @@ These are the scheduled functions:
 '''
 scheduler = BlockingScheduler()
 scheduler.add_job(awards, 'cron', day_of_week='mon',
-                  hour=14, minute=45, second=0,
+                  hour=16, minute=00, second=0,
                   start_date='2021-02-24')
 scheduler.add_job(new_comp, 'cron', [mongo], day_of_week='mon',
                   hour=00, minute=0, second=0,
