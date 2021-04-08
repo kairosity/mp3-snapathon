@@ -1166,7 +1166,7 @@ As Materialize comes with its own very useful set of form input validations, I h
     <img src="/static/images/testing/username-required-register.png" width="500">
 </div>
 
-2. Username must be between 6 - 25 characters in length. -- PASS
+2. Username must be between 5 - 25 characters in length. -- PASS
 
 <div align="center">
     <img src="/static/images/testing/username-length-register.png" width="500">
@@ -1228,7 +1228,7 @@ As Materialize comes with its own very useful set of form input validations, I h
 </div>
 <br>
 
-2. Username must be between 6 - 25 characters in length. -- PASS
+2. Username must be between 5 - 25 characters in length. -- PASS
 <br>
 <div align="center">
     <img src="/static/images/testing/username-length-update-profile.png" width="500">

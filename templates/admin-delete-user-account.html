@@ -33,11 +33,11 @@
         <form class="account-deletion-form" method="POST" action="{{ url_for('delete_account', username=user.username) }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="input-field col s12 m6 center-align">
-            <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25">
+            <input id="password" name="password" type="password" class="validate" minlength="6" maxlength="25" required>
             <label for="password">password</label>
           </div>
           <div class="input-field col s12 m6 ">
-            <input id="password_confirmation" name="password_confirmation" type="password" class="validate" minlength="6" maxlength="25">
+            <input id="password_confirmation" name="password_confirmation" type="password" class="validate" minlength="6" maxlength="25" required>
             <label for="password_confirmation">password confirmation</label>
           </div>
           <div class="col s12 center-align">

@@ -1335,7 +1335,7 @@ def del_user_account2(password, password_confirmation,
                 message = "You must enter your admin password correctly twice in \
                     order to delete an account. This is a security measure."
                 url = redirect(url_for(
-                    'admin_user_details', username=user_to_delete["username"]))
+                    'admin_delete_user_account', username=user_to_delete["username"]))
 
             else:
                 message = "You must enter your password correctly twice in order to delete your\
@@ -1349,7 +1349,8 @@ def del_user_account2(password, password_confirmation,
             message = "Incorrect admin password, please\
                  try again. This is a security measure."
             url = redirect(url_for(
-                'admin_user_details', username=user_to_delete["username"]))
+                'admin_delete_user_account',
+                username=user_to_delete["username"]))
 
         else:
             message = "Incorrect password. Please try again."
@@ -1361,7 +1362,7 @@ def del_user_account2(password, password_confirmation,
     elif user_deleting["username"] == 'admin':
         message = "You must enter your admin password to delete an account."
         url = redirect(url_for(
-            'admin_user_details', username=user_to_delete["username"]))
+            'admin_delete_user_account', username=user_to_delete["username"]))
     else:
         message = "You must enter your password to delete your account."
         url = redirect(url_for(
