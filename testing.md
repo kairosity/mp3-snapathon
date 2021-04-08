@@ -1091,7 +1091,7 @@ appropriate error message was displayed to the user.  -- PASS
 ### __6. Input Validations__
 __PASS__
 
-As Materialize comes with its own very useful set of form input validations, I have relied quite heavily on those validations and validation messages for this application, but I have supplemented them, specifically with the custom file upload validations. 
+As Materialize comes with its own very useful set of form input validations, I have used those form validations and validation messages for this application, but I have supplemented them, specifically with the custom file upload validations. 
 
 <details><summary><b>click for validations</b></summary>
 <br>
@@ -1184,9 +1184,9 @@ As Materialize comes with its own very useful set of form input validations, I h
     <img src="/static/images/testing/email-regex-register.png" width="500">
 </div>
 
-5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic'] then the POST should be cancelled and an error message displayed to the user. -- PASS
 
-6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- PASS
 
 7. Password must be set. -- PASS
 
@@ -1249,10 +1249,10 @@ As Materialize comes with its own very useful set of form input validations, I h
 </div>
 <br>
 
-5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+5. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic'] then the POST should be cancelled and an error message displayed to the user. -- PASS
 <br>
 
-6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+6. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- PASS
 <br>
 
 7. Current password, new password & new password confirmation fields must all be between 6 - 25 characters in length. -- PASS
@@ -1305,9 +1305,9 @@ They must not be left blank. -- PASS
     <img src="/static/images/testing/compete-camera-required.png" width="500">
 </div>
 
-2. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg'] then the POST should be cancelled and an error message displayed to the user. -- FAIL (currently not working properly)
+2. If a file is uploaded and its extension is not one of: ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic'] then the POST should be cancelled and an error message displayed to the user. -- PASS
 
-3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- FAIL (currently not working properly)
+3. If a file is uploaded and it is above the maximum size of 750 X 750 bytes (562KB) the POST should fail and an error page displayed to the user explaining why. -- PASS
 
 4. There are maximum character length validations set on the following inputs: -- PASS
 

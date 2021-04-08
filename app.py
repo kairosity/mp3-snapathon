@@ -81,9 +81,11 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 
-# App Configuration Settings
+# Database Configuration Settings
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+
+# Other Configuration Settings
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['UPLOAD_EXTENSIONS'] = \
     ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
@@ -123,9 +125,8 @@ def awards():
     * Calculates & assigns points to each user who voted for a photo that
       came 1st, 2nd or 3rd.
     '''
-    # datetime.now().strftime("%V%G")
 
-    this_week_and_year_formatted = "132021"
+    this_week_and_year_formatted = datetime.now().strftime("%V%G")
     this_weeks_entries = list(mongo.db.photos.find(
         {"week_and_year": this_week_and_year_formatted}))
 
@@ -609,11 +610,11 @@ def compete():
 
                 if current_user["can_enter"] is True:
 
-                    url = upload_comp_entry(request,
-                                            mongo,
-                                            app,
-                                            this_weeks_comp_category,
-                                            current_user)
+                    upload_comp_entry(request,
+                                      mongo,
+                                      app,
+                                      this_weeks_comp_category,
+                                      current_user)
 
                     flash("Entry Received!")
                     return redirect(url_for('compete'))
@@ -891,6 +892,7 @@ def logout():
         return redirect(url_for("login"))
 
 
+# Error Handlers
 @app.errorhandler(403)
 def forbidden_error(e):
     error = 403
@@ -948,7 +950,6 @@ def all_other_exceptions(e):
     return render_template('error.html', error=e, error_msg=error_msg)
 
 
-# SET DEBUG TO FALSE BEFORE DEPLOYMENT
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

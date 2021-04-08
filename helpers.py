@@ -224,8 +224,6 @@ def filter_users_and_exclude_non_voters(
         else:
             valid_users.append(user)
 
-    print(f"Non Voters: {non_voters}")
-
     for user in non_voters:
         database_var.db.photos.update_one(
             {"created_by": user["username"],
@@ -1095,11 +1093,9 @@ def edit_user_profile(user, username, request, database_var, app):
 
         # delete user's profile pic.
         if existing_profile_pic is not None:
-            print("profile pic is here to be deleted without a new upload")
 
             file_to_delete = database_var.db.fs.files.find_one(
                 {"filename": existing_profile_pic})
-            print(file_to_delete)
 
             chunks_to_delete = list(database_var.db.fs.chunks.find({
                                     "files_id": file_to_delete["_id"]}))

@@ -6,7 +6,7 @@ Snapathon gamifies photography. It is a community-led photo-sharing application 
 Users register accounts and then they enter one competition a week on a particular theme. Every user that enters the competition can then vote for 
 one other photo (not their own) to win. At the end of the week, votes are tallied and awards distributed automatically.
 
-<a href="https://snapathon-comp.herokuapp.com/"><img src="static/images/snapathon-multi-device-view.png"></a>
+<a href="https://snapathon-comp.herokuapp.com/"><img src="static/images/deployment/snapathon-multi-device-view.png"></a>
 
 # Table of Contents
 
@@ -2985,6 +2985,10 @@ only applies sometimes. I have written a specific custom error code to tell user
 
 <br>
 
+## Media
+
+Images used in this application are from Unsplash and are covered for non-commercial and commercial use under the Unsplash License. Attribution is not necessary, but wherever possible I have credited the photographers below. This application has been developed as part of a Diploma with Code Institute, as such all images used, are for educational purposes.  
+
 ## Unsplash Images Used in the Application
 
 <details><summary><b>click to expand</b></summary>
@@ -3144,6 +3148,18 @@ only applies sometimes. I have written a specific custom error code to tell user
 - Photo by <a href="https://unsplash.com/@daramsphotography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Joe Darams</a> on <a href="https://unsplash.com/s/photos/events?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 - Photo by <a href="https://unsplash.com/@rayhennessy?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ray Hennessy</a> on <a href="https://unsplash.com/s/photos/fireworks?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 - Photo by <a href="https://unsplash.com/@lc_photography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Leon Contreras</a> on <a href="https://unsplash.com/s/photos/fireworks?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@detroitmetro?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Trevor Buntin</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+Photo by <a href="https://unsplash.com/@furkandegerli?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Furkan Değerli</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@behrouzsasani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">behrouz sasani</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@furkandegerli?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Furkan Değerli</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+-Photo by <a href="https://unsplash.com/@behrouzsasani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">behrouz sasani</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+-Photo by <a href="https://unsplash.com/@lanejackmanphoto?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lane Jackman</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@arunwithideas?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Arun Sharma</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@shaynecody116?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">shayne carpenter</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@mikepalmowski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mike Palmowski</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@shaonpro?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mahmudul Hasan Shaon</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@paul_siewert?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Paul Siewert</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Photo by <a href="https://unsplash.com/@nate_dumlao?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Nathan Dumlao</a> on <a href="https://unsplash.com/s/photos/portraits?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
 
 </details>
@@ -3161,15 +3177,15 @@ only applies sometimes. I have written a specific custom error code to tell user
 1. Logged into my MongoDB account. 
 2. With the "Clusters" tab selected, I clicked on "Connect" 
 <p align="left">
-  <img src="static/images/mongodb-connection-1.png">
+  <img src="static/images/deployment/mongodb-connection-1.png">
 </p>
 3. Selected "Connect your application"
 <p align="left">
-  <img src="static/images/mongodb-connection-3.png">
+  <img src="static/images/deployment/mongodb-connection-3.png">
 </p>
 4. Selected "Python" as the "Driver" and "Version" "3.6 or later". 
 <p align="left">
-  <img src="static/images/mongodb-connection-2.png">
+  <img src="static/images/deployment/mongodb-connection-2.png">
 </p>
 5. Copied the connection string and pasted it in my env.py file editing it to include my dbname and my user password.
 
@@ -3185,54 +3201,59 @@ Before following the steps listed below, a requirements.txt file and a Procfile 
         pip3 freeze --local > requirements.txt
         echo web: python app.py > Procfile
 
+Then to integrate APScheduler into the application to automate the awards() & new competition processess I added a second dyno to my Procfile --> ```clock: python jobs.py``` Referring to the jobs.py file where the scheduled jobs are listed. 
+
+I then used the Heroku CLI to scale up the clock process using the command: ```heroku ps:scale clock=1```
+
+
 ### The application was deployed via Heroku using this process: 
 
  1. Navigated to [Heroku](https://www.heroku.com/)
  2. Signed into my Heroku account. 
  3. Selected "New" on the dashboard and then "Create new application" option as below: 
  <p align="left">
-  <img src="static/images/deployment-process-1.png">
+  <img src="static/images/deployment/deployment-process-1.png">
 </p>
 
  4. Selected a name for my application, selected "Europe" as the region and clicked "Create app". 
  <p align="left">
-  <img src="static/images/deployment-process-2.png">
+  <img src="static/images/deployment/deployment-process-2.png">
 </p>
  5. With the "Deploy" tab selected, "GitHub - Connect to GitHub" was chosen as the deployment method.
 <p align="left">
-  <img src="static/images/deployment-process-3.png">
+  <img src="static/images/deployment/deployment-process-3.png">
 </p>
  6. Making sure my GitHub profile was displayed, I clicked "connect" next to the GitHub repository for this project.
 
 <p align="left">
-    <img src="static/images/deployment-process-4.png">
+    <img src="static/images/deployment/deployment-process-4.png">
 </p>
 <p align="left">
-    <img src="static/images/deployment-process-5.png">
+    <img src="static/images/deployment/deployment-process-5.png">
 </p>
 <p align="left">
-    <img src="static/images/deployment-process-6.png">
+    <img src="static/images/deployment/deployment-process-6.png">
 </p>
  7. Then I navigated to the "Settings" tab and clicked on "Reveal Convig Vars".
  <p align="left">
-    <img src="static/images/deployment-process-7.png">
+    <img src="static/images/deployment/deployment-process-7.png">
 </p>
 
  8. Added in my configuration variables to Heroku.
  9. Navigated back to the "Deploy" tab and selected "Enable Automatic Deploys" with the master branch selected from the dropdown box.
  <p align="left">
-    <img src="static/images/deployment-process-9.png">
+    <img src="static/images/deployment/deployment-process-9.png">
 </p>
 <p align="left">
-    <img src="static/images/deployment-process-10.png">
+    <img src="static/images/deployment/deployment-process-10.png">
 </p>
  10. Then clicked on "Deploy Branch" also with master selected. 
  <p align="left">
-    <img src="static/images/deployment-process-11.png">
+    <img src="static/images/deployment/deployment-process-11.png">
 </p>
  11. Site is deployed and any changes are automatically deployed each time they are updated and pushed to GitHub during development.
 <p align="left">
-    <img src="static/images/deployment-process-12.png">
+    <img src="static/images/deployment/deployment-process-12.png">
 </p>
 
 #### __back to [contents](#table-of-contents)__ 

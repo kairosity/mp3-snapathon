@@ -10,8 +10,9 @@ $(document).ready(function(){
 
 /* Adds the "active" class to the nav-link currently active. 
 Because of query strings - it checks whether the href contains the pathname
-rather than is equal TO the pathname. Also adds a special case for when the page 
-first loads and the path is '/'
+rather than is equal TO the pathname. Also adds special cases for when the page 
+first loads and the path is '/' and for the search results page when the browse tab 
+should be highlighted but the path is 'search'.
 */
     $(function(){
         let path = window.location.href.split('/').pop();
@@ -25,6 +26,11 @@ first loads and the path is '/'
                 $(this).parent().removeClass("active");
                 let home = $('.nav-link').first();
                 home.parent().addClass("active");
+            }
+            if (path.indexOf('search') > -1){
+                $(this).parent().removeClass("active");
+                let search = $('[href="/browse"]');
+                search.parent().addClass("active");
             }
         });
     });

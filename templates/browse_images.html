@@ -9,7 +9,7 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="row valign-wrapper center-align">
             <div class="input-field col s12 m8 offset-m2">
-                <input type="text" name="query" id="query" class="validate" minlength="3" aria-label="filter by keyword" value="{{query}}">
+                <input type="text" name="query" id="query" class="validate" minlength="1" aria-label="filter by keyword" value="{{query}}">
                 <label for="query" aria-label="filter by keyword">Filter by keyword</label>
             </div>
         </div>
