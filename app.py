@@ -88,8 +88,7 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 # Other Configuration Settings
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['UPLOAD_EXTENSIONS'] = \
-    ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic',
-        '.JPG', '.PNG', '.GIF', '.SVG', '.JPEG', '.HEIC']
+    ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic']
 
 # Email Settings
 mail_settings = {
@@ -932,8 +931,10 @@ def payload_too_large(e):
 @app.errorhandler(415)
 def unsupported_media_type(e):
     error = 415
-    error_msg = "Sorry, but the file you're trying to upload is an unsupported\
-    file type. We only accept .jpg, .jpeg, .gif, .svg or .png files. Thanks!"
+    error_msg = "Sorry, but the file you're trying to upload is an\
+    unsupported file type. We only accept .jpg, .jpeg, .gif, .svg or\
+    .png files. Please ensure that your filename extension\
+    (e.g. '.jpg') is written in all lowercase. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 415
 
 
