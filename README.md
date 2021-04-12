@@ -2958,6 +2958,15 @@ In order to integrate gmail to receive mail from the application, I had to lower
 that every now and then gmail decides that this is not ok, and rejects the access. This is a common issue that developers have found and it 
 only applies sometimes. I have written a specific custom error code to tell users to try again later, if it does occur. 
 
+## Forgotten Passwords
+
+If a user forgets their password there is currently no way for them to retrieve it, implementing email verification on registration and an email
+based forgotten password functionality is definitely a must for future updates.
+
+## Browse Dropdown on iOS
+
+Materialize dropdown has a bug that sometimes makes it difficult for users to select the correct dropdown option from select menus on new versions of iOS. This seems to be a common issue and they are working on a bugfix currently. It seems to work fine on Android. 
+
 <br>
 
 #### __back to [contents](#table-of-contents)__
