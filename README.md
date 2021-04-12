@@ -2919,10 +2919,9 @@ for greater flexibility and improved UX when it comes to using mobile to upload 
 
 ## New Image File Types & Image Sizing
 
-There is currently only limited functionality if a user wants to upload images from their phones. Firstly, most phones have large image sizes (well above the 560KB) threshold, and limited abilities to resize those images. Users would have to download a specific app to resize images. So the files will be rejected on that basis. Secondly, new image formats such as the Apple iOS 11 HEIC file type, doesn't yet have good Python compatibility. The imghdr method for example, does not yet recognise that file type as an image. 
+There is currently only limited functionality if a user wants to upload images from their phones. Firstly, most phones have large image sizes (well above the 560KB) threshold, and limited abilities to resize those images. Users would have to download a specific app to resize images. So the files will be rejected on that basis. Secondly, new image formats such as the Apple iOS 11 HEIC file type, doesn't yet have good Python compatibility. The imghdr method for example, does not yet recognise that file type as an image. Even supposed '.jpg' phone images are problematic because of the different file format of mobile images.
 
-So currently, images are best uploaded via desktop, so that resizing and file formats are more easily managed, but for future iterations of the application, greater ease
-of use for mobile users definitely needs to be implemented re: file types and sizing. 
+So currently, images are best uploaded via desktop, so that resizing and file formats are more easily managed, but for future iterations of the application, greater ease of use for mobile users definitely needs to be implemented re: file types and sizing. 
 
 ## Offensive Images Filter 
 
