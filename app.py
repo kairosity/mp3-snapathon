@@ -933,7 +933,7 @@ def unsupported_media_type(e):
     error = 415
     error_msg = "Sorry, but the file you're trying to upload is an\
     unsupported file type. We only accept .jpg, .jpeg, .gif, .svg or\
-    .png files. Please ensure that your filename extension\
+    .png files. Please also ensure that your filename extension\
     (e.g. '.jpg') is written in all lowercase. Thanks!"
     return render_template('error.html', error=error, error_msg=error_msg), 415
 
