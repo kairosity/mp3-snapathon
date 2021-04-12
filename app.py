@@ -88,7 +88,8 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 # Other Configuration Settings
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['UPLOAD_EXTENSIONS'] = \
-    ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic', '.JPG', '.PNG', '.GIF', '.SVG', '.JPEG', '.HEIC']
+    ['.jpg', '.png', '.gif', '.svg', '.jpeg', '.heic',
+        '.JPG', '.PNG', '.GIF', '.SVG', '.JPEG', '.HEIC']
 
 # Email Settings
 mail_settings = {
